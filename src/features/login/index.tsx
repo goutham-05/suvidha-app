@@ -20,7 +20,7 @@ function Login() {
   };
 
   return (
-    <Container className="main-body">
+    <Container>
       <BrandLogo />
       {showUserForm ? (
         <UserForm onSubmit={onSubmitForm} />
