@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, Icon, Image } from "semantic-ui-react";
 
 function BrandLogo() {

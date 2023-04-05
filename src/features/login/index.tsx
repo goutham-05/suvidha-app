@@ -1,7 +1,11 @@
-import React from "react";
-import { Grid, Icon, Image } from "semantic-ui-react";
+import { useLocation } from "react-router-dom";
+import { Grid, Image } from "semantic-ui-react";
 
 function Login() {
+  const {
+    state: { selectedLanguage },
+  } = useLocation();
+
   return (
     <Grid container centered>
       <Grid.Column>
