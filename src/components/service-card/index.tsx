@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Card from "semantic-ui-react/dist/commonjs/views/Card";
-import { SemanticICONS } from "semantic-ui-react/src/generic";
+import {SemanticICONS} from "semantic-ui-react/src/generic";
+import ServiceModal from "../service-modal";
+import {ServiceModalObject, serviceModalObjects} from "../../config/services";
 
 interface Props {
   title: string;
@@ -10,8 +12,29 @@ interface Props {
   onClick?: (event: React.SyntheticEvent<HTMLElement>, data: any) => void;
   size?: "mini" | "tiny" | "small" | "large" | "big" | "huge" | "massive";
 }
-0
+
 const ServiceCard: React.FC<Props> = ({ title, icon, size, path, onClick }) => {
+  const [modalState, setModalState] = React.useState(false)
+
+  const serviceHasModal = serviceModalObjects.find(service => service.title === title);
+
+  console.log(title, serviceHasModal)
+
+  let modal;
+  if (serviceHasModal) {
+      let modalObject = serviceModalObjects.find((serviceModalObject: ServiceModalObject) => serviceModalObject.title = title)!
+
+      console.log(modalObject)
+
+      modal = <ServiceModal
+          modalState={modalState}
+          title={title}
+          setModalState={setModalState}
+          modalObject={modalObject}
+      />
+  }
+
+
   return (
     <>
       <Card onClick={onClick} centered>
