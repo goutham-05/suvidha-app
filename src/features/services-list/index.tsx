@@ -1,10 +1,14 @@
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "semantic-ui-react";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
-import {SemanticICONS} from "semantic-ui-react/src/generic";
+import { SemanticICONS } from "semantic-ui-react/src/generic";
 import Navbar from "../../components/nav-bar";
 import ServiceCard from "../../components/service-card";
+import ServiceModal from "../../components/service-modal";
+import { ServiceInfo, serviceInfo } from "../../config/services";
+import { ServiceActionList } from "../service-modal-content";
 
 interface ServiceList {
   title: string;
@@ -67,32 +71,56 @@ const mockServicesList: ServiceList[] = [
 ];
 
 function ServicesList() {
-  
+  const [modalStatus, setModalStatus] = React.useState(false);
+
+  const [modalConent, setModalContent] = React.useState<JSX.Element>();
+
+  const [service, setService] = useState<ServiceInfo>();
+
   const naviage = useNavigate();
 
-  const onClick = (path: string) => {
-    console.log("Clicked", path);
-    naviage(path);
-  };
+  const onClick = useCallback((title: string, path: string) => {
+    const findService = serviceInfo.find((service) => service.title === title);
+    if (!findService) {
+      naviage(path);
+    }
+    if (findService?.element) {
+      setModalContent(findService?.element);
+      setModalStatus(true);
+      setService(findService);
+    }
+  }, []);
+
+  const setModalState = useCallback((status: boolean) => {
+    setModalStatus(status);
+  }, []);
 
   return (
     <>
       <Navbar />
       <Container fluid textAlign="justified">
         <Grid>
-          {mockServicesList.map(({ icon, title, size = "huge", path }, index) => (
-            <Grid.Column mobile={8} tablet={4} computer={4}>
-              <ServiceCard
-                onClick={() => onClick(path)}
-                size={size}
-                title={title}
-                icon={icon}
-                path={path}
-                key={index}
-              />{" "}
-            </Grid.Column>
-          ))}
+          {mockServicesList.map(
+            ({ icon, title, size = "huge", path }, index) => (
+              <Grid.Column mobile={8} tablet={4} computer={4} key={index}>
+                <ServiceCard
+                  onClick={() => onClick(title, path)}
+                  size={size}
+                  title={title}
+                  icon={icon}
+                  key={index}
+                />
+              </Grid.Column>
+            )
+          )}
         </Grid>
+        <ServiceModal
+          status={modalStatus}
+          title={service?.title || ""}
+          setModalState={setModalState}
+        >
+          {modalConent}
+        </ServiceModal>
       </Container>
     </>
   );

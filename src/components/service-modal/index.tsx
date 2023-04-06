@@ -1,36 +1,34 @@
 import React from "react";
 
-import {Button, Header, Modal} from 'semantic-ui-react'
-import ServiceModalContent from "../../features/service-modal-content";
-import {ServiceModalObject} from "../../config/services";
+import { Modal, Segment } from "semantic-ui-react";
 
 interface Props {
-    modalState: boolean,
-    title: string,
-    setModalState: any
-    modalObject: ServiceModalObject
+  status: boolean;
+  title: string;
+  setModalState: (status: boolean) => void;
+  children?: React.ReactNode;
 }
 
-const ServiceModal: React.FC<Props> = ({modalState, title, setModalState, modalObject}) => {
-    const [open, setOpen] = React.useState(false)
+const ServiceModal: React.FC<Props> = ({
+  status,
+  title,
+  setModalState,
+  children,
+}) => {
+  return (
+    <Modal
+      centered={true}
+      open={status}
+      onClose={() => setModalState(false)}
+      onOpen={() => setModalState(true)}
+      closeIcon={true}
+    >
+      <Segment inverted color="teal" size="large" textAlign="center">
+        {title}
+      </Segment>
+      <Modal.Content>{children}</Modal.Content>
+    </Modal>
+  );
+};
 
-    return (
-        <Modal size='tiny' onClose={() => setModalState(false)} open={modalState}>
-            <Modal.Header>
-                {title}
-                <Button circular icon='close' onClick={() => setModalState(false)}/>
-            </Modal.Header>
-            <Modal.Content>
-                <Modal.Description>
-                    <Header>
-                        <ServiceModalContent
-                            modalObject={modalObject}/>
-                    </Header>
-                </Modal.Description>
-            </Modal.Content>
-
-        </Modal>
-    );
-}
-
-export default ServiceModal
+export default ServiceModal;
