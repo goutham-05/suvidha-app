@@ -24,7 +24,7 @@ const MedicalStaff = () => {
             <Icon name="user doctor" />
           </Button>
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column width={5}>
           <h2>Nursing Supervisor</h2>
         </Grid.Column>
         <Grid.Column width={1}>

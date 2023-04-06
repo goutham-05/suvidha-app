@@ -55,6 +55,17 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.ui.checkbox .box:before,
+.ui.checkbox label:before {
+  border: 1px solid red;
+}
+
+.ui.checkbox input:checked:focus~.box:before, .ui.checkbox input:checked:focus~label:before, .ui.checkbox input:not([type=radio]):indeterminate:focus~.box:before, .ui.checkbox input:not([type=radio]):indeterminate:focus~label:before {
+  border: 1px solid red !important;
+}
+
+
+
 .ui.search.dropdown.active > input.search,
 .ui.search.dropdown.visible > input.search {
   width: "500px";

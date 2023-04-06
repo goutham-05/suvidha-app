@@ -1,5 +1,7 @@
 import Ambulance from "../../components/ambulance-modal";
 import ContactModal from "../../components/contact-modal";
+import FacilitiesModal from "../../components/facilities-modal";
+import HouseKeepingModal from "../../components/house-keeping-modal";
 import MedicalStaff from "../../components/medical-staff";
 
 export interface ServiceInfo {
@@ -13,10 +15,8 @@ export const serviceInfo: ServiceInfo[] = [
     element: <MedicalStaff />,
   },
   {
-    title: "House Keeping",
-  },
-  {
     title: "Facilities",
+    element: <FacilitiesModal />,
   },
   {
     title: "Ambulance",
@@ -25,5 +25,9 @@ export const serviceInfo: ServiceInfo[] = [
   {
     title: "Contact Support",
     element: <ContactModal />,
+  },
+  {
+    title: "House Keeping",
+    element: <HouseKeepingModal />,
   },
 ];

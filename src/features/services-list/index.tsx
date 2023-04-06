@@ -8,7 +8,6 @@ import Navbar from "../../components/nav-bar";
 import ServiceCard from "../../components/service-card";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
-import { ServiceActionList } from "../service-modal-content";
 
 interface ServiceList {
   title: string;
