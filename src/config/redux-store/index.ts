@@ -1,8 +1,19 @@
-import { configureStore, applyMiddleware } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  Middleware,
+  AnyAction,
+  Dispatch,
+} from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import authSlice from "../../features/login/authSlice";
 import logger from "redux-logger";
+
+const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
+
+if (process.env.NODE_ENV === `development`) {
+  middlewares.push(logger);
+}
 
 const store = configureStore({
   reducer: {
@@ -15,13 +26,11 @@ const store = configureStore({
       // you can also type middlewares manually
       ()
       // prepend and concat calls can be chained
-      .concat(logger),
+      .concat(middlewares),
   devTools: process.env.NODE_ENV !== "production",
 });
 
 export default store;
-
-console.log("store.getState()", store.getState());
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
