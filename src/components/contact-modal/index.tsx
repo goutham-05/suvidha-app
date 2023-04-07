@@ -6,10 +6,10 @@ import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 const ContactModal = () => {
   return (
     <Grid>
-    {["Floor Manager", "Nursing In Charge", "Financial Counselor"].map(
+      {["Floor Manager", "Nursing In Charge", "Financial Counselor"].map(
         (item, index) => (
-          <Grid.Row>
-          <Grid.Column width={8} textAlign="justified">
+          <Grid.Row key={index}>
+            <Grid.Column width={8} textAlign="justified">
               <span
                 style={{
                   padding: "10px",
@@ -31,10 +31,10 @@ const ContactModal = () => {
                 width: "100%",
               }}
             />
-            </Grid.Row>
+          </Grid.Row>
         )
       )}
-          </Grid>
+    </Grid>
   );
 };
 

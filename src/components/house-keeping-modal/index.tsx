@@ -14,7 +14,7 @@ const HouseKeepingModal = () => {
         "Room Cleaning",
         "Newspaper",
       ].map((item, index) => (
-        <Grid.Row>
+        <Grid.Row key={index}>
           <Grid.Column width={8} textAlign="justified">
             <span
               style={{
