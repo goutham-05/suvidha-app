@@ -4,9 +4,12 @@ import { Button, Grid, Form, Label } from "semantic-ui-react";
 import { useForm } from "react-hook-form";
 import CInput from "../../common/input";
 import { getOtp } from "../../features/login/authSlice";
-import { RootState, useAppDispatch, useAppSelector } from "../../config/redux-store";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../config/redux-store";
 import { useEffect } from "react";
-import MessageNotification from "../../common/notification";
 
 interface Props {}
 
@@ -14,7 +17,9 @@ const UserForm: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { status, user, message } = useAppSelector((state: RootState) => state.user);
+  const { status, user } = useAppSelector(
+    (state: RootState) => state.user
+  );
 
   const {
     register,
@@ -38,7 +43,6 @@ const UserForm: React.FC<Props> = () => {
 
   return (
     <>
-      <MessageNotification status={status} message={message} theme="dark" />
       <Form onSubmit={handleSubmit(onSubmitForm)}>
         <Grid columns="equal">
           <Grid.Row stretched>
