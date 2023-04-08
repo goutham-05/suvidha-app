@@ -16,16 +16,19 @@ function Home() {
       },
     });
   };
-
+  const dropdownStyles = {
+    borderRadius: '1rem', // change the value to adjust the radius
+  };
   return (
     <>
-      <div>Home</div>
+      <div>Select Language</div>
       <DropDown
         fluid
         options={languageOptions}
         placeholder={"Select a language"}
         search
         selection
+        style={dropdownStyles}
         onChange={onChangeLanguage}
       />
     </>

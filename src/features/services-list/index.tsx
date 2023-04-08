@@ -18,26 +18,10 @@ interface ServiceList {
 
 const mockServicesList: ServiceList[] = [
   {
-    title: "My Bills",
-    icon: "clipboard list",
-    path: "/bills",
-  },
-  {
-    title: "My Requests",
-    icon: "users",
-    path: "/bills",
-  },
-  {
     title: "Medical Staff",
     icon: "user md",
     path: "/bills",
-  },
-  {
-    title: "Portor Service",
-    icon: "wheelchair",
-    path: "/bills",
-  },
-  {
+  },{
     title: "Order Food",
     icon: "food",
     path: "/food-menu",
@@ -48,18 +32,18 @@ const mockServicesList: ServiceList[] = [
     path: "/bills",
   },
   {
-    title: "Ambulance",
-    icon: "ambulance",
-    path: "/bills",
-  },
-  {
     title: "Contact Support",
     icon: "talk",
     path: "/bills",
   },
   {
-    title: "Feedback",
-    icon: "edit",
+    title: "Portor Service",
+    icon: "wheelchair",
+    path: "/bills",
+  },
+  {
+    title: "Ambulance",
+    icon: "ambulance",
     path: "/bills",
   },
   {
@@ -67,6 +51,21 @@ const mockServicesList: ServiceList[] = [
     icon: "hospital",
     path: "/bills",
   },
+  {
+    title: "My Bills",
+    icon: "clipboard list",
+    path: "/bills",
+  },
+  {
+    title: "My Requests",
+    icon: "users",
+    path: "/bills",
+  },
+  {
+    title: "Feedback",
+    icon: "edit",
+    path: "/bills",
+  }
 ];
 
 function ServicesList() {

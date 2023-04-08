@@ -5,6 +5,7 @@ interface Props {
     placeholder: string;
     fluid: boolean;
     search: boolean;
+    style: object;
     selection: boolean;
     options: any;
     onChange?: (event: React.SyntheticEvent<HTMLElement>, data: any) => void;
