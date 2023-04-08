@@ -45,13 +45,7 @@ const CInput: React.FC<Props> = ({
   label,
 }) => {
   // to do use of Input component from semantic-ui-react
-  return (
-    <input
-      {...register(label, { required })}
-      placeholder={placeholder}
-      value={"1"}
-    />
-  );
+  return <input {...register(label, { required })} placeholder={placeholder} />;
 };
 
 export default CInput;
