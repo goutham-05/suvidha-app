@@ -25,21 +25,21 @@ const FoodMenu = () => {
         </Grid.Row>
       </Grid>
       <Grid columns="6">
-        <Grid.Row>
-          <Grid.Column>
+        <Grid.Row >
+          <Grid.Column mobile={5} tablet={4} computer={4}>
             <Button positive>Veg</Button>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column mobile={5} tablet={4} computer={4}>
             <Button positive>Jain</Button>
           </Grid.Column>
-          <Grid.Column>
-            <Button positive>Positive Button</Button>
+          <Grid.Column mobile={5} tablet={4} computer={4}>
+            <Button positive>Button</Button>
           </Grid.Column>
-          <Grid.Column>
-            <Button positive>Positive Button</Button>
+          <Grid.Column mobile={5} tablet={4} computer={4}>
+            <Button positive>Button</Button>
           </Grid.Column>
-          <Grid.Column>
-            <Button positive>Positive Button</Button>
+          <Grid.Column mobile={5} tablet={4} computer={4}>
+            <Button positive>Button</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>

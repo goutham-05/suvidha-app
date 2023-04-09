@@ -17,9 +17,7 @@ const UserForm: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { status, user } = useAppSelector(
-    (state: RootState) => state.user
-  );
+  const { status, user } = useAppSelector((state: RootState) => state.user);
 
   const {
     register,
@@ -85,7 +83,19 @@ const UserForm: React.FC<Props> = () => {
           </Grid.Row>
           <Grid.Row stretched>
             <Grid.Column>
-              <Button type="submit" loading={false} color="red">
+              <Button
+                style={{
+                  borderRadius: "100px",
+                  padding: "16px",
+                  border: "1px solid gray",
+                  textAlign: "center",
+                  fontWeight: "lighter",
+                  fontSize: "1.4rem",
+                }}
+                type="submit"
+                loading={false}
+                color="red"
+              >
                 Get OTP
               </Button>
             </Grid.Column>

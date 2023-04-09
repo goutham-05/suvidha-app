@@ -2,21 +2,21 @@ import React from "react";
 import { Dropdown } from "semantic-ui-react";
 
 interface Props {
-    placeholder: string;
-    fluid: boolean;
-    search: boolean;
-    selection: boolean;
-    options: any;
-    onChange?: (event: React.SyntheticEvent<HTMLElement>, data: any) => void;
+  placeholder: string;
+  fluid: boolean;
+  search: boolean;
+  selection: boolean;
+  options: any;
+  onChange?: (event: React.SyntheticEvent<HTMLElement>, data: any) => void;
 }
 
 const DropDown: React.FC<Props> = ({
-    placeholder,
-    fluid,
-    search,
-    selection,
-    options,
-    onChange
+  placeholder,
+  fluid,
+  search,
+  selection,
+  options,
+  onChange,
 }) => {
   return (
     <Dropdown
