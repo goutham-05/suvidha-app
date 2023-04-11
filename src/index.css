@@ -4,7 +4,10 @@
   padding: 2rem;
   text-align: center;
   padding-bottom: 10rem;
-  background-image: url("./assets/backgroundImage.jpg");
+  /* background-image: url("./assets/backgroundImage.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: bottom right; */
 }
 button {
   border-radius: 100px !important;

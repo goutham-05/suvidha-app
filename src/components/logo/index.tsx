@@ -2,9 +2,19 @@ import { Icon, Image } from "semantic-ui-react";
 
 import logo from "../../assets/brandLogo.png";
 
-interface Props {}
+interface Props {
+  size?:
+    | "mini"
+    | "tiny"
+    | "small"
+    | "medium"
+    | "large"
+    | "big"
+    | "huge"
+    | "massive";
+}
 
-const BrandLogo: React.FC<Props> = () => {
+const BrandLogo: React.FC<Props> = ({ size = "massive" }) => {
   return (
     <Image
       style={{

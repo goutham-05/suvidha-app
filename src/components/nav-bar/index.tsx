@@ -1,8 +1,11 @@
 import React from "react";
-import { Header, Label, Segment } from "semantic-ui-react";
+import { Header, Label, Segment, Image } from "semantic-ui-react";
 import BrandLogo from "../logo";
+import { useNavigate, useNavigation } from "react-router-dom";
+import logo from "../../assets/brandLogo.png";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <Segment clearing>
       <Header as="h2" floated="right">
@@ -17,9 +20,12 @@ const Navbar = () => {
         <Label as="a" color="teal">
           Room: 9001-A
         </Label>
+        <Label onClick={() => navigate("/")} as="a" color="green">
+          Logout
+        </Label>
       </Header>
       <Header as="h2" floated="left">
-        <BrandLogo size="large" />
+        <Image size="massive" src={logo} circular />
       </Header>
     </Segment>
   );
