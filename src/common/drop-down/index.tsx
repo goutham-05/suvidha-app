@@ -27,6 +27,9 @@ const DropDown: React.FC<Props> = ({
       options={options}
       className="drop-down"
       onChange={onChange}
+      style={{
+        borderRadius: "25px",
+      }}
     />
   );
 };

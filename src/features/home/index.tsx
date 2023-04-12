@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import DropDown from "../../common/drop-down";
 import { languageOptions } from "../../config/languages";
+import BrandLogo from "../../components/logo";
 
 function Home() {
   const navigate = useNavigate();
@@ -19,7 +20,16 @@ function Home() {
 
   return (
     <>
-      <div>Home</div>
+      <BrandLogo
+        styles={{
+          width: "70%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          height: "50%",
+          marginTop: "10%",
+          marginBottom: "10%",
+        }}
+      />
       <DropDown
         fluid
         options={languageOptions}
