@@ -25,8 +25,6 @@ interface Props {
 }
 
 const BrandLogo: React.FC<Props> = ({ size = "massive", styles }) => {
-  console.log("styles", styles);
-
   return <Image style={styles ? styles : initialStyles} src={logo} circular />;
 };
 
