@@ -3,7 +3,7 @@ import { Route, Routes, useRoutes } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
 import { routes } from "./utilities/routes/routes";
-import Background from "./components/background";
+import BackgroundImage from "./components/background";
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       {element}
-      <Background/>
+      <BackgroundImage />
       <Footer />
     </div>
   );
