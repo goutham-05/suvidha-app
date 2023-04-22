@@ -6,12 +6,14 @@ import Bills from "../../features/bills";
 import { Link, RouteObject } from "react-router-dom";
 import NoMatch from "../../components/not-found";
 import FoodMenu from "../../features/food-menu";
+import QrCode from '../../components/qr-code'
 
 export const routes: RouteObject[] = [
   {
     path: "/",
     element: <Home />,
   },
+  {path: "/Qrcode", element: <QrCode /> },
   { path: "/login", element: <Login /> },
   {
     path: "/services",

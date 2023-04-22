@@ -5,6 +5,12 @@ import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox";
 
 const HouseKeepingModal = () => {
+
+
+  // const [services, setServices] = useState([])
+  // const onServicesSelect = (item) => {
+
+  // }
   return (
     <Grid>
       {[

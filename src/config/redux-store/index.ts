@@ -3,6 +3,7 @@ import {
   Middleware,
   AnyAction,
   Dispatch,
+  createSlice,
 } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
@@ -15,10 +16,27 @@ if (process.env.NODE_ENV === `development`) {
   middlewares.push(logger);
 }
 
+// const myData = createSlice({
+//   name: 'mySlice',
+//   initialState: {
+//     roomID: '',
+//     floorID: '',
+//   },
+//   reducers: {
+//     setData: (state, action) => {
+//       state.roomID = action.payload.roomID;
+//       state.floorID = action.payload.floorID;
+//     },
+//   },
+// });
+
 const store = configureStore({
   reducer: {
     user: authSlice.reducer,
   },
+  // reducer: {
+  //   myData: myData.reducer,
+  // },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .prepend

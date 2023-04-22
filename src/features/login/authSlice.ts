@@ -25,8 +25,8 @@ export const getOtp = createAsyncThunk(
   async (payload: Payload, { dispatch, rejectWithValue }) => {
     // dispatch and rejectWithValue are from thunkAPI which are destructured here
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/${payload.username}`
+      const response = await axios.post(
+        `http://10.20.100.179:4000/api/patient-login/${payload.username}`
       );
       return response.data;
     } catch (error: Error | any) {
