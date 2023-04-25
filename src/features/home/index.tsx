@@ -32,6 +32,8 @@ function Home() {
 
   useEffect(() => {
     const url = 'http://localhost:5173/1/block-1/floor-1/ns-1/room-1/bed-1';
+    const URL = window.location.href;
+    console.log(URL);
     window.history.replaceState(null, "New Page Title", url)
     const urlParams = '/1/block-1/floor-1/ns-1/room-1/bed-1'.split('/');
 

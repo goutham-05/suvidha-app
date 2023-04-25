@@ -8,7 +8,7 @@ import NoMatch from "../../components/not-found";
 import FoodMenu from "../../features/food-menu";
 import QrCode from '../../components/qr-code';
 import Admin from "../../Admin/Login";
-import AdminHome from "../../Admin/Home";
+import AdminHome from "../../Admin/AdminHome";
 
 export const routes: RouteObject[] = [
   {
