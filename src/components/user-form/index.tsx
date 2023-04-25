@@ -1,4 +1,8 @@
-import { useNavigate, unstable_HistoryRouter, useLocation} from "react-router-dom";
+import {
+  useNavigate,
+  unstable_HistoryRouter,
+  useLocation,
+} from "react-router-dom";
 import { Button, Grid, Form, Label } from "semantic-ui-react";
 
 import { useForm } from "react-hook-form";
@@ -15,12 +19,12 @@ interface Props {
   history: History;
 }
 
-const UserForm: React.FC<Props> = ({history}) => {
+const UserForm: React.FC<Props> = ({ history }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { status, user } = useAppSelector((state: RootState) => state.user);
-  // console.log(location);
+  const { status, data } = useAppSelector((state: RootState) => state.user);
+  console.log(location);
 
   const {
     register,
@@ -32,41 +36,53 @@ const UserForm: React.FC<Props> = ({history}) => {
     if (status === "succeeded") {
       navigate("/login", {
         state: {
-          user: user,
+          user: data,
         },
       });
     }
-    console.log('userDat', user);
+    console.log('userDat', data);
   }, [status]);
 
-  // const [mobileNumber, setmobileNumber] = useState('');
-  // const [admissionNum, setadmissionNum] = useState('');
+  // const [mobile_number, setmobile_number] = useState("");
+  // const [admissionno, setadmissionno] = useState("");
 
-  // const handlemobileNumberChange = (event: any) => {
-  //   setmobileNumber(event.target.value);
+  // const handlemobile_numberChange = (event: any) => {
+  //   setmobile_number(event.target.value);
   // };
 
-  // const handleadmissionNumChange = (event: any) => {
-  //   setadmissionNum(event.target.value);
+  // const handleadmissionnoChange = (event: any) => {
+  //   setadmissionno(event.target.value);
   // };
 
   // const handleSubmit = async (event: any) => {
   //   event.preventDefault();
   //   try {
-  //     const response = await axios.post('http://10.20.100.179:4000/api/patient-login', {
-  //       mobileNumber,
-  //       admissionNum
-  //     });
+  //     const response = await axios.post(
+  //       "http://10.20.100.179:4000/api/patient-login",
+  //       {
+  //         mobile_number,
+  //         admissionno,
+  //       }
+  //     );
+  //     localStorage.setItem('mobile_number', mobile_number);
   //     console.log(response.data);
+  //     localStorage.setItem("patient-data", JSON.stringify(response.data));
+  //     console.log('patient-Data', response.data );
+  //     navigate("/login", {
+  //       state: {
+  //         user: mobile_number,
+  //         admissionno: admissionno,
+  //       },
+  //     });
   //   } catch (error) {
   //     console.log(error);
   //   }
   // };
 
   const onSubmitForm = (data: any) => {
-    //localStorage.setItem('phone_email');
+    console.log('formData', data);
+    //localStorage.setItem('mobile_number', mobile_number);
     dispatch(getOtp(data));
-    console.log('Data', data);
   };
 
   return (
@@ -78,7 +94,7 @@ const UserForm: React.FC<Props> = ({history}) => {
               <CInput
                 placeholder="Mobile Number / Email"
                 register={register}
-                label="mobileNumber"
+                label="mobile_number"
                 required={true}
                 size="large"
                 error={errors["Mobile Number / Email"] ? true : false}
@@ -86,7 +102,7 @@ const UserForm: React.FC<Props> = ({history}) => {
                 loading={false}
                 //style={{background: 'red'}}
               />
-              {errors.mobileNumber?.type === "required" && (
+              {errors.mobile_number?.type === "required" && (
                 <Label color="orange" pointing prompt>
                   Mobile Number / Email is required
                 </Label>
@@ -96,7 +112,7 @@ const UserForm: React.FC<Props> = ({history}) => {
           <Grid.Row stretched>
             <Grid.Column style={{color: 'red'}}>
               <CInput
-                label="ipNumber"
+                label="admissionno"
                 placeholder="IP Number"
                 register={register}
                 required={true}
@@ -135,19 +151,27 @@ const UserForm: React.FC<Props> = ({history}) => {
         </Grid>
       </Form>
     </>
-  //   <div>
-  //   <form onSubmit={handleSubmit}>
-  //     <label>
-  //       mobileNumber:
-  //       <input type="text" value={mobileNumber} onChange={handlemobileNumberChange} />
-  //     </label>
-  //     <label>
-  //       admissionNum:
-  //       <input type="admissionNum" value={admissionNum} onChange={handleadmissionNumChange} />
-  //     </label>
-  //     <button type="submit">Login</button>
-  //   </form>
-  // </div>
+    // <div>
+    //   <form onSubmit={handleSubmit}>
+    //     <label>
+    //       mobile_number:
+    //       <input
+    //         type="text"
+    //         value={mobile_number}
+    //         onChange={handlemobile_numberChange}
+    //       />
+    //     </label>
+    //     <label>
+    //       admissionno:
+    //       <input
+    //         type="admissionno"
+    //         value={admissionno}
+    //         onChange={handleadmissionnoChange}
+    //       />
+    //     </label>
+    //     <button type="submit">Login</button>
+    //   </form>
+    // </div>
   );
 };
 
