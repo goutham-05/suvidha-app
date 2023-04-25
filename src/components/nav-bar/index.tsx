@@ -7,8 +7,11 @@ import "./index.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const floorNO = localStorage.getItem('floorNO');
-  
+
+  const floorNO = localStorage.getItem('FloorNo');
+  // const patientName: string | null = localStorage.getItem('patient-data');
+  // const patientname = JSON.parse(patientName).data.patientname;
+
   return (
     <div className="ui inverted segment" style={{ background: "#b1dfdf", height: 100, width:410, marginLeft: -30, marginTop: -30}}>
       <div className="ui inverted secondary menu">
@@ -17,7 +20,7 @@ const Navbar = () => {
         </div>
         <div className="data-container">
         <div className='patientData'>
-                <p>Sudha Kumar<br/><p className='mobile-paragraph'>IP: 123456789102</p>Room: <span>{floorNO}</span></p>
+                <p>Kumar<br/><p className='mobile-paragraph'>IP: 123456789102</p>Room: <span>{floorNO}</span></p>
                 </div>
         </div>
       </div>

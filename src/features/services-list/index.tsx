@@ -21,6 +21,8 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import axios from "axios";
+import { setServers } from "dns";
 
 interface ServiceList {
   title: string;
@@ -92,7 +94,23 @@ function ServicesList() {
 
   const naviage = useNavigate();
 
-  const onClick = useCallback((title: string, path: string) => {
+  // const getServices = async () => {
+  //   var response = await axios.post('http://10.20.100.179:4000/api/get-service-data-bytype', {
+  //     "service_type":"1",
+  //   }, {
+  //     headers: {
+  //       'Authorization': `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjoiOTAzMDc4OTY0MCIsImFkbWlzc2lvbm5vIjoiSVAyMzI0MDAyMDQ0IiwiaWF0IjoxNjgyMzIzMTQ0LCJleHAiOjE2ODIzMjY3NDR9.fGzOXxlWL6_VtR5mCxu_xBYDxc_mERkIpxZqZ5xmOBo'}` 
+  //      } 
+  //   })
+    
+  //   console.log('services-available', response.data);
+  // }
+
+  // useEffect(() => {
+  //   getServices();
+  // })
+
+  const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);
     if (!findService) {
       naviage(path);
@@ -109,19 +127,6 @@ function ServicesList() {
   }, []);
 
   const [showModal, setShowModal] = useState(false);
-
-  // const {roomID, floorID } =   useAppSelector((state) => state.myData);
-
-  // console.log(roomID);
-
-  // const handleOpenModal = () => {
-  //     //naviage("/Ambulance");
-  //    //setShowModal(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setShowModal(false);
-  // };
 
   return (
     <>
@@ -154,7 +159,7 @@ function ServicesList() {
       <div>
         {showModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999 }}>
-          <div style={{ width: '80%',position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#b1dfdf', padding: '20px', borderRadius: '30px'}}>
+          <div style={{ width: '80%',position: 'absolute', top: '50%', left: '50%', transform: 'translate(50%, 50%)', backgroundColor: '#b1dfdf', padding: '20px', borderRadius: '30px'}}>
             <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1px'}}>
             <div style={{background: '#007cb0', width: '70%', borderRadius: '10px', marginLeft: '45px'}}> 
             <h2 style={{color: 'white', marginTop: '8px', fontSize: '20px'}}>Ambulance</h2>
@@ -176,6 +181,7 @@ function ServicesList() {
         </div>
       )}
         </div>
+       
     </>
   );
 }

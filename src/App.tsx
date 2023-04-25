@@ -4,7 +4,6 @@ import "./App.css";
 import Footer from "./components/footer";
 import { routes } from "./utilities/routes/routes";
 import BackgroundImage from "./components/background";
-import Ambulance from "./components/ambulance-modal";
 
 function App() {
 

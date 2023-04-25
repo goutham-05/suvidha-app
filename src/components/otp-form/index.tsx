@@ -24,6 +24,7 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
   const { state } = useLocation();
   const dispatch = useAppDispatch();
 
+  const getMobile = localStorage.getItem('Login');
 
   const {
     register,
@@ -31,9 +32,6 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-
-  })
 
   const [mobile, setMobile] = useState('');
   const [ipNumber, setIpNumber] = useState('');
@@ -43,10 +41,15 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
     console.log('OTP-Screen',data);
   };
 
+  // TODO
+  // 1.fetch user data from redux store using useAppSelector 
+  // 2.create object with otp api params and values along with token value
+  // 3.In slice file create object only with otp 
+
   return (
     <>
       <Message style={{marginTop: "-80px", border: 'none'}}>
-        <Message.Header style={{color: '#374F4F'}}>Enter OTP sent to {localStorage.getItem('phone_email')}</Message.Header>
+        <Message.Header style={{color: '#374F4F'}}>Enter OTP sent to {getMobile}</Message.Header>
         <p style={{color: '#374F4F'}}>Or</p> <Message.Header style={{color: '#374F4F'}}>Enter OTP sent to nikhil@gmail.com</Message.Header>
       </Message>
       <Form onSubmit={handleSubmit(onSubmitForm)}>

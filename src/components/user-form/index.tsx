@@ -40,49 +40,12 @@ const UserForm: React.FC<Props> = ({ history }) => {
         },
       });
     }
-    console.log('userDat', data);
   }, [status]);
-
-  // const [mobile_number, setmobile_number] = useState("");
-  // const [admissionno, setadmissionno] = useState("");
-
-  // const handlemobile_numberChange = (event: any) => {
-  //   setmobile_number(event.target.value);
-  // };
-
-  // const handleadmissionnoChange = (event: any) => {
-  //   setadmissionno(event.target.value);
-  // };
-
-  // const handleSubmit = async (event: any) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "http://10.20.100.179:4000/api/patient-login",
-  //       {
-  //         mobile_number,
-  //         admissionno,
-  //       }
-  //     );
-  //     localStorage.setItem('mobile_number', mobile_number);
-  //     console.log(response.data);
-  //     localStorage.setItem("patient-data", JSON.stringify(response.data));
-  //     console.log('patient-Data', response.data );
-  //     navigate("/login", {
-  //       state: {
-  //         user: mobile_number,
-  //         admissionno: admissionno,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const onSubmitForm = (data: any) => {
     console.log('formData', data);
-    //localStorage.setItem('mobile_number', mobile_number);
     dispatch(getOtp(data));
+    localStorage.setItem('Login', JSON.stringify(data.mobile_number));
   };
 
   return (

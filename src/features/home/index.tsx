@@ -34,19 +34,18 @@ function Home() {
     const url = 'http://localhost:5173/1/block-1/floor-1/ns-1/room-1/bed-1';
     window.history.replaceState(null, "New Page Title", url)
     const urlParams = '/1/block-1/floor-1/ns-1/room-1/bed-1'.split('/');
-    const unit = urlParams[0];
-    const blockNO = urlParams[1];
-    const  floorNO = urlParams[2];
-    const  nsNO = urlParams[3];
-    const  roomNO = urlParams[4];
-    const  bedNO = urlParams[6];
-    localStorage.setItem('Unit', unit);
-    localStorage.setItem('blockNO', blockNO);
-    localStorage.setItem('floorNO', floorNO);
-    localStorage.setItem('nsNO', nsNO);
-    localStorage.setItem('roomNO', roomNO);
-    localStorage.setItem('bedNO', bedNO);
-    console.log(blockNO, floorNO, nsNO, roomNO, bedNO);
+
+    const myObject = { 
+      blockNO: urlParams[1],
+      floorNO: urlParams[2],
+      nsNO: urlParams[3],
+      roomNO: urlParams[4],
+      bedNO: urlParams[5]
+    };
+    
+    localStorage.setItem('Data', JSON.stringify(myObject));
+    localStorage.setItem('FloorNo', JSON.stringify(myObject.floorNO));
+
   }, [])
 
 

@@ -50,25 +50,13 @@ const DropDown: React.FC<Props> = ({
   }
 
   return (
-    // <Dropdown
-    //   placeholder={placeholder}
-    //   fluid={fluid}
-    //   search={search}
-    //   selection={selection}
-    //   options={options}
-    //   className="drop-down"
-    //   onChange={onChange}
-    //   style={{
-    //     borderRadius: "25px",
-    //   }}
-    // />
     <div className="dropdown" onClick={onSubmit}>
       <div className="dropdown-btn">{selected}
       <span className="fas fa-caret-down"></span>
       </div>
       { isDropDownClicked && (
       <div className="dropdown-content">
-        {languagesData.map((item) => {
+        {languagesData.map((item: any) => {
           return (
             <div className="dropdown-item" onClick={(e) => {setSelected(item.value); setIsDropDownClicked(false)}}>
               {item.value}
