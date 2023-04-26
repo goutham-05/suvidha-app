@@ -9,6 +9,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import authSlice from "../../features/login/authSlice";
 import logger from "redux-logger";
+import serviceSlice from "../../features/services-list/serviceSlice";
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -19,6 +20,7 @@ if (process.env.NODE_ENV === `development`) {
 const store = configureStore({
   reducer: {
     user: authSlice.reducer,
+    services: serviceSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
