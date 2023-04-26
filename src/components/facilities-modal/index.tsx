@@ -16,7 +16,7 @@ const FacilitiesModal = () => {
       },
       {
         headers: {
-          Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjoiOTAzMDc4OTY0MCIsImFkbWlzc2lvbm5vIjoiSVAyMzI0MDAyMDQ0IiwiaWF0IjoxNjgyMzMwMDc5LCJleHAiOjE2ODIzMzM2Nzl9.JK50M244NZn7n0X5TWaavanncp5tp8kZPppYwXbhkHk"}`,
+          Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjoiOTAzMDc4OTY0MCIsImFkbWlzc2lvbm5vIjoiSVAyMzI0MDAyMDQ0IiwiaWF0IjoxNjgyNTA1ODU3LCJleHAiOjE2ODI1MDk0NTd9.t8C9o1Rgdqv7SfUS6PEKc5wlF05bxz9v_cFqOFgENlY"}`,
         },
       }
       

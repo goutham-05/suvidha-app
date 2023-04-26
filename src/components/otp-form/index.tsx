@@ -41,11 +41,6 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
     console.log('OTP-Screen',data);
   };
 
-  // TODO
-  // 1.fetch user data from redux store using useAppSelector 
-  // 2.create object with otp api params and values along with token value
-  // 3.In slice file create object only with otp 
-
   return (
     <>
       <Message style={{marginTop: "-80px", border: 'none'}}>
@@ -76,7 +71,7 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
 
           <Grid.Row stretched>
             <Grid.Column>
-              <Button type="submit" loading={false} style={{background: '#E41B47'}}>
+              <Button type="submit" loading={false} style={{background: '#E41B47', width: '100%'}}>
                 <h1 style={{color: 'white', fontSize: '15px'}}>Submit</h1>
               </Button>
             </Grid.Column>

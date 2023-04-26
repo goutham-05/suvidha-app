@@ -10,6 +10,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import BackgroundImage from "../../components/background";
 
 function Home() {
   const {floorID, roomID} = useParams();
@@ -70,6 +71,7 @@ function Home() {
         selection
         onChange={onChangeLanguage}
       />
+      <BackgroundImage />
     </>
   );
 }

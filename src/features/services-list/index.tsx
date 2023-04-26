@@ -23,6 +23,8 @@ import {
 } from "../../config/redux-store";
 import axios from "axios";
 import { setServers } from "dns";
+import BackgroundImage from "../../components/background";
+import Footer from "../../components/footer";
 
 interface ServiceList {
   title: string;
@@ -90,7 +92,8 @@ function ServicesList() {
 
   const [modalConent, setModalContent] = React.useState<JSX.Element>();
 
-  const [service, setService] = useState<ServiceInfo>();
+  const [service, setService] = useState<ServiceInfo>([]);
+
 
   const naviage = useNavigate();
 
@@ -105,10 +108,6 @@ function ServicesList() {
     
   //   console.log('services-available', response.data);
   // }
-
-  // useEffect(() => {
-  //   getServices();
-  // })
 
   const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);
@@ -181,7 +180,8 @@ function ServicesList() {
         </div>
       )}
         </div>
-       
+       <BackgroundImage />
+       <Footer />
     </>
   );
 }

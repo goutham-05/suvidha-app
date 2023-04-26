@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "semantic-ui-react";
-import { useNavigate , useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./index.css";
 
 const languagesData = [
@@ -24,7 +24,6 @@ interface Props {
   onChange?: (event: React.SyntheticEvent<HTMLElement>, data: any) => void;
 }
 
-
 const DropDown: React.FC<Props> = ({
   placeholder,
   fluid,
@@ -35,11 +34,11 @@ const DropDown: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
-  const [selected, setSelected] = useState('Select Language');
+  const [selected, setSelected] = useState("Select Language");
 
   const onSubmit = () => {
-    setIsDropDownClicked(!isDropDownClicked)
-    if ( isDropDownClicked === true) {
+    setIsDropDownClicked(!isDropDownClicked);
+    if (isDropDownClicked === true) {
       navigate("/login", {
         state: {
           selectedLanguage: selected,
@@ -47,25 +46,32 @@ const DropDown: React.FC<Props> = ({
       });
       console.log(selected);
     }
-  }
+  };
 
   return (
     <div className="dropdown" onClick={onSubmit}>
-      <div className="dropdown-btn">{selected}
-      <span className="fas fa-caret-down"></span>
+      <div className="dropdown-btn">
+        {selected}
+        <span className="fas fa-caret-down"></span>
       </div>
-      { isDropDownClicked && (
-      <div className="dropdown-content">
-        {languagesData.map((item: any) => {
-          return (
-            <div className="dropdown-item" onClick={(e) => {setSelected(item.value); setIsDropDownClicked(false)}}>
-              {item.value}
-              <div className="border-line" />
-            </div>
-          );
-        })}
-      </div>
-  )}
+      {isDropDownClicked && (
+        <div className="dropdown-content">
+          {languagesData.map((item: any) => {
+            return (
+              <div
+                className="dropdown-item"
+                onClick={(e) => {
+                  setSelected(item.value);
+                  setIsDropDownClicked(false);
+                }}
+              >
+                {item.value}
+                <div className="border-line" />
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

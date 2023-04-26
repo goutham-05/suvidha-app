@@ -9,6 +9,7 @@ import FoodMenu from "../../features/food-menu";
 import QrCode from '../../components/qr-code';
 import Admin from "../../Admin/Login";
 import AdminHome from "../../Admin/AdminHome";
+import QrCodeGeneration from "../../Admin/components/QrCodeForm";
 
 export const routes: RouteObject[] = [
   {
@@ -36,5 +37,9 @@ export const routes: RouteObject[] = [
   {
     path: "/AdminHome",
     element: <AdminHome />
+  },
+  {
+    path: "/qr-code-generation",
+    element: <QrCodeGeneration />
   }
 ];

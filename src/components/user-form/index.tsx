@@ -15,6 +15,8 @@ import {
 } from "../../config/redux-store";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import BackgroundImage from "../background";
+
 interface Props {
   history: History;
 }
@@ -43,6 +45,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
   }, [status]);
 
   const onSubmitForm = (data: any) => {
+    
     console.log('formData', data);
     dispatch(getOtp(data));
     localStorage.setItem('Login', JSON.stringify(data.mobile_number));
@@ -97,11 +100,11 @@ const UserForm: React.FC<Props> = ({ history }) => {
                 style={{
                   borderRadius: "100px",
                   padding: "10px",
-                  border: "1px solid gray",
                   textAlign: "center",
                   fontWeight: "lighter",
                   fontSize: "1.4rem",
                   background: '#E41B47',
+                  width: '100%',
                 }}
                 type="submit"
                 loading={false}
@@ -113,28 +116,8 @@ const UserForm: React.FC<Props> = ({ history }) => {
           </Grid.Row>
         </Grid>
       </Form>
+      <BackgroundImage />
     </>
-    // <div>
-    //   <form onSubmit={handleSubmit}>
-    //     <label>
-    //       mobile_number:
-    //       <input
-    //         type="text"
-    //         value={mobile_number}
-    //         onChange={handlemobile_numberChange}
-    //       />
-    //     </label>
-    //     <label>
-    //       admissionno:
-    //       <input
-    //         type="admissionno"
-    //         value={admissionno}
-    //         onChange={handleadmissionnoChange}
-    //       />
-    //     </label>
-    //     <button type="submit">Login</button>
-    //   </form>
-    // </div>
   );
 };
 

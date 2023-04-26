@@ -1,14 +1,11 @@
 import React from "react";
 import Logo from "../../../assets/Logo.png";
-import './index.css';
+import "./index.css";
 function TopBar() {
   return (
     <div className="topbar">
       <div className="topbarWrapper">
-        <img src={Logo} width={'8%'}/>
-        {/* <div className="topLeft">
-          <img src={Logo} />
-        </div> */}
+        <img src={Logo} width={"8%"} />
         <div className="topRight">
           <div className="topbarIconContainer">
             <span className="topIconBadge">AdminName</span>
