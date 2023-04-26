@@ -26,9 +26,9 @@ function QrCodeGeneration() {
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
   const [isFloorDropDownClicked, setFloorDropDownClicked] = useState(false);
   const [isBlockDropDownClicked, setBlockDropDownClicked] = useState(false);
-  const [selected, setSelected] = useState("Select Unit");
-  const [block, setBloack] = useState("Select Block");
-  const [floor, setFloor] = useState("Select floor");
+  const [unitSelected, setUnitSelected] = useState('Select Unit');
+  const [blockSelected, setBloack] = useState('Select Block');
+  const [floorSelected, setFloorSelected] = useState('Select floor');
 
   const onSubmit = () => {
     setIsDropDownClicked(!isDropDownClicked);
@@ -39,7 +39,7 @@ function QrCodeGeneration() {
     <div style={{marginTop: '150px'}}>
       <div className="dropdown" onClick={onSubmit}>
         <div className="dropdown-btn">
-          {selected}
+          {unitSelected}
           <span className="fas fa-caret-down"></span>
         </div>
         {isDropDownClicked && (
@@ -49,7 +49,7 @@ function QrCodeGeneration() {
                 <div
                   className="dropdown-item"
                   onClick={(e) => {
-                    setSelected(item.value);
+                    setUnitSelected(item.value);
                     setIsDropDownClicked(false);
                   }}
                 >
@@ -63,7 +63,7 @@ function QrCodeGeneration() {
       </div>
       <div className="dropdown" onClick={onSubmit}>
         <div className="dropdown-btn">
-          {block}
+          {blockSelected}
           <span className="fas fa-caret-down"></span>
         </div>
         {isDropDownClicked && (
@@ -73,7 +73,7 @@ function QrCodeGeneration() {
                 <div
                   className="dropdown-item"
                   onClick={(e) => {
-                    setSelected(item.value);
+                    setUnitSelected(item.value);
                     setIsDropDownClicked(false);
                   }}
                 >
@@ -87,7 +87,7 @@ function QrCodeGeneration() {
       </div>
       <div className="dropdown" onClick={onSubmit}>
         <div className="dropdown-btn">
-          {floor}
+          {floorSelected}
           <span className="fas fa-caret-down"></span>
         </div>
         {isFloorDropDownClicked && (
@@ -97,7 +97,7 @@ function QrCodeGeneration() {
                 <div
                   className="dropdown-item"
                   onClick={(e) => {
-                    setFloor(item.value);
+                    setFloorSelected(item.value);
                     setIsDropDownClicked(false);
                   }}
                 >

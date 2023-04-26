@@ -34,24 +34,23 @@ const DropDown: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
-  const [selected, setSelected] = useState("Select Language");
+  const [languageSelected, setLanguageSelected] = useState("Select Language");
 
   const onSubmit = () => {
     setIsDropDownClicked(!isDropDownClicked);
-    if (isDropDownClicked === true) {
+    if (isDropDownClicked) {
       navigate("/login", {
         state: {
-          selectedLanguage: selected,
+          selectedLanguage: languageSelected,
         },
       });
-      console.log(selected);
     }
   };
 
   return (
     <div className="dropdown" onClick={onSubmit}>
       <div className="dropdown-btn">
-        {selected}
+        {languageSelected}
         <span className="fas fa-caret-down"></span>
       </div>
       {isDropDownClicked && (
@@ -61,7 +60,7 @@ const DropDown: React.FC<Props> = ({
               <div
                 className="dropdown-item"
                 onClick={(e) => {
-                  setSelected(item.value);
+                  setLanguageSelected(item.value);
                   setIsDropDownClicked(false);
                 }}
               >

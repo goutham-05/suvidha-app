@@ -38,7 +38,6 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
 
   const onSubmitForm = (data: any) => {
     onSubmit(data);
-    console.log('OTP-Screen',data);
   };
 
   return (
