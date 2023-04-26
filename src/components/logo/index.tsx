@@ -1,13 +1,12 @@
 import { Icon, Image } from "semantic-ui-react";
 
-import logo from "../../assets/brandLogo.png";
+import logo from "../../assets/Logo.png";
 
 const initialStyles = {
-  width: "70%",
+  width: "40%",
   marginLeft: "auto",
   marginRight: "auto",
-  height: "50%",
-  marginTop: "10%",
+  height: "40%",
   marginBottom: "25%",
 };
 

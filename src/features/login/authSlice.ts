@@ -1,33 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { delay } from "lodash";
 import axios from "axios";
+import { useEffect } from "react";
+
 interface State {
-  user: any;
+  data: any;
   status: "idle" | "loading" | "failed" | "succeeded";
   error: string;
   message: string;
 }
 
 const initialState: State = {
-  user: null,
+  data: null,
   status: "idle",
   error: "",
   message: "",
 };
 
 interface Payload {
-  username: string;
-  ipNumber: string;
+  mobile_number: number;
+  admissionno: string;
 }
 
 export const getOtp = createAsyncThunk(
   "auth/getOtp",
   async (payload: Payload, { dispatch, rejectWithValue }) => {
     // dispatch and rejectWithValue are from thunkAPI which are destructured here
+    console.log(payload);
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/${payload.username}`
+      const response = await axios.post(
+        `http://10.20.100.179:4000/api/patient-login`,payload
       );
+      console.log(response.data);
       return response.data;
     } catch (error: Error | any) {
       return rejectWithValue({
@@ -41,12 +45,13 @@ export const getOtp = createAsyncThunk(
   }
 );
 
+
 export const validateOtp = createAsyncThunk(
   "auth/validateOtp",
   async (payload: Payload, thunkAPI) => {
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/1`
+      const response = await axios.post(
+        `http://10.20.100.179:4000/api/validate-otp`, payload
       );
 
       return response.data;
@@ -74,7 +79,7 @@ const authSlice = createSlice({
     },
     [getOtp.fulfilled.type]: (state, action) => {
       state.status = "succeeded";
-      state.user = action.payload;
+      state.data = action.payload.data;
       state.message = "OTP sent successfully";
     },
     [getOtp.rejected.type]: (state, action) => {

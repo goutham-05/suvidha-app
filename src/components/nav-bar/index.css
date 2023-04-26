@@ -1,0 +1,63 @@
+.NavBar{
+    background:transparent;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #b1dfdf;
+}
+
+.data-container{
+    width: 300px;
+    height: 20px;
+    margin-left: 100px;
+    
+}
+
+.data-container p{
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.patientData{
+    margin-top: 5px;
+    margin-left: 10px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.patientData p{
+    color: black;
+    margin-bottom: 2px;
+}
+
+ .wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 100px 100px 100px 100px;
+    margin-left: 70px;
+  }
+  .item {
+    background-color: #238fb8;
+    border: 1px solid black;
+    margin-top: 10px;
+    border-radius: 30px;
+    width: 120px;
+    height: 80px;
+    border: none;
+  }
+
+  .item h1{
+    font-size: 12px;
+    color: white;
+    margin-top: 10px;
+  }
+
+  .footer p{
+    color : 'red';
+    margin-top: 30px;
+}

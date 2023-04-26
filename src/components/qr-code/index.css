@@ -1,0 +1,29 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: #fff;
+  }
+  
+  .navbar-logo {
+    width: 100px;
+    height: 80px;
+  }
+  
+  .navbar-links {
+    text-align: right;
+  }
+  
+  .navbar-links li {
+    margin-right: 2px;
+  }
+  
+  .navbar-links li:last-child {
+    margin-right: 0;
+  }
+  
+  .navbar-links li a {
+    color: black;
+    text-decoration: none;
+  }

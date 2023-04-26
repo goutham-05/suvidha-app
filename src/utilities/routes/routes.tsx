@@ -6,12 +6,17 @@ import Bills from "../../features/bills";
 import { Link, RouteObject } from "react-router-dom";
 import NoMatch from "../../components/not-found";
 import FoodMenu from "../../features/food-menu";
+import QrCode from '../../components/qr-code';
+import Admin from "../../Admin/Login";
+import AdminHome from "../../Admin/AdminHome";
+import QrCodeGeneration from "../../Admin/components/QrCodeForm";
 
 export const routes: RouteObject[] = [
   {
     path: "/",
     element: <Home />,
   },
+  {path: "/Qrcode", element: <QrCode /> },
   { path: "/login", element: <Login /> },
   {
     path: "/services",
@@ -25,4 +30,16 @@ export const routes: RouteObject[] = [
     element: <FoodMenu />,
   },
   { path: "*", element: <NoMatch /> },
+  {
+    path: "/Admin",
+    element: <Admin />
+  },
+  {
+    path: "/AdminHome",
+    element: <AdminHome />
+  },
+  {
+    path: "/qr-code-generation",
+    element: <QrCodeGeneration />
+  }
 ];

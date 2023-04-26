@@ -1,9 +1,35 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Checkbox from "semantic-ui-react/dist/commonjs/modules/Checkbox";
 
 const FacilitiesModal = () => {
+
+  const [facilitiesAvailable, setFacilitiesAvailable] = useState([]);
+
+  const getServices = async () => {
+    var response = await axios.post(
+      "http://10.20.100.179:4000/api/get-service-data-bytype",
+      {
+        service_type: "1",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjoiOTAzMDc4OTY0MCIsImFkbWlzc2lvbm5vIjoiSVAyMzI0MDAyMDQ0IiwiaWF0IjoxNjgyNTA1ODU3LCJleHAiOjE2ODI1MDk0NTd9.t8C9o1Rgdqv7SfUS6PEKc5wlF05bxz9v_cFqOFgENlY"}`,
+        },
+      }
+      
+    );
+    console.log("Response", response.data.data);
+    setFacilitiesAvailable(response.data.data);
+    console.log('RESPONSE', facilitiesAvailable);
+  };
+
+  useEffect(() => {
+    getServices();
+  }, []);
+
   return (
     <Grid>
       {[

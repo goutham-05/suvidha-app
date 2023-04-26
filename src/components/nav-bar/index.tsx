@@ -2,32 +2,29 @@ import React from "react";
 import { Header, Label, Segment, Image } from "semantic-ui-react";
 import BrandLogo from "../logo";
 import { useNavigate, useNavigation } from "react-router-dom";
-import logo from "../../assets/brandLogo.png";
+import logo from "../../assets/Logo.png";
+import "./index.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const floorNO = localStorage.getItem('FloorNo');
+  // const patientName: string | null = localStorage.getItem('patient-data');
+  // const patientname = JSON.parse(patientName).data.patientname;
+
   return (
-    <Segment clearing>
-      <Header as="h2" floated="right">
-        <Label as="a" color="blue">
-          Sudha Kumar
-        </Label>
-        <br />
-        <Label as="a" color="red">
-          IP: 125487524468
-        </Label>
-        <br />
-        <Label as="a" color="teal">
-          Room: 9001-A
-        </Label>
-        <Label onClick={() => navigate("/")} as="a" color="green">
-          Logout
-        </Label>
-      </Header>
-      <Header as="h2" floated="left">
-        <Image size="massive" src={logo} circular />
-      </Header>
-    </Segment>
+    <div className="ui inverted segment" style={{ background: "#b1dfdf", height: 100, width:410, marginLeft: -30, marginTop: -30}}>
+      <div className="ui inverted secondary menu">
+        <div className="Logo-container">
+          <img src={logo} style={{marginTop: '-12px', width: '100px', height: '100px'}}/>
+        </div>
+        <div className="data-container">
+        <div className='patientData'>
+                <p>Kumar<br/><p className='mobile-paragraph'>IP: 123456789102</p>Room: <span>{floorNO}</span></p>
+                </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
