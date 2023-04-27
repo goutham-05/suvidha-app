@@ -23,7 +23,7 @@
   width: 74%;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
-  
+  margin-top: 5px;
 }
 
 .dropdown .dropdown-content .dropdown-item{

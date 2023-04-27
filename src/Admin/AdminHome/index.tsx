@@ -1,15 +1,12 @@
 import React from "react";
-import TopBar from "../common/TopBar";
-import SideBar from "../common/SideBar";
-import MainBar from "../common/MainBar";
 import "./index.css";
+import Sidebar from "../components/Sidebar";
+
 function AdminHome() {
   return (
     <div>
-      <TopBar />
-      <div className="flex-container">
-        <SideBar />
-        <MainBar />
+      <div className="nav-bar">
+        <h1>Nav Bar</h1>
       </div>
     </div>
   );

@@ -1,10 +1,9 @@
 import React from "react";
-import styles from "./index.module.css"
-import backgroundImage from "../../assets/backgroundImage.jpg"
-
+import styles from "./index.module.css";
+import BgImg from "../../assets/bgimg.png";
 const BackgroundImage = () => {
     return (
-        <img className={styles.bottomImage} src={backgroundImage} alt={""}></img>
+        <img className={styles.bottomImage} src={BgImg} alt={""}></img>
     )
 }
 

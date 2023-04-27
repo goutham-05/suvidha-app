@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Form() {
+function Sidebar(props) {
     return (
         <div>
-            <h1>Form</h1>
+            <h1>Side</h1>
         </div>
     );
 }
 
-export default Form;
+export default Sidebar;

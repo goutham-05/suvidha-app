@@ -46,7 +46,7 @@ const FacilitiesModal = () => {
             <span
               style={{
                 padding: "10px",
-                fontSize: "26px",
+                fontSize: "22px",
                 fontWeight: "bold",
               }}
             >

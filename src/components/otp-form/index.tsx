@@ -14,6 +14,7 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import { useEffect, useState } from "react";
+import BackgroundImage from "../background";
 
 
 interface Props {
@@ -77,6 +78,7 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
           </Grid.Row>
         </Grid>
       </Form>
+      <BackgroundImage />
     </>
   );
 };

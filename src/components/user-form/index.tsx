@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BackgroundImage from "../background";
+import {useAuth} from "../../hooks/useAuth";
 
 interface Props {
   history: History;
@@ -45,7 +46,6 @@ const UserForm: React.FC<Props> = ({ history }) => {
   }, [status]);
 
   const onSubmitForm = (data: any) => {
-    
     console.log('formData', data);
     dispatch(getOtp(data));
     localStorage.setItem('Login', JSON.stringify(data.mobile_number));

@@ -25,3 +25,10 @@
   background-color: lightblue;
   border-radius: 10px;
 }
+
+.nav-bar {
+  width: 1300px;
+  height: 20px;
+  background-color: red;
+  margin-left: -10px;
+}
