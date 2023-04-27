@@ -1,8 +1,4 @@
-import {
-  useNavigate,
-  unstable_HistoryRouter,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Grid, Form, Label } from "semantic-ui-react";
 
 import { useForm } from "react-hook-form";
@@ -13,20 +9,19 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import BackgroundImage from "../background";
 
 interface Props {
-  history: History;
+  history?: History;
 }
 
 const UserForm: React.FC<Props> = ({ history }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { status, data } = useAppSelector((state: RootState) => state.user);
-  console.log(location);
+  const { status, data: userData } = useAppSelector(
+    (state: RootState) => state.user
+  );
 
   const {
     register,
@@ -38,23 +33,21 @@ const UserForm: React.FC<Props> = ({ history }) => {
     if (status === "succeeded") {
       navigate("/login", {
         state: {
-          user: data,
+          user: userData,
         },
       });
     }
   }, [status]);
 
   const onSubmitForm = (data: any) => {
-    
-    console.log('formData', data);
     dispatch(getOtp(data));
-    localStorage.setItem('Login', JSON.stringify(data.mobile_number));
+    localStorage.setItem("Login", JSON.stringify(data.mobile_number));
   };
 
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmitForm)}>
-        <Grid columns="equal" style={{marginTop: -80}}>
+        <Grid columns="equal" style={{ marginTop: -80 }}>
           <Grid.Row stretched>
             <Grid.Column>
               <CInput
@@ -76,7 +69,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row stretched>
-            <Grid.Column style={{color: 'red'}}>
+            <Grid.Column style={{ color: "red" }}>
               <CInput
                 label="admissionno"
                 placeholder="IP Number"
@@ -103,8 +96,8 @@ const UserForm: React.FC<Props> = ({ history }) => {
                   textAlign: "center",
                   fontWeight: "lighter",
                   fontSize: "1.4rem",
-                  background: '#E41B47',
-                  width: '100%',
+                  background: "#E41B47",
+                  width: "100%",
                 }}
                 type="submit"
                 loading={false}

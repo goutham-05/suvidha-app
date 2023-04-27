@@ -1,11 +1,11 @@
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import {
   Button,
   Grid, Form,
   Message,
   Label
 } from "semantic-ui-react";
-import { getOtp } from "../../features/login/authSlice";
+import { getOtp, validateOtp } from "../../features/login/authSlice";
 import { useForm } from "react-hook-form";
 import CInput from "../../common/input";
 import {
@@ -15,14 +15,15 @@ import {
 } from "../../config/redux-store";
 import { useEffect, useState } from "react";
 
-
 interface Props {
-  onSubmit: (data: any) => void;
 }
 
-const OtpForm: React.FC<Props> = ({ onSubmit }) => {
+const OtpForm: React.FC<Props> = ({ }) => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { status, otpSuccess , data: userData } = useAppSelector((state: RootState) => state.user);
 
   const getMobile = localStorage.getItem('Login');
 
@@ -36,8 +37,23 @@ const OtpForm: React.FC<Props> = ({ onSubmit }) => {
   const [mobile, setMobile] = useState('');
   const [ipNumber, setIpNumber] = useState('');
 
+  
+  useEffect(() => {
+    if (status === 'succeeded' && otpSuccess) {
+      navigate("/services");
+    }
+  }, [status, otpSuccess])
+  
+
   const onSubmitForm = (data: any) => {
-    onSubmit(data);
+    const otpData = {
+      mobile_number: userData?.mobile_number,
+    admissionno: userData?.admissionno,
+    otp: data.otp
+    }
+
+    dispatch(validateOtp(otpData))
+
   };
 
   return (

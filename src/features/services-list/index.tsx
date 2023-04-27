@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card } from "semantic-ui-react";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
-import { SemanticICONS } from "semantic-ui-react/src/generic";
 import Navbar from "../../components/nav-bar";
-import ServiceCard from "../../components/service-card";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
-import hospitasServices from "../../assets/HospitalServices.png";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
 import FeedBack from "../../assets/Feedback-icon.png";
 import MyBills from "../../assets/Grievince.png";
@@ -16,13 +12,6 @@ import PortorService from "../../assets/wheel-chair-icon.png";
 import Food from '../../assets/Order-food-icon.png';
 import Discharge from '../../assets/Discharge.png';
 import Facilities from '../../assets/Facilities.png';
-import {
-  RootState,
-  useAppDispatch,
-  useAppSelector,
-} from "../../config/redux-store";
-import axios from "axios";
-import { setServers } from "dns";
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
 
@@ -96,18 +85,6 @@ function ServicesList() {
 
 
   const naviage = useNavigate();
-
-  // const getServices = async () => {
-  //   var response = await axios.post('http://10.20.100.179:4000/api/get-service-data-bytype', {
-  //     "service_type":"1",
-  //   }, {
-  //     headers: {
-  //       'Authorization': `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjoiOTAzMDc4OTY0MCIsImFkbWlzc2lvbm5vIjoiSVAyMzI0MDAyMDQ0IiwiaWF0IjoxNjgyMzIzMTQ0LCJleHAiOjE2ODIzMjY3NDR9.fGzOXxlWL6_VtR5mCxu_xBYDxc_mERkIpxZqZ5xmOBo'}` 
-  //      } 
-  //   })
-    
-  //   console.log('services-available', response.data);
-  // }
 
   const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);

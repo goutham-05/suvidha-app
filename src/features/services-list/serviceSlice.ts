@@ -65,36 +65,29 @@ const serviceSlice = createSlice({
   name: "service",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getServicesList.pending, (state) => {
+  extraReducers: {
+    [getServicesList.pending.type]: (state) => {
       state.status = "loading";
-    });
-    builder.addCase(
-      getServicesList.fulfilled,
-      (state: State, { payload }: any) => {
-        state.status = "succeeded";
+    },
+    [getServicesList.fulfilled.type]: (state, { payload }) => {
+             state.status = "succeeded";
         serviceAdaptor.upsertMany(state, payload);
-      }
-    );
-    builder.addCase(getServicesList.rejected, (state, { payload }: any) => {
-      state.status = "failed";
+    },
+    [getServicesList.rejected.type]: (state, { payload }) => {
+         state.status = "failed";
       state.error = payload.message;
-    });
-
-    builder.addCase(getServicesListById.pending, (state) => {
-      state.status = "loading";
-    });
-    builder.addCase(
-      getServicesListById.fulfilled,
-      (state, { payload }: any) => {
-        state.status = "succeeded";
+    },
+  },
+  [getServicesListById.pending.type]: (state: State) => {
+    state.status = "loading";
+  },
+  [getServicesListById.fulfilled.type]: (state: State, { payload }: any) => {
+    state.status = "succeeded";
         serviceAdaptor.upsertMany(state, payload);
-      }
-    );
-    builder.addCase(getServicesListById.rejected, (state, { payload }: any) => {
-      state.status = "failed";
+  },
+  [getServicesListById.rejected.type]: (state: State, { payload }: any) => {
+    state.status = "failed";
       state.error = payload.message;
-    });
   },
 });
 

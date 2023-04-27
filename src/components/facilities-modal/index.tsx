@@ -21,9 +21,7 @@ const FacilitiesModal = () => {
       }
       
     );
-    console.log("Response", response.data.data);
     setFacilitiesAvailable(response.data.data);
-    console.log('RESPONSE', facilitiesAvailable);
   };
 
   useEffect(() => {

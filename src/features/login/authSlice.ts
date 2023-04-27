@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { delay } from "lodash";
-import axios from "axios";
-import { useEffect } from "react";
+import { axiosPost } from "../../services/baseService";
+import { RootState } from "../../config/redux-store";
 
 interface State {
   data: any;
   status: "idle" | "loading" | "failed" | "succeeded";
   error: string;
   message: string;
+  otpSuccess: boolean;
 }
 
 const initialState: State = {
@@ -15,6 +16,7 @@ const initialState: State = {
   status: "idle",
   error: "",
   message: "",
+  otpSuccess: false,
 };
 
 interface Payload {
@@ -22,16 +24,16 @@ interface Payload {
   admissionno: string;
 }
 
+interface OtpPayload extends Payload {
+  otp: string;
+}
+
 export const getOtp = createAsyncThunk(
   "auth/getOtp",
   async (payload: Payload, { dispatch, rejectWithValue }) => {
     // dispatch and rejectWithValue are from thunkAPI which are destructured here
-    console.log(payload);
     try {
-      const response = await axios.post(
-        `http://10.20.100.179:4000/api/patient-login`,payload
-      );
-      console.log(response.data);
+      const response: any = await axiosPost(`patient-login`, payload);
       return response.data;
     } catch (error: Error | any) {
       return rejectWithValue({
@@ -45,18 +47,18 @@ export const getOtp = createAsyncThunk(
   }
 );
 
-
 export const validateOtp = createAsyncThunk(
   "auth/validateOtp",
-  async (payload: Payload, thunkAPI) => {
+  async (payload: OtpPayload, { getState, rejectWithValue }) => {
+    const { user } = getState() as RootState;
+    const { data } = user;
+    const token = data.token;
     try {
-      const response = await axios.post(
-        `http://10.20.100.179:4000/api/validate-otp`, payload
-      );
+      const response: any = await axiosPost(`validate-otp`, payload, token);
 
       return response.data;
     } catch (error: Error | any) {
-      return thunkAPI.rejectWithValue({
+      return rejectWithValue({
         message: error.message,
       });
     }
@@ -79,13 +81,26 @@ const authSlice = createSlice({
     },
     [getOtp.fulfilled.type]: (state, action) => {
       state.status = "succeeded";
-      state.data = action.payload.data;
+      state.data = action.payload;
       state.message = "OTP sent successfully";
     },
     [getOtp.rejected.type]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
       state.message = action.payload.message;
+    },
+    [validateOtp.pending.type]: (state) => {
+      state.status = "loading";
+    },
+    [validateOtp.fulfilled.type]: (state, action) => {
+      state.status = "succeeded";
+      state.otpSuccess = true;
+      state.message = "OTP verified successfully";
+    },
+    [validateOtp.rejected.type]: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload.error;
+      state.message = "Invalid OTP";
     },
   },
 });
