@@ -86,7 +86,7 @@ const OtpForm: React.FC<Props> = ({ }) => {
 
           <Grid.Row stretched>
             <Grid.Column>
-              <Button type="submit" loading={false} style={{background: '#E41B47', width: '100%'}}>
+              <Button type="submit" loading={false} style={{background: '#0075ad', width: '100%'}}>
                 <h1 style={{color: 'white', fontSize: '15px'}}>Submit</h1>
               </Button>
             </Grid.Column>

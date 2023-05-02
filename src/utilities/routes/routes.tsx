@@ -10,6 +10,9 @@ import QrCode from '../../components/qr-code';
 import Admin from "../../Admin/Login";
 import AdminHome from "../../Admin/AdminHome";
 import QrCodeGeneration from "../../Admin/components/QrCodeForm";
+import Services from "../../features/Services";
+import Board from "../../features/board";
+import MyDetails from "../../features/my-details";
 
 export const routes: RouteObject[] = [
   {
@@ -22,6 +25,10 @@ export const routes: RouteObject[] = [
     path: "/services",
     element: <ServicesList />,
     children: [{ path: "/services/bills", element: <Bills /> }],
+  },
+  {
+    path: "/service",
+    element: <Services />
   },
   { path: "/bills", element: <Bills /> },
   { path: "/cart", element: <Cart /> },
@@ -41,5 +48,17 @@ export const routes: RouteObject[] = [
   {
     path: "/qr-code-generation",
     element: <QrCodeGeneration />
+  },
+  {
+    path: "/portalservices",
+    element: <Services />,
+  },
+  {
+    path: '/board',
+    element: <Board />,
+  },
+  {
+    path: '/mydetails',
+    element: <MyDetails />
   }
 ];

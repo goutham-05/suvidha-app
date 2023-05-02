@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.css"
-import backgroundImage from "../../assets/backgroundImage.jpg"
+import backgroundImage from "../../assets/backgroundImage.png"
 
 const BackgroundImage = () => {
     return (

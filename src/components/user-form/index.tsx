@@ -96,7 +96,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
                   textAlign: "center",
                   fontWeight: "lighter",
                   fontSize: "1.4rem",
-                  background: "#E41B47",
+                  background: "#0075ad",
                   width: "100%",
                 }}
                 type="submit"

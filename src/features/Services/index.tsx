@@ -11,54 +11,44 @@ import MyBills from "../../assets/Grievince.png";
 import PortorService from "../../assets/wheel-chair-icon.png";
 import Food from '../../assets/Order-food-icon.png';
 import Discharge from '../../assets/Discharge.png';
+import HospitalServices from '../../assets/HospitalServices.png'
 import Facilities from '../../assets/Facilities.png';
-import HospitalServ from '../../assets/HospitalServices.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
+import { Icon } from 'semantic-ui-react'
 
-interface ServiceList {
+interface Services {
   title: string;
   icon: string;
   path: string;
   size?: "mini" | "tiny" | "small" | "large" | "big" | "huge" | "massive";
 }
 
-const mockServicesList: ServiceList[] = [
+const mockServicesList: Services[] = [
   {
-    title: "My Details",
-    icon: MyBills,
-    path: '/mydetails',
+    title: "House Keeping",
+    icon: Facilities,
+    path: '/bills',
   },
   {
-    title: "Service Request",
-    icon: HospitalServ,
-    path: "/service",
-  },
-  {
-    title: "Portal Services",
-    icon: PortorService,
-    path: "/bills",
-  },
-  {
-    title: "Grievance/Feedback",
-    icon: FeedBack,
-    path: "/board",
-  },
-  {
-    title: "Call Support",
+    title: "Food & Beverages",
     icon: Food,
-    path: "/food-menu",
+    path: '/bills',
+  },
+  {
+    title: "Facilities",
+    icon: Discharge,
+    path: '/services',
   },
 ];
 
-function ServicesList() {
+function Services() {
 
   const [modalStatus, setModalStatus] = React.useState(false);
 
   const [modalConent, setModalContent] = React.useState<JSX.Element>();
 
   const [service, setService] = useState<ServiceInfo>([]);
-
 
   const naviage = useNavigate();
 
@@ -80,15 +70,22 @@ function ServicesList() {
 
   const [showModal, setShowModal] = useState(false);
 
+  const Back = () => {
+    naviage("/services")
+  }
+
   return (
     <>
       <Navbar />
+      <div onClick={Back} style={{marginBottom: '10px', marginRight: '390px'}}>
+      <Icon disabled name='arrow left'  size="large" color="#6D6D70"/>
+    </div>
       <Container fluid textAlign="justified">
         <Grid>
           {mockServicesList.map(
             ({ icon, title, size = "huge", path }, index) => (
               <Grid.Column mobile={8} tablet={4} computer={4} key={index} onClick={() => onClick(title, path)}>
-                <div style={{ background: '#6C6D70', height: 100, width: 150, borderRadius: 30}} >
+                <div style={{ background: '#6C6D70', height: 100, width: 140, borderRadius: 30, margin: '15px'}} >
                   <div style={{display: "flex", justifyContent: 'center', paddingTop: 10, flexDirection: "row"}}>
                     <img src={icon} width={50} height={50} />
                   </div>
@@ -139,4 +136,4 @@ function ServicesList() {
   );
 }
 
-export default ServicesList;
+export default Services;
