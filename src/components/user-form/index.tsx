@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Grid, Form, Label } from "semantic-ui-react";
-
+import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import CInput from "../../common/input";
 import { getOtp } from "../../features/login/authSlice";
@@ -17,6 +17,7 @@ interface Props {
 }
 
 const UserForm: React.FC<Props> = ({ history }) => {
+  const { t } = useTranslation(["login"]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { status, data: userData } = useAppSelector(
@@ -51,7 +52,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
           <Grid.Row stretched>
             <Grid.Column>
               <CInput
-                placeholder="Mobile Number / Email"
+                placeholder={t('login:mobileNumber')}
                 register={register}
                 label="mobile_number"
                 required={true}
@@ -72,7 +73,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
             <Grid.Column style={{ color: "red" }}>
               <CInput
                 label="admissionno"
-                placeholder="IP Number"
+                placeholder={t('login:IpNumber')}
                 register={register}
                 required={true}
                 size="large"
@@ -103,7 +104,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
                 loading={false}
                 color="red"
               >
-                Get OTP
+               {t('login:GetOTP')}
               </Button>
             </Grid.Column>
           </Grid.Row>
