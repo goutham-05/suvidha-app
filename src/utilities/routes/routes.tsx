@@ -13,6 +13,7 @@ import QrCodeGeneration from "../../Admin/components/QrCodeForm";
 import Services from "../../features/Services";
 import Board from "../../features/board";
 import MyDetails from "../../features/my-details";
+import HouseKeepingModal from "../../components/house-keeping-modal";
 
 export const routes: RouteObject[] = [
   {
@@ -60,5 +61,5 @@ export const routes: RouteObject[] = [
   {
     path: '/mydetails',
     element: <MyDetails />
-  }
+  },
 ];

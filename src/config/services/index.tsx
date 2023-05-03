@@ -27,7 +27,7 @@ export const serviceInfo: ServiceInfo[] = [
     element: <ContactModal />,
   },
   {
-    title: "House Keeping",
+    title: "HouseKeeping",
     element: <HouseKeepingModal />,
   },
 ];
