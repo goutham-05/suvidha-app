@@ -1,19 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./index.css";
-
-const languagesData = [
-  { id: 1, value: "English", selected: false },
-  { id: 2, value: "తెలుగు", selected: false },
-  { id: 3, value: "हिन्दी", selected: false },
-  { id: 4, value: "मराठी", selected: false },
-  { id: 5, value: "ಕನ", selected: false },
-  { id: 6, value: "தமிழ்", selected: false },
-  { id: 7, value: "اردو", selected: false },
-  { id: 8, value: "ଓଡିଆ", selected: false },
-  { id: 9, value: "മലയാളം", selected: false },
-];
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
+import { Icon } from 'semantic-ui-react';
 
 interface Props {
   placeholder: string;
@@ -28,49 +19,58 @@ const DropDown: React.FC<Props> = ({
   placeholder,
   fluid,
   selection,
-  options,
   onChange,
   search,
 }) => {
+  // customed drawer
   const navigate = useNavigate();
-  const [isDropDownClicked, setIsDropDownClicked] = useState(false);
-  const [languageSelected, setLanguageSelected] = useState("Select Language");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const { i18n} = useTranslation();
+  const options = ['English', 'తెలుగు', 'हिन्दी', 'मराठी','தமிழ்','ಕನ', 'اردو', 'ଓଡିଆ', 'മലയാളം'];
 
-  const onSubmit = () => {
-    setIsDropDownClicked(!isDropDownClicked);
-    if (isDropDownClicked) {
-      navigate("/login", {
-        state: {
-          selectedLanguage: languageSelected,
-        },
-      });
-    }
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleOptionSelect = (option: any) => {
+    console.log(option);
+    setSelectedOption(option);
+    i18next.changeLanguage(option);
+    // i18n.changeLanguage("hi");
+    console.log('selected', option);
+    setIsOpen(false);
+    navigate("/login");
   };
 
   return (
-    <div className="dropdown" onClick={onSubmit}>
-      <div className="dropdown-btn">
-        {languageSelected}
-        <span className="fas fa-caret-down"></span>
+    <div className="dropdown">
+          <div className="dropdown-btn">
+      <div className="dropdown-header" onClick={toggleDropdown}>
+        {selectedOption || 'Select language'}
+        {
+          isOpen ? (
+            <Icon disabled name='caret up'  size="large" color="black" style={{marginLeft: '10px'}}/>
+          ): (
+      <Icon disabled name='caret down'  size="large" color="black" style={{marginLeft: '10px'}}/>
+          )
+        }
       </div>
-      {isDropDownClicked && (
-        <div className="dropdown-content">
-          {languagesData.map((item: any) => {
-            return (
-              <div
-                className="dropdown-item"
-                onClick={(e) => {
-                  setLanguageSelected(item.value);
-                  setIsDropDownClicked(false);
-                }}
-              >
-                {item.value}
-                <div className="border-line" />
-              </div>
-            );
-          })}
-        </div>
+      {isOpen && (
+        <ul className="dropdown-content" style={{background: 'transparent', marginTop: '-10px', width: '310px', marginLeft: '-6px'}}>
+          {options.map((option, index) => (
+            <li
+              key={index}
+              style={{padding: '10px'}}
+              onClick={() => handleOptionSelect(option)}
+            >
+              {option}
+              <div className="border-line" />
+            </li>
+          ))}
+        </ul>
       )}
+    </div>
     </div>
   );
 };

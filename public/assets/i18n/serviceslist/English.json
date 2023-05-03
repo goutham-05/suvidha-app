@@ -1,0 +1,12 @@
+{
+    "MyDetails": "MyDetails",
+    "ServiceRequest": "ServiceRequest",
+    "PorterServices": "PorterServices",
+    "Grievance/Feedback": "Grievance/Feedback",
+    "CallSupport": "CallSupport",
+    "Grievance":"Grievance",
+    "Feedback":"Feedback",
+    "EnterText":"EnterText",
+    "Submit":"Submit",
+    "Attach":"Attach"
+}

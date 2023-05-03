@@ -1,6 +1,5 @@
 .dropdown{
   width: 300px;
-  margin: 0 auto;
 }
 
 .dropdown .dropdown-btn{
@@ -23,7 +22,8 @@
   width: 74%;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
-  
+  text-decoration: none;
+  list-style: none;
 }
 
 .dropdown .dropdown-content .dropdown-item{
@@ -39,5 +39,9 @@
 .border-line{
   border: 0.2px solid #B8B8B8;
   border-bottom-right-radius: 30px;
-  width: 100%;
+  width: '300px';
+}
+
+.custom-dropdown {
+  border: 1px solid red;
 }
