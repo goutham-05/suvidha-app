@@ -10,9 +10,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["serviceslist"]); 
 
-  const floorNO = localStorage.getItem('FloorNo');
-  // const patientName: string | null = localStorage.getItem('patient-data');
-  // const patientname = JSON.parse(patientName).data.patientname;
+  const patientLocation: string | null = localStorage.getItem('patientLocation');
+  const floor = JSON.parse(patientLocation).floor;
 
   return (
     <div className="ui inverted segment" style={{ background: "#b1dfdf", height: 100, width:410, marginLeft: -30, marginTop: -30}}>
@@ -22,7 +21,7 @@ const Navbar = () => {
         </div>
         <div className="data-container">
         <div className='patientData'>
-                <p>Kumar<br/><p className='mobile-paragraph'>{t('IP')}: 123456789102</p>{t('Room')}: <span>{floorNO}</span></p>
+                <p>Kumar<br/><p className='mobile-paragraph'>{t('IP')}: 123456789102</p>{t('Room')}: <span>{floor}</span></p>
                 </div>
         </div>
       </div>

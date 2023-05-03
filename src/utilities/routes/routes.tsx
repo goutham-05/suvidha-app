@@ -13,31 +13,48 @@ import QrCodeGeneration from "../../Admin/components/QrCodeForm";
 import Services from "../../features/Services";
 import Board from "../../features/board";
 import MyDetails from "../../features/my-details";
-import HouseKeepingModal from "../../components/house-keeping-modal";
 
-export const routes: RouteObject[] = [
+type ProtectedRoute = RouteObject & { isProtected?: boolean };
+export const routes: ProtectedRoute[] = [
   {
-    path: "/",
+    path: "/:param1?/:param2?/:param3?/:param4?/:param5?/:param6?",
     element: <Home />,
   },
-  {path: "/Qrcode", element: <QrCode /> },
-  { path: "/login", element: <Login /> },
+  {
+    path: "/Qrcode",
+    element: <QrCode />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
   {
     path: "/services",
     element: <ServicesList />,
+    isProtected: true,
     children: [{ path: "/services/bills", element: <Bills /> }],
   },
   {
     path: "/service",
-    element: <Services />
+    element: <Services />,
+    isProtected: true
   },
-  { path: "/bills", element: <Bills /> },
-  { path: "/cart", element: <Cart /> },
+  {
+    path: "/bills",
+    element: <Bills />
+  },
+  {
+    path: "/cart",
+    element: <Cart />
+  },
   {
     path: "/food-menu",
     element: <FoodMenu />,
   },
-  { path: "*", element: <NoMatch /> },
+  {
+    path: "*",
+    element: <NoMatch />
+  },
   {
     path: "/Admin",
     element: <Admin />

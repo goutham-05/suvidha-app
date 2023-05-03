@@ -23,7 +23,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
   const { status, data: userData } = useAppSelector(
     (state: RootState) => state.user
   );
-
+  console.log('USERDATA::', userData);
   const {
     register,
     handleSubmit,

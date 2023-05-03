@@ -31,7 +31,8 @@
     "redux-logger": "^3.0.6",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
