@@ -7,10 +7,6 @@ function AdminHome() {
   return (
     <div>
       <TopBar />
-      <div className="flex-container">
-        <SideBar />
-        <MainBar />
-      </div>
     </div>
   );
 }

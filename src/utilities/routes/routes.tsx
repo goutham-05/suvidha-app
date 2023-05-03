@@ -13,6 +13,9 @@ import QrCodeGeneration from "../../Admin/components/QrCodeForm";
 import Services from "../../features/Services";
 import Board from "../../features/board";
 import MyDetails from "../../features/my-details";
+import MyDischargeModal from "../../components/discharge-modal";
+import MyBillModal from "../../components/bills-modal";
+import MyInsuranceModal from "../../components/insurance-model";
 type ProtectedRoute = RouteObject & { isProtected?: boolean };
 export const routes: ProtectedRoute[] = [
   {
@@ -40,15 +43,18 @@ export const routes: ProtectedRoute[] = [
   },
   {
     path: "/bills",
-    element: <Bills />
+    element: <Bills />,
+    isProtected: true
   },
   {
     path: "/cart",
-    element: <Cart />
+    element: <Cart />,
+    isProtected: true
   },
   {
     path: "/food-menu",
     element: <FoodMenu />,
+    isProtected: true
   },
   {
     path: "*",
@@ -78,6 +84,21 @@ export const routes: ProtectedRoute[] = [
   {
     path: '/mydetails',
     element: <MyDetails />,
+    isProtected: true,
+  },
+  {
+    path:'/mydischarge',
+    element: <MyDischargeModal />,
+    isProtected: true,
+  },
+  {
+    path:'/mybills',
+    element: <MyBillModal />,
+    isProtected: true,
+  },
+  {
+    path:'/myinsurance',
+    element: <MyInsuranceModal />,
     isProtected: true,
   }
 ];
