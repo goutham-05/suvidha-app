@@ -29,17 +29,17 @@ const mockServicesList: Services[] = [
   {
     title: "My Bills",
     icon: Facilities,
-    path: '/request',
+    path: '/mybills',
   },
   {
     title: "My Discharge",
     icon: Food,
-    path: '/bills',
+    path: '/mydischarge',
   },
   {
     title: "My Insurance",
     icon: Discharge,
-    path: '/services',
+    path: '/myinsurance',
   },
 ];
 
