@@ -8,7 +8,8 @@ import "./index.css";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const floorNO = localStorage.getItem('FloorNo');
+  const patientLocation = JSON.parse(localStorage.getItem('patientLocation'));
+  console.log('PatientLocation', patientLocation.floor);
   // const patientName: string | null = localStorage.getItem('patient-data');
   // const patientname = JSON.parse(patientName).data.patientname;
 
@@ -20,7 +21,7 @@ const Navbar = () => {
         </div>
         <div className="data-container">
         <div className='patientData'>
-                <p>Kumar<br/><p className='mobile-paragraph'>IP: 123456789102</p>Room: <span>{floorNO}</span></p>
+                <p>Kumar<br/><p className='mobile-paragraph'>IP: 123456789102</p>Room: <span>{patientLocation.floor}</span></p>
                 </div>
         </div>
       </div>

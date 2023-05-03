@@ -13,12 +13,22 @@ import { useAuth } from "./hooks/useAuth";
 import { HomeLayout } from "./components/HomeLayout";
 
 function App() {
-  const element = useRoutes(routes);
-  return (
-    <div className="App">
-      {element}
-    </div>
+  const isLoggedIn = localStorage.getItem('patientLocation');
+  const routing = useRoutes(
+    routes.map((route) => {
+      const { isProtected, ...rest } = route;
+      return {
+        ...rest,
+        element: isProtected && !isLoggedIn ? (
+          <Navigate to="/login" replace />
+        ) : (
+          route.element
+        ),
+      };
+    })
   );
+
+  return <>{routing}</>;
 }
 
 export default App;
