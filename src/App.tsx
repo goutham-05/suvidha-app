@@ -13,7 +13,8 @@ import { useAuth } from "./hooks/useAuth";
 import { HomeLayout } from "./components/HomeLayout";
 
 function App() {
-  const isLoggedIn = localStorage.getItem('patientLocation');
+  const isLoggedIn = localStorage.getItem('patientLocation').length;
+  console.log('isLoggedIn::',isLoggedIn);
   const routing = useRoutes(
     routes.map((route) => {
       const { isProtected, ...rest } = route;
