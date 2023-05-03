@@ -4,13 +4,16 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import CInput from "../../common/input";
 import { getOtp } from "../../features/login/authSlice";
+import { setDb } from "../../features/login/dbSlice";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import BackgroundImage from "../background";
+
+import localForage from 'localforage';
 
 interface Props {
   history?: History;
@@ -23,12 +26,43 @@ const UserForm: React.FC<Props> = ({ history }) => {
   const { status, data: userData } = useAppSelector(
     (state: RootState) => state.user
   );
-  console.log('USERDATA::', userData);
+
+  const db = useAppSelector((state) => state.db.db);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  async function openDatabase() {
+    const config = {
+      name: 'ksuvidha',
+      version: 1,
+      storeName: 'checkotp',
+      description: 'My store with auto-incrementing IDs',
+      autoIncrement: true
+    };
+    const database = await localForage.createInstance(config);
+    dispatch(setDb(database));
+  }
+  useEffect(() => {
+    if(userData){
+      openDatabase();
+    }
+  }, [status]);
+  useEffect(() => {
+    addData(userData);
+  }, [db, userData]);
+
+  async function addData(userData:any) {
+    try {
+      await db.setItem(userData.ip_no, userData.otp);
+      console.log('Data added to store');
+    } catch (error) {
+      console.log('Error adding data to store', error);
+    }
+  }
 
   useEffect(() => {
     if (status === "succeeded") {
