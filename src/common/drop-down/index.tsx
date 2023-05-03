@@ -37,7 +37,6 @@ const DropDown: React.FC<Props> = ({
     console.log(option);
     setSelectedOption(option);
     i18next.changeLanguage(option);
-    // i18n.changeLanguage("hi");
     console.log('selected', option);
     setIsOpen(false);
     navigate("/login");
@@ -46,7 +45,7 @@ const DropDown: React.FC<Props> = ({
   return (
     <div className="dropdown">
           <div className="dropdown-btn">
-      <div className="dropdown-header" onClick={toggleDropdown}>
+      <div className="dropdown-header" onClick={toggleDropdown} style={{marginLeft: '25px'}}>
         {selectedOption || 'Select language'}
         {
           isOpen ? (

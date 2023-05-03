@@ -8,5 +8,7 @@
     "Feedback":"Feedback",
     "EnterText":"EnterText",
     "Submit":"Submit",
-    "Attach":"Attach"
+    "Attach":"Attach",
+    "IP":"IP",
+    "Room":"Room"
 }

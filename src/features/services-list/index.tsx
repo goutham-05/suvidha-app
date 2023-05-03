@@ -27,17 +27,17 @@ interface ServiceList {
 
 const mockServicesList: ServiceList[] = [
   {
-    title: "MyDetails",
+    title: "My Details",
     icon: MyBills,
     path: '/mydetails',
   },
   {
-    title: "ServiceRequest",
+    title: "Service Request",
     icon: HospitalService,
     path: "/service",
   },
   {
-    title: "PorterServices",
+    title: "Porter Services",
     icon: PortorService,
     path: "/bills",
   },
@@ -47,7 +47,7 @@ const mockServicesList: ServiceList[] = [
     path: "/board",
   },
   {
-    title: "CallSupport",
+    title: "Call Support",
     icon: Food,
     path: "/food-menu",
   },

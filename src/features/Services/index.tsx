@@ -15,7 +15,8 @@ import HospitalServices from '../../assets/HospitalServices.png'
 import Facilities from '../../assets/Facilities.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
-import { Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react';
+import { useTranslation } from "react-i18next"; 
 
 interface Services {
   title: string;
@@ -26,12 +27,12 @@ interface Services {
 
 const mockServicesList: Services[] = [
   {
-    title: "House Keeping",
+    title: "HouseKeeping",
     icon: Facilities,
     path: '/bills',
   },
   {
-    title: "Food & Beverages",
+    title: "Food&Beverages",
     icon: Food,
     path: '/bills',
   },
@@ -51,6 +52,7 @@ function Services() {
   const [service, setService] = useState<ServiceInfo>([]);
 
   const naviage = useNavigate();
+  const { t } = useTranslation(["servicerequest"]); 
 
   const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);
@@ -80,17 +82,18 @@ function Services() {
       <div onClick={Back} style={{marginBottom: '10px', marginRight: '390px'}}>
       <Icon disabled name='arrow left'  size="large" color="#6D6D70"/>
     </div>
-      <Container fluid textAlign="justified">
+    <div style={{marginLeft: '3%'}}>
+      <Container fluid textAlign="justified" style={{marginLeft: '-100px'}}>
         <Grid>
           {mockServicesList.map(
             ({ icon, title, size = "huge", path }, index) => (
               <Grid.Column mobile={8} tablet={4} computer={4} key={index} onClick={() => onClick(title, path)}>
-                <div style={{ background: '#6C6D70', height: 100, width: 140, borderRadius: 30, margin: '15px'}} >
-                  <div style={{display: "flex", justifyContent: 'center', paddingTop: 10, flexDirection: "row"}}>
+                <div style={{ background: '#6C6D70', height: 100, width: 140, borderRadius: 30}} >
+                  <div style={{display: "flex", justifyContent: 'center', paddingTop: 16, flexDirection: "row"}}>
                     <img src={icon} width={50} height={50} />
                   </div>
                   <div>
-                  <h1 style={{fontSize: 12, textAlign: "center", color: 'white', paddingBottom: 20}}>{title}</h1>
+                  <h1 style={{fontSize: 12, textAlign: "center", color: 'white', paddingBottom: 20}}>{t(title)}</h1>
                   </div>
                 </div>
               </Grid.Column>
@@ -105,6 +108,7 @@ function Services() {
           {modalConent}
         </ServiceModal>
       </Container>
+      </div>
       <div>
         {showModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999 }}>
