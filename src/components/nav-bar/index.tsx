@@ -3,15 +3,15 @@ import { Header, Label, Segment, Image } from "semantic-ui-react";
 import BrandLogo from "../logo";
 import { useNavigate, useNavigation } from "react-router-dom";
 import logo from "../../assets/Logo.png";
+import { useTranslation } from "react-i18next";
 import "./index.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation(["serviceslist"]); 
 
-  const patientLocation = JSON.parse(localStorage.getItem('patientLocation'));
-  console.log('PatientLocation', patientLocation.floor);
-  // const patientName: string | null = localStorage.getItem('patient-data');
-  // const patientname = JSON.parse(patientName).data.patientname;
+  const patientLocation: string | null = localStorage.getItem('patientLocation');
+  const floor = JSON.parse(patientLocation).floor;
 
   return (
     <div className="ui inverted segment" style={{ background: "#b1dfdf", height: 100, width:410, marginLeft: -30, marginTop: -30}}>
@@ -21,7 +21,7 @@ const Navbar = () => {
         </div>
         <div className="data-container">
         <div className='patientData'>
-                <p>Kumar<br/><p className='mobile-paragraph'>IP: 123456789102</p>Room: <span>{patientLocation.floor}</span></p>
+                <p>Kumar<br/><p className='mobile-paragraph'>{t('IP')}: 123456789102</p>{t('Room')}: <span>{floor}</span></p>
                 </div>
         </div>
       </div>

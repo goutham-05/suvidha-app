@@ -15,7 +15,8 @@ import HospitalServices from '../../assets/HospitalServices.png'
 import Facilities from '../../assets/Facilities.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
-import { Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react';
+import { useTranslation } from "react-i18next";
 
 interface Services {
   title: string;
@@ -51,6 +52,8 @@ function MyDetails() {
   const [service, setService] = useState<ServiceInfo>([]);
 
   const naviage = useNavigate();
+  const { t } = useTranslation(["mydetails"]); 
+
 
   const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);
@@ -85,12 +88,12 @@ function MyDetails() {
           {mockServicesList.map(
             ({ icon, title, size = "huge", path }, index) => (
               <Grid.Column mobile={8} tablet={4} computer={4} key={index} onClick={() => onClick(title, path)}>
-                <div style={{ background: '#6C6D70', height: 100, width: 140, borderRadius: 30, margin: '15px'}} >
-                  <div style={{display: "flex", justifyContent: 'center', paddingTop: 10, flexDirection: "row"}}>
+                <div style={{ background: '#6C6D70', height: 100, width: 140, borderRadius: 30}} >
+                  <div style={{display: "flex", justifyContent: 'center', paddingTop: 15, flexDirection: "row"}}>
                     <img src={icon} width={50} height={50} />
                   </div>
                   <div>
-                  <h1 style={{fontSize: 12, textAlign: "center", color: 'white', paddingBottom: 20}}>{title}</h1>
+                  <h1 style={{fontSize: 12, textAlign: "center", color: 'white', paddingBottom: 20}}>{t(title)}</h1>
                   </div>
                 </div>
               </Grid.Column>
