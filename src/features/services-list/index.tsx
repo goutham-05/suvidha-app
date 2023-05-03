@@ -10,10 +10,12 @@ import FeedBack from "../../assets/Feedback-icon.png";
 import MyBills from "../../assets/Grievince.png";
 import PortorService from "../../assets/wheel-chair-icon.png";
 import Food from '../../assets/Order-food-icon.png';
+import HospitalService from '../../assets/HospitalServices.png';
 import Discharge from '../../assets/Discharge.png';
 import Facilities from '../../assets/Facilities.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
+import { useTranslation } from "react-i18next";
 
 interface ServiceList {
   title: string;
@@ -24,27 +26,27 @@ interface ServiceList {
 
 const mockServicesList: ServiceList[] = [
   {
-    title: "My Bills",
+    title: "MyDetails",
     icon: MyBills,
     path: '/bills',
   },
   {
-    title: "My Requests",
-    icon: MyBills,
-    path: "/bills",
+    title: "ServiceRequest",
+    icon: HospitalService,
+    path: "/service",
   },
   {
-    title: "My Discharge",
-    icon: Discharge,
-    path: "/bills",
-  },
-  {
-    title: "Portor Service",
+    title: "PorterServices",
     icon: PortorService,
     path: "/bills",
   },
   {
-    title: "Order Food",
+    title: "Grievance/Feedback",
+    icon: FeedBack,
+    path: "/board",
+  },
+  {
+    title: "CallSupport",
     icon: Food,
     path: "/food-menu",
   },
@@ -86,6 +88,7 @@ function ServicesList() {
 
   const naviage = useNavigate();
 
+  const { t } = useTranslation(["serviceslist"]); 
   const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);
     if (!findService) {
@@ -117,7 +120,7 @@ function ServicesList() {
                     <img src={icon} width={50} height={50} />
                   </div>
                   <div>
-                  <h1 style={{fontSize: 12, textAlign: "center", color: 'white', paddingBottom: 20}}>{title}</h1>
+                  <h1 style={{fontSize: 12, textAlign: "center", color: 'white', paddingBottom: 20}}>{t(title)}</h1>
                   </div>
                 </div>
               </Grid.Column>
