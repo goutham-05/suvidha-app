@@ -69,6 +69,7 @@ export const routes: ProtectedRoute[] = [
   {
     path: "/portalservices",
     element: <Services />,
+    isProtected: true,
   },
   {
     path: '/board',
@@ -76,6 +77,7 @@ export const routes: ProtectedRoute[] = [
   },
   {
     path: '/mydetails',
-    element: <MyDetails />
+    element: <MyDetails />,
+    isProtected: true,
   }
 ];
