@@ -14,7 +14,7 @@ const Navbar = () => {
   const floor = JSON.parse(patientLocation).floor;
 
   return (
-    <div className="ui inverted segment" style={{ background: "#b1dfdf", height: 100, width:410, marginLeft: -30, marginTop: -30}}>
+    <div className="ui inverted segment" style={{ background: "white", height: 100, width:410, marginLeft: -30, marginTop: -30, boxShadow: '1px 2px 9px grey',}}>
       <div className="ui inverted secondary menu">
         <div className="Logo-container">
           <img src={logo} style={{marginTop: '-12px', width: '100px', height: '100px'}}/>
