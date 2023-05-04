@@ -27,7 +27,7 @@ const OtpForm: React.FC<Props> = ({ }) => {
 
   const { status, otpSuccess , data: userData } = useAppSelector((state: RootState) => state.user);
 
-  const getMobile = localStorage.getItem('Login');
+  const getMobile = localStorage.getItem('mobile_number');
 
   const {
     register,
@@ -40,11 +40,11 @@ const OtpForm: React.FC<Props> = ({ }) => {
   const [ipNumber, setIpNumber] = useState('');
 
   
-  // useEffect(() => {
-  //   if (status === 'succeeded' && otpSuccess) {
-  //     navigate("/services");
-  //   }
-  // }, [status, otpSuccess])
+  useEffect(() => {
+    if (status === 'succeeded' && otpSuccess) {
+      navigate("/services");
+    }
+  }, [status, otpSuccess])
   
   const db = useAppSelector((state) => state.db.db);
   const onSubmitForm = async (data: any) => {
@@ -58,6 +58,7 @@ const OtpForm: React.FC<Props> = ({ }) => {
       navigate("/services");
     }
   };
+
 
   return (
     <>

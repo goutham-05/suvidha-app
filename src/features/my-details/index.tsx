@@ -6,8 +6,6 @@ import Navbar from "../../components/nav-bar";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
-import FeedBack from "../../assets/Feedback-icon.png";
-import MyBills from "../../assets/Grievince.png";
 import PortorService from "../../assets/wheel-chair-icon.png";
 import Food from '../../assets/Order-food-icon.png';
 import Discharge from '../../assets/Discharge.png';
@@ -17,6 +15,9 @@ import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
 import { Icon } from 'semantic-ui-react';
 import { useTranslation } from "react-i18next";
+import MyDis from '../../assets/Discharge.png';
+import MyIns from '../../assets/My Insurance.png'
+import MyBill from '../../assets/My-Bills.png';
 
 interface Services {
   title: string;
@@ -27,18 +28,18 @@ interface Services {
 
 const mockServicesList: Services[] = [
   {
-    title: "My Bills",
-    icon: Facilities,
+    title: "My Bill",
+    icon: MyBill,
     path: '/mybills',
   },
   {
     title: "My Discharge",
-    icon: Food,
+    icon: MyDis,
     path: '/mydischarge',
   },
   {
-    title: "My Insurance",
-    icon: Discharge,
+    title: "Insurance Status",
+    icon: MyIns,
     path: '/myinsurance',
   },
 ];

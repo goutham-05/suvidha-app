@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Icon } from "semantic-ui-react";
 import Navbar from "../nav-bar";
-import './index.css';
+import "./index.css";
 import BackgroundImage from "../background";
 import {
   RootState,
@@ -20,88 +20,197 @@ const MyBillModal = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["mydetails"]);
   useEffect(() => {
-    dispatch(getOtp({
-      'mobile_number' : localStorage.getItem('mobile_number'),
-      'admissionno' : localStorage.getItem('admissionno')
-    }));
-  }, [])
+    dispatch(
+      getOtp({
+        mobile_number: localStorage.getItem("mobile_number"),
+        admissionno: localStorage.getItem("admissionno"),
+      })
+    );
+  }, []);
   const userData = useAppSelector((state) => state.user);
   const billValues = [
     userData.data?.total_advance,
     userData.data?.app_bill_amount,
     userData.data?.latest_esitmated_amt,
     userData.data?.balance_amt,
-  ]
+  ];
 
   const Back = () => {
     navigate("/mydetails");
   };
   return (
     <div>
-        <Navbar />
-        <div className="mydischargeContainer">
-            <div className="mydischargeHeader">
-                <span className="headerTitle">My Bills</span>
-                <div onClick={Back}>
-                <Icon disabled name='close'  size="large" color="black" style={{marginTop: '10px', marginLeft: '20px'}}/>
-                </div>
-            </div>
-            <div style={{display: 'flex'}}>
-                <Grid>
-        <div style={{marginTop: '45px', marginLeft: '10px', textAlign: 'left'}}>
-          {[
-            "Advance Paid",
-            "Approximate Bill",
-            "Initial Estimated Amount",
-            "Due Amt",
-          ].map((item, index) => (
-            <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
-              <span
-                style={{
-                  padding: "10px",
-                  fontSize: "15px",
-                  fontWeight: "bold",
-                  color: 'black',
-                  marginLeft: '10px'
-                }}
-              >
-                {item}
-                {/* <div style={{border: '1px solid #6C6D70'}} /> */}
-              </span>
-            </Grid.Column>
-          ))}
-        </div>
-      </Grid>
-      <Grid>
-        <div style={{marginTop: '10px', marginLeft: '20px', textAlign: 'left'}}>
-          {billValues.map((item, index) => (
-            <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
-              <span
-                style={{
-                  padding: "10px",
-                  fontSize: "15px",
-                  fontWeight: "bold",
-                  color: 'black',
-                  marginLeft: '10px'
-                }}
-              >
-                {item}
-                {/* <div style={{border: '1px solid #6C6D70'}} /> */}
-              </span>
-            </Grid.Column>
-          ))}
-        </div>
-        <div
-           className="payBillButton" style={{marginTop: '30px', marginLeft: '-72px'}}>
-            <span style={{ marginLeft: "6px", color: "white", marginTop: '200px'}}>Pay Bill</span>
+      <Navbar />
+      <div className="mydischargeContainer">
+        <div className="mydischargeHeader">
+          <span className="headerTitle">My Bill</span>
+          <div onClick={Back}>
+            <Icon
+              disabled
+              name="close"
+              size="large"
+              color="black"
+              style={{ marginTop: "10px", marginLeft: "20px" }}
+            />
           </div>
-      </Grid> 
- 
-            </div>
         </div>
-        <BackgroundImage />
+        <div className="two-column-container">
+      <div className="column" style={{
+      marginTop: "45px",
+      textAlign: "left",
+    }}>
+        {[
+      "Advance Paid",
+      "Approximate Bill",
+      "InitialEstimatedAmount",
+      "Due Amt",
+    ].map((item, index) => (
+      <Grid.Column
+        width={8}
+        textAlign="justified"
+        style={{ marginBottom: "10px", width: '100%'}}
+      >
+        <span
+          style={{
+            padding: "10%",
+            fontSize: "100%",
+            fontWeight: "bold",
+            color: "black",
+            marginLeft: "10%",
+          }}
+        >
+          {item}
+        </span>
+      </Grid.Column>
+    ))}
+      </div>
+      <div className="column" style={{
+      marginTop: "45px",
+      textAlign: "left",
+      marginLeft: '10%'
+    }}>
+      {billValues.map((item, index) => (
+      <Grid.Column
+        width={8}
+        textAlign="justified"
+        style={{ marginBottom: "10px" }}
+      >
+        <span
+          style={{
+            padding: "10%",
+            fontSize: "100%",
+            fontWeight: "bold",
+            color: "black",
+            marginLeft: "10px",
+          }}
+        >
+          : 
+          {item}
+        </span>
+      </Grid.Column>
+    ))}
+    <div
+    className="payBillButton"
+    style={{ marginTop: "30px", marginLeft: "-60px" }}
+  >
+    <span
+      style={{
+        marginLeft: "22%",
+        color: "white",
+        marginTop: "100%",
+      }}
+    >
+      Pay Bill
+    </span>
+  </div>
+      </div>
+    </div>
+    
+      </div>
+      <BackgroundImage />
     </div>
   );
 };
 
 export default MyBillModal;
+
+
+{/* <div style={{ display: "flex" }}>
+<Grid>
+  <div
+    style={{
+      marginTop: "45px",
+      marginLeft: "10px",
+      textAlign: "left",
+    }}
+  >
+    {[
+      "Advance Paid",
+      "Approximate Bill",
+      "Initial Estimated Amount",
+      "Due Amt",
+    ].map((item, index) => (
+      <Grid.Column
+        width={8}
+        textAlign="justified"
+        style={{ marginBottom: "10px" }}
+      >
+        <span
+          style={{
+            padding: "10px",
+            fontSize: "15px",
+            fontWeight: "bold",
+            color: "black",
+            marginLeft: "10px",
+          }}
+        >
+          {item}
+        </span>
+      </Grid.Column>
+    ))}
+  </div>
+</Grid>
+<Grid>
+  <div
+    style={{
+      marginTop: "10px",
+      marginLeft: "20px",
+      textAlign: "left",
+    }}
+  >
+    {billValues.map((item, index) => (
+      <Grid.Column
+        width={8}
+        textAlign="justified"
+        style={{ marginBottom: "10px" }}
+      >
+        <span
+          style={{
+            padding: "10px",
+            fontSize: "15px",
+            fontWeight: "bold",
+            color: "black",
+            marginLeft: "10px",
+          }}
+        >
+          {item}
+        </span>
+      </Grid.Column>
+    ))}
+  </div>
+  <div
+    className="payBillButton"
+    style={{ marginTop: "30px", marginLeft: "-72px" }}
+  >
+    <span
+      style={{
+        marginLeft: "6px",
+        color: "white",
+        marginTop: "200px",
+      }}
+    >
+      Pay Bill
+    </span>
+  </div>
+</Grid>
+</div> */}

@@ -6,14 +6,11 @@ import Navbar from "../../components/nav-bar";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
-import FeedBack from "../../assets/Feedback-icon.png";
-import MyBills from "../../assets/Grievince.png";
-import PortorService from "../../assets/wheel-chair-icon.png";
-import Food from '../../assets/Order-food-icon.png';
-import HospitalService from '../../assets/HospitalServices.png';
-import Discharge from '../../assets/Discharge.png';
-import Facilities from '../../assets/Facilities.png';
-import HospitalServ from '../../assets/HospitalServices.png';
+import FeedBack from '../../assets/Feed-and-Grivences.png';
+import CallSup from '../../assets/Call-Support.png';
+import MyDetails from '../../assets/mydetails.png';
+import ServiceReq from '../../assets/Service-Request.png';
+import PortalSer from '../../assets/Porter-services.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
 import { useTranslation } from "react-i18next";
@@ -22,7 +19,6 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-import { getOtp } from "../../features/login/authSlice";
 
 interface ServiceList {
   title: string;
@@ -34,17 +30,17 @@ interface ServiceList {
 const mockServicesList: ServiceList[] = [
   {
     title: "My Details",
-    icon: MyBills,
+    icon: MyDetails,
     path: '/mydetails',
   },
   {
     title: "Service Request",
-    icon: HospitalService,
+    icon: ServiceReq,
     path: "/service",
   },
   {
     title: "Porter Services",
-    icon: PortorService,
+    icon: PortalSer,
     path: "/bills",
   },
   {
@@ -54,7 +50,7 @@ const mockServicesList: ServiceList[] = [
   },
   {
     title: "Call Support",
-    icon: Food,
+    icon: CallSup,
     path: "/food-menu",
   },
 ];
