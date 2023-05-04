@@ -8,15 +8,6 @@ import BackgroundImage from "../../components/background";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const TopBarList = [
-  {
-    status: "Grievance",
-  },
-  {
-    status: "Feedback",
-  },
-];
-
 const Feedback = () => {
   const { t } = useTranslation(["serviceslist"]);
   return (
@@ -89,7 +80,7 @@ const Grievance = () => {
     </div>
   );
 };
-function Board(props) {
+function Board() {
   const [state, setState] = useState(false);
   const [status, setStatus] = useState("Grievance");
   const naviage = useNavigate();
@@ -97,10 +88,8 @@ function Board(props) {
 
   const onChangeScreen = () => {
     if (status === "Grievance") {
-      setState(!state);
-    } else {
-      setState(false);
-    }
+      setState((prev) => !prev);
+    } 
   };
 
   const Back = () => {
@@ -116,14 +105,13 @@ function Board(props) {
         >
           <Icon disabled name="arrow left" size="large" color="#6D6D70" />
         </div>
-        <div className="main">
-          {TopBarList.map((item) => {
-            return (
-              <div onClick={onChangeScreen} className="left-div">
-                <h5 style={{ marginTop: "-4px" }}>{t(item.status)}</h5>
-              </div>
-            );
-          })}
+        <div className="main" style={{justifyContent: 'center'}}>
+          <div className="left-div" style={{padding: '10px', background: state? '#6c6d70' : '#ececec'}} onClick={onChangeScreen}>
+          <h5 style={{ marginTop: "-4px", color: state? 'white' : 'black'}}>Grievance</h5>
+          </div>
+          <div className="left-div" style={{padding: '10px', background: state? '#ececec' : '#6c6d70'}} onClick={onChangeScreen}>
+          <h5 style={{ marginTop: "-4px", color: state? 'black' : 'white'}}>Feedback</h5>
+          </div>
         </div>
         <div className="screens-div">
           {state ? <Grievance /> : <Feedback />}

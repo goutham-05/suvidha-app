@@ -25,7 +25,7 @@ const MyDischargeModal = () => {
             </div>
             <div>
                 <Grid>
-        <div style={{marginTop: '50px', marginLeft: '34px'}}>
+        <div style={{marginTop: '50px', marginLeft: '20px'}}>
           {[
             "Discharge Time: 12:00 PM",
             "Discharge Start: May 3,2023",
