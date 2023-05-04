@@ -76,7 +76,8 @@ const UserForm: React.FC<Props> = ({ history }) => {
 
   const onSubmitForm = (data: any) => {
     dispatch(getOtp(data));
-    localStorage.setItem("Login", JSON.stringify(data.mobile_number));
+    localStorage.setItem("mobile_number", data.mobile_number);
+    localStorage.setItem("admissionno", data.admissionno);
   };
 
   return (
