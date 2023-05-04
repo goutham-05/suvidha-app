@@ -37,8 +37,7 @@
     height: 35px;
     background: #E31A47;
     border-radius: 10px;
-    margin-left: 20%;
     padding-top: 6px;
     font-size: 14px;
-    color: white;
+    color: 'white';
 }

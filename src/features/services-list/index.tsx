@@ -69,6 +69,10 @@ function ServicesList() {
 
   const naviage = useNavigate();
 
+  const userData = useAppSelector((state) => state.user)
+
+  console.log('dashboard', userData)
+
   const { t } = useTranslation(["serviceslist"]); 
   const onClick =  useCallback((title: string, path: string) => {
     const findService = serviceInfo.find((service) => service.title === title);
