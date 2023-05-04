@@ -1,7 +1,7 @@
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Segment from "semantic-ui-react/dist/commonjs/elements/Segment";
 import { Button, Header, Image, Modal } from "semantic-ui-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Icon } from "semantic-ui-react";
 import Navbar from "../nav-bar";
@@ -13,12 +13,25 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import { useTranslation } from "react-i18next";
+import { getOtp } from "../../features/login/authSlice";
 
 const MyBillModal = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation(["mydetails"]);
-  // const userData = useAppSelector((state) => state.user)
-  // console.log('Bill', userData.data.hims_estimated_amount);
+  useEffect(() => {
+    dispatch(getOtp({
+      'mobile_number' : localStorage.getItem('mobile_number'),
+      'admissionno' : localStorage.getItem('admissionno')
+    }));
+  }, [])
+  const userData = useAppSelector((state) => state.user);
+  const billValues = [
+    userData.data?.total_advance,
+    userData.data?.app_bill_amount,
+    userData.data?.latest_esitmated_amt,
+    userData.data?.balance_amt,
+  ]
 
   const Back = () => {
     navigate("/mydetails");
@@ -61,12 +74,7 @@ const MyBillModal = () => {
       </Grid>
       <Grid>
         <div style={{marginTop: '10px', marginLeft: '20px', textAlign: 'left'}}>
-          {[
-            ":100",
-            ":Nill",
-            ":25000",
-            ":Nill",
-          ].map((item, index) => (
+          {billValues.map((item, index) => (
             <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
               <span
                 style={{
