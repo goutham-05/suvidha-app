@@ -6,10 +6,8 @@ import Navbar from "../../components/nav-bar";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
-import FeedBack from "../../assets/Feedback-icon.png";
-import MyBills from "../../assets/Grievince.png";
-import PortorService from "../../assets/wheel-chair-icon.png";
-import Food from '../../assets/Order-food-icon.png';
+import HouseKeep from '../../assets/House-keeping-icon.png'
+import Food from '../../assets/Food-and-Beverage.png';
 import Discharge from '../../assets/Discharge.png';
 import HospitalServices from '../../assets/HospitalServices.png'
 import Facilities from '../../assets/Facilities.png';
@@ -28,7 +26,7 @@ interface Services {
 const mockServicesList: Services[] = [
   {
     title: "HouseKeeping",
-    icon: Facilities,
+    icon: HouseKeep,
     path: '/bills',
   },
   {

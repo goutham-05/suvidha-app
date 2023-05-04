@@ -87,7 +87,7 @@ const authSlice = createSlice({
     [getOtp.rejected.type]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
-      state.message = action.payload.message;
+      state.message =  "Invalid Details";
     },
     [validateOtp.pending.type]: (state) => {
       state.status = "loading";
@@ -99,7 +99,7 @@ const authSlice = createSlice({
     },
     [validateOtp.rejected.type]: (state, action) => {
       state.status = "failed";
-      state.error = action.payload.error;
+      state.error = action.payload.message;
       state.message = "Invalid OTP";
     },
   },

@@ -71,6 +71,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
           user: userData,
         },
       });
+      localStorage.setItem("patient_name", userData.patient_name);
     }
   }, [status]);
 
@@ -116,7 +117,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
                 fluid={true}
                 loading={false}
               />
-              {errors.ipNumber?.type === "required" && (
+              {errors.admissionno?.type === "required" && (
                 <Label color="orange" pointing prompt>
                   IP Number is required
                 </Label>

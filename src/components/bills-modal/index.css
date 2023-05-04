@@ -41,3 +41,13 @@
     font-size: 14px;
     color: 'white';
 }
+
+.two-column-container {
+    display: grid;
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Creates two columns with equal width */
+    gap: 2px; /* Adds some space between the columns */
+    width: 100%;
+  }
