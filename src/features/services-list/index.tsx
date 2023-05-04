@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
@@ -17,6 +17,12 @@ import HospitalServ from '../../assets/HospitalServices.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
 import { useTranslation } from "react-i18next";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../config/redux-store";
+import { getOtp } from "../../features/login/authSlice";
 
 interface ServiceList {
   title: string;
@@ -61,8 +67,11 @@ function ServicesList() {
 
   const [service, setService] = useState<ServiceInfo>([]);
 
-
   const naviage = useNavigate();
+
+  const userData = useAppSelector((state) => state.user)
+
+  console.log('dashboard', userData)
 
   const { t } = useTranslation(["serviceslist"]); 
   const onClick =  useCallback((title: string, path: string) => {

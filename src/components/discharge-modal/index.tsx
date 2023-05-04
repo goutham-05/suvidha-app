@@ -23,9 +23,9 @@ const MyDischargeModal = () => {
                 <Icon disabled name='close'  size="large" color="black" style={{marginTop: '10px', marginLeft: '20px'}}/>
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <Grid>
-        <div style={{marginTop: '50px', marginLeft: '34px'}}>
+        <div style={{marginTop: '50px', marginLeft: '20px'}}>
           {[
             "Discharge Time: 12:00 PM",
             "Discharge Start: May 3,2023",
@@ -42,12 +42,64 @@ const MyDischargeModal = () => {
                 }}
               >
                 {item}
-                <div style={{border: '1px solid #6C6D70'}} />
               </span>
             </Grid.Column>
           ))}
         </div>
       </Grid>
+            </div> */}
+            <div style={{display: 'flex'}}>
+                <Grid>
+        <div style={{marginTop: '45px', marginLeft: '10px', textAlign: 'left'}}>
+          {[
+            "Discharge Time",
+            "Discharge Start",
+            "Discharge Complete",
+            "Discharge Approved",
+          ].map((item, index) => (
+            <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
+              <span
+                style={{
+                  padding: "10px",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  color: 'black',
+                  marginLeft: '10px'
+                }}
+              >
+                {item}
+                {/* <div style={{border: '1px solid #6C6D70'}} /> */}
+              </span>
+            </Grid.Column>
+          ))}
+        </div>
+      </Grid>
+      <Grid>
+        <div style={{marginTop: '20px', marginLeft: '20px', textAlign: 'left'}}>
+          {[
+            ":12:00 PM",
+            ":May 3,2023l",
+            ":May 3,2023",
+            ":Approved",
+          ].map((item, index) => (
+            <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
+              <span
+                style={{
+                  padding: "10px",
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  color: 'black',
+                  marginLeft: '10px'
+                }}
+              >
+                {item}
+                {/* <div style={{border: '1px solid #6C6D70'}} /> */}
+              </span>
+            </Grid.Column>
+          ))}
+        </div>
+      </Grid> 
+ 
             </div>
         </div>
         <BackgroundImage />
