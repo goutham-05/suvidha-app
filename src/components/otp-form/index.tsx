@@ -40,22 +40,23 @@ const OtpForm: React.FC<Props> = ({ }) => {
   const [ipNumber, setIpNumber] = useState('');
 
   
-  useEffect(() => {
-    if (status === 'succeeded' && otpSuccess) {
+  // useEffect(() => {
+  //   if (status === 'succeeded' && otpSuccess) {
+  //     navigate("/services");
+  //   }
+  // }, [status, otpSuccess])
+  
+  const db = useAppSelector((state) => state.db.db);
+  const onSubmitForm = async (data: any) => {
+    const otp = await db.getItem(userData.ip_no);
+    if (otp === null || otp != data.otp) {
+      alert('Invalid OTP')
+      return;
+    } else {
+      const otp = await db.setItem('token',userData.token);
+      localStorage.setItem("token", userData.token);
       navigate("/services");
     }
-  }, [status, otpSuccess])
-  
-
-  const onSubmitForm = (data: any) => {
-    const otpData = {
-      mobile_number: userData?.mobile_number,
-    admissionno: userData?.admissionno,
-    otp: data.otp
-    }
-
-    dispatch(validateOtp(otpData))
-
   };
 
   return (

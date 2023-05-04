@@ -4,7 +4,7 @@ import "./App.css";
 import { routes } from "./utilities/routes/routes";
 
 function App() {
-  const isLoggedIn = localStorage.getItem('patientLocation');
+  const isLoggedIn = localStorage.getItem('token');
   const routing = useRoutes(
     routes.map((route) => {
       const { isProtected, ...rest } = route;

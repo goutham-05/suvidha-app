@@ -10,6 +10,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import authSlice from "../../features/login/authSlice";
 import logger from "redux-logger";
 import serviceSlice from "../../features/services-list/serviceSlice";
+import dbSlice from "../../features/login/dbSlice";
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -21,6 +22,7 @@ const store = configureStore({
   reducer: {
     user: authSlice.reducer,
     services: serviceSlice.reducer,
+    db: dbSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
