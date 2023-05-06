@@ -56,7 +56,7 @@ const DropDown: React.FC<Props> = ({
         }
       </div>
       {isOpen && (
-        <ul className="dropdown-content" style={{background: 'transparent', marginTop: '-10px', width: '310px', marginLeft: '-6px'}}>
+        <ul className="dropdown-content" style={{background: 'transparent', marginTop: '8%', width: '310px', marginLeft: '-14%'}}>
           {options.map((option, index) => (
             <li
               key={index}

@@ -8,8 +8,6 @@ import { ServiceInfo, serviceInfo } from "../../config/services";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
 import HouseKeep from '../../assets/House-keeping-icon.png'
 import Food from '../../assets/Food-and-Beverage.png';
-import Discharge from '../../assets/Discharge.png';
-import HospitalServices from '../../assets/HospitalServices.png'
 import Facilities from '../../assets/Facilities.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
@@ -36,7 +34,7 @@ const mockServicesList: Services[] = [
   },
   {
     title: "Facilities",
-    icon: Discharge,
+    icon: Facilities,
     path: '/services',
   },
 ];

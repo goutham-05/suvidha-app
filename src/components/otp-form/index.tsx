@@ -15,7 +15,7 @@ import {
 } from "../../config/redux-store";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
+import MessageNotification from '../../common/notification';
 interface Props {
 }
 
@@ -25,7 +25,10 @@ const OtpForm: React.FC<Props> = ({ }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation(["otp"]);
 
-  const { status, otpSuccess , data: userData } = useAppSelector((state: RootState) => state.user);
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<"idle" | "loading" | "failed" | "succeeded">("idle");
+
+  const { otpSuccess , data: userData } = useAppSelector((state: RootState) => state.user);
 
   const getMobile = localStorage.getItem('mobile_number');
 
@@ -48,10 +51,11 @@ const OtpForm: React.FC<Props> = ({ }) => {
   
   const db = useAppSelector((state) => state.db.db);
   const onSubmitForm = async (data: any) => {
+    setStatus("idle");
     const otp = await db.getItem(userData.ip_no);
     if (otp === null || otp != data.otp) {
-      alert('Invalid OTP')
-      return;
+      setMessage('Invalid OTP');
+      setStatus('failed');
     } else {
       const otp = await db.setItem('token',userData.token);
       localStorage.setItem("token", userData.token);
@@ -62,6 +66,7 @@ const OtpForm: React.FC<Props> = ({ }) => {
 
   return (
     <>
+    <MessageNotification message={message} status={status} theme="dark" />
       <Message style={{marginTop: "-80px", border: 'none'}}>
         <Message.Header style={{color: '#374F4F'}}>{t('Enter OTP sent to')} {getMobile}</Message.Header>
         {/* <p style={{color: '#374F4F'}}>Or</p> <Message.Header style={{color: '#374F4F'}}>Enter OTP sent to nikhil@gmail.com</Message.Header> */}

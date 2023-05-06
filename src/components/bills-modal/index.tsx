@@ -62,7 +62,7 @@ const MyBillModal = () => {
         {[
       "Advance Paid",
       "Approximate Bill",
-      "InitialEstimatedAmount",
+      "Initial Estimated Amount",
       "Due Amt",
     ].map((item, index) => (
       <Grid.Column
@@ -77,6 +77,7 @@ const MyBillModal = () => {
             fontWeight: "bold",
             color: "black",
             marginLeft: "10%",
+            whiteSpace: 'nowrap'
           }}
         >
           {item}
@@ -111,7 +112,7 @@ const MyBillModal = () => {
     ))}
     <div
     className="payBillButton"
-    style={{ marginTop: "30px", marginLeft: "-60px" }}
+    style={{ marginTop: "30px", marginLeft: "-70px" }}
   >
     <span
       style={{

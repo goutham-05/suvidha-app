@@ -8,7 +8,7 @@ import { ServiceInfo, serviceInfo } from "../../config/services";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
 import FeedBack from '../../assets/Feed-and-Grivences.png';
 import CallSup from '../../assets/Call-Support.png';
-import MyDetails from '../../assets/mydetails.png';
+import MyDetails from '../../assets/My-Details.png';
 import ServiceReq from '../../assets/Service-Request.png';
 import PortalSer from '../../assets/Porter-services.png';
 import BackgroundImage from "../../components/background";
@@ -51,7 +51,7 @@ const mockServicesList: ServiceList[] = [
   {
     title: "Call Support",
     icon: CallSup,
-    path: "/food-menu",
+    path: "/callsupport",
   },
 ];
 

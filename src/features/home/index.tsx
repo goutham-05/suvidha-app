@@ -35,23 +35,6 @@ function Home() {
     });
   };
 
-  useEffect(() => {
-    // const url = "http://localhost:5173/1/block-1/floor-1/ns-1/room-1/bed-1";
-    // window.history.replaceState(null, "New Page Title", url);
-    // const urlParams = "/1/block-1/floor-1/ns-1/room-1/bed-1".split("/");
-    
-    // const myObject = {
-    //   blockNO: urlParams[1],
-    //   floorNO: urlParams[2],
-    //   nsNO: urlParams[3],
-    //   roomNO: urlParams[4],
-    //   bedNO: urlParams[5],
-    // };
-
-    // localStorage.setItem("Data", JSON.stringify(myObject));
-    // localStorage.setItem("FloorNo", JSON.stringify(myObject.floorNO));
-  }, []);
-
   return (
     <>
       <BrandLogo
