@@ -61,7 +61,7 @@ function ServicesList() {
 
   const [modalConent, setModalContent] = React.useState<JSX.Element>();
 
-  const [service, setService] = useState<ServiceInfo>([]);
+  const [service, setService] = useState<ServiceInfo>();
 
   const naviage = useNavigate();
 

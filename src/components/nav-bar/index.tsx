@@ -1,32 +1,36 @@
 import React, { useEffect } from "react";
 import { Header, Label, Segment, Image } from "semantic-ui-react";
 import BrandLogo from "../logo";
-import { useNavigate, useNavigation,useParams, useHistory } from "react-router-dom";
+import { useNavigate, useNavigation,useParams } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 import { useTranslation } from "react-i18next";
 import "./index.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  //const history = useHistory();
   const { t } = useTranslation(["serviceslist"]);
 
-  const patientLocation: string | null =
-    localStorage.getItem("patientLocation");
-  const floor = JSON.parse(patientLocation).floor;
+  const patientLocation: string | null = localStorage.getItem("patientLocation");
+  let roomNo = '';
+  if (patientLocation !== null) {
+    const roomNo = JSON.parse(patientLocation).room;
+  }
 
   const patientName = localStorage.getItem("patient_name");
   const ipNumber = localStorage.getItem("admissionno");
 
   const userLogout = () => {
-    let redirectUrl = '/'+JSON.parse(localStorage.getItem("patientLocation")).unit+'/'+JSON.parse(localStorage.getItem("patientLocation")).block+'/'+JSON.parse(localStorage.getItem("patientLocation")).floor+'/'+JSON.parse(localStorage.getItem("patientLocation")).ns+'/'+JSON.parse(localStorage.getItem("patientLocation")).room+'/'+JSON.parse(localStorage.getItem("patientLocation")).bed;
-    // console.log(redirectUrl);return;
+    let redirectUrl = '/';
+    const patientLocation: string | null = localStorage.getItem("patientLocation");
+    if (patientLocation !== null) {
+      let redirectUrl = '/'+JSON.parse(patientLocation).unit+'/'+JSON.parse(patientLocation).block+'/'+JSON.parse(patientLocation).floor+'/'+JSON.parse(patientLocation).ns+'/'+JSON.parse(patientLocation).room+'/'+JSON.parse(patientLocation).bed;
+    }
     localStorage.removeItem('patient_name');
     localStorage.removeItem('i18nextLng');
     localStorage.removeItem('admissionno');
     localStorage.removeItem('mobile_number');
     localStorage.removeItem('token');
-    localStorage.getItem("patientLocation");
+    //localStorage.getItem("patientLocation");
     navigate(redirectUrl);
   }
 
@@ -58,7 +62,7 @@ const Navbar = () => {
               <p className="mobile-paragraph">
                 {t("IP")}: {ipNumber}
               </p>
-              {t("Room")}: <span>{floor}</span>
+              {t("Room")}: <span>{roomNo}</span>
             </p>
           </div>
           <div style={{background: '#6C6D70', width: '34%', borderRadius: '20px', marginLeft: '60%', marginTop: '3%'}} onClick={userLogout}>Logout</div>

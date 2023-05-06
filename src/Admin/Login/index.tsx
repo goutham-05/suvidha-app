@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 import "./index.css";
 import Logo from "../../assets/Logo.png";
-
-const Admin: React.FC<Props> = ({ history }) => {
+interface Props {
+  // define your props here
+}
+const Admin: React.FC<Props> = () => {
   return (
     <div className="container">
       <div className="">

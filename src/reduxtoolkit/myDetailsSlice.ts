@@ -18,7 +18,7 @@ const initialState: State = {
 };
 
 interface Payload {
-  admissionno: string;
+  admissionno: string | null;
 }
 export const getMyInsuranceStatus = createAsyncThunk(
   "getMyInsuranceStatus",
