@@ -49,7 +49,7 @@ function CallSupport() {
     <>
       <Navbar />
       <div onClick={Back} style={{ marginBottom: "10%", marginRight: "390%" }}>
-        <Icon disabled name="arrow left" size="large" color="#6D6D70" />
+        <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
       </div>
       <div
         style={{ display: "flex", justifyContent: "center", marginLeft: "5%" }}
@@ -157,7 +157,7 @@ function CallSupport() {
               </div>
               <Modal.Actions style={{ marginLeft: "35%", marginTop: "4%" }}>
                 <Button color="red">
-                  <Icon disabled name="call" color="white" size="small" />
+                  <Icon disabled name="call" size="small" />{/* color="white" */}
                   <a href="tel:555-555-5555">Call</a>
                 </Button>
               </Modal.Actions> 
