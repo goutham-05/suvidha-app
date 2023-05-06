@@ -45,7 +45,7 @@ function Services() {
 
   const [modalConent, setModalContent] = React.useState<JSX.Element>();
 
-  const [service, setService] = useState<ServiceInfo>([]);
+  const [service, setService] = useState<ServiceInfo>();
 
   const naviage = useNavigate();
   const { t } = useTranslation(["servicerequest"]); 
@@ -76,7 +76,7 @@ function Services() {
     <>
       <Navbar />
       <div onClick={Back} style={{marginBottom: '10px', marginRight: '390px'}}>
-      <Icon disabled name='arrow left'  size="large" color="#6D6D70"/>
+      <Icon disabled name='arrow left'  size="large" />  {/* color="#6D6D70" */}
     </div>
     <div style={{marginLeft: '3%'}}>
       <Container fluid textAlign="justified" style={{marginLeft: '-100px'}}>

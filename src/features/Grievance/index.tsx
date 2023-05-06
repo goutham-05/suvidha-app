@@ -2,7 +2,7 @@ import React from 'react';
 import Form from "semantic-ui-react/dist/commonjs/collections/Form";
 import TextArea from "semantic-ui-react/dist/commonjs/addons/TextArea";
 import Navbar from '../../components/nav-bar';
-function Grievance(props) {
+function Grievance(props:any) {
     return (
         <>
         <Form>

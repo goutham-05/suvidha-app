@@ -11,6 +11,7 @@ import authSlice from "../../features/login/authSlice";
 import logger from "redux-logger";
 import serviceSlice from "../../features/services-list/serviceSlice";
 import dbSlice from "../../features/login/dbSlice";
+import myDetailsSlice from "../../reduxtoolkit/myDetailsSlice"
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -23,6 +24,7 @@ const store = configureStore({
     user: authSlice.reducer,
     services: serviceSlice.reducer,
     db: dbSlice.reducer,
+    myDetails:myDetailsSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

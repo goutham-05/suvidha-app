@@ -49,7 +49,7 @@ const Grievance = () => {
     <div className="grievance-container">
       <div className="attach-button" onClick={Attach}>
         <h6>
-          <Icon disabled name="attach" color="white" size="large" />
+          <Icon disabled name="attach" size="large" />  {/* color="white" */}
           {t("Attach")}{" "}
         </h6>
       </div>
@@ -103,7 +103,7 @@ function Board() {
           onClick={Back}
           style={{ marginBottom: "10px", marginRight: "390px" }}
         >
-          <Icon disabled name="arrow left" size="large" color="#6D6D70" />
+          <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
         </div>
         <div className="main" style={{justifyContent: 'center'}}>
           <div className="left-div" style={{padding: '10px', background: state? '#6c6d70' : '#ececec'}} onClick={onChangeScreen}>
