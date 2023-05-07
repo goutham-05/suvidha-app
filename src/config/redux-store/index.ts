@@ -11,7 +11,9 @@ import authSlice from "../../features/login/authSlice";
 import logger from "redux-logger";
 import serviceSlice from "../../features/services-list/serviceSlice";
 import dbSlice from "../../features/login/dbSlice";
-import myDetailsSlice from "../../reduxtoolkit/myDetailsSlice"
+import myDetailsSlice from "../../reduxtoolkit/myDetailsSlice";
+import unitSlice from "../../reduxtoolkit/unitSlice";
+import qrCodeSlice from "../../reduxtoolkit/qrCodeSlice";
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -24,7 +26,9 @@ const store = configureStore({
     user: authSlice.reducer,
     services: serviceSlice.reducer,
     db: dbSlice.reducer,
-    myDetails:myDetailsSlice.reducer
+    myDetails:myDetailsSlice.reducer,
+    units: unitSlice.reducer,
+    qrCode: qrCodeSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
