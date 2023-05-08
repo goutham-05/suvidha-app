@@ -15,7 +15,7 @@ const Feedback = () => {
       <TextArea
         style={{
           resize: "none",
-          width: "320px",
+          width: "100%",
           height: "180px",
           marginTop: "10px",
           border: "1px solid grey",

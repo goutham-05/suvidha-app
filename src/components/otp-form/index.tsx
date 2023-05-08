@@ -19,7 +19,16 @@ import MessageNotification from '../../common/notification';
 interface Props {
 }
 
-const OtpForm: React.FC<Props> = ({ }) => {
+function formatMobileNumber(getMobile) {
+  const visibleDigits = 4;
+  const hiddenDigits = getMobile.length - visibleDigits;
+  const firstDigits = getMobile.substring(0, hiddenDigits);
+  const lastDigits = getMobile.substring(hiddenDigits);
+  const hiddenNumbers = '*'.repeat(hiddenDigits);
+  return `${hiddenNumbers}${lastDigits}`;
+}
+
+const OtpForm: React.FC<Props> = ({props}) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -30,6 +39,7 @@ const OtpForm: React.FC<Props> = ({ }) => {
 
   const { otpSuccess , data: userData } = useAppSelector((state: RootState) => state.user);
 
+  localStorage.setItem("mobile_number", userData.mobile_number);
   const getMobile = localStorage.getItem('mobile_number');
 
   const {
@@ -63,15 +73,15 @@ const OtpForm: React.FC<Props> = ({ }) => {
     }
   };
 
-
+  const formattedNumber = formatMobileNumber(getMobile);
   return (
     <>
     <MessageNotification message={message} status={status} theme="dark" />
-      <Message style={{marginTop: "-80px", border: 'none'}}>
-        <Message.Header style={{color: '#374F4F'}}>{t('Enter OTP sent to')} {getMobile}</Message.Header>
+      <Message style={{marginTop: '-28%', justifyContent: 'center', border: 'none'}}>
+        <Message.Header style={{color: '#374F4F'}}>{t('Enter OTP sent to')}  {formattedNumber}</Message.Header>
         {/* <p style={{color: '#374F4F'}}>Or</p> <Message.Header style={{color: '#374F4F'}}>Enter OTP sent to nikhil@gmail.com</Message.Header> */}
       </Message>
-      <Form onSubmit={handleSubmit(onSubmitForm)}>
+      <Form onSubmit={handleSubmit(onSubmitForm)} style={{marginLeft: '10%'}}>
         <Grid columns="equal">
           <Grid.Row stretched>
             <Grid.Column>

@@ -20,7 +20,7 @@ const initialState: State = {
 };
 
 interface Payload {
-  mobile_number: number | string | null;
+  // mobile_number: number | string | null;
   admissionno: string | null;
 }
 

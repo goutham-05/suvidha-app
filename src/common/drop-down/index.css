@@ -1,9 +1,9 @@
 .dropdown{
-  width: 300px;
+  width: 100%;
 }
 
 .dropdown .dropdown-btn{
-  padding: 10px;
+  padding: 10%;
   background: white;
   border-radius: 30px;
   border: 1px solid grey;
@@ -15,7 +15,7 @@
   position: absolute;
   top: 33%;
   left:13%;
-  padding: 10px;
+  padding: 5%;
   background: white;
   font-weight: 500;
   color: #333;
@@ -27,7 +27,7 @@
 }
 
 .dropdown .dropdown-content .dropdown-item{
-  padding: 10px;
+  padding: 5%;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -39,7 +39,7 @@
 .border-line{
   border: 0.2px solid #B8B8B8;
   border-bottom-right-radius: 30px;
-  width: '300px';
+  width: '100%';
 }
 
 .custom-dropdown {
@@ -47,5 +47,5 @@
 }
 
 .dropdown-header{
-margin-left: '220px';
+margin-left: '100%';
 }

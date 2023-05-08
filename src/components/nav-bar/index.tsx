@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Header, Label, Segment, Image } from "semantic-ui-react";
+import { Header, Label, Segment, Table} from "semantic-ui-react";
+import { Input, Menu } from 'semantic-ui-react'
 import BrandLogo from "../logo";
 import { useNavigate, useNavigation,useParams } from "react-router-dom";
 import logo from "../../assets/Logo.png";
@@ -36,39 +37,30 @@ const Navbar = () => {
 
 
   return (
-    <div
-      className="ui inverted segment"
-      style={{
-        background: "white",
-        height: 120,
-        width: 410,
-        marginLeft: -30,
-        marginTop: -30,
-        boxShadow: "1px 2px 9px grey",
-      }}
-    >
-      <div className="ui inverted secondary menu">
-        <div className="Logo-container">
-          <img
-            src={logo}
-            style={{ marginTop: "-12px", width: "100px", height: "100px" }}
-          />
-        </div>
-        <div className="data-container">
-          <div className="patientData">
-            <p>
+
+    <Segment clearing style={{marginTop: '-10%', width: '119%',height: '100px', marginLeft: '-9%',}}>
+         <div className="data-container" style={{float: 'right', whiteSpace: 'nowrap'}}>
+           <div className="patientData">
+             <p style={{fontSize: '80%'}}>
               {patientName}
-              <br />
-              <p className="mobile-paragraph">
-                {t("IP")}: {ipNumber}
+             <br />
+               <p>
+                 {t("IP")}: {ipNumber}
               </p>
-              {t("Room")}: <span>{roomNo}</span>
+              <br/>
+              <span style={{float: 'right'}}>
+              {t("Room")}: <span>Floor-1</span>
+              </span>
             </p>
+            <div className="logout-button" onClick={userLogout}><p>Logout</p></div>
           </div>
-          <div style={{background: '#6C6D70', width: '34%', borderRadius: '20px', marginLeft: '60%', marginTop: '3%'}} onClick={userLogout}>Logout</div>
-        </div>
-      </div>
-    </div>
+         </div>
+    <Header as='h2' floated='left'>
+    <img
+            src={logo}
+            style={{ marginTop: "-10%", width: "100%", height: "100px"}}/>
+    </Header>
+  </Segment>
   );
 };
 

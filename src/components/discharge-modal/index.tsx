@@ -18,7 +18,7 @@ const MyDischargeModal = () => {
         <Navbar />
         <div className="mydischargeContainer">
             <div className="mydischargeHeader">
-                <span className="headerTitle">My Discharge</span>
+                <span className="headerTitle" style={{background: '#4A98CD'}}>My Discharge</span>
                 <div onClick={Back}>
                 <Icon disabled name='close'  size="large" color="black" style={{marginTop: '10px', marginLeft: '20px'}}/>
                 </div>

@@ -22,18 +22,36 @@ const MyBillModal = () => {
   useEffect(() => {
     dispatch(
       getOtp({
-        mobile_number: localStorage.getItem("mobile_number"),
+        // mobile_number: localStorage.getItem("mobile_number"),
         admissionno: localStorage.getItem("admissionno"),
       })
     );
   }, []);
   const userData = useAppSelector((state) => state.user);
+  const [patientTypeChecking, setPatientTypeChecking] = useState([]);
+
   const billValues = [
     userData.data?.total_advance,
     userData.data?.app_bill_amount,
     userData.data?.latest_esitmated_amt,
     userData.data?.balance_amt,
   ];
+
+  // useEffect(() => {
+  //   if (userData.data.patient_type === "GENERAL") {
+      // const billValues = [
+      //   userData.data?.total_advance,
+      //   userData.data?.app_bill_amount,
+      //   userData.data?.latest_esitmated_amt,
+      //   userData.data?.balance_amt,
+      // ];
+  //     setPatientTypeChecking(billValues);
+  //     console.log('BIlls values', patientTypeChecking);
+  //   }
+  // }, [])
+
+
+  
 
   const Back = () => {
     navigate("/mydetails");
@@ -45,7 +63,7 @@ const MyBillModal = () => {
       <Navbar />
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
-          <span className="headerTitle">My Bill</span>
+          <span className="headerTitle" style={{background: '#4A98CD'}}>My Bill</span>
           <div onClick={Back}>
             <Icon
               disabled

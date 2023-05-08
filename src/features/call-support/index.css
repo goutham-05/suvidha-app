@@ -46,20 +46,21 @@
     background-color: #e31a47;
     width: 40%;
     border-radius: 10px;
-    color: white;
+    color: white;margin-top: 4%;
   }
 
   .Tablecontainer {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
-    height: 10%;
+    height: 10%; */
+    margin-top: 4%;
   }
   
   table {
     border-collapse: collapse;
     width: 100%;
-    max-width: 800px;
+    max-width: 100%;
   }
   
   th,
