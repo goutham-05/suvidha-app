@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Header, Label, Segment, Table} from "semantic-ui-react";
+import { Header, Label, Segment, Grid} from "semantic-ui-react";
 import { Input, Menu } from 'semantic-ui-react'
 import BrandLogo from "../logo";
 import { useNavigate, useNavigation,useParams } from "react-router-dom";
@@ -19,6 +19,9 @@ const Navbar = () => {
 
   const patientName = localStorage.getItem("patient_name");
   const ipNumber = localStorage.getItem("admissionno");
+  const blockNo = localStorage.getItem("patient_block");
+  const floorNo = localStorage.getItem("patient_floor");
+  const wardName = localStorage.getItem("patient_wardName");
 
   const userLogout = () => {
     let redirectUrl = '/';
@@ -38,24 +41,17 @@ const Navbar = () => {
 
 
   return (
-
-    <Segment clearing style={{marginTop: '-10%', width: '119%',height: '100px', marginLeft: '-9%',}}>
-         <div className="data-container" style={{float: 'right', whiteSpace: 'nowrap'}}>
-           <div className="patientData">
-             <p style={{fontSize: '80%'}}>
-              {patientName}
-             <br />
-               <p>
-                 {t("IP")}: {ipNumber}
-              </p>
-              <br/>
-              <span style={{float: 'right'}}>
-              {t("Room")}: <span>Floor-1</span>
-              </span>
-            </p>
-            <div className="logout-button" onClick={userLogout}><p>Logout</p></div>
+    <Segment clearing style={{marginTop: '-10%', width: '119%',height: '130px', marginLeft: '-9%',}}>
+      <div className="data-container" style={{float: 'right', whiteSpace: 'nowrap'}}>
+      <div className="patientData">
+      <p> {patientName}</p>
+      <p><strong> {t("IP")}:</strong> {ipNumber}</p>
+          <p><strong>Block:</strong> {blockNo}</p>
+          <p><strong>Floor:</strong> {floorNo}</p>
+          <p><strong>Ward Name:</strong> {wardName}</p>
+          <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', background: '#4A98CD', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>Logout</p>
           </div>
-         </div>
+      </div>
     <Header as='h2' floated='left'>
     <img
             src={logo}

@@ -57,7 +57,20 @@ const MyBillModal = () => {
   // }, [])
 
 
-  
+  const billData = () => {
+    if (userData.data.patient_type !== "GENERAL") {
+      const billValues = [userData.data?.latest_estimated_amt,'', userData.data?.latest_estimated_amt]
+      setPatientTypeChecking(billValues);
+    }
+    else {
+      const billValues = ['','',userData.data?.app_bill_amount, userData.data?.balance_amt]
+      setPatientTypeChecking(billValues);
+    }
+  }
+
+  useEffect(() => {
+    billData();
+  }, [])
 
   const Back = () => {
     navigate("/mydetails");
@@ -116,7 +129,7 @@ const MyBillModal = () => {
       textAlign: "left",
       marginLeft: '10%'
     }}>
-      {billValues.map((item, index) => (
+      {patientTypeChecking.map((item, index) => (
       <Grid.Column
         width={8}
         textAlign="justified"
@@ -136,7 +149,7 @@ const MyBillModal = () => {
         </span>
       </Grid.Column>
     ))}
-    <div
+    {/* <div
     className="payBillButton"
     style={{ marginTop: "30px", marginLeft: "-70px" }}
   >
@@ -144,12 +157,12 @@ const MyBillModal = () => {
       style={{
         marginLeft: "22%",
         color: "white",
-        marginTop: "100%",
+        marginTop: "120%",
       }}
     >
       Pay Bill
     </span>
-  </div>
+  </div> */}
       </div>
     </div>
     
