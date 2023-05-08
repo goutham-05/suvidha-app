@@ -56,12 +56,12 @@ const qrCodeSlice = createSlice({
     [storQRCode.fulfilled.type]: (state, action) => {
       state.status = "succeeded";
       state.data = action.payload;
-      state.message = "QR Code Saved Successfully";
+      state.message = "QR Code Generated Successfully";
     },
     [storQRCode.rejected.type]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
-      state.message = "QR Code Already Exists";
+      state.message = "Something went wrong, Please try again after some time!";
     },
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import KLogo from "../../assets/kimslogo.png";
 import "./index.css";
 import QRCode from "qrcode";
@@ -10,13 +10,18 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-
+import html2canvas from "html2canvas";
 function QrCode() {
   const dispatch = useAppDispatch();
+  const qrCodeRef = useRef(null);
   const { status, data, message } = useAppSelector((state) => state.units);
-  const { status:qrCStatus, data:qrCData, message:qrCMessage } = useAppSelector((state) => state.qrCode);
+  const {
+    status: qrCStatus,
+    data: qrCData,
+    message: qrCMessage,
+  } = useAppSelector((state) => state.qrCode);
   const [qrCodeData, setQRCodeData] = useState("");
-  console.log('qrCMessage::', qrCMessage);
+  console.log("qrCMessage::", qrCMessage);
   useEffect(() => {
     dispatch(getUnits({}));
   }, []);
@@ -45,29 +50,59 @@ function QrCode() {
     e.preventDefault();
     try {
       const ksUrl = formData.qr_code_data + "/" + formData.unit_code;
+      const logoUrl = "https://www.kimshospitals.com/_nuxt/img/kims_logo.63a8855.png";
       const qrCodeDataUrl = await QRCode.toDataURL(ksUrl);
       setQRCodeData(qrCodeDataUrl);
-      dispatch(storQRCode({
-        unit_name: formData.unit_name,
-        unit_code: formData.unit_code,
-        ks_url: ksUrl,
-        qr_code: qrCodeDataUrl,
-      }));
+      dispatch(
+        storQRCode({
+          unit_name: formData.unit_name,
+          unit_code: formData.unit_code,
+          ks_url: ksUrl,
+          qr_code: qrCodeDataUrl,
+        })
+      );
     } catch (error) {
       console.error(error);
     }
   };
+  const handlePrint = async () => {
+    const printContent = document.getElementById("print_qr_code");
+    if(!printContent){
+      return;
+    }
+    printContent.style.height = "auto";
+    void printContent.offsetWidth;
+  
+    const canvas = await html2canvas(printContent);
+    const printWindow = window.open("", "Print");
+    if(!printWindow){
+      return;
+    }
+    printWindow.document.write(
+      `<html><head><title></title></head><body><img src="${canvas.toDataURL()}" /></body></html>`
+    );
+    printWindow.document.close();
+  
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+      printContent.style.height = "100%";
+    }, 1000);
+  };
   return (
     <div>
-      { qrCMessage && (<MessageNotification status={qrCStatus} message={qrCMessage} theme="dark" />)}
+      {qrCMessage && (
+        <MessageNotification
+          status={qrCStatus}
+          message={qrCMessage}
+          theme="dark"
+        />
+      )}
       <form onSubmit={handleSubmit}>
         <div>
-          <small>Please enter Unit Name:</small>
-          <select
-            name="unit_code"
-            onChange={handleInputChange}
-            required
-          >
+          <small>Please Select Unit Name:</small>
+          <select name="unit_code" onChange={handleInputChange} required>
             <option value="">Select a unit...</option>
             {data &&
               data.map((unit: any) => (
@@ -94,33 +129,45 @@ function QrCode() {
           <button type="submit">GENERATE</button>
         </div>
       </form>
-      <nav className="navbar">
-        <img src={KLogo} alt="Logo" className="navbar-logo" />
-        <ul className="navbar-links">
-          <li>
-            <a href="#">{formData.unit_name}</a>
-          </li>
-          <li>
-            <a href="#">{formData.unit_code}</a>
-          </li>
-        </ul>
-      </nav>
-      <div style={{ width: "100%" }}>
-        <p style={{ fontSize: "12px", fontWeight: 900 }}>
-          PLEASE SCAN THIS QR CODE FOR FEEDBACK / SERVICES / COMPLAINTS
-        </p>
-      </div>
       <div>
-        {/* <img src={QRCODE} style={{marginTop: '30px'}}/> */}
-        {qrCodeData && (
-          <img src={qrCodeData} alt="QR Code" style={{ marginTop: "30px" }} />
-        )}
-        <div style={{ width: "100%" }}>
-          <p
-            style={{ fontSize: "12px", fontWeight: "bold", marginTop: "20px" }}
-          >
-            फीडबैक/सेवाओं/शिकायतों के लिए कृपया इस क्यूआर कोड को स्कैन करें
-          </p>
+        <div>
+          <button onClick={() => handlePrint()}>Print QR Code</button>
+          <div id="print_qr_code">
+            <nav className="navbar">
+              <img src={KLogo} alt="Logo" className="navbar-logo"  onLoad={handlePrint} />
+              <ul className="navbar-links">
+                <li>
+                  <a href="#">{formData.unit_name}</a>
+                </li>
+              </ul>
+            </nav>
+            <div style={{ width: "100%" }}>
+              <p style={{ fontSize: "12px", fontWeight: 900 }}>
+                PLEASE SCAN THIS QR CODE FOR FEEDBACK / SERVICES / COMPLAINTS
+              </p>
+            </div>
+            <div ref={qrCodeRef}>
+              {qrCodeData && (
+                <img
+                  src={qrCodeData}
+                  alt="QR Code"
+                  style={{ marginTop: "30px" }}
+                />
+              )}
+              <div style={{ width: "100%" }}>
+                <p
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    marginTop: "20px",
+                  }}
+                >
+                  फीडबैक/सेवाओं/शिकायतों के लिए कृपया इस क्यूआर कोड को स्कैन
+                  करें
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
