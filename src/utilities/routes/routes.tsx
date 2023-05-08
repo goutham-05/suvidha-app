@@ -83,6 +83,7 @@ export const routes: ProtectedRoute[] = [
   {
     path: '/board',
     element: <Board />,
+    isProtected: true,
   },
   {
     path: '/mydetails',

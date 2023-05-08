@@ -38,6 +38,8 @@ const MyBillModal = () => {
   const Back = () => {
     navigate("/mydetails");
   };
+
+
   return (
     <div>
       <Navbar />
@@ -62,7 +64,7 @@ const MyBillModal = () => {
         {[
       "Advance Paid",
       "Approximate Bill",
-      "Initial Estimated Amount",
+      "Estimated Amount",
       "Due Amt",
     ].map((item, index) => (
       <Grid.Column
