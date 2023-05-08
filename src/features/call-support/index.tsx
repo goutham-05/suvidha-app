@@ -6,7 +6,7 @@ import Navbar from "../../components/nav-bar";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
 import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
-import CallSuppport from "../../assets/Call-Support.png";
+import CallSuppport from "../../assets/callsupport.png";
 import Food from "../../assets/Food-and-Beverage.png";
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
@@ -30,7 +30,7 @@ const callSupportList: Services[] = [
     path: "/bills",
   },
   {
-    title: "Call Support",
+    title: "Contact Support",
     icon: CallSuppport,
     path: "/bills",
   },
@@ -61,7 +61,7 @@ function CallSupport() {
           trigger={
             <div
               style={{
-                background: "#6C6D70",
+                background: "#4A98CD",
                 height: 100,
                 width: 140,
                 borderRadius: 30,
@@ -95,7 +95,7 @@ function CallSupport() {
           }
           style={{
             width: "80%",
-            height: "35%",
+            height: "28%",
             marginLeft: "10%",
             marginTop: "40%",
             borderRadius: "20px",
@@ -110,7 +110,6 @@ function CallSupport() {
                     marginLeft: "18%",
                     marginTop: "8%",
                     width: "60%",
-                    height: "36px",
                     background: "#007cb0",
                     borderRadius: "5px",
                     textAlign: "center",
@@ -171,7 +170,7 @@ function CallSupport() {
           trigger={
             <div
               style={{
-                background: "#6C6D70",
+                background: "#4A98CD",
                 height: 100,
                 width: 140,
                 margin: "4%",
@@ -198,14 +197,14 @@ function CallSupport() {
                     fontWeight: "bold",
                   }}
                 >
-                  Call Support
+                  Contact Support
                 </h1>
               </div>
             </div>
           }
           style={{
             width: "70%",
-            height: "40%",
+            height: "35%",
             marginLeft: "15%",
             marginTop: "40%",
             borderRadius: "20px",
@@ -220,7 +219,6 @@ function CallSupport() {
                     marginLeft: "18%",
                     marginTop: "8%",
                     width: "60%",
-                    height: "38px",
                     background: "#007cb0",
                     borderRadius: "5px",
                     textAlign: "center",
@@ -231,7 +229,7 @@ function CallSupport() {
                   </p>
                 </Header>
                 <div
-                  style={{ flex: 1, marginTop: "11%", marginLeft: "6%" }}
+                  style={{ flex: 1, marginTop: "10%", marginLeft: "6%" }}
                   onClick={() => setSecondModel(false)}
                 >
                   <Icon disabled name="close" color="black" size="large" />
@@ -251,7 +249,7 @@ function CallSupport() {
           </tr>
           <div style={{width: '128%', border: '1px solid black'}}></div>
           <tr>
-            <td>Nerse In Charge</td>
+            <td>Nursing Incharge</td>
             <td><a href="tel:555-555-5555" style={{textDecoration: 'none', borderRadius: '10px', padding: '18%', background: '#E41B47', color: 'white'}}>
             <Icon disabled name="call" />
             </a></td>

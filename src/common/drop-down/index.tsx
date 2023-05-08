@@ -45,22 +45,22 @@ const DropDown: React.FC<Props> = ({
   return (
     <div className="dropdown">
           <div className="dropdown-btn">
-      <div className="dropdown-header" onClick={toggleDropdown} style={{marginLeft: '25px'}}>
+      <div className="dropdown-header" onClick={toggleDropdown} style={{marginLeft: '12%'}}>
         {selectedOption || 'Select language'}
         {
           isOpen ? (
-            <Icon disabled name='caret up'  size="large" color="black" style={{marginLeft: '10px'}}/>
+            <Icon disabled name='caret up'  size="large" color="black" style={{marginLeft: '8%'}}/>
           ): (
-      <Icon disabled name='caret down'  size="large" color="black" style={{marginLeft: '10px'}}/>
+      <Icon disabled name='caret down'  size="large" color="black" style={{marginLeft: '5%'}}/>
           )
         }
       </div>
       {isOpen && (
-        <ul className="dropdown-content" style={{background: 'transparent', marginTop: '8%', width: '310px', marginLeft: '-14%'}}>
+        <ul className="dropdown-content" style={{background: 'transparent', marginTop: '8%', width: '100%', marginLeft: '-14%'}}>
           {options.map((option, index) => (
             <li
               key={index}
-              style={{padding: '10px'}}
+              style={{padding: '5%'}}
               onClick={() => handleOptionSelect(option)}
             >
               {option}

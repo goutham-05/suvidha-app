@@ -84,8 +84,8 @@ const UserForm: React.FC<Props> = ({ history }) => {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmitForm)}>
-        <Grid columns="equal" style={{ marginTop: -80 }}>
-          <Grid.Row stretched>
+        <Grid columns="equal" style={{marginTop: '-30%', justifyContent: 'center'}}>
+          {/* <Grid.Row stretched>
             <Grid.Column>
               <CInput
                 placeholder={t('login:mobileNumber')}
@@ -104,7 +104,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
                 </Label>
               )}
             </Grid.Column>
-          </Grid.Row>
+          </Grid.Row> */}
           <Grid.Row stretched>
             <Grid.Column style={{ color: "red" }}>
               <CInput
@@ -129,12 +129,13 @@ const UserForm: React.FC<Props> = ({ history }) => {
               <Button
                 style={{
                   borderRadius: "100px",
-                  padding: "10px",
+                  padding: "10%",
                   textAlign: "center",
                   fontWeight: "lighter",
                   fontSize: "1.4rem",
                   background: "#0075ad",
                   width: "100%",
+                  marginLeft: '4%'
                 }}
                 type="submit"
                 loading={false}

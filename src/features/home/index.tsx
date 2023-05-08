@@ -43,7 +43,6 @@ function Home() {
           marginLeft: "auto",
           marginRight: "auto",
           height: "40%",
-          marginTop: "-34px",
         }}
       />
       <DropDown
