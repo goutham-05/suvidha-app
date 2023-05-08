@@ -19,7 +19,7 @@ import MessageNotification from '../../common/notification';
 interface Props {
 }
 
-function formatMobileNumber(getMobile) {
+function formatMobileNumber(getMobile:any) {
   const visibleDigits = 4;
   const hiddenDigits = getMobile.length - visibleDigits;
   const firstDigits = getMobile.substring(0, hiddenDigits);
@@ -28,7 +28,7 @@ function formatMobileNumber(getMobile) {
   return `${hiddenNumbers}${lastDigits}`;
 }
 
-const OtpForm: React.FC<Props> = ({props}) => {
+const OtpForm: React.FC<Props> = ({}) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
