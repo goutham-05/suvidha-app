@@ -47,9 +47,9 @@ const Grievance = () => {
   };
   return (
     <div className="grievance-container">
-      <div className="attach-button" onClick={Attach}>
+      <div className="attach-button" onClick={Attach} style={{marginTop: '4%'}}>
         <h6>
-          <Icon disabled name="attach" size="large" />  {/* color="white" */}
+          <Icon disabled name="attach" size="small" />  {/* color="white" */}
           {t("Attach")}{" "}
         </h6>
       </div>

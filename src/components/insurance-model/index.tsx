@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { Icon } from "semantic-ui-react";
 import Navbar from "../nav-bar";
 
-import { getMyInsuranceStatus } from '../../reduxtoolkit/myDetailsSlice';
+import { getMyInsuranceStatus } from "../../reduxtoolkit/myDetailsSlice";
 import {
   RootState,
   useAppDispatch,
@@ -32,17 +32,30 @@ const MyInsuranceModal = () => {
     );
   }, []);
   const insuranceStatus = useAppSelector((state) => state.myDetails);
-  console.log("insuranceStatus::",insuranceStatus.data?.call_log_reason);
+  console.log(insuranceStatus);
+
+  const [insuranceData, setInsuranceData] = useState(false);
+
+  useEffect(() => {
+    if (insuranceData === null) {
+      console.log("NO Data", insuranceData);
+      setInsuranceData(false);
+    } else {
+      setInsuranceData(insuranceStatus.data);
+    }
+  }, [insuranceData]);
+
   const insuranceValues = [
     insuranceStatus?.data?.call_log_reason,
-    insuranceStatus?.data?.payer_remarks
+    insuranceStatus?.data?.payer_remarks,
   ];
+
   return (
     <div>
       <Navbar />
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
-          <span className="headerTitle">My Bill</span>
+          <span className="headerTitle">My Insurance</span>
           <div onClick={Back}>
             <Icon
               disabled
@@ -53,76 +66,97 @@ const MyInsuranceModal = () => {
             />
           </div>
         </div>
-        <div className="two-column-container">
-      <div className="column" style={{
-      marginTop: "45px",
-      textAlign: "left",
-    }}>
-        {[
-      "Status",
-      "Remarks"
-    ].map((item, index) => (
-      <Grid.Column
-        width={8}
-        textAlign="justified"
-        style={{ marginBottom: "10px", width: '100%'}}
-      >
-        <span
-          style={{
-            padding: "10%",
-            fontSize: "100%",
-            fontWeight: "bold",
-            color: "black",
-            marginLeft: "10%",
-          }}
-        >
-          {item}
-        </span>
-      </Grid.Column>
-    ))}
-      </div>
-      <div className="column" style={{
-      marginTop: "45px",
-      textAlign: "left",
-      marginLeft: '10%'
-    }}>
-      {insuranceValues.map((item, index) => (
-      <Grid.Column
-        width={8}
-        textAlign="justified"
-        style={{ marginBottom: "10px" }}
-      >
-        <span
-          style={{
-            padding: "10%",
-            fontSize: "100%",
-            fontWeight: "bold",
-            color: "black",
-            marginLeft: "10px",
-          }}
-        >
-          : 
-          {item}
-        </span>
-      </Grid.Column>
-    ))}
-    <div
-    className="payBillButton"
-    style={{ marginTop: "30px", marginLeft: "-60px" }}
-  >
-    <span
-      style={{
-        marginLeft: "22%",
-        color: "white",
-        marginTop: "100%",
-      }}
-    >
-      Pay Bill
-    </span>
-  </div>
-      </div>
-    </div>
-    
+
+        <Grid style={{ marginTop: "10%", marginLeft: "-1%" }}>
+          <Grid.Column floated="left" width={1}>
+            <span
+              style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
+            >
+              status
+            </span>
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <span
+              style={{
+                fontSize: "100%",
+                fontWeight: "bold",
+                color: "black",
+                marginLeft: "13px",
+              }}
+            >
+              :
+            </span>
+          </Grid.Column>
+          {insuranceData ? (
+            <Grid.Column floated="left" width={6}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "100%",
+                  fontWeight: "bold",
+                  color: "black",
+                }}
+              >
+                No Data
+                
+              </span>
+            </Grid.Column>
+          ) : (
+            <Grid.Column floated="left" width={6}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "100%",
+                  fontWeight: "bold",
+                  color: "black",
+                }}
+              >
+                {insuranceStatus?.data?.call_log_reason}
+              </span>
+            </Grid.Column>
+          )}
+          {/* <Grid.Column floated="left" width={6}>
+            <span style={{ whiteSpace: "nowrap", fontSize: "100%", fontWeight: "bold", color: "black"}}>
+              {insuranceStatus?.data?.call_log_reason}
+            </span>
+          </Grid.Column> */}
+        </Grid>
+        <Grid style={{ marginLeft: "-1%" }}>
+          <Grid.Column floated="left" width={1}>
+            <span
+              style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
+            >
+              Ramarks
+            </span>
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <span
+              style={{
+                fontSize: "100%",
+                fontWeight: "bold",
+                color: "black",
+                marginLeft: "24px",
+              }}
+            >
+              :
+            </span>
+          </Grid.Column>
+          <Grid.Column floated="left" width={7}>
+            <div className="scrollable-div">
+              <p
+                style={{
+                  fontSize: "100%",
+                  fontWeight: "bold",
+                  color: "black",
+                  float: "right",
+                  marginLeft: "6%",
+                }}
+              >
+                {insuranceStatus?.data?.payer_remarks}
+              </p>
+            </div>
+          </Grid.Column>
+        </Grid>
       </div>
       <BackgroundImage />
     </div>

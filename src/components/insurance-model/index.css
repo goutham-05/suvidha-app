@@ -19,7 +19,7 @@
     background: #6C6D70;
     border-radius: 10px;
     margin-left: 20%;
-    padding-top: 10px;
+    padding-top: 2.5%;
     font-size: 16px;
     font-weight: bold;
     color: white;
@@ -42,3 +42,39 @@
     font-size: 14px;
     color: white;
 }
+
+.Tablecontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    margin-top: 20%;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+
+  .scrollable-div {
+   width: 160px;
+   height: 150px;
+   overflow: scroll;
+   border-radius: 4%;
+  }

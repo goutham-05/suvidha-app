@@ -22,10 +22,7 @@ interface Payload {
 }
 export const getMyInsuranceStatus = createAsyncThunk(
   "getMyInsuranceStatus",
-  async (payload: Payload, { dispatch, getState, rejectWithValue }) => {
-    // const { user } = getState() as RootState;
-    // const { data } = user;
-    // const token = data.token;
+  async (payload: Payload, { dispatch, rejectWithValue }) => {
     try {
       const response: any = await axiosPost(`my-insurance-status`, payload);
       return response.data;

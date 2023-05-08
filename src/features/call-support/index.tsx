@@ -158,7 +158,7 @@ function CallSupport() {
               <Modal.Actions style={{ marginLeft: "35%", marginTop: "4%" }}>
                 <Button color="red">
                   <Icon disabled name="call" size="small" />{/* color="white" */}
-                  <a href="tel:555-555-5555">Call</a>
+                  <a href="tel:555-555-5555" style={{textDecoration: 'none', color: 'white'}}>Call</a>
                 </Button>
               </Modal.Actions> 
             </Modal.Actions>
