@@ -20,8 +20,8 @@ const initialState: State = {
 };
 
 interface Payload {
-  // mobile_number: number | string | null;
   admissionno: string | null;
+  unit_id: string | null
 }
 
 interface OtpPayload extends Payload {

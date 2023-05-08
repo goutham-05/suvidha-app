@@ -76,8 +76,12 @@ const UserForm: React.FC<Props> = ({ history }) => {
   }, [status]);
 
   const onSubmitForm = (data: any) => {
+    const unitCodeStr = localStorage.getItem('unit_code');
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      data.unit_id = unit_code.unit;
+    }
     dispatch(getOtp(data));
-    localStorage.setItem("mobile_number", data.mobile_number);
     localStorage.setItem("admissionno", data.admissionno);
   };
 

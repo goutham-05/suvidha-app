@@ -11,10 +11,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["serviceslist"]);
 
-  const patientLocation: string | null = localStorage.getItem("patientLocation");
+  const unit_code: string | null = localStorage.getItem("unit_code");
   let roomNo = '';
-  if (patientLocation !== null) {
-    const roomNo = JSON.parse(patientLocation).room;
+  if (unit_code !== null) {
+    const roomNo = JSON.parse(unit_code).room;
   }
 
   const patientName = localStorage.getItem("patient_name");
@@ -22,17 +22,18 @@ const Navbar = () => {
 
   const userLogout = () => {
     let redirectUrl = '/';
-    const patientLocation: string | null = localStorage.getItem("patientLocation");
-    if (patientLocation !== null) {
-      let redirectUrl = '/'+JSON.parse(patientLocation).unit+'/'+JSON.parse(patientLocation).block+'/'+JSON.parse(patientLocation).floor+'/'+JSON.parse(patientLocation).ns+'/'+JSON.parse(patientLocation).room+'/'+JSON.parse(patientLocation).bed;
+    let unit_id = '';
+    const unitCodeStr = localStorage.getItem('unit_code');
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      unit_id = unit_code.unit;
     }
     localStorage.removeItem('patient_name');
     localStorage.removeItem('i18nextLng');
     localStorage.removeItem('admissionno');
     localStorage.removeItem('mobile_number');
     localStorage.removeItem('token');
-    //localStorage.getItem("patientLocation");
-    navigate(redirectUrl);
+    navigate(redirectUrl+''+unit_id);
   }
 
 

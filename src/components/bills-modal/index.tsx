@@ -20,10 +20,16 @@ const MyBillModal = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["mydetails"]);
   useEffect(() => {
+    let unit_id = '';
+    const unitCodeStr = localStorage.getItem('unit_code');
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      unit_id = unit_code.unit;
+    }
     dispatch(
       getOtp({
-        // mobile_number: localStorage.getItem("mobile_number"),
         admissionno: localStorage.getItem("admissionno"),
+        unit_id: unit_id
       })
     );
   }, []);

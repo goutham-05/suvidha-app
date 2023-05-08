@@ -14,7 +14,7 @@ function Home() {
   console.log('ns::', param4);
   console.log('room::', param5);
   console.log('bed::', param6);
-  const patientLocation = {
+  const unit_code = {
       unit: param1,
       block: param2,
       floor: param3,
@@ -22,7 +22,7 @@ function Home() {
       room: param5,
       bed: param6,
     };
-    localStorage.setItem("patientLocation", JSON.stringify(patientLocation));
+    localStorage.setItem("unit_code", JSON.stringify(unit_code));
   const onChangeLanguage = (
     _: React.SyntheticEvent<HTMLElement>,
     data: any
