@@ -11,6 +11,7 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import html2canvas from "html2canvas";
+import Logo from '../../assets/Logo.png';
 function QrCode() {
   const dispatch = useAppDispatch();
   const qrCodeRef = useRef(null);
@@ -135,6 +136,7 @@ function QrCode() {
           <div id="print_qr_code">
             <nav className="navbar">
               <img src={KLogo} alt="Logo" className="navbar-logo"  onLoad={handlePrint} />
+              <img src={Logo} className="navbar-suvidhaLogo" alt="SuvidhaLogo" />
               <ul className="navbar-links">
                 <li>
                   <a href="#">{formData.unit_name}</a>

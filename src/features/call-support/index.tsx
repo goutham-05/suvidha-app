@@ -8,6 +8,7 @@ import { Header, Modal, Icon} from "semantic-ui-react";
 import Ambulance from "../../assets/AmbulanceIcon.png";
 import AmbulanceIcon from "../../assets/ambulance.png";
 import Call from '../../assets/phone-call.png';
+import { useTranslation } from "react-i18next";
 import "./index.css";
 
 interface Services {
@@ -35,6 +36,7 @@ function CallSupport() {
   const [open, setOpen] = React.useState(false);
   const [sec, setSecondModel] = useState(false);
 
+  const { t } = useTranslation(["serviceslist", "mydetails"]);
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -84,7 +86,7 @@ function CallSupport() {
                     fontWeight: "bold",
                   }}
                 >
-                  Ambulance
+                  {t('Ambulance')}
                 </h1>
               </div>
             </div>
@@ -191,7 +193,7 @@ function CallSupport() {
                     fontWeight: "bold",
                   }}
                 >
-                  Contact Support
+                  {t('Contact Support')}
                 </h1>
               </div>
             </div>

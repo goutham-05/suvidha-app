@@ -10,7 +10,7 @@ import Logout from '../../assets/logout-Icon.png'
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation(["serviceslist"]);
+  const { t } = useTranslation(["serviceslist", "mydetails"]);
 
   const unit_code: string | null = localStorage.getItem("unit_code");
   let roomNo = '';
@@ -50,9 +50,9 @@ const Navbar = () => {
       <div className="patientData">
       <p> {patientName}</p>
       <p><strong> {t("IP")}:</strong> {ipNumber}</p>
-          <p><strong>Block:</strong> {blockNo}</p>
-          <p><strong>Floor:</strong> {floorNo}</p>
-          <p><strong>Ward Name:</strong> {wardName}</p>
+          <p><strong>{t('Room')}:</strong> {blockNo}</p>
+          <p><strong>{t('mydetails:Floor')}:</strong> {floorNo}</p>
+          <p><strong>{t('mydetails:WardName')}:</strong> {wardName}</p>
           <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>
             <img src={Logout} width={22} height={22} color="white"/>
           </p>
