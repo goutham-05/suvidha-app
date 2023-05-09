@@ -23,7 +23,7 @@ import ServiceDisabled from "../../common/service-disabled";
 type ProtectedRoute = RouteObject & { isProtected?: boolean };
 export const routes: ProtectedRoute[] = [
   {
-    path: "/:param1", //?/:param2?/:param3?/:param4?/:param5?/:param6?
+    path: "/:param1", 
     element: <Home />,
   },
   {

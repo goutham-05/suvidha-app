@@ -8,9 +8,15 @@
   
   .navbar-logo {
     width: 100px;
-    height: 80px;
+    height: 50px;
   }
   
+  .navbar-suvidhaLogo {
+    width: 90px;
+    height: 80px;
+    margin-left: 6%;
+  }
+
   .navbar-links {
     text-align: right;
   }
