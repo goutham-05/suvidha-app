@@ -25,7 +25,8 @@ interface Payload {
 }
 
 interface OtpPayload extends Payload {
-  otp: string;
+  admissionno: string | null;
+  otp: string | null;
 }
 
 export const getOtp = createAsyncThunk(
@@ -49,12 +50,12 @@ export const getOtp = createAsyncThunk(
 
 export const validateOtp = createAsyncThunk(
   "auth/validateOtp",
-  async (payload: OtpPayload, { getState, rejectWithValue }) => {
+  async (otpPayload: OtpPayload, { getState, rejectWithValue }) => {
     const { user } = getState() as RootState;
     const { data } = user;
     const token = data.token;
     try {
-      const response: any = await axiosPost(`validate-otp`, payload, token);
+      const response: any = await axiosPost(`validate-otp`, otpPayload, token);
 
       return response.data;
     } catch (error: Error | any) {
