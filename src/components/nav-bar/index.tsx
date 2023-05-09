@@ -6,6 +6,7 @@ import { useNavigate, useNavigation,useParams } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 import { useTranslation } from "react-i18next";
 import "./index.css";
+import Logout from '../../assets/logout-Icon.png'
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -52,7 +53,9 @@ const Navbar = () => {
           <p><strong>Block:</strong> {blockNo}</p>
           <p><strong>Floor:</strong> {floorNo}</p>
           <p><strong>Ward Name:</strong> {wardName}</p>
-          <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', background: '#4A98CD', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>Logout</p>
+          <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>
+            <img src={Logout} width={22} height={22} color="white"/>
+          </p>
           </div>
       </div>
     <Header as='h2' floated='left'>
