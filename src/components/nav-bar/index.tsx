@@ -36,6 +36,9 @@ const Navbar = () => {
     localStorage.removeItem('admissionno');
     localStorage.removeItem('mobile_number');
     localStorage.removeItem('token');
+    localStorage.removeItem('patient_wardName');
+    localStorage.removeItem('patient_block');
+    localStorage.removeItem('patient_floor');
     navigate(redirectUrl+''+unit_id);
   }
 

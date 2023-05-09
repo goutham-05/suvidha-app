@@ -75,6 +75,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
       localStorage.setItem("patient_block", userData.block);
       localStorage.setItem("patient_floor", userData.floor);
       localStorage.setItem("patient_wardName", userData.ward_name);
+      localStorage.setItem("patient_type", userData.patient_type);
     }
   }, [status]);
 

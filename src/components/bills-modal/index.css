@@ -47,7 +47,15 @@
     grid-template-columns: repeat(
       2,
       1fr
-    ); /* Creates two columns with equal width */
-    gap: 2px; /* Adds some space between the columns */
+    ); 
+    gap: 2px;
     width: 100%;
+    white-space: nowrap;
   }
+
+
+  
+  
+  
+  
+  

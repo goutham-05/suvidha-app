@@ -14,6 +14,7 @@ import dbSlice from "../../features/login/dbSlice";
 import myDetailsSlice from "../../reduxtoolkit/myDetailsSlice";
 import unitSlice from "../../reduxtoolkit/unitSlice";
 import qrCodeSlice from "../../reduxtoolkit/qrCodeSlice";
+import myDischargeSlice from "../../reduxtoolkit/myDischargeSlice";
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -28,7 +29,8 @@ const store = configureStore({
     db: dbSlice.reducer,
     myDetails:myDetailsSlice.reducer,
     units: unitSlice.reducer,
-    qrCode: qrCodeSlice.reducer
+    qrCode: qrCodeSlice.reducer,
+    myDischarge: myDischargeSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

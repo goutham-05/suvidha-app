@@ -25,8 +25,8 @@ const MyInsuranceModal = () => {
   };
 
   useEffect(() => {
-    let unit_id = '';
-    const unitCodeStr = localStorage.getItem('unit_code');
+    let unit_id = "";
+    const unitCodeStr = localStorage.getItem("unit_code");
     const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
     if (unit_code) {
       unit_id = unit_code.unit;
@@ -34,7 +34,7 @@ const MyInsuranceModal = () => {
     dispatch(
       getMyInsuranceStatus({
         admissionno: localStorage.getItem("admissionno"),
-        unit_id: unit_id
+        unit_id: unit_id,
       })
     );
   }, []);
@@ -47,20 +47,21 @@ const MyInsuranceModal = () => {
     if (insuranceStatus.data === null) {
       setInsuranceData(null);
       setInsuranceStatu(true);
-    }
-    else {
+    } else {
       setInsuranceData(insuranceStatus.data);
-      setInsuranceStatu(false)
-      console.log('status::', insuranceData);
+      setInsuranceStatu(false);
+      console.log("status::", insuranceData);
     }
-  })
+  });
 
   return (
     <div>
       <Navbar />
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
-          <span className="headerTitle" style={{background: '#4A98CD'}}>Insurance Claim Status</span>
+          <span className="headerTitle" style={{ background: "#4A98CD" }}>
+            Insurance Claim Status
+          </span>
           <div onClick={Back}>
             <Icon
               disabled
@@ -77,7 +78,7 @@ const MyInsuranceModal = () => {
             <span
               style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
             >
-              status
+              Status
             </span>
           </Grid.Column>
           <Grid.Column width={1}>
@@ -92,26 +93,40 @@ const MyInsuranceModal = () => {
               :
             </span>
           </Grid.Column>
-          {
-insuranceStatu ? 
-<Grid.Column floated="left" width={6}>
-<span style={{ whiteSpace: "nowrap", fontSize: "100%", fontWeight: "bold", color: "black"}}>
-  No Data
-</span>
-</Grid.Column>  :
-  <Grid.Column floated="left" width={6}>
-            <span style={{ whiteSpace: "nowrap", fontSize: "100%", fontWeight: "bold", color: "black"}}>
-              {insuranceStatus?.data?.call_log_reason}
-            </span>
-          </Grid.Column>  
-          }
+          {insuranceStatu ? (
+            <Grid.Column floated="left" width={6}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "100%",
+                  fontWeight: "bold",
+                  color: "black",
+                }}
+              >
+                No Data
+              </span>
+            </Grid.Column>
+          ) : (
+            <Grid.Column floated="left" width={6}>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "100%",
+                  fontWeight: "bold",
+                  color: "black",
+                }}
+              >
+                {insuranceStatus?.data?.call_log_reason}
+              </span>
+            </Grid.Column>
+          )}
         </Grid>
         <Grid style={{ marginLeft: "-1%" }}>
           <Grid.Column floated="left" width={1}>
             <span
               style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
             >
-              Ramarks
+              Remarks
             </span>
           </Grid.Column>
           <Grid.Column width={1}>
@@ -128,32 +143,31 @@ insuranceStatu ?
           </Grid.Column>
           <Grid.Column floated="left" width={7}>
             <div className="scrollable-div">
-              {
-                insuranceStatu ?
+              {insuranceStatu ? (
                 <p
-                style={{
-                  fontSize: "100%",
-                  fontWeight: "bold",
-                  color: "black",
-                  float: "left",
-                  marginLeft: "20%",
-                }}
-              >
-                No Data
-              </p>
-              :
-              <p
-                style={{
-                  fontSize: "100%",
-                  fontWeight: "bold",
-                  color: "black",
-                  float: "right",
-                  marginLeft: "6%",
-                }}
-              >
-                {insuranceStatus?.data?.payer_remarks}
-              </p>
-              }
+                  style={{
+                    fontSize: "100%",
+                    fontWeight: "bold",
+                    color: "black",
+                    float: "left",
+                    marginLeft: "20%",
+                  }}
+                >
+                  No Data
+                </p>
+              ) : (
+                <p
+                  style={{
+                    fontSize: "100%",
+                    fontWeight: "bold",
+                    color: "black",
+                    float: "right",
+                    marginLeft: "6%",
+                  }}
+                >
+                  {insuranceStatus?.data?.payer_remarks}
+                </p>
+              )}
             </div>
           </Grid.Column>
         </Grid>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
@@ -20,30 +20,68 @@ interface Services {
   size?: "mini" | "tiny" | "small" | "large" | "big" | "huge" | "massive";
 }
 
-const mockServicesList: Services[] = [
-  {
-    title: "My Bill",
-    icon: MyBill,
-    path: "/mybills",
-  },
-  {
-    title: "My Discharge",
-    icon: MyDis,
-    path: "/mydischarge",
-  },
-  {
-    title: "Insurance Status",
-    icon: MyIns,
-    path: "/myinsurance",
-  },
-];
-
 function MyDetails() {
-  const [modalStatus, setModalStatus] = React.useState(false);
 
-  const [modalConent, setModalContent] = React.useState<JSX.Element>();
+  const [myDetailsModules, setMyDetailsModules] = useState([
+    {
+      title: "My Bill",
+      icon: MyBill,
+      path: "/mybills",
+    },
+    {
+      title: "My Discharge",
+      icon: MyDis,
+      path: "/mydischarge",
+    },
+    {
+      title: "Insurance Status",
+      icon: MyIns,
+      path: "/myinsurance",
+    },
+  ]);
+  
 
-  const [service, setService] = useState<ServiceInfo>();
+  const patientTypeCheck = () => {
+    const patient_type = localStorage.getItem('patient_type')
+    if (patient_type === "GENERAL") {
+      setMyDetailsModules([
+        {
+          title: "My Bill",
+          icon: MyBill,
+          path: "/mybills",
+        },
+        {
+          title: "My Discharge",
+          icon: MyDis,
+          path: "/mydischarge",
+        },
+       
+      ])
+    }
+    else {
+      setMyDetailsModules([
+        {
+          title: "My Bill",
+          icon: MyBill,
+          path: "/mybills",
+        },
+        {
+          title: "My Discharge",
+          icon: MyDis,
+          path: "/mydischarge",
+        },
+        {
+          title: "Insurance Status",
+          icon: MyIns,
+          path: "/myinsurance",
+        },
+      ])
+    }
+  }
+
+  useEffect(() => {
+    patientTypeCheck();
+  }, [myDetailsModules])
 
   const naviage = useNavigate();
   const { t } = useTranslation(["mydetails"]);
@@ -53,18 +91,12 @@ function MyDetails() {
     if (!findService) {
       naviage(path);
     }
-    if (findService?.element) {
-      setModalContent(findService?.element);
-      setModalStatus(true);
-      setService(findService);
-    }
+    // if (findService?.element) {
+    //   setModalContent(findService?.element);
+    //   setModalStatus(true);
+    //   setService(findService);
+    // }
   }, []);
-
-  const setModalState = useCallback((status: boolean) => {
-    setModalStatus(status);
-  }, []);
-
-  const [showModal, setShowModal] = useState(false);
 
   const Back = () => {
     naviage("/services");
@@ -78,7 +110,7 @@ function MyDetails() {
       </div>
 
       <Grid columns={2} rows={3} padded>
-        {mockServicesList.map((item, index, path) => (
+        {myDetailsModules.map((item, index, path) => (
           <Grid.Column
             key={`col-${index}`}
             onClick={() => onClick(item.title, item.path)}
