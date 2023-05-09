@@ -36,17 +36,17 @@ const mockServicesList: ServiceList[] = [
   {
     title: "Service Request",
     icon: ServiceReq,
-    path: "/service",
+    path: "/servicedisabled",
   },
   {
     title: "Porter Services",
     icon: PortalSer,
-    path: "/bills",
+    path: "/servicedisabled",
   },
   {
     title: "Grievance/Feedback",
     icon: FeedBack,
-    path: "/board",
+    path: "/servicedisabled",
   },
   {
     title: "Call Support",
@@ -81,11 +81,6 @@ function ServicesList() {
     }
   }, []);
 
-  const setModalState = useCallback((status: boolean) => {
-    setModalStatus(status);
-  }, []);
-
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <>

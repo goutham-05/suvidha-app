@@ -106,10 +106,10 @@ function Board() {
           <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
         </div>
         <div className="main" style={{justifyContent: 'center'}}>
-          <div className="left-div" style={{padding: '10px', background: state? '#6c6d70' : '#ececec'}} onClick={onChangeScreen}>
+          <div className="left-div" style={{padding: '10px', background: state? '#4A98CD' : '#ececec'}} onClick={onChangeScreen}>
           <h5 style={{ marginTop: "-4px", color: state? 'white' : 'black'}}>Grievance</h5>
           </div>
-          <div className="left-div" style={{padding: '10px', background: state? '#ececec' : '#6c6d70'}} onClick={onChangeScreen}>
+          <div className="left-div" style={{padding: '10px', background: state? '#ececec' : '#4A98CD'}} onClick={onChangeScreen}>
           <h5 style={{ marginTop: "-4px", color: state? 'black' : 'white'}}>Feedback</h5>
           </div>
         </div>

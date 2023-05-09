@@ -18,6 +18,7 @@ import MyBillModal from "../../components/bills-modal";
 import MyInsuranceModal from "../../components/insurance-model";
 import HouseKeepingModal from "../../components/house-keeping-modal";
 import CallSupport from "../../features/call-support";
+import ServiceDisabled from "../../common/service-disabled";
 
 type ProtectedRoute = RouteObject & { isProtected?: boolean };
 export const routes: ProtectedRoute[] = [
@@ -113,6 +114,11 @@ export const routes: ProtectedRoute[] = [
   {
     path: '/callsupport',
     element: <CallSupport />,
+    isProtected: true,
+  },
+  {
+    path: '/servicedisabled',
+    element: <ServiceDisabled />,
     isProtected: true,
   }
 ];

@@ -3,16 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
 import Navbar from "../../components/nav-bar";
-import ServiceModal from "../../components/service-modal";
-import { ServiceInfo, serviceInfo } from "../../config/services";
-import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
 import CallSuppport from "../../assets/callsupport.png";
-import Food from "../../assets/Food-and-Beverage.png";
-import BackgroundImage from "../../components/background";
-import Footer from "../../components/footer";
-import { useTranslation } from "react-i18next";
-import { Button, Header, Image, Modal, Icon, Label, Menu, Table} from "semantic-ui-react";
+import { Header, Modal, Icon} from "semantic-ui-react";
 import Ambulance from "../../assets/AmbulanceIcon.png";
+import AmbulanceIcon from "../../assets/ambulance.png";
+import Call from '../../assets/phone-call.png';
 import "./index.css";
 
 interface Services {
@@ -39,16 +34,17 @@ const callSupportList: Services[] = [
 function CallSupport() {
   const [open, setOpen] = React.useState(false);
   const [sec, setSecondModel] = useState(false);
-  const [dimmer, setDimmer] = useState(false);
-  const naviage = useNavigate();
 
-  const Back = () => {
-    naviage("/services");
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate("/services");
   };
+
   return (
     <>
       <Navbar />
-      <div onClick={Back} style={{ marginBottom: "10%", marginRight: "390%" }}>
+      <div onClick={goBack} style={{ marginBottom: "10%", marginRight: "390%" }}>
         <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
       </div>
       <div
@@ -94,12 +90,12 @@ function CallSupport() {
             </div>
           }
           style={{
-            width: "80%",
-            height: "28%",
-            marginLeft: "10%",
-            marginTop: "40%",
+            width: "86%",
+            height: "24%",
+            marginLeft: "7%",
+            marginTop: "60%",
             borderRadius: "20px",
-            background: '#b1dfdf'
+            background: 'white'
           }}
         >
           <Modal.Description>
@@ -110,8 +106,9 @@ function CallSupport() {
                     marginLeft: "18%",
                     marginTop: "8%",
                     width: "60%",
+                    height:'36px',
                     background: "#007cb0",
-                    borderRadius: "5px",
+                    borderRadius: "10px",
                     textAlign: "center",
                   }}
                 >
@@ -135,19 +132,15 @@ function CallSupport() {
                   }}
                 >
                   <div style={{ marginLeft: "20%", marginTop: "1%" }}>
-                    <Icon
-                      disabled
-                      name="ambulance"
-                      color="black"
-                      size="large"
-                    />
+                   <img src={AmbulanceIcon} width={40} height={40}/>
                   </div>
                   <p
                     style={{
                       paddingLeft: "2%",
-                      fontSize: "140%",
+                      fontSize: "150%",
                       color: "black",
                       fontWeight: "bold",
+                      paddingTop: '4%'
                     }}
                   >
                     Call Red Ambulance
@@ -155,17 +148,18 @@ function CallSupport() {
                 </div>
               </div>
               <Modal.Actions style={{ marginLeft: "35%", marginTop: "4%" }}>
-                <Button color="red">
-                  <Icon disabled name="call" size="small" />{/* color="white" */}
-                  <a href="tel:555-555-5555" style={{textDecoration: 'none', color: 'white'}}>Call</a>
-                </Button>
+                <div style={{background: '#E41B47', width: '40%', height: '40px' , borderRadius: '10px', display: 'flex'}}>
+                <img src={Call} width={22} height={22} style={{marginLeft: '16%', marginTop: '10%'}}/>
+                <div style={{marginTop: '12%'}}>
+                <a href="tel:9030789640" style={{textDecoration: 'none', color: 'white', padding:'20%', fontSize: '18px'}}>Call</a>
+                </div>
+              </div>
               </Modal.Actions> 
             </Modal.Actions>
           </Modal.Description>
         </Modal>
         <Modal
-          onClose={() => setSecondModel(false)}
-          onOpen={() => setSecondModel(true)}
+          onOpen={() => navigate('/servicedisabled')}
           open={sec}
           trigger={
             <div
@@ -230,7 +224,6 @@ function CallSupport() {
                 </Header>
                 <div
                   style={{ flex: 1, marginTop: "10%", marginLeft: "6%" }}
-                  onClick={() => setSecondModel(false)}
                 >
                   <Icon disabled name="close" color="black" size="large" />
                 </div>
