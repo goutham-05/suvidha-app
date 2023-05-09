@@ -151,7 +151,7 @@ function CallSupport() {
                 <div style={{background: '#E41B47', width: '40%', height: '40px' , borderRadius: '10px', display: 'flex'}}>
                 <img src={Call} width={22} height={22} style={{marginLeft: '16%', marginTop: '10%'}}/>
                 <div style={{marginTop: '12%'}}>
-                <a href="tel:9030789640" style={{textDecoration: 'none', color: 'white', padding:'20%', fontSize: '18px'}}>Call</a>
+                <a href="tel:9618478765" style={{textDecoration: 'none', color: 'white', padding:'20%', fontSize: '18px'}}>Call</a>
                 </div>
               </div>
               </Modal.Actions> 
