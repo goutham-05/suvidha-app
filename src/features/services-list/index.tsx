@@ -85,7 +85,8 @@ function ServicesList() {
   return (
     <>
       <Navbar />
-      <Grid columns={2} rows={3} padded >
+      <div style={{marginTop: '10%'}}>
+      <Grid columns={2} rows={3} padded>
         {mockServicesList.map((item, index, path) => (
           <Grid.Column
             key={`col-${index}`}
@@ -116,6 +117,7 @@ function ServicesList() {
           </Grid.Column>
         ))}
       </Grid>
+      </div>
       <BackgroundImage />
       <Footer />
     </>

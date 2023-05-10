@@ -46,6 +46,7 @@ function CallSupport() {
   return (
     <>
       <Navbar />
+      <div style={{marginTop: '5%'}}>
       <div onClick={goBack} style={{ marginBottom: "10%", marginRight: "390%" }}>
         <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
       </div>
@@ -93,7 +94,7 @@ function CallSupport() {
           }
           style={{
             width: "86%",
-            height: "24%",
+            height: "34%",
             marginLeft: "7%",
             marginTop: "60%",
             borderRadius: "20px",
@@ -138,14 +139,14 @@ function CallSupport() {
                   </div>
                   <p
                     style={{
-                      paddingLeft: "2%",
+                      paddingLeft: "5%",
                       fontSize: "110%",
                       color: "black",
                       fontWeight: "bold",
                       paddingTop: '4%'
                     }}
                   >
-                    {t('Call Red Ambulance')}
+                    {t('Book Ambulance')}
                   </p>
                 </div>
               </div>
@@ -262,6 +263,7 @@ function CallSupport() {
             </Modal.Actions>
           </Modal.Description>
         </Modal>
+      </div>
       </div>
     </>
   );

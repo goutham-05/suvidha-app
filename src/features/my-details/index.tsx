@@ -91,11 +91,6 @@ function MyDetails() {
     if (!findService) {
       naviage(path);
     }
-    // if (findService?.element) {
-    //   setModalContent(findService?.element);
-    //   setModalStatus(true);
-    //   setService(findService);
-    // }
   }, []);
 
   const Back = () => {
@@ -105,6 +100,7 @@ function MyDetails() {
   return (
     <>
       <Navbar />
+      <div style={{marginTop: '5%'}}>
       <div onClick={Back} style={{ marginBottom: "10%", marginRight: "100%" }}>
         <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
       </div>
@@ -142,6 +138,7 @@ function MyDetails() {
       </Grid>      
       <BackgroundImage />
       <Footer />
+      </div>
     </>
   );
 }

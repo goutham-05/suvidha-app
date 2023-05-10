@@ -36,7 +36,7 @@ function NoMatch() {
   };
 
     return (
-        <div>
+        <div style={{marginTop: '15%'}}>
           <img src={Logo} width={150} height={150}/>
           <div className="dropdown">
           <div className="dropdown-btn">

@@ -45,25 +45,22 @@ const Navbar = () => {
 
 
   return (
-    <Segment clearing style={{marginTop: '-10%', width: '119%',height: '130px', marginLeft: '-9%',}}>
-      <div className="data-container" style={{float: 'right', whiteSpace: 'nowrap'}}>
-      <div className="patientData">
-      <p> {patientName}</p>
-      <p><strong> {t("IP")}:</strong> {ipNumber}</p>
-          <p><strong>{t('Room')}:</strong> {blockNo}</p>
-          <p><strong>{t('mydetails:Floor')}:</strong> {floorNo}</p>
-          <p><strong>{t('mydetails:WardName')}:</strong> {wardName}</p>
-          <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>
-            <img src={Logout} width={22} height={22} color="white"/>
-          </p>
-          </div>
-      </div>
-    <Header as='h2' floated='left'>
-    <img
-            src={logo}
-            style={{ marginTop: "-10%", width: "100%", height: "100px"}}/>
-    </Header>
-  </Segment>
+
+    <div style={{marginTop: '-10%', width: '119%',height: '130px', marginLeft: '-9%',display: 'flex', background: 'white', boxShadow: '0px 2px 4px grey'}}>
+      <img src={logo} width={90} height={90} style={{marginTop: '5%', marginLeft: '5%'}}/>
+           <div className="data-container" style={{ whiteSpace: 'nowrap', marginLeft: '40%', marginTop: '2%'}}>
+       <div className="patientData">
+       <p> {patientName}</p>
+       <p><strong> {t("IP")}:</strong> {ipNumber}</p>
+           <p><strong>{t('Room')}:</strong> {blockNo}</p>
+           <p><strong>{t('mydetails:Floor')}:</strong> {floorNo}</p>
+           <p><strong>{t('mydetails:WardName')}:</strong> {wardName}</p>
+           <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>
+             <img src={Logout} width={22} height={22} color="white"/>
+           </p>
+           </div>
+       </div>
+    </div>
   );
 };
 
