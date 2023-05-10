@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Button, Dimmer, Icon, Loader } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 function ServiceDisabled() {
 
   const navigate = useNavigate();
+  const { t } = useTranslation(["mydetails"]);
+
   const goBack = () => {
     navigate('/services')
   }
@@ -33,7 +35,7 @@ function ServiceDisabled() {
                     textAlign: "center",
                   }}
                 >
-                  <p style={{ paddingTop: "3%", color: "white", fontSize: '16px', fontWeight: 'bold'}}>In Progress</p>
+                  <p style={{ paddingTop: "3%", color: "white", fontSize: '16px', fontWeight: 'bold'}}>{t('In Progress')}</p>
                 </div>
                 <div
                   style={{ flex: 1, marginTop: "11%", marginLeft: "6%" }}
@@ -44,8 +46,7 @@ function ServiceDisabled() {
               </div>
               <div style={{ width: '90%', borderRadius: '10px', marginLeft: '5%', marginTop: '10%'}}>
         <span style={{fontSize: '18px', color: 'black'}}>
-          We regret to inform you that the feature you have requested is
-          currently undergoing development and is not yet available
+          {t('We regret to inform you that the feature you have requested is currently undergoing development and is not yet available')}
         </span>
         </div>
             </div>

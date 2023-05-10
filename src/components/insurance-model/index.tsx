@@ -12,13 +12,14 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import { useTranslation } from "react-i18next"; 
 
 import "./index.css";
 import BackgroundImage from "../background";
 const MyInsuranceModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const { t } = useTranslation(["mydetails"]);
 
   const Back = () => {
     navigate("/mydetails");
@@ -60,7 +61,7 @@ const MyInsuranceModal = () => {
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            Insurance Claim Status
+            {t('Insurance Claim Status')}
           </span>
           <div onClick={Back}>
             <Icon
@@ -78,16 +79,16 @@ const MyInsuranceModal = () => {
             <span
               style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
             >
-              Status
+              {t('Status')}
             </span>
           </Grid.Column>
-          <Grid.Column width={1}>
+          <Grid.Column>
             <span
               style={{
                 fontSize: "100%",
                 fontWeight: "bold",
                 color: "black",
-                marginLeft: "13px",
+                marginLeft: "1px",
               }}
             >
               :
@@ -111,7 +112,7 @@ const MyInsuranceModal = () => {
               <span
                 style={{
                   whiteSpace: "nowrap",
-                  fontSize: "100%",
+                  fontSize: "84%",
                   fontWeight: "bold",
                   color: "black",
                 }}
@@ -126,7 +127,7 @@ const MyInsuranceModal = () => {
             <span
               style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
             >
-              Remarks
+              {t('Remarks')}
             </span>
           </Grid.Column>
           <Grid.Column width={1}>

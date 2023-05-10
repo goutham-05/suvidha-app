@@ -80,7 +80,7 @@ const MyBillModal = () => {
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            My Bill
+            {t('My Bill')}
           </span>
           <div onClick={Back}>
             <Icon
@@ -116,7 +116,7 @@ const MyBillModal = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {item}
+                 {t(item)}
                 </span>
               </Grid.Column>
             ))}
