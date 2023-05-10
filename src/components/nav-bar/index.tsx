@@ -13,17 +13,17 @@ const Navbar = () => {
   const { t } = useTranslation(["serviceslist", "mydetails"]);
 
   const unit_code: string | null = localStorage.getItem("unit_code");
-  let roomNo = '';
-  if (unit_code !== null) {
-    const roomNo = JSON.parse(unit_code).room;
-  }
 
   const patientName = localStorage.getItem("patient_name");
   const ipNumber = localStorage.getItem("admissionno");
-  const blockNo = localStorage.getItem("patient_block");
+  const bedNo = localStorage.getItem("patient_bed");
+  const  myBed = bedNo === null ? "-" : bedNo;
+  const roomno = localStorage.getItem("patient_room");
+  const myRoom = roomno === null ? "-" : roomno;
   const floorNo = localStorage.getItem("patient_floor");
   const wardName = localStorage.getItem("patient_wardName");
 
+ 
   const userLogout = () => {
     let redirectUrl = '/';
     let unit_id = '';
@@ -52,8 +52,8 @@ const Navbar = () => {
        <div className="patientData">
        <p> {patientName}</p>
        <p><strong> {t("IP")}:</strong> {ipNumber}</p>
-           <p><strong>{t('Room')}:</strong> {blockNo}</p>
-           <p><strong>{t('mydetails:Floor')}:</strong> {floorNo}</p>
+       <p><strong>{t('Bed')}: </strong>{myBed}</p>
+       <p><strong>{t('Room')}/{t('Floor')}: </strong>{myRoom}/{floorNo}</p>
            <p><strong>{t('mydetails:WardName')}:</strong> {wardName}</p>
            <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>
              <img src={Logout} width={22} height={22} color="white"/>
