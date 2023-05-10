@@ -13,7 +13,8 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import { useTranslation } from "react-i18next";
-import { getOtp } from "../../features/login/authSlice";
+import { getOtp} from "../../features/login/authSlice";
+import { getMyBill } from "../../reduxtoolkit/myBillSlice";
 
 const MyBillModal = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ const MyBillModal = () => {
       unit_id = unit_code.unit;
     }
     dispatch(
-      getOtp({
+      getMyBill({
         admissionno: localStorage.getItem("admissionno"),
         unit_id: unit_id,
       })
