@@ -114,7 +114,7 @@ function CallSupport() {
                     textAlign: "center",
                   }}
                 >
-                  <p style={{ paddingTop: "3%", color: "white" }}>Ambulance</p>
+                  <p style={{ paddingTop: "3%", color: "white" }}>{t('Ambulance')}</p>
                 </Header>
                 <div
                   style={{ flex: 1, marginTop: "11%", marginLeft: "6%" }}
@@ -139,13 +139,13 @@ function CallSupport() {
                   <p
                     style={{
                       paddingLeft: "2%",
-                      fontSize: "150%",
+                      fontSize: "110%",
                       color: "black",
                       fontWeight: "bold",
                       paddingTop: '4%'
                     }}
                   >
-                    Call Red Ambulance
+                    {t('Call Red Ambulance')}
                   </p>
                 </div>
               </div>
@@ -153,7 +153,7 @@ function CallSupport() {
                 <div style={{background: '#E41B47', width: '40%', height: '40px' , borderRadius: '10px', display: 'flex'}}>
                 <img src={Call} width={22} height={22} style={{marginLeft: '16%', marginTop: '10%'}}/>
                 <div style={{marginTop: '12%'}}>
-                <a href="tel:9618478765" style={{textDecoration: 'none', color: 'white', padding:'20%', fontSize: '18px'}}>Call</a>
+                <a href="tel:9618478765" style={{textDecoration: 'none', color: 'white', padding:'20%', fontSize: '18px'}}>{t('Call')}</a>
                 </div>
               </div>
               </Modal.Actions> 

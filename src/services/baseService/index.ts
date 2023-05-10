@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const API_BASE_URL = "http://10.20.100.179:4000/api/";
+const API_BASE_URL = "http://ksuvidha.kimshospitals.com:4000/api/";
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2JpbGVfbnVtYmVyIjoiOTAzMDc4OTY0MCIsImFkbWlzc2lvbm5vIjoiSVAyMzI0MDAyMDQ0IiwiaWF0IjoxNjgyNjE0NzQxLCJleHAiOjE2ODI2MTgzNDF9.Wf2mAQnZZ0GskPp86dEDO4dIApbYHrODkxUr4iTdcW8";

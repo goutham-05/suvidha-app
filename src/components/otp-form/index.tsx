@@ -92,7 +92,7 @@ const OtpForm: React.FC<Props> = ({}) => {
           <Grid.Row stretched>
             <Grid.Column>
               <CInput
-                placeholder={t("Enter Otp")}
+                placeholder={t('Enter OTP')}
                 register={register}
                 label="otp"
                 required={true}

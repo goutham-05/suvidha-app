@@ -12,11 +12,12 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import { useTranslation } from "react-i18next"; 
 import { getMyDischarge } from "../../reduxtoolkit/myDischargeSlice";
 
 const MyDischargeModal = () => {
   const navigate = useNavigate();
-
+  const { t } = useTranslation(["mydetails"]);
   const dispatch = useAppDispatch();
 
   let unit_id = "";
@@ -56,7 +57,7 @@ myDis = myDis === null ? "NO" : myDis;
         <Navbar />
         <div className="mydischargeContainer">
             <div className="mydischargeHeader">
-                <span className="headerTitle" style={{background: '#4A98CD'}}>My Discharge</span>
+                <span className="headerTitle" style={{background: '#4A98CD'}}>{t('My Discharge')}</span>
                 <div onClick={Back}>
                 <Icon disabled name='close'  size="large" color="black" style={{marginTop: '10px', marginLeft: '20px'}}/>
                 </div>
@@ -73,13 +74,13 @@ myDis = myDis === null ? "NO" : myDis;
               <span
                 style={{
                   padding: "10px",
-                  fontSize: "14px",
+                  fontSize: "13px",
                   fontWeight: "bold",
                   color: 'black',
                   marginLeft: '10px'
                 }}
               >
-                {item}
+                {t(item)}
               </span>
             </Grid.Column>
           ))}
