@@ -36,7 +36,7 @@ const mockServicesList: ServiceList[] = [
   {
     title: "Service Request",
     icon: ServiceReq,
-    path: "/servicedisabled",
+    path: "/service",
   },
   {
     title: "Porter Services",
@@ -83,7 +83,7 @@ function ServicesList() {
 
 
   return (
-    <>
+    <div style={{marginTop:"5%"}}>
       <Navbar />
       <div style={{marginTop: '10%'}}>
       <Grid columns={2} rows={3} padded>
@@ -120,7 +120,7 @@ function ServicesList() {
       </div>
       <BackgroundImage />
       <Footer />
-    </>
+    </div>
   );
 }
 

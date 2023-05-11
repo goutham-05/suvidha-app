@@ -23,14 +23,14 @@ interface Services {
 
 const mockServicesList: Services[] = [
   {
-    title: "HouseKeeping",
+    title: "House Keeping",
     icon: HouseKeep,
     path: "/bills",
   },
   {
-    title: "Food&Beverages",
+    title: "Food & Beverages",
     icon: Food,
-    path: "/bills",
+    path: "/food&Beverages",
   },
   {
     title: "Facilities",
@@ -74,6 +74,7 @@ function Services() {
   return (
     <>
       <Navbar />
+      <div style={{marginTop: '8%'}}>
       <div onClick={Back} style={{ marginBottom: "10%", marginRight: "190%" }}>
         <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
       </div>
@@ -108,9 +109,10 @@ function Services() {
           </Grid.Column>
         ))}
       </Grid>    
-      
+      </div>
       <BackgroundImage />
       <Footer />
+      
     </>
   );
 }
