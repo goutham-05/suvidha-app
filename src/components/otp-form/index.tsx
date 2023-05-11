@@ -11,6 +11,9 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import MessageNotification from "../../common/notification";
+import Logo from "../../assets/Logo.png";
+import BackgroundImage from "../background";
+import "./index.css";
 interface Props {}
 
 function formatMobileNumber(getMobile: any) {
@@ -60,10 +63,10 @@ const OtpForm: React.FC<Props> = ({}) => {
     setStatus("idle");
     const otp = await db.getItem(userData.ip_no);
     if (otp === null || otp != data.otp) {
-      setMessage('Invalid OTP');
-      setStatus('failed');
+      setMessage("Invalid OTP");
+      setStatus("failed");
     } else {
-      const otp = await db.setItem('token',userData.token);
+      const otp = await db.setItem("token", userData.token);
       localStorage.setItem("token", userData.token);
       navigate("/services");
     }
@@ -78,16 +81,73 @@ const OtpForm: React.FC<Props> = ({}) => {
   const formattedNumber = formatMobileNumber(getMobile);
   return (
     <>
-      <MessageNotification message={message} status={status} theme="dark" />
-      <Message
-        style={{ marginTop: "-28%", justifyContent: "center", border: "none" }}
+  <div style={{ marginTop: "4%" }}>
+    <img src={Logo} width={150} height={150} />
+  </div>
+  <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+    <MessageNotification message={message} status={status} theme="dark" />
+    <Message style={{
+    fontSize: "1.2rem",
+    maxWidth: "340px",
+    width: "100%",
+    margin: "0 auto",
+    padding: "1rem",
+  }}>
+      <Message.Header style={{ color: "#374F4F", fontSize: "1.2rem", textAlign: "center" }}>
+        {t("Enter OTP sent to")} {formattedNumber}
+      </Message.Header>
+    </Message>
+
+    <Form onSubmit={handleSubmit(onSubmitForm)} style={{
+    fontSize: "1.2rem",
+    maxWidth: "340px",
+    width: "100%",
+    margin: "0 auto",
+    padding: "1rem",
+  }}>
+      <CInput
+        placeholder={t("Enter OTP")}
+        register={register}
+        label="otp"
+        required={true}
+        size="large"
+        error={errors["otp"] ? true : false}
+        fluid={true}
+        loading={false}
+      />
+      {errors.otp?.type === "required" && (
+        <Label color="orange" pointing prompt>
+          OTP is required
+        </Label>
+      )}
+      <Button
+        type="submit"
+        loading={false}
+        style={{
+          borderRadius: "100px",
+          textAlign: "center",
+          fontWeight: "lighter",
+          fontSize: "1.4rem",
+          background: "#0075ad",
+          width: "100%",
+          maxWidth: "300px", // set a maximum width for the button
+          margin: "0 auto", // center the button horizontally
+        }}
       >
-        <Message.Header style={{ color: "#374F4F" }}>
-          {t("Enter OTP sent to")} {formattedNumber}
-        </Message.Header>
-        {/* <p style={{color: '#374F4F'}}>Or</p> <Message.Header style={{color: '#374F4F'}}>Enter OTP sent to nikhil@gmail.com</Message.Header> */}
-      </Message>
-      <Form onSubmit={handleSubmit(onSubmitForm)} style={{ marginLeft: "10%" }}>
+        <h1 style={{ color: "white", fontSize: "1.2rem" }}>{t("Submit")}</h1>
+      </Button>
+    </Form>
+    <BackgroundImage />
+  </div>
+</>
+
+  );
+};
+
+export default OtpForm;
+
+{
+  /* <Form onSubmit={handleSubmit(onSubmitForm)} style={{ marginLeft: "10%" }}>
         <Grid columns="equal">
           <Grid.Row stretched>
             <Grid.Column>
@@ -123,9 +183,5 @@ const OtpForm: React.FC<Props> = ({}) => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Form>
-    </>
-  );
-};
-
-export default OtpForm;
+      </Form> */
+}

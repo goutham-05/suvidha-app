@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Header, Label, Segment, Grid} from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Header, Label, Segment, Grid, Icon} from "semantic-ui-react";
 import { Input, Menu } from 'semantic-ui-react'
 import BrandLogo from "../logo";
 import { useNavigate, useNavigation,useParams } from "react-router-dom";
@@ -43,9 +43,7 @@ const Navbar = () => {
     navigate(redirectUrl+''+unit_id);
   }
 
-
   return (
-
     <div style={{marginTop: '-10%', width: '119%',height: '130px', marginLeft: '-9%',display: 'flex', background: 'white', boxShadow: '0px 2px 4px grey'}}>
       <img src={logo} width={90} height={90} style={{marginTop: '5%', marginLeft: '5%'}}/>
            <div className="data-container" style={{ whiteSpace: 'nowrap', marginLeft: '40%', marginTop: '2%'}}>

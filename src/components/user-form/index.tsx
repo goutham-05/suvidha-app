@@ -12,8 +12,10 @@ import {
 } from "../../config/redux-store";
 import { useState, useEffect } from "react";
 import BackgroundImage from "../background";
-
+import Logo from '../../assets/Logo.png';
 import localForage from 'localforage';
+import BrandLogo from "../logo";
+import './index.css';
 
 interface Props {
   history?: History;
@@ -92,70 +94,59 @@ const UserForm: React.FC<Props> = ({ history }) => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmitForm)}>
-        <Grid columns="equal" style={{marginTop: '-30%', justifyContent: 'center'}}>
-          {/* <Grid.Row stretched>
-            <Grid.Column>
-              <CInput
-                placeholder={t('login:mobileNumber')}
-                register={register}
-                label="mobile_number"
-                required={true}
-                size="large"
-                error={errors["Mobile Number / Email"] ? true : false}
-                fluid={true}
-                loading={false}
-                //style={{background: 'red'}}
-              />
-              {errors.mobile_number?.type === "required" && (
-                <Label color="orange" pointing prompt>
-                  Mobile Number / Email is required
-                </Label>
-              )}
-            </Grid.Column>
-          </Grid.Row> */}
-          <Grid.Row stretched>
-            <Grid.Column style={{ color: "red" }}>
-              <CInput
-                label="admissionno"
-                placeholder={t('login:IpNumber')}
-                register={register}
-                required={true}
-                size="large"
-                error={errors["IP Number"] ? true : false}
-                fluid={true}
-                loading={false}
-              />
-              {errors.admissionno?.type === "required" && (
-                <Label color="orange" pointing prompt>
-                  IP Number is required
-                </Label>
-              )}
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row stretched>
-            <Grid.Column>
-              <Button
-                style={{
-                  borderRadius: "100px",
-                  padding: "10%",
-                  textAlign: "center",
-                  fontWeight: "lighter",
-                  fontSize: "1.4rem",
-                  background: "#0075ad",
-                  width: "100%",
-                  marginLeft: '4%'
-                }}
-                type="submit"
-                loading={false}
-                color="red"
-              >
-               {t('login:GetOTP')}
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Form>
+    <img src={Logo} width={150} height={150}/>
+
+    <Form onSubmit={handleSubmit(onSubmitForm)}>
+  <Grid columns="equal" style={{ marginTop: "1%", justifyContent: "center" }}>
+    <Grid.Row stretched>
+      <Grid.Column style={{
+    fontSize: "1.2rem",
+    maxWidth: "340px",
+    width: "100%",
+    margin: "0 auto",
+    padding: "1rem",
+  }}>
+        <CInput
+          label="admissionno"
+          placeholder={t("login:IpNumber")}
+          register={register}
+          required={true}
+          size="large"
+          error={errors["IP Number"] ? true : false}
+          fluid={true}
+          loading={false}
+          
+        />
+        {errors.admissionno?.type === "required" && (
+          <Label color="orange" pointing prompt>
+            IP Number is required
+          </Label>
+        )}
+      </Grid.Column>
+    </Grid.Row>
+    <Grid.Row stretched>
+      <Grid.Column>
+        <Button
+          style={{
+            borderRadius: "100px",
+            textAlign: "center",
+            fontWeight: "lighter",
+            fontSize: "1.4rem",
+            background: "#0075ad",
+            width: "100%",
+            maxWidth: "300px", // set a maximum width for the button
+            margin: "0 auto", // center the button horizontally
+          }}
+          type="submit"
+          loading={false}
+          color="red"
+        >
+          {t("login:GetOTP")}
+        </Button>
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
+</Form>
       <BackgroundImage />
     </>
   );

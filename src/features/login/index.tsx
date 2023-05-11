@@ -35,7 +35,12 @@ function Login() {
   return (
     <Container>
       <MessageNotification status={status} message={message} theme="dark" />
-      <BrandLogo />
+      {/* <BrandLogo styles={{
+          width: "20%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          height: "40%",
+        }} /> */}
       {showUserForm ? <UserForm /> : <OtpForm />}
     </Container>
   );

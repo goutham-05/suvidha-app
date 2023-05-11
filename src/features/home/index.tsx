@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DropDown from "../../common/drop-down";
 import { languageOptions } from "../../config/languages";
 import BrandLogo from "../../components/logo";
+import Logo from '../../assets/Logo.png';
 import BackgroundImage from "../../components/background";
 
 function Home() {
@@ -37,14 +38,9 @@ function Home() {
 
   return (
     <>
-      <BrandLogo
-        styles={{
-          width: "40%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          height: "40%",
-        }}
-      />
+    <div>
+    <img src={Logo} width={150} height={150}/>
+    </div>
       <DropDown
         fluid
         options={languageOptions}

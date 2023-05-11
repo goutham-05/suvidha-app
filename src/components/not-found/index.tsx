@@ -10,6 +10,7 @@ import Logo from '../../assets/Logo.png';
 import { Icon } from 'semantic-ui-react';
 import './index.css';
 import BackgroundImage from '../background';
+import BrandLogo from '../logo';
 
 function NoMatch() {
   const dispatch = useAppDispatch();
@@ -36,8 +37,15 @@ function NoMatch() {
   };
 
     return (
-        <div style={{marginTop: '15%'}}>
-          <img src={Logo} width={150} height={150}/>
+      
+      <div>
+        {/* <BrandLogo styles={{
+          width: "25%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          height: "25%",
+        }} /> */}
+       <img src={Logo} width={150} height={150} />
           <div className="dropdown">
           <div className="dropdown-btn">
       <div className="dropdown-header" onClick={toggleDropdown} style={{marginLeft: '12%'}}>
@@ -65,8 +73,8 @@ function NoMatch() {
      </ul>
       )}
     </div>
-    </div>
     <BackgroundImage />
+        </div>
         </div>
       );
 }

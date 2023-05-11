@@ -126,7 +126,7 @@ function CallSupport() {
               </div>
             </div>
             <Modal.Actions>
-              <div style={{ flexDirection: "column", marginLeft: '-6%' }}>
+              <div style={{ flexDirection: "column", marginLeft: '4%' }}>
                 <div
                   style={{
                     display: "flex",

@@ -3,11 +3,11 @@ import { Icon, Image } from "semantic-ui-react";
 import logo from "../../assets/Logo.png";
 
 const initialStyles = {
-  width: "40%",
-  marginLeft: "auto",
-  marginRight: "auto",
-  height: "40%",
-  marginBottom: "25%",
+  // width: "20%",
+  // marginLeft: "auto",
+  // marginRight: "auto",
+  // height: "20%",
+  // marginBottom: "25%",
 };
 
 interface Props {
