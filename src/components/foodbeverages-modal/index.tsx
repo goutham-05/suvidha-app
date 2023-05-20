@@ -109,7 +109,7 @@ function FoodBeverages() {
     localStorage.setItem('serving time',selectedType);
     setServingListData(true);
     setIsOpen(!isOpen);
-    setSelectedItem(null); // Reset selected item
+    //setSelectedItem(null); // Reset selected item
   };
 
   let unit_id = "";
@@ -137,8 +137,7 @@ function FoodBeverages() {
   }, []);
 
   const [remarksList, setRemarksList] = useState<string[]>([]);
-  const [selectedItem, setSelectedItem] = useState(null);
-
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
   // const handleAddToCart = (item: any, remarks: any) => {
   //   dispatch(addFoodToMyCart({ ...item, remarks }));
   // };
@@ -314,7 +313,7 @@ function FoodBeverages() {
                             transform: "translate(-50%, -50%)",
                             width: "50%",
                             height: "20px",
-                            background:  selectedItem === index ? "red" : "white",
+                            background: selectedItems.includes(index) ? "red" : "white",
                             borderRadius: "6px",
                             boxShadow: "0px 2px 4px grey",
                             zIndex: 1,
@@ -331,7 +330,7 @@ function FoodBeverages() {
                                   })
                                 );
                                 
-                                setSelectedItem(index); // Set selected item
+                                setSelectedItems((prevSelectedItems) => [...prevSelectedItems, index]);
                               }}
                               
                               >ADD</span>
