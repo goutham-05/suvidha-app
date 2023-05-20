@@ -51,6 +51,7 @@ const Navbar = () => {
     localStorage.removeItem('patient_room');
     localStorage.removeItem('serving time');
     localStorage.removeItem('patient_type');
+    dispatch(deleteMyCartItems(localStorage.removeItem('serving time')))
     navigate(redirectUrl+''+unit_id);
   }
 

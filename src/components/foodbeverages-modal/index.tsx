@@ -68,15 +68,11 @@ function FoodBeverages() {
     (state) => state.getItemServiceTime
   );
 
-  const [servingTimeData, setServingTimeData] = useState(getItemsServingTime.data);
-
-
-  // ...
+  const [servingTimeData, setServingTimeData] = useState(getItemsServingTime?.data);
 
   useEffect(() => {
-    // Update the servingTimeData state when getItemsServingTime.data changes
-    setServingTimeData(getItemsServingTime.data);
-  }, [getItemsServingTime.data]);
+    setServingTimeData(getItemsServingTime?.data);
+  }, [getItemsServingTime?.data]);
   
   console.log("servingItems:::::::", getItemsServingTime);
 
@@ -107,6 +103,7 @@ function FoodBeverages() {
     }
     setSelectedServingType(selectedServingType);
     localStorage.setItem('serving time',selectedType);
+    localStorage.setItem('servingType', selectedServingType);
     setServingListData(true);
     setIsOpen(!isOpen);
     //setSelectedItem(null); // Reset selected item
@@ -134,7 +131,7 @@ function FoodBeverages() {
         servingtime_id: "1",
       })
     );
-  }, []);
+  }, [unit_id]);
 
   const [remarksList, setRemarksList] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -232,10 +229,11 @@ function FoodBeverages() {
           marginTop: "10%",
         }}
       >
-        {servingListData ? (
+        {/* {servingListData ? ( */}
+        { localStorage.getItem('serving time') ?
           <div>
             {Array.isArray(getItemsServingTime.data) ? (
-              servingTimeData.map((item: any, index: any) => (
+              servingTimeData?.map((item: any, index: any) => (
                 <div
                   style={{
                     width: "92%",
@@ -245,6 +243,7 @@ function FoodBeverages() {
                     margin: "5%",
                     border: "1px solid grey",
                     boxShadow: "0px 2px 4px grey",
+                    background: selectedItems.includes(index) ? "#4A98CD" : "white",
                   }}
                 >
                   <div style={{ display: "flex" }}>
@@ -261,18 +260,20 @@ function FoodBeverages() {
                           fontWeight: "bold",
                           fontSize: "14px",
                           float: "left",
+                          color: selectedItems.includes(index) ? "white" : "black",
                         }}
                       >
                         {item.item}
                       </p>
                       <div style={{ float: "left", display: "flex" }}>
-                        <img
-                          src={Rupee}
-                          width={5}
-                          height={10}
-                          style={{ marginTop: "5px" }}
-                        />
-                        <p>{item.price_att}</p>
+                        {
+                          selectedItems.includes(index) ? (
+                            <Icon inverted color='grey' name='rupee' />
+                          ) : (
+                            <Icon color='black' name='rupee' />
+                          )
+                        }
+                        <p style={{color: selectedItems.includes(index) ? "white" : "black",}}>{item.price_att}</p>
                       </div>
                       <div
                         style={{
@@ -313,7 +314,7 @@ function FoodBeverages() {
                             transform: "translate(-50%, -50%)",
                             width: "50%",
                             height: "20px",
-                            background: selectedItems.includes(index) ? "red" : "white",
+                            background: "white",
                             borderRadius: "6px",
                             boxShadow: "0px 2px 4px grey",
                             zIndex: 1,
@@ -331,6 +332,7 @@ function FoodBeverages() {
                                 );
                                 
                                 setSelectedItems((prevSelectedItems) => [...prevSelectedItems, index]);
+                                localStorage.setItem('cartItems', JSON.stringify(myCartItems));
                               }}
                               
                               >ADD</span>
@@ -365,8 +367,20 @@ function FoodBeverages() {
             ) : (
               <p>Loading...</p>
             )}
-          </div>
-        ) : (
+          </div> : (
+            <p
+            style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "#4A98CD",
+              marginTop: "10% ",
+            }}
+          >
+            Please Select Serving Type
+          </p>
+          )
+}
+        {/* ) : (
           <p
             style={{
               fontSize: "18px",
@@ -377,7 +391,7 @@ function FoodBeverages() {
           >
             Please Select Serving Type
           </p>
-        )}
+        )} */}
       </div>
       {myCartItems.length > 0 ? (
         <div

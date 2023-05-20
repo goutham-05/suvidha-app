@@ -22,7 +22,7 @@ import getMyOrderFoodSlice, {
 import { increaseQty } from "../../reduxtoolkit/myFoodSlice";
 import { Dimmer } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-import order from "../../../src/assets/fb/3256961.png";
+import order from "../../../src/assets/fb/orderplaced.png";
 
 interface Item {
   itemid: number;
@@ -34,9 +34,9 @@ interface Item {
   quantity: number;
   unit_id: string | null;
   type:number;
-  patient_ipno:string;
+  //patient_ipno:string;
   delivery_address:string | null;
-  serving_time:number;
+  //serving_time: string | number;
   my_cart_items: object;
   selectedItems: object;
 }
@@ -49,8 +49,6 @@ function MyCart() {
   const goBack = () => {
     navigate("/food&Beverages");
   };
-
-  let gst = 12;
 
   const subTotal = () => {
     let subTotalValue = 0;
@@ -67,7 +65,7 @@ function MyCart() {
       subTotalValue = subTotalValue + item.quantity * item.price_att;
     });
     if (subTotalValue > 0) {
-      return subTotalValue + gst;
+      return subTotalValue;
     } else {
       return subTotalValue;
     }
@@ -82,7 +80,7 @@ function MyCart() {
     const timeout = setTimeout(() => {
       setModalOpen(false);
       navigate("/food&Beverages");
-    }, 5000);
+    }, 2000);
 
     return () => {
       clearTimeout(timeout);
@@ -102,27 +100,13 @@ function MyCart() {
       serving_time: localStorage.getItem("serving time"),
       my_cart_items,
     };
+    console.log('selectedItems',selectedItems);
     dispatch(getMyOrderFood(selectedItems));
     dispatch(deleteMyCartItems(selectedItems));
     foodOrderModal();
     setModalOpen(true);
+    localStorage.removeItem('serving time');
   };
-
-  //  const handleProceedToPay = () => {
-
-  //   const selectedItems = {
-  //     "unit_id": localStorage.getItem('unit_code'),
-  //     "patient_ipno": localStorage.getItem('admissionno'),
-  //     "delivery_address": "",
-  //     "serving_time": localStorage.getItem('serving time'),
-  //   my_cart_items,
-  //   };
-
-  //   console.log("selected items:::",selectedItems);
-
-  //   dispatch(addToCart(selectedItems));
-  //   console.log(selectedItems);
-  // };
 
   return (
     <div>
@@ -212,14 +196,6 @@ function MyCart() {
                     border: "1px solid black",
                   }}
                 >
-                  {/* {item.quantity == 0 ? (
-                    <span style={{ fontWeight: "bold" }}>ADD</span>
-                  ) : null}
-                  {
-                    item.quantity !== 0 ? (
-                      <span style={{ fontWeight: "bold" }}>{item.quantity}</span>
-                    ) : null
-                  } */}
                   {item.quantity == 0 ? (
                     <span style={{ fontWeight: "bold" }}>ADD</span>
                   ) : null}
@@ -317,11 +293,6 @@ function MyCart() {
               }}
             >
               Subtotal
-              <div style={{ float: "left", display: "flex" }}>
-                <span style={{ fontSize: "12px", fontWeight: "bold" }}>
-                  GST
-                </span>
-              </div>
             </p>
           </div>
           <div style={{ marginLeft: "66%", marginTop: "2%" }}>
@@ -343,15 +314,6 @@ function MyCart() {
                   marginTop: "-4%",
                 }}
               >
-                <img
-                  src={Rupee}
-                  width={8}
-                  height={12}
-                  style={{ marginTop: "6px", padding: "1%" }}
-                />
-                <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-                  {gst}
-                </span>
               </div>
             </div>
           </div>
@@ -415,8 +377,8 @@ function MyCart() {
         <p style={{ padding: "2%", color: "white" }}>Proceed to Pay</p>
       </div>
       <Dimmer active={modalOpen}>
-        <img src={order} width={50} height={50} />
-        <p>Order Placed</p>
+        <img src={order} width={60} height={60} />
+        <p style={{marginTop: '10%', fontSize: '20px'}}>Order Placed</p>
       </Dimmer>
       <BackgroundImage />
     </div>
@@ -424,3 +386,21 @@ function MyCart() {
 }
 
 export default MyCart;
+
+
+
+  //  const handleProceedToPay = () => {
+
+  //   const selectedItems = {
+  //     "unit_id": localStorage.getItem('unit_code'),
+  //     "patient_ipno": localStorage.getItem('admissionno'),
+  //     "delivery_address": "",
+  //     "serving_time": localStorage.getItem('serving time'),
+  //   my_cart_items,
+  //   };
+
+  //   console.log("selected items:::",selectedItems);
+
+  //   dispatch(addToCart(selectedItems));
+  //   console.log(selectedItems);
+  // };

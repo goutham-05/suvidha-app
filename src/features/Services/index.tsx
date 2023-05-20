@@ -28,7 +28,7 @@ import Idly from "../../assets/fb/87ea2e127a2e58e7c08e4a13d857879f.avif";
 import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
 import Dosa from "../../assets/fb/istockphoto-909906350-612x612.jpg";
 import { addMyFood } from "../../reduxtoolkit/myFoodSlice";
-
+import { patientCheck } from "../../reduxtoolkit/patientCheckSlice";
 interface Services {
   title: string;
   icon: string;
@@ -54,71 +54,27 @@ const mockServicesList: Services[] = [
   },
 ];
 
-const foodData = [
-  {
-    title: "Veg Biryani",
-    rate: "120.00",
-    image: veg,
-    category: "Veg",
-    type: "Lunch",
-    qty: 0,
-  },
-  {
-    title: "Orange Juice",
-    rate: "85.00",
-    image: juice,
-    category: "Veg",
-    type: "Pre BreakFast",
-    qty: 0,
-  },
-  {
-    title: "Coffe",
-    rate: "40.00",
-    image: coffee,
-    category: "Veg",
-    type: "Pre BreakFast",
-    qty: 0,
-  },
-  {
-    title: "Chicken Biryani",
-    rate: "120.00",
-    image: chicken,
-    category: "Non Veg",
-    type: "Dinner",
-    qty: 0,
-  },
-  {
-    title: "Idly",
-    rate: "50.00",
-    image: Idly,
-    category: "Veg",
-    type: "BreakFast",
-    qty: 0,
-  },
-  {
-    title: "Dosa",
-    rate: "50.00",
-    image: Dosa,
-    category: "Veg",
-    type: "BreakFast",
-    qty: 0,
-  },
-];
+
 
 function Services() {
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(addMyFood(foodData));
-  // }, [dispatch]);
 
-  // useEffect(() => {
-  //   const foodDatacopy = [...foodData];
-  //   foodDatacopy.map((item) => {
-  //     dispatch(addMyFood(item));
-  //   });
-  // }, []);
+  const patientCheckInDK = useAppSelector((state) => state.patientCheck);
+
+  console.log('patientCheck',patientCheckInDK);
+
+  useEffect(() => {
+    const unitIdString = localStorage.getItem("unit_code");
+    const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+    const unitId = unitIdObject.unit;
+    dispatch(patientCheck({
+      unit_id: unitId,
+      patient_ipno: localStorage.getItem('admissionno')
+    }))
+  }, [])
+
 
   
   const [modalStatus, setModalStatus] = React.useState(false);
@@ -152,6 +108,10 @@ function Services() {
     naviage("/services");
   };
 
+  const filteredServicesList = patientCheckInDK.data.length > 0
+  ? mockServicesList
+  : mockServicesList.filter(item => item.title !== "Food & Beverages");
+
   return (
     <>
       <Navbar />
@@ -160,7 +120,7 @@ function Services() {
         <Icon disabled name="arrow left" size="large" /> {/* color="#6D6D70" */}
       </div>
       <Grid columns={2} rows={3} padded>
-        {mockServicesList.map((item, index, path) => (
+        {filteredServicesList.map((item, index, path) => (
           <Grid.Column
             key={`col-${index}`}
             onClick={() => onClick(item.title, item.path)}

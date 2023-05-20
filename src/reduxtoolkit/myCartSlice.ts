@@ -8,6 +8,8 @@ interface CartItem {
   other_remark?: string;
   remarkid:[];
   price_att: number;
+  //selectedItems: string | null;
+  
 }
 
 const myCartSlice = createSlice({
@@ -24,12 +26,13 @@ const myCartSlice = createSlice({
       });
       if (myindex == -1) {
         state.push({
-          item:action.payload.item,
+          item: action.payload.item,
           itemid: action.payload.itemid,
           quantity: action.payload.quantity + 1,
-          price_att:action.payload.price_att,
+          price_att: action.payload.price_att,
           other_remark: remarks || "",
           remarkid: [],
+          //selectedItems: null
         });
       } else {
         state[myindex].quantity = state[myindex].quantity + 1;
@@ -67,9 +70,6 @@ const myCartSlice = createSlice({
     },
     deleteMyCartItems(state, action) {
       return [];
-      // return state.filter((item) => {
-      //   return item.itemid !== action.payload;
-      // });
     }
   },
 });

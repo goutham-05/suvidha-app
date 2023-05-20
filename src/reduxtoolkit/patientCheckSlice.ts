@@ -20,15 +20,12 @@ const initialState: State = {
 interface Payload {
   unit_id: string | null;
   patient_ipno:string | null;
-  delivery_address:string | null;
-  serving_time: string | number | null;
-  my_cart_items: {};
 }
-export const getMyOrderFood = createAsyncThunk(
-  "getMyOrderFood",
+export const patientCheck = createAsyncThunk(
+  "patientCheck",
   async (payload: Payload, { dispatch, rejectWithValue }) => {
     try {
-      const response: any = await axiosPost(`order-food`, payload);
+      const response: any = await axiosPost(`check-patient-in-dk`, payload);
       return response.data;
     } catch (error: Error | any) {
       return rejectWithValue({
@@ -42,8 +39,8 @@ export const getMyOrderFood = createAsyncThunk(
   }
 );
 
-const getMyOrderFoodSlice = createSlice({
-  name: "orderFood",
+const patientCheckSlice = createSlice({
+  name: "patientCheck",
   initialState,
   reducers: {
     clearNotification(state) {
@@ -53,15 +50,15 @@ const getMyOrderFoodSlice = createSlice({
     },
   },
   extraReducers: {
-    [getMyOrderFood.pending.type]: (state) => {
+    [patientCheck.pending.type]: (state) => {
       state.status = "loading";
     },
-    [getMyOrderFood.fulfilled.type]: (state, action) => {
+    [patientCheck.fulfilled.type]: (state, action) => {
       state.status = "succeeded";
       state.data = action.payload;
       state.message = "OTP sent successfully";
     },
-    [getMyOrderFood.rejected.type]: (state, action) => {
+    [patientCheck.rejected.type]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
       state.message = "Invalid Details";
@@ -69,8 +66,8 @@ const getMyOrderFoodSlice = createSlice({
   },
 });
 
-export const { clearNotification } = getMyOrderFoodSlice.actions;
+export const { clearNotification } = patientCheckSlice.actions;
 
 // export default auth.reducer;
 
-export default getMyOrderFoodSlice;
+export default patientCheckSlice;

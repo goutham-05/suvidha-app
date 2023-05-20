@@ -22,6 +22,7 @@ import cartItems from "../../reduxtoolkit/myCartItemsSlice";
 import getMyServingTimeSlice from "../../reduxtoolkit/getServingTimesSlice";
 import getItemServiceTimeSlice from "../../reduxtoolkit/getItemServSlice";
 import orderFood from "../../reduxtoolkit/orderFoodSlice";
+import patienCheck from "../../reduxtoolkit/patientCheckSlice";
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -45,6 +46,7 @@ const store = configureStore({
     getMyServingTime: getMyServingTimeSlice.reducer,
     getItemServiceTime: getItemServiceTimeSlice.reducer,
     order:orderFood.reducer,
+    patientCheck: patienCheck.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
