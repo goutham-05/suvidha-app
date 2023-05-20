@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import BackgroundImage from "../background";
 import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
-import { addToCart, clearCart } from "../../reduxtoolkit/myCartItemsSlice";
 import myCartSlice, {
   addFoodToMyCart,
   deleteMyCartItems,
@@ -21,30 +20,14 @@ import getMyOrderFoodSlice, {
 } from "../../reduxtoolkit/orderFoodSlice";
 import { increaseQty } from "../../reduxtoolkit/myFoodSlice";
 import { Dimmer } from "semantic-ui-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import order from "../../../src/assets/fb/orderplaced.png";
 
-interface Item {
-  itemid: number;
-  mealtype_id: number;
-  price_att: number;
-  item_type: number;
-  item: string;
-  counts: number;
-  quantity: number;
-  unit_id: string | null;
-  type:number;
-  //patient_ipno:string;
-  delivery_address:string | null;
-  //serving_time: string | number;
-  my_cart_items: object;
-  selectedItems: object;
-}
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const my_cart_items = useAppSelector((state) => state.cart);
-  const foodData = useAppSelector((state) => state.order);
 
   const goBack = () => {
     navigate("/food&Beverages");
@@ -72,16 +55,14 @@ function MyCart() {
   };
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [shouldNavigate, setShouldNavigate] = useState(false);
 
   const foodOrderModal = () => {
-        setModalOpen(false);
+        setModalOpen(true);
     
     const timeout = setTimeout(() => {
       setModalOpen(false);
       navigate("/food&Beverages");
     }, 2000);
-
     return () => {
       clearTimeout(timeout);
     };
@@ -107,6 +88,7 @@ function MyCart() {
     setModalOpen(true);
     localStorage.removeItem('serving time');
   };
+  
 
   return (
     <div>
@@ -138,7 +120,7 @@ function MyCart() {
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
-      {my_cart_items.map((item, index) => (
+      {my_cart_items?.map((item, index) => (
         <div
           key={index}
           style={{
@@ -214,6 +196,9 @@ function MyCart() {
                             dispatch(removeMyCartItem(item));
                           } else {
                             dispatch(deleteSingleCartItem(item.itemid));
+                            if (my_cart_items.length === 1) {
+                              navigate("/food&Beverages");
+                            }
                           }
                         }}
                       >
@@ -275,11 +260,11 @@ function MyCart() {
           marginLeft: "4%",
         }}
       >
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex"}}>
           <div
             style={{
               width: "10%",
-              height: "56px",
+              height: "45px",
               whiteSpace: "nowrap",
               marginLeft: "20px",
               marginTop: "3%",
@@ -295,15 +280,14 @@ function MyCart() {
               Subtotal
             </p>
           </div>
-          <div style={{ marginLeft: "66%", marginTop: "2%" }}>
-            <div>
+          <div style={{ marginLeft: "68%", marginTop: "3%" }}>
               <img
                 src={Rupee}
                 width={10}
                 height={14}
-                style={{ padding: "2%" }}
+                style={{ padding: "2%", marginBottom: '5px'}}
               />
-              <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              <span style={{ fontSize: "16px", fontWeight: "bold"}}>
                 {subTotal()}
               </span>
 
@@ -315,7 +299,6 @@ function MyCart() {
                 }}
               >
               </div>
-            </div>
           </div>
         </div>
         <div style={{ width: "100%", border: "0.9px solid grey" }}></div>
@@ -326,6 +309,7 @@ function MyCart() {
               height: "60px",
               whiteSpace: "nowrap",
               marginLeft: "5%",
+              marginTop: '2%'
             }}
           >
             <p

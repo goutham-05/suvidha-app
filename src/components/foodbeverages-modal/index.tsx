@@ -332,7 +332,6 @@ function FoodBeverages() {
                                 );
                                 
                                 setSelectedItems((prevSelectedItems) => [...prevSelectedItems, index]);
-                                localStorage.setItem('cartItems', JSON.stringify(myCartItems));
                               }}
                               
                               >ADD</span>

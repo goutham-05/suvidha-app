@@ -108,7 +108,7 @@ function Services() {
     naviage("/services");
   };
 
-  const filteredServicesList = patientCheckInDK.data.length > 0
+  const filteredServicesList = patientCheckInDK.data?.length > 0
   ? mockServicesList
   : mockServicesList.filter(item => item.title !== "Food & Beverages");
 
