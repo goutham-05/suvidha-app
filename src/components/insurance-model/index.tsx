@@ -39,21 +39,19 @@ const MyInsuranceModal = () => {
       })
     );
   }, []);
+
   const insuranceStatus = useAppSelector((state) => state.myDetails);
 
-  const [insuranceData, setInsuranceData] = useState(null);
-  const [insuranceStatu, setInsuranceStatu] = useState(false);
+  const insuranceDate = insuranceStatus.data?.approveddate;
 
-  useEffect(() => {
-    if (insuranceStatus.data === null) {
-      setInsuranceData(null);
-      setInsuranceStatu(true);
-    } else {
-      setInsuranceData(insuranceStatus.data);
-      setInsuranceStatu(false);
-      console.log("status::", insuranceData);
-    }
-  });
+  const myInsuranceData = [
+    insuranceStatus.data?.status_name,
+    insuranceDate
+  ]
+
+  useEffect(() =>{
+    myInsuranceData;
+  }, [])
 
   return (
     <div>
@@ -74,6 +72,52 @@ const MyInsuranceModal = () => {
           </div>
         </div>
 
+        <div style={{display: 'flex'}}>
+                <Grid>
+        <div style={{marginTop: '45px',  textAlign: 'left'}}>
+          {[
+            "Status",
+            "Approved Date",
+          ].map((item, index) => (
+            <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
+              <span
+                style={{
+                  padding: "10px",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  color: 'black',
+                  marginLeft: '10px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {t(item)}
+              </span>
+            </Grid.Column>
+          ))}
+        </div>
+      </Grid>
+      <Grid>
+        <div style={{marginTop: '8%', marginLeft: '2%', textAlign: 'left'}}>
+          {myInsuranceData.map((item, index) => (
+            <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
+              <span
+                style={{
+                  padding: "10px",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  color: 'black',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                :<span style={{marginLeft: '4%'}}>{item}</span>
+              </span>
+            </Grid.Column>
+          ))}
+        </div>
+      </Grid> 
+      </div>
+        
+{/* 
         <Grid style={{ marginTop: "10%", marginLeft: "-1%" }}>
           <Grid.Column floated="left" width={1}>
             <span
@@ -121,8 +165,8 @@ const MyInsuranceModal = () => {
               </span>
             </Grid.Column>
           )}
-        </Grid>
-        <Grid style={{ marginLeft: "-1%" }}>
+        </Grid> */}
+        {/* <Grid style={{ marginLeft: "-1%" }}>
           <Grid.Column floated="left" width={1}>
             <span
               style={{ fontSize: "100%", fontWeight: "bold", color: "black" }}
@@ -171,7 +215,7 @@ const MyInsuranceModal = () => {
               )}
             </div>
           </Grid.Column>
-        </Grid>
+        </Grid> */}
       </div>
       <BackgroundImage />
     </div>

@@ -10,9 +10,9 @@ axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
 //axios.defaults.withCredentials = true;
 
-export const axiosGet = async <T>(endpoint: string): Promise<T> => {
+export const axiosGet = async <T>(endpoint: string, data:any): Promise<T> => {
   try {
-    const response: AxiosResponse<T> = await axios.get(endpoint);
+    const response: AxiosResponse<T> = await axios.get(endpoint, data);
     return response.data;
   } catch (error: any) {
     throw new Error(error.response.data);

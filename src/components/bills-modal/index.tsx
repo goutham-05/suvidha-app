@@ -34,8 +34,10 @@ const MyBillModal = () => {
       })
     );
   }, []);
+
   const userData = useAppSelector((state) => state.user);
-  const [patientTypeChecking, setPatientTypeChecking] = useState([]);
+
+  const [patientTypeChecking, setPatientTypeChecking] = useState<any[]>([]);
   const [billProperties, setBillProperties] = useState([
     "Advance Paid",
               "Approximate Bill",
@@ -47,29 +49,27 @@ const MyBillModal = () => {
 
   const billData = () => {
     if (userData.data?.patient_type !== "GENERAL") {
-      const billProps = ["Advance Paid","Estimated Amount"]
-      const billValues = [userData.data?.latest_estimated_amt,userData.data?.latest_estimated_amt,];
-      setPatientTypeChecking(billValues as SetStateAction<never[]>);
+      const billProps = ["Advance Paid", "Estimated Amount"];
+      const billValues = userData.data?.length === 0 ? ["No Data", "No"] : [userData.data?.total_advance, userData.data?.latest_estimated_amt];
+      setPatientTypeChecking(billValues);
+      console.log(billValues)
       setBillProperties(billProps);
     } else {
-      const billProps = ["Advance Paid",
-      "Approximate Bill",
-      "Estimated Amount",
-      "Due Amt"]
+      const billProps = ["Advance Paid", "Approximate Bill", "Estimated Amount", "Due Amt"];
       const billValues = [
-        userData.data?.app_bill_amount,
-        userData.data?.balance_amt,
-        userData.data?.app_bill_amount,
-        userData.data?.balance_amt,
+        userData.data?.app_bill_amount || "No Data",
+        userData.data?.balance_amt || "No Data",
+        userData.data?.app_bill_amount || "No Data",
+        userData.data?.balance_amt || "No Data"
       ];
-      setPatientTypeChecking(billValues as SetStateAction<never[]>);
+      setPatientTypeChecking(billValues);
       setBillProperties(billProps);
     }
   };
 
   useEffect(() => {
     billData();
-  }, [billData]);
+  }, []);
 
   const Back = () => {
     navigate("/mydetails");
@@ -113,7 +113,7 @@ const MyBillModal = () => {
                     fontSize: "100%",
                     fontWeight: "bold",
                     color: "black",
-                    marginLeft: "10%",
+                    marginLeft: "2%",
                     whiteSpace: "nowrap",
                   }}
                 >

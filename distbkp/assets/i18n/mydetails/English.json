@@ -1,7 +1,7 @@
 {
-    "my_bills": "My Bills",
+    "My Bill": "My Bill",
     "My Discharge":"My Discharge",
-    "My Insurance":"My Insurance",
     "Advancepaid": "Advancepaid",
-    "Book Ambulance":"Book Ambulance"
+    "Book Ambulance":"Book Ambulance",
+    "Insurance Status":"Insurance Status"
 }

@@ -41,7 +41,7 @@ const mockServicesList: ServiceList[] = [
   {
     title: "Porter Services",
     icon: PortalSer,
-    path: "/servicedisabled",
+    path: "/portalservices",
   },
   {
     title: "Grievance/Feedback",
@@ -83,7 +83,7 @@ function ServicesList() {
 
 
   return (
-    <div style={{marginTop:"5%"}}>
+    <div>
       <Navbar />
       <div style={{marginTop: '10%'}}>
       <Grid columns={2} rows={3} padded>

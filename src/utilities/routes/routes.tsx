@@ -1,6 +1,6 @@
 import ServicesList from "../../features/services-list";
 import Login from "../../features/login";
-import Cart from "../../features/cart";
+// import Cart from "../../features/cart";
 import Home from "../../features/home";
 import Bills from "../../features/bills";
 import { Link, RouteObject } from "react-router-dom";
@@ -20,6 +20,8 @@ import HouseKeepingModal from "../../components/house-keeping-modal";
 import CallSupport from "../../features/call-support";
 import ServiceDisabled from "../../common/service-disabled";
 import FoodBeverages from "../../components/foodbeverages-modal";
+import PortalService from "../../features/PortalServices";
+import MyCart from "../../components/my-cart";
 
 type ProtectedRoute = RouteObject & { isProtected?: boolean };
 export const routes: ProtectedRoute[] = [
@@ -51,11 +53,11 @@ export const routes: ProtectedRoute[] = [
     element: <Bills />,
     isProtected: true
   },
-  {
-    path: "/cart",
-    element: <Cart />,
-    isProtected: true
-  },
+  // {
+  //   path: "/cart",
+  //   element: <Cart />,
+  //   isProtected: true
+  // },
   {
     path: "/food-menu",
     element: <FoodMenu />,
@@ -79,7 +81,7 @@ export const routes: ProtectedRoute[] = [
   },
   {
     path: "/portalservices",
-    element: <Services />,
+    element: <PortalService />,
     isProtected: true,
   },
   {
@@ -125,6 +127,11 @@ export const routes: ProtectedRoute[] = [
   {
     path:'/food&Beverages',
     element: <FoodBeverages />,
+    isProtected: true,
+  },
+  {
+    path:'/cart',
+    element: <MyCart />,
     isProtected: true,
   }
 ];

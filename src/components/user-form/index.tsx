@@ -12,10 +12,11 @@ import {
 } from "../../config/redux-store";
 import { useState, useEffect } from "react";
 import BackgroundImage from "../background";
-import Logo from '../../assets/Logo.png';
-import localForage from 'localforage';
+import Logo from "../../assets/Logo.png";
+import localForage from "localforage";
 import BrandLogo from "../logo";
-import './index.css';
+import "./index.css";
+import { Loader } from "semantic-ui-react";
 
 interface Props {
   history?: History;
@@ -39,17 +40,17 @@ const UserForm: React.FC<Props> = ({ history }) => {
 
   async function openDatabase() {
     const config = {
-      name: 'ksuvidha',
+      name: "ksuvidha",
       version: 1,
-      storeName: 'checkotp',
-      description: 'My store with auto-incrementing IDs',
-      autoIncrement: true
+      storeName: "checkotp",
+      description: "My store with auto-incrementing IDs",
+      autoIncrement: true,
     };
     const database = await localForage.createInstance(config);
     dispatch(setDb(database));
   }
   useEffect(() => {
-    if(userData){
+    if (userData) {
       openDatabase();
     }
   }, [status]);
@@ -57,12 +58,12 @@ const UserForm: React.FC<Props> = ({ history }) => {
     addData(userData);
   }, [db, userData]);
 
-  async function addData(userData:any) {
+  async function addData(userData: any) {
     try {
       await db.setItem(userData.ip_no, userData.otp);
-      console.log('Data added to store');
+      console.log("Data added to store");
     } catch (error) {
-      console.log('Error adding data to store', error);
+      console.log("Error adding data to store", error);
     }
   }
 
@@ -74,6 +75,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
         },
       });
       localStorage.setItem("patient_name", userData.patient_name);
+      console.log("Bed Number", userData.patient_name);
       localStorage.setItem("patient_bed", userData.bed_no);
       localStorage.setItem("patient_room", userData.room_no);
       localStorage.setItem("patient_floor", userData.floor);
@@ -82,71 +84,94 @@ const UserForm: React.FC<Props> = ({ history }) => {
     }
   }, [status]);
 
-  const onSubmitForm = (data: any) => {
-    const unitCodeStr = localStorage.getItem('unit_code');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmitForm = async (data: any) => {
+    setIsLoading(true);
+    const unitCodeStr = localStorage.getItem("unit_code");
     const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
     if (unit_code) {
       data.unit_id = unit_code.unit;
     }
-    dispatch(getOtp(data));
-    localStorage.setItem("admissionno", data.admissionno);
+    await dispatch(getOtp(data));
+    localStorage.setItem("mobile_number", data.mobile_number);
+    setIsLoading(false);
   };
 
   return (
     <>
-    <img src={Logo} width={150} height={150}/>
-
-    <Form onSubmit={handleSubmit(onSubmitForm)}>
-  <Grid columns="equal" style={{ marginTop: "1%", justifyContent: "center" }}>
-    <Grid.Row stretched>
-      <Grid.Column style={{
-    fontSize: "1.2rem",
-    maxWidth: "340px",
-    width: "100%",
-    margin: "0 auto",
-    padding: "1rem",
-  }}>
-        <CInput
-          label="admissionno"
-          placeholder={t("login:IpNumber")}
-          register={register}
-          required={true}
-          size="large"
-          error={errors["IP Number"] ? true : false}
-          fluid={true}
-          loading={false}
-          
-        />
-        {errors.admissionno?.type === "required" && (
-          <Label color="orange" pointing prompt>
-            IP Number is required
-          </Label>
-        )}
-      </Grid.Column>
-    </Grid.Row>
-    <Grid.Row stretched>
-      <Grid.Column>
-        <Button
-          style={{
-            borderRadius: "100px",
-            textAlign: "center",
-            fontWeight: "lighter",
-            fontSize: "1.4rem",
-            background: "#0075ad",
-            width: "100%",
-            maxWidth: "300px", // set a maximum width for the button
-            margin: "0 auto", // center the button horizontally
-          }}
-          type="submit"
-          loading={false}
-          color="red"
+      <img src={Logo} width={150} height={150} />
+      <Form onSubmit={handleSubmit(onSubmitForm)}>
+        <div style={{ width: "auto", marginLeft: "-4%" }}>
+          <span
+            style={{
+              fontSize: "12px",
+              fontWeight: "bold",
+              color: "grey",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {t("login_text")}
+          </span>
+        </div>
+        <Grid
+          columns="equal"
+          style={{ marginTop: "1%", justifyContent: "center" }}
         >
-          {t("login:GetOTP")}
-        </Button>
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
-</Form>
+          <Grid.Row stretched>
+            <Grid.Column
+              style={{
+                fontSize: "1.2rem",
+                maxWidth: "340px",
+                width: "100%",
+                margin: "0 auto",
+                padding: "1rem",
+              }}
+            >
+              <CInput
+                placeholder={t("mobileNumber")}
+                register={register}
+                label="mobile_number"
+                required={true}
+                size="large"
+                error={errors["Mobile Number / Email"] ? true : false}
+                fluid={true}
+                loading={false}
+              />
+              {errors.mobile_number?.type === "required" && (
+                <Label color="orange" pointing prompt>
+                  Mobile Number / Email is required
+                </Label>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row stretched>
+            <Grid.Column>
+              {isLoading ? (
+                <Loader active={isLoading} inline="centered" />
+              ) : (
+                <Button
+                  style={{
+                    borderRadius: "100px",
+                    textAlign: "center",
+                    fontWeight: "lighter",
+                    fontSize: "1.4rem",
+                    background: "#0075ad",
+                    width: "100%",
+                    maxWidth: "300px", // set a maximum width for the button
+                    margin: "0 auto", // center the button horizontally
+                  }}
+                  type="submit"
+                  loading={false}
+                  color="red"
+                >
+                  {t("login:GetOTP")}
+                </Button>
+              )}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Form>
       <BackgroundImage />
     </>
   );

@@ -1,5 +1,6 @@
 {
 	"mobileNumber": "Mobile Number",
 	"IpNumber": "IP Number",
-	"GetOTP": "Get OTP"
+	"GetOTP": "Get OTP",
+	"login_text":"Please Login With Your Registered Mobile Number"
 }

@@ -36,7 +36,7 @@ function CallSupport() {
   const [open, setOpen] = React.useState(false);
   const [sec, setSecondModel] = useState(false);
 
-  const { t } = useTranslation(["serviceslist", "mydetails"]);
+  const { t } = useTranslation(["serviceslist"]);
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -151,7 +151,7 @@ function CallSupport() {
                 </div>
               </div>
               <Modal.Actions style={{ marginLeft: "35%", marginTop: "4%" }}>
-                <div style={{background: '#E41B47', width: '40%', height: '40px' , borderRadius: '10px', display: 'flex'}}>
+                <div style={{background: '#E41B47', width: '50%', height: '40px' , borderRadius: '10px', display: 'flex'}}>
                 <img src={Call} width={22} height={22} style={{marginLeft: '16%', marginTop: '10%'}}/>
                 <div style={{marginTop: '12%'}}>
                 <a href="tel:9618478765" style={{textDecoration: 'none', color: 'white', padding:'20%', fontSize: '18px'}}>{t('Call')}</a>

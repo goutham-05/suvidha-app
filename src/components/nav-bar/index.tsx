@@ -7,9 +7,16 @@ import logo from "../../assets/Logo.png";
 import { useTranslation } from "react-i18next";
 import "./index.css";
 import Logout from '../../assets/logout-Icon.png'
+import { deleteMyCartItems } from "../../reduxtoolkit/myCartSlice";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../config/redux-store";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation(["serviceslist", "mydetails"]);
 
   const unit_code: string | null = localStorage.getItem("unit_code");
@@ -17,9 +24,9 @@ const Navbar = () => {
   const patientName = localStorage.getItem("patient_name");
   const ipNumber = localStorage.getItem("admissionno");
   const bedNo = localStorage.getItem("patient_bed");
-  const  myBed = bedNo === null ? "-" : bedNo;
+  const  myBed = bedNo === "null" ? "--" : bedNo;
   const roomno = localStorage.getItem("patient_room");
-  const myRoom = roomno === null ? "-" : roomno;
+  const myRoom = roomno === "null" ? "--" : roomno;
   const floorNo = localStorage.getItem("patient_floor");
   const wardName = localStorage.getItem("patient_wardName");
 
@@ -40,6 +47,10 @@ const Navbar = () => {
     localStorage.removeItem('patient_wardName');
     localStorage.removeItem('patient_block');
     localStorage.removeItem('patient_floor');
+    localStorage.removeItem('patient_bed');
+    localStorage.removeItem('patient_room');
+    localStorage.removeItem('serving time');
+    localStorage.removeItem('patient_type');
     navigate(redirectUrl+''+unit_id);
   }
 
@@ -50,8 +61,8 @@ const Navbar = () => {
        <div className="patientData">
        <p> {patientName}</p>
        <p><strong> {t("IP")}:</strong> {ipNumber}</p>
-       <p><strong>{t('Bed')}: </strong>{myBed}</p>
-       <p><strong>{t('Room')}/{t('Floor')}: </strong>{myRoom}/{floorNo}</p>
+       <p><strong>{t('mydetails:Bed')}: </strong>{myBed}</p>
+       <p><strong>{t('Room')}/{t('mydetails:Floor')}: </strong>{myRoom}/{floorNo}</p>
            <p><strong>{t('mydetails:WardName')}:</strong> {wardName}</p>
            <p style={{padding: '2px 10px', borderRadius: '5px', border: 'none', color: '#fff', cursor: 'pointer',   transition: 'all 0.3s ease'}} onClick={userLogout}>
              <img src={Logout} width={22} height={22} color="white"/>

@@ -1,194 +1,433 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../nav-bar";
 import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import veg from '../../assets/fb/vegbiryani.webp';
-import juice from '../../assets/fb/orangejuice.jfif';
-import coffee from '../../assets/fb/coffee.jfif';
-import chicken from '../../assets/fb/chibiryani.jfif';
+import veg from "../../assets/fb/vegbiryani.webp";
+import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
+import Dosa from "../../assets/fb/istockphoto-909906350-612x612.jpg";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../config/redux-store";
+import { addFoodToMyCart } from "../../reduxtoolkit/myCartSlice";
+import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
+import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
+
+interface Item {
+  title: string;
+  type: string;
+  rate: number;
+  image: string;
+  qty: number;
+  category: string;
+  selectedServingType: string;
+}
 
 const data = [
   {
-    title: 'All',
-    category: 'All',
+    itemId: 1,
+    title: "All",
+    category: "All",
+    status: false,
   },
   {
-    title: 'Veg',
-    category: 'Veg',
+    itemId: 2,
+    title: "Veg",
+    category: "Veg",
+    status: false,
   },
   {
-    title: 'Jain'
+    itemId: 3,
+    title: "Non Veg",
+    category: "Non Veg",
+    status: false,
   },
   {
-    title:'Non Veg',
-    category: 'Non Veg'
+    itemId: 4,
+    title: "Drinks & Juices",
+    category: "Drinks",
+    status: false,
   },
-  {
-    title:'Bestseller'
-  },
-  {
-    title:'Drinks & Juices',
-    category: 'Drinks',
-  }
 ];
 
-const foodData = [
-  {
-    title :'Veg Biryani',
-    rate:'$120.00',
-    image: veg,
-    category: 'Veg'
-  }, 
-  {
-    title: 'Orange Juice',
-    rate:'$85.00',
-    image: juice,
-    category: 'Drinks'
-  },
-  {
-    title: 'Coffe',
-    rate:'$40.00',
-    image: coffee,
-    category: 'Drinks'
-  },
-  {
-    title :'Chicken Biryani',
-    rate:'$120.00',
-    image: chicken,
-    category: 'Non Veg'
-  }
-]
-
 function FoodBeverages() {
-
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const myCartItems = useAppSelector((state) => state.cart);
+
+  const quantity = myCartItems[0]?.quantity ?? 0;
+
+  console.log("CartItems", quantity);
+
+  const getMyServicesTypes = useAppSelector((state) => state.getMyServingTime);
+  const incrementItems = useAppSelector(state => state.myFood)
+  const getItemsServingTime = useAppSelector(
+    (state) => state.getItemServiceTime
+  );
+
+  const [servingTimeData, setServingTimeData] = useState(getItemsServingTime.data);
+
+
+  // ...
+
+  useEffect(() => {
+    // Update the servingTimeData state when getItemsServingTime.data changes
+    setServingTimeData(getItemsServingTime.data);
+  }, [getItemsServingTime.data]);
+  
+  console.log("servingItems:::::::", getItemsServingTime);
 
   const goBack = () => {
-    navigate("/service")
+    navigate("/service");
+  };
+
+  const goCart = () => {
+    navigate("/cart");
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [servingListData, setServingListData] = useState(false);
+  const [selectedServingType, setSelectedServingType] =
+    useState("Serving Type");
+
+  const handleServingTypeSelection = (
+    selectedType: string,
+    selectedServingType: string,
+  ) => {
+    if (selectedType) {
+      dispatch(
+        getItemServiceTime({
+          unit_id: unit_id,
+          servingtime_id: selectedType.toString(),
+        })
+      );
+    }
+    setSelectedServingType(selectedServingType);
+    localStorage.setItem('serving time',selectedType);
+    setServingListData(true);
+    setIsOpen(!isOpen);
+    setSelectedItem(null); // Reset selected item
+  };
+
+  let unit_id = "";
+  const unitCodeStr = localStorage.getItem("unit_code");
+  const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+  if (unit_code) {
+    unit_id = unit_code.unit;
   }
 
-  const [selectCat, setSelectCat] = useState("All");
+  useEffect(() => {
+    dispatch(
+      getMyServingTime({
+        unit_id: unit_id,
+      })
+    );
+  }, []);
 
-  const filteredData =
-  selectCat === "All"
-    ? foodData
-    : foodData.filter((item) => item.category === selectCat);
+  useEffect(() => {
+    dispatch(
+      getItemServiceTime({
+        unit_id: unit_id,
+        servingtime_id: "1",
+      })
+    );
+  }, []);
 
-  const selectCategory = (category: any) => {
-      setSelectCat(category)
-  }
+  const [remarksList, setRemarksList] = useState<string[]>([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // const handleAddToCart = (item: any, remarks: any) => {
+  //   dispatch(addFoodToMyCart({ ...item, remarks }));
+  // };
 
   return (
-    <div style={{ marginTop: "4%" }}>
+    <>
       <Navbar />
-      <div onClick={goBack} style={{ marginBottom: "5%", marginRight: "190%", marginTop: "6%" }}>
+      <div
+        onClick={goBack}
+        style={{ marginBottom: "5%", marginRight: "190%", marginTop: "6%" }}
+      >
         <Icon disabled name="arrow left" size="large" />
       </div>
-      <div
-        style={{display: "flex", justifyContent: "center"}}
-      >
-        <div style={{ position: "relative", width: "100%", height: "50px" }}>
-          <input
-            type="text"
-            placeholder="Search Menu"
+      <div>
+        <div style={{ display: "flex", marginTop: "4%" }}>
+          <div
             style={{
-              width: "95%",
-              height: "70%",
+              marginRight: "20px",
+              width: "20%",
+              height: "20px",
+              padding: "3px",
+              fontSize: "10px",
+              background: "white",
+              boxShadow: "0px 2px 4px grey",
               borderRadius: "10px",
-              background: "#D3D3D3",
-              border: "none",
+              whiteSpace: "nowrap",
+              marginLeft: "6%",
             }}
-          />
-          <i
-            className="search icon"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <p>{selectedServingType}</p>{" "}
+            <Icon disabled name="angle down" inverted color="grey" />
+          </div>
+          {data.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                marginRight: "20px",
+                width: "20%",
+                height: "20px",
+                padding: "3px",
+                fontSize: "10px",
+                background: "white",
+                boxShadow: "0px 2px 4px grey",
+                borderRadius: "10px",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <div>{item.title}</div>
+            </div>
+          ))}
+        </div>
+        {isOpen && (
+          <div
             style={{
               position: "absolute",
-              top: "30%",
-              left: "240px",
-              transform: "translateY(-50%)",
-              fontSize: "15px",
-              color: "black",
+              zIndex: 1,
+              background: "white",
+              boxShadow: "0px 2px 4px grey",
+              borderRadius: "10px",
+              marginTop: "5px",
+              width: "45%",
+              height: "250px",
+              padding: "20px",
             }}
-          ></i>
-        </div>
-        <div
-          style={{
-            marginLeft: "5%",
-            background: "#0075ad",
-            width: "15%",
-            height: "32px",
-            borderRadius: "20%",
-            marginTop: "0.1%",
-          }}
-        >
-          <Icon
-            name="cart"
-            size="large"
-            inverted
-            color="grey"
-            style={{ marginTop: "12%" }}
-          />
-        </div>
-      </div>
-      <div style={{ display: "flex", flexWrap: "nowrap", width: "100%", marginLeft: '2%', marginTop: '5%'}}>
-  {data.map((item, index) => (
-    <div
-      key={index}
-      style={{
-        marginRight: "20px",
-        width: "100%",
-        height: "20px",
-        padding: "3px",
-        fontSize: "10px",
-        background: "white",
-        boxShadow: "0px 2px 4px grey",
-        borderRadius: "10px",
-        whiteSpace: 'nowrap'
-      }}>
-        <div onClick={() => selectCategory(item.category)}>
-      {item.title}
-      </div>
-    </div>
-  ))}
-</div>
-<div style={{marginTop: '10%',}}>
-      {
-        filteredData.map((item, index) => (
-          <div
-          key={index}
-          style={{
-           width: '92%',
-           height: '100px',
-           padding: '10px',
-           borderRadius: '10px',
-           margin: '5%',
-           border: '1px solid grey',
-           boxShadow: "0px 2px 4px grey",
-          }}
-        >
-          <div style={{display: 'flex'}}>
-            <div style={{width: '10%', height: '80px', whiteSpace: 'nowrap'}}>
-            <p style={{fontWeight: 'bold', fontSize: '18px', float: 'left'}}>{item.title}</p>
-          <p style={{float:'left'}}>{item.rate}</p>
-            </div>
-            <div style={{width: '40%', height: '80px', marginLeft: '60%',}}>
-            <img src={item.image} width={90} height={70} style={{ borderRadius: '20px'}}/>
+          >
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              {Array.isArray(getItemsServingTime.data) ? (
+                getMyServicesTypes.data?.map((item: any, index: any) => (
+                  <div
+                    onClick={() => {
+                      handleServingTypeSelection(item.id, item.mealtime);
+                    }}
+                  >
+                    {item.mealtime}
+                  </div>
+                ))
+              ) : (
+                <p style={{ marginTop: "50%" }}>Loading...</p>
+              )}
             </div>
           </div>
-          
-         {/* <div style={{ width: '20%', marginTop: '4%', whiteSpace: 'nowrap', border: '1px solid grey'}}>
-          <p style={{fontWeight: 'bold', fontSize: '18px', float: 'left'}}>{item.title}</p>
-          <p style={{float:'left'}}>{item.rate}</p> */}
-          {/* <img src={item.image}  style={{width: '100%', height: '20px', marginLeft: '100px'}}/> */}
-         {/* </div>
-         <div style={{width: '10%', height: '50px', background: 'red', float: 'right'}}/> */}
+        )}
+      </div>
+      <div
+        style={{
+          minHeight: "10px",
+          maxHeight: "400px",
+          overflowY: "scroll",
+          marginTop: "10%",
+        }}
+      >
+        {servingListData ? (
+          <div>
+            {Array.isArray(getItemsServingTime.data) ? (
+              servingTimeData.map((item: any, index: any) => (
+                <div
+                  style={{
+                    width: "92%",
+                    height: "120px",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    margin: "5%",
+                    border: "1px solid grey",
+                    boxShadow: "0px 2px 4px grey",
+                  }}
+                >
+                  <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        width: "10%",
+                        height: "80px",
+                        whiteSpace: "nowrap",
+                      }}
+                      key={item.itemid}
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                          float: "left",
+                        }}
+                      >
+                        {item.item}
+                      </p>
+                      <div style={{ float: "left", display: "flex" }}>
+                        <img
+                          src={Rupee}
+                          width={5}
+                          height={10}
+                          style={{ marginTop: "5px" }}
+                        />
+                        <p>{item.price_att}</p>
+                      </div>
+                      <div
+                        style={{
+                          marginTop: "60px",
+                          borderRadius: "10px  ",
+                        }}
+                      >
+                        <input
+                          placeholder="Add Remarks"
+                          style={{
+                            width: "120px",
+                            height: "40px",
+                            borderRadius: "5px",
+                          }}
+                          type="text"
+                          value={remarksList[index] || ""}
+                          onChange={(event) => {
+                            const updatedRemarksList = [...remarksList];
+                            updatedRemarksList[index] = event.target.value;
+                            setRemarksList(updatedRemarksList);
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ marginLeft: "56%", position: "relative" }}>
+                      <img
+                        src={veg}
+                        width={100}
+                        height={70}
+                        style={{ borderRadius: "10px" }}
+                      />
+                      <div>
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: "90%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: "50%",
+                            height: "20px",
+                            background:  selectedItem === index ? "red" : "white",
+                            borderRadius: "6px",
+                            boxShadow: "0px 2px 4px grey",
+                            zIndex: 1,
+                          }}
+                        >
+                          {
+                            item.quantity === 0 ? (
+                              <span style={{ fontWeight: "bold" }}
+                              onClick={() => {
+                                dispatch(
+                                  addFoodToMyCart({
+                                    ...item,
+                                    remarks: remarksList[index],
+                                  })
+                                );
+                                
+                                setSelectedItem(index); // Set selected item
+                              }}
+                              
+                              >ADD</span>
+                            ) : null
+                          }
+                          {
+                            item.quantity === 0 ? null : (
+                              <span style={{ fontWeight: "bold" }}
+                              >-</span>
+                            ) 
+                          }
+                          {
+                             item.quantity === 0 ? null : (
+                              <span style={{ fontWeight: "bold" }}
+                              >{quantity}</span>
+                            ) 
+                          }
+                          {
+                             item.quantity === 0 ? null : (
+                              <span style={{ fontWeight: "bold" }}
+                            >+</span>
+                            ) 
+                          }
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+        ) : (
+          <p
+            style={{
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "#4A98CD",
+              marginTop: "10% ",
+            }}
+          >
+            Please Select Serving Type
+          </p>
+        )}
+      </div>
+      {myCartItems.length > 0 ? (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "60px",
+            marginTop: "8%",
+            background: "white",
+            borderRadius: "10px",
+            boxShadow: "0px 2px 4px grey",
+            marginLeft: "1%",
+          }}
+        >
+          <div style={{ marginLeft: "10%", marginTop: "6%" }}>
+            <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
+              <div>{`${myCartItems.length} ITEM${
+                myCartItems.length === 1 ? "" : "S"
+              } ADDED`}</div>
+            </p>
+          </div>
+          <div
+            style={{
+              marginLeft: "22%",
+              marginTop: "5%",
+              height: "26px",
+              width: "30%",
+              borderRadius: "5px",
+              background: "#4A98CD",
+            }}
+            onClick={goCart}
+          >
+            <span
+              style={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                marginTop: "10%",
+                color: "white",
+              }}
+            >
+              View Cart
+            </span>
+            <Icon name="caret right" inverted color="grey" />
+          </div>
         </div>
-        ))
-      }
-</div>
-    </div>
+      ) : null}
+    </>
   );
 }
 
 export default FoodBeverages;
+

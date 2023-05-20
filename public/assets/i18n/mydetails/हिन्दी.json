@@ -1,8 +1,9 @@
 {
     "My Bill": "मेरे बिल",
     "My Discharge":"मेरा डिस्चार्ज",
-    "My Insurance":"मेरा बीमा",
+    "Insurance Status":"बीमा की स्थिति",
     "Floor":"गृहतल",
+    "Bed":"बिस्तर",
     "WardName":"वार्ड का नाम",
     "Advance Paid":"अग्रिम भुगतान",
     "Approximate Bill":"अनुमानित बिल",

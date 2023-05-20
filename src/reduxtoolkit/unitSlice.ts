@@ -21,7 +21,7 @@ export const getUnits = createAsyncThunk(
   "getUnits",
   async (payload: Payload, { dispatch, getState, rejectWithValue }) => {
     try {
-      const response: any = await axiosGet(`get-units`);
+      const response: any = await axiosGet(`get-units`, payload);
       return response.data;
     } catch (error: Error | any) {
       return rejectWithValue({

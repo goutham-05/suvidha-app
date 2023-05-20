@@ -81,7 +81,7 @@ function MyDetails() {
 
   useEffect(() => {
     patientTypeCheck();
-  }, [myDetailsModules])
+  }, [])
 
   const naviage = useNavigate();
   const { t } = useTranslation(["mydetails"]);

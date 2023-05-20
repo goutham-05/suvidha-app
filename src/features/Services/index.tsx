@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Grid from "semantic-ui-react/dist/commonjs/collections/Grid";
 import Container from "semantic-ui-react/dist/commonjs/elements/Container";
@@ -13,6 +13,21 @@ import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
 import { Icon } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../config/redux-store";
+
+import veg from "../../assets/fb/vegbiryani.webp";
+import juice from "../../assets/fb/orangejuice.jfif";
+import coffee from "../../assets/fb/coffee.jfif";
+import chicken from "../../assets/fb/chibiryani.jfif";
+import Cart from "../../assets/fb/shopping-bag.png";
+import Idly from "../../assets/fb/87ea2e127a2e58e7c08e4a13d857879f.avif";
+import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
+import Dosa from "../../assets/fb/istockphoto-909906350-612x612.jpg";
+import { addMyFood } from "../../reduxtoolkit/myFoodSlice";
 
 interface Services {
   title: string;
@@ -25,7 +40,7 @@ const mockServicesList: Services[] = [
   {
     title: "House Keeping",
     icon: HouseKeep,
-    path: "/bills",
+    path: "/services",
   },
   {
     title: "Food & Beverages",
@@ -39,7 +54,73 @@ const mockServicesList: Services[] = [
   },
 ];
 
+const foodData = [
+  {
+    title: "Veg Biryani",
+    rate: "120.00",
+    image: veg,
+    category: "Veg",
+    type: "Lunch",
+    qty: 0,
+  },
+  {
+    title: "Orange Juice",
+    rate: "85.00",
+    image: juice,
+    category: "Veg",
+    type: "Pre BreakFast",
+    qty: 0,
+  },
+  {
+    title: "Coffe",
+    rate: "40.00",
+    image: coffee,
+    category: "Veg",
+    type: "Pre BreakFast",
+    qty: 0,
+  },
+  {
+    title: "Chicken Biryani",
+    rate: "120.00",
+    image: chicken,
+    category: "Non Veg",
+    type: "Dinner",
+    qty: 0,
+  },
+  {
+    title: "Idly",
+    rate: "50.00",
+    image: Idly,
+    category: "Veg",
+    type: "BreakFast",
+    qty: 0,
+  },
+  {
+    title: "Dosa",
+    rate: "50.00",
+    image: Dosa,
+    category: "Veg",
+    type: "BreakFast",
+    qty: 0,
+  },
+];
+
 function Services() {
+
+  // const dispatch = useAppDispatch();
+
+  // useEffect(() => {
+  //   dispatch(addMyFood(foodData));
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   const foodDatacopy = [...foodData];
+  //   foodDatacopy.map((item) => {
+  //     dispatch(addMyFood(item));
+  //   });
+  // }, []);
+
+  
   const [modalStatus, setModalStatus] = React.useState(false);
 
   const [modalConent, setModalContent] = React.useState<JSX.Element>();
