@@ -43,11 +43,11 @@ const mockServicesList: ServiceList[] = [
     icon: PortalSer,
     path: "/portalservices",
   },
-  {
-    title: "Grievance/Feedback",
-    icon: FeedBack,
-    path: "/servicedisabled",
-  },
+  // {
+  //   title: "Grievance/Feedback",
+  //   icon: FeedBack,
+  //   path: "/servicedisabled",
+  // },
   {
     title: "Call Support",
     icon: CallSup,

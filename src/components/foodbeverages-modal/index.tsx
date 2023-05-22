@@ -4,8 +4,6 @@ import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import veg from "../../assets/fb/vegbiryani.webp";
-import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
-import Dosa from "../../assets/fb/istockphoto-909906350-612x612.jpg";
 import {
   RootState,
   useAppDispatch,
@@ -63,21 +61,27 @@ function FoodBeverages() {
   console.log("CartItems", quantity);
 
   const getMyServicesTypes = useAppSelector((state) => state.getMyServingTime);
-  const incrementItems = useAppSelector(state => state.myFood)
+  const incrementItems = useAppSelector((state) => state.myFood);
   const getItemsServingTime = useAppSelector(
     (state) => state.getItemServiceTime
   );
 
-  const [servingTimeData, setServingTimeData] = useState(getItemsServingTime?.data);
+  const [servingTimeData, setServingTimeData] = useState(
+    getItemsServingTime?.data || []
+  );
 
   useEffect(() => {
     setServingTimeData(getItemsServingTime?.data);
   }, [getItemsServingTime?.data]);
-  
+
   console.log("servingItems:::::::", getItemsServingTime);
 
   const goBack = () => {
     navigate("/service");
+    if (quantity === 0) {
+      localStorage.removeItem("servingType");
+      localStorage.removeItem("serving time");
+    } else return;
   };
 
   const goCart = () => {
@@ -86,12 +90,15 @@ function FoodBeverages() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [servingListData, setServingListData] = useState(false);
-  const [selectedServingType, setSelectedServingType] =
-    useState("Serving Type");
+
+  const [selectedServingType, setSelectedServingType] = useState(() => {
+    const servingType = localStorage.getItem("servingType");
+    return servingType ? servingType : "Serving Type";
+  });
 
   const handleServingTypeSelection = (
     selectedType: string,
-    selectedServingType: string,
+    selectedServingType: string
   ) => {
     if (selectedType) {
       dispatch(
@@ -101,12 +108,12 @@ function FoodBeverages() {
         })
       );
     }
+
     setSelectedServingType(selectedServingType);
-    localStorage.setItem('serving time',selectedType);
-    localStorage.setItem('servingType', selectedServingType);
+    localStorage.setItem("serving time", selectedType);
+    localStorage.setItem("servingType", selectedServingType);
     setServingListData(true);
     setIsOpen(!isOpen);
-    //setSelectedItem(null); // Reset selected item
   };
 
   let unit_id = "";
@@ -131,13 +138,33 @@ function FoodBeverages() {
         servingtime_id: "1",
       })
     );
-  }, [unit_id]);
+  }, [unit_id, dispatch]);
 
   const [remarksList, setRemarksList] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  // const handleAddToCart = (item: any, remarks: any) => {
-  //   dispatch(addFoodToMyCart({ ...item, remarks }));
-  // };
+  const [servingTypeSelecting, setServingTypeSelecting] =
+    useState("Serving Type");
+
+  const [searchInput, setSearchInput] = useState("");
+  // Initialize an array of disabled states for each item
+const [disabledItems, setDisabledItems] = useState([]);
+
+  const [filteredServingTimeData, setFilteredServingTimeData] =
+    useState(servingTimeData);
+
+  useEffect(() => {
+    // Filter the servingTimeData based on the search input
+    const filteredData =
+      servingTimeData &&
+      servingTimeData.filter((item: any) =>
+        item?.item?.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    setFilteredServingTimeData(filteredData || []);
+  }, [searchInput, servingTimeData]);
+
+  const handleSearchInputChange = (event: any) => {
+    setSearchInput(event.target.value);
+  };
 
   return (
     <>
@@ -148,12 +175,18 @@ function FoodBeverages() {
       >
         <Icon disabled name="arrow left" size="large" />
       </div>
+      <input
+        placeholder="Search Menu..."
+        style={{ marginBottom: "10px", height: "40px" }}
+        value={searchInput}
+        onChange={handleSearchInputChange}
+      />
       <div>
         <div style={{ display: "flex", marginTop: "4%" }}>
           <div
             style={{
               marginRight: "20px",
-              width: "20%",
+              width: "22%",
               height: "20px",
               padding: "3px",
               fontSize: "10px",
@@ -165,8 +198,10 @@ function FoodBeverages() {
             }}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <p>{selectedServingType}</p>{" "}
-            <Icon disabled name="angle down" inverted color="grey" />
+            <p>
+              {selectedServingType}
+              {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
+            </p>
           </div>
           {data.map((item, index) => (
             <div
@@ -229,157 +264,202 @@ function FoodBeverages() {
           marginTop: "10%",
         }}
       >
-        {/* {servingListData ? ( */}
-        { localStorage.getItem('serving time') ?
+        {localStorage.getItem("serving time") ? (
           <div>
             {Array.isArray(getItemsServingTime.data) ? (
-              servingTimeData?.map((item: any, index: any) => (
-                <div
-                  style={{
-                    width: "92%",
-                    height: "120px",
-                    padding: "10px",
-                    borderRadius: "10px",
-                    margin: "5%",
-                    border: "1px solid grey",
-                    boxShadow: "0px 2px 4px grey",
-                    background: selectedItems.includes(index) ? "#4A98CD" : "white",
-                  }}
-                >
-                  <div style={{ display: "flex" }}>
-                    <div
-                      style={{
-                        width: "10%",
-                        height: "80px",
-                        whiteSpace: "nowrap",
-                      }}
-                      key={item.itemid}
-                    >
-                      <p
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: "14px",
-                          float: "left",
-                          color: selectedItems.includes(index) ? "white" : "black",
-                        }}
-                      >
-                        {item.item}
-                      </p>
-                      <div style={{ float: "left", display: "flex" }}>
-                        {
-                          selectedItems.includes(index) ? (
-                            <Icon inverted color='grey' name='rupee' />
-                          ) : (
-                            <Icon color='black' name='rupee' />
-                          )
-                        }
-                        <p style={{color: selectedItems.includes(index) ? "white" : "black",}}>{item.price_att}</p>
-                      </div>
+              filteredServingTimeData.length > 0 ? (
+                filteredServingTimeData?.map((item: any, index: any) => (
+                  <div
+                    style={{
+                      width: "92%",
+                      height: "120px",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      margin: "5%",
+                      border: "1px solid grey",
+                      boxShadow: "0px 2px 4px grey",
+                      background: selectedItems.includes(index)
+                        ? "#4A98CD"
+                        : "white",
+                    }}
+                  >
+                    <div style={{ display: "flex" }}>
                       <div
                         style={{
-                          marginTop: "60px",
-                          borderRadius: "10px  ",
+                          width: "10%",
+                          height: "80px",
+                          whiteSpace: "nowrap",
                         }}
+                        key={item.itemid}
                       >
-                        <input
-                          placeholder="Add Remarks"
+                        <p
                           style={{
-                            width: "120px",
-                            height: "40px",
-                            borderRadius: "5px",
-                          }}
-                          type="text"
-                          value={remarksList[index] || ""}
-                          onChange={(event) => {
-                            const updatedRemarksList = [...remarksList];
-                            updatedRemarksList[index] = event.target.value;
-                            setRemarksList(updatedRemarksList);
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div style={{ marginLeft: "56%", position: "relative" }}>
-                      <img
-                        src={veg}
-                        width={100}
-                        height={70}
-                        style={{ borderRadius: "10px" }}
-                      />
-                      <div>
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: "90%",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            width: "50%",
-                            height: "20px",
-                            background: "white",
-                            borderRadius: "6px",
-                            boxShadow: "0px 2px 4px grey",
-                            zIndex: 1,
+                            fontWeight: "bold",
+                            fontSize: "14px",
+                            float: "left",
+                            color: selectedItems.includes(index)
+                              ? "white"
+                              : "black",
                           }}
                         >
-                          {
-                            item.quantity === 0 ? (
-                              <span style={{ fontWeight: "bold" }}
-                              onClick={() => {
-                                dispatch(
-                                  addFoodToMyCart({
-                                    ...item,
-                                    remarks: remarksList[index],
-                                  })
-                                );
-                                
-                                setSelectedItems((prevSelectedItems) => [...prevSelectedItems, index]);
-                              }}
+                          {item.item}
+                        </p>
+                        <div style={{ float: "left", display: "flex" }}>
+                          {selectedItems.includes(index) ? (
+                            <Icon inverted color="grey" name="rupee" />
+                          ) : (
+                            <Icon color="black" name="rupee" />
+                          )}
+                          <p
+                            style={{
+                              color: selectedItems.includes(index)
+                                ? "white"
+                                : "black",
+                            }}
+                          >
+                            {item.price_att}
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            marginTop: "60px",
+                            borderRadius: "10px  ",
+                          }}
+                        >
+                          <input
+                            placeholder="Add Remarks"
+                            style={{
+                              width: "120px",
+                              height: "40px",
+                              borderRadius: "5px",
+                            }}
+                            type="text"
+                            value={remarksList[index] || ""}
+                            onChange={(event) => {
+                              const updatedRemarksList = [...remarksList];
+                              updatedRemarksList[index] = event.target.value;
+                              setRemarksList(updatedRemarksList);
+                            }}
+                            disabled={selectedItems.includes(index) && !remarksList[index]}
+                          />
+                        </div>
+                      </div>
+                      <div style={{ marginLeft: "56%", position: "relative" }}>
+                        <img
+                          src={veg}
+                          width={100}
+                          height={70}
+                          style={{ borderRadius: "10px" }}
+                        />
+                        <div>
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "90%",
+                              left: "50%",
+                              transform: "translate(-50%, -50%)",
+                              width: "50%",
+                              height: "20px",
+                              background: "white",
+                              borderRadius: "6px",
+                              boxShadow: "0px 2px 4px grey",
+                              zIndex: 1,
+                            }}
+                          >
+                            {item.quantity === 0 ? (
+                              <span
+                                // style={{ fontWeight: "bold" }}
+                                // onClick={() => {
+                                //   dispatch(
+                                //     addFoodToMyCart({
+                                //       ...item,
+                                //       remarks: remarksList[index],
+                                //     })
+                                //   );
+
+                                //   setSelectedItems((prevSelectedItems) => [
+                                //     ...prevSelectedItems,
+                                //     index,
+                                //   ]);
+                                //   // Clear the input field
+                                //   const updatedRemarksList = [...remarksList];
+                                //   updatedRemarksList[index] = "";
+                                //   setRemarksList(updatedRemarksList);
                               
-                              >ADD</span>
-                            ) : null
-                          }
-                          {
-                            item.quantity === 0 ? null : (
-                              <span style={{ fontWeight: "bold" }}
-                              >-</span>
-                            ) 
-                          }
-                          {
-                             item.quantity === 0 ? null : (
-                              <span style={{ fontWeight: "bold" }}
-                              >{quantity}</span>
-                            ) 
-                          }
-                          {
-                             item.quantity === 0 ? null : (
-                              <span style={{ fontWeight: "bold" }}
-                            >+</span>
-                            ) 
-                          }
-
-
+                                // }}
+                                style={{
+                                  fontWeight: "bold",
+                                  color: selectedItems.includes(index) && !remarksList[index] ? "gray" : "black",
+                                  pointerEvents: selectedItems.includes(index) && !remarksList[index] ? "none" : "auto",
+                                }}
+                                // onClick={() => {
+                                //   if (selectedItems.includes(index) && !remarksList[index]) return; // Exit if input field is disabled
+                          
+                                //   setSelectedItems((prevSelectedItems) => [
+                                //     ...prevSelectedItems,
+                                //     index,
+                                //   ]);
+                                  
+                                //   dispatch(
+                                //     addFoodToMyCart({
+                                //       ...item,
+                                //       remarks: remarksList[index],
+                                //     })
+                                //   );
+                                // }}
+                                onClick={() => {
+                                  if (selectedItems.includes(index) && !remarksList[index]) return; // Exit if input field is disabled
+                              
+                                  setSelectedItems((prevSelectedItems) => [
+                                    ...prevSelectedItems,
+                                    index,
+                                  ]);
+                              
+                                  dispatch(
+                                    addFoodToMyCart({
+                                      ...item,
+                                      remarks: remarksList[index],
+                                    })
+                                  );
+                                }}
+                              >
+                                ADD
+                              </span>
+                            ) : null}
+                            {item.quantity === 0 ? null : (
+                              <span style={{ fontWeight: "bold" }}>-</span>
+                            )}
+                            {item.quantity === 0 ? null : (
+                              <span style={{ fontWeight: "bold" }}>
+                                {quantity}
+                              </span>
+                            )}
+                            {item.quantity === 0 ? null : (
+                              <span style={{ fontWeight: "bold" }}>+</span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
+                ))
+              ) : (
+                <p
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    color: "#4A98CD",
+                    marginTop: "10%",
+                  }}
+                >
+                  Item not available
+                </p>
+              )
             ) : (
               <p>Loading...</p>
             )}
-          </div> : (
-            <p
-            style={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              color: "#4A98CD",
-              marginTop: "10% ",
-            }}
-          >
-            Please Select Serving Type
-          </p>
-          )
-}
-        {/* ) : (
+          </div>
+        ) : (
           <p
             style={{
               fontSize: "18px",
@@ -390,7 +470,7 @@ function FoodBeverages() {
           >
             Please Select Serving Type
           </p>
-        )} */}
+        )}
       </div>
       {myCartItems.length > 0 ? (
         <div
@@ -442,4 +522,3 @@ function FoodBeverages() {
 }
 
 export default FoodBeverages;
-

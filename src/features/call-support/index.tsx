@@ -161,7 +161,7 @@ function CallSupport() {
             </Modal.Actions>
           </Modal.Description>
         </Modal>
-        <Modal
+        {/* <Modal
           onOpen={() => navigate('/servicedisabled')}
           open={sec}
           trigger={
@@ -262,7 +262,7 @@ function CallSupport() {
     </div>
             </Modal.Actions>
           </Modal.Description>
-        </Modal>
+        </Modal> */}
       </div>
       </div>
     </>

@@ -37,21 +37,21 @@ interface Services {
 }
 
 const mockServicesList: Services[] = [
-  {
-    title: "House Keeping",
-    icon: HouseKeep,
-    path: "/services",
-  },
+  // {
+  //   title: "House Keeping",
+  //   icon: HouseKeep,
+  //   path: "/servicedisabled",
+  // },
   {
     title: "Food & Beverages",
     icon: Food,
     path: "/food&Beverages",
   },
-  {
-    title: "Facilities",
-    icon: Facilities,
-    path: "/services",
-  },
+  // {
+  //   title: "Facilities",
+  //   icon: Facilities,
+  //   path: "/servicedisabled",
+  // },
 ];
 
 

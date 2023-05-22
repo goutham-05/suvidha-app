@@ -87,6 +87,7 @@ function MyCart() {
     foodOrderModal();
     setModalOpen(true);
     localStorage.removeItem('serving time');
+    localStorage.removeItem('servingType');
   };
   
 
@@ -198,6 +199,8 @@ function MyCart() {
                             dispatch(deleteSingleCartItem(item.itemid));
                             if (my_cart_items.length === 1) {
                               navigate("/food&Beverages");
+                              localStorage.removeItem('serving time');
+                              localStorage.removeItem('servingType');
                             }
                           }
                         }}
@@ -358,7 +361,7 @@ function MyCart() {
         }}
         onClick={handleProceedToPay}
       >
-        <p style={{ padding: "2%", color: "white" }}>Proceed to Pay</p>
+        <p style={{ padding: "2%", color: "white" }}>Add To My Bill</p>
       </div>
       <Dimmer active={modalOpen}>
         <img src={order} width={60} height={60} />

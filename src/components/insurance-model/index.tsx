@@ -25,6 +25,34 @@ const MyInsuranceModal = () => {
     navigate("/mydetails");
   };
 
+  // useEffect(() => {
+  //   let unit_id = "";
+  //   const unitCodeStr = localStorage.getItem("unit_code");
+  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+  //   if (unit_code) {
+  //     unit_id = unit_code.unit;
+  //   }
+  //   dispatch(
+  //     getMyInsuranceStatus({
+  //       admissionno: localStorage.getItem("admissionno"),
+  //       unit_id: unit_id,
+  //     })
+  //   );
+  // }, []);
+
+  // const insuranceStatus = useAppSelector((state) => state.myDetails);
+
+  // const insuranceDate = insuranceStatus.data?.approveddate;
+
+  // const myInsuranceData = [
+  //   insuranceStatus.data?.status_name,
+  //   insuranceDate
+  // ]
+
+  // useEffect(() =>{
+  //   myInsuranceData;
+  // }, [])
+
   useEffect(() => {
     let unit_id = "";
     const unitCodeStr = localStorage.getItem("unit_code");
@@ -39,19 +67,19 @@ const MyInsuranceModal = () => {
       })
     );
   }, []);
-
+  
   const insuranceStatus = useAppSelector((state) => state.myDetails);
-
+  
   const insuranceDate = insuranceStatus.data?.approveddate;
-
+  
   const myInsuranceData = [
-    insuranceStatus.data?.status_name,
-    insuranceDate
-  ]
-
-  useEffect(() =>{
-    myInsuranceData;
-  }, [])
+    insuranceStatus.data?.status_name || "--",
+    insuranceDate || "--"
+  ];
+  
+  useEffect(() => {
+    myInsuranceData
+  }, []);
 
   return (
     <div>
