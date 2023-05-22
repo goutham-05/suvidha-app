@@ -9,12 +9,7 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import BackgroundImage from "../background";
 import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
-import myCartSlice, {
-  addFoodToMyCart,
-  deleteMyCartItems,
-  deleteSingleCartItem,
-  removeMyCartItem,
-} from "../../reduxtoolkit/myCartSlice";
+
 import getMyOrderFoodSlice, {
   getMyOrderFood,
 } from "../../reduxtoolkit/orderFoodSlice";
@@ -22,6 +17,10 @@ import { increaseQty } from "../../reduxtoolkit/myFoodSlice";
 import { Dimmer } from "semantic-ui-react";
 import { useState } from "react";
 import order from "../../../src/assets/fb/orderplaced.png";
+import {
+  decrementCartItem,
+  incrementCartItem,
+} from "../../reduxtoolkit/myCartSlice";
 
 function MyCart() {
   const navigate = useNavigate();
@@ -57,8 +56,8 @@ function MyCart() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const foodOrderModal = () => {
-        setModalOpen(true);
-    
+    setModalOpen(true);
+
     const timeout = setTimeout(() => {
       setModalOpen(false);
       navigate("/food&Beverages");
@@ -66,8 +65,7 @@ function MyCart() {
     return () => {
       clearTimeout(timeout);
     };
-  }
-
+  };
 
   const handleProceedToPay = () => {
     const unitIdString = localStorage.getItem("unit_code");
@@ -81,15 +79,13 @@ function MyCart() {
       serving_time: localStorage.getItem("serving time"),
       my_cart_items,
     };
-    console.log('selectedItems',selectedItems);
+    console.log("selectedItems", selectedItems);
     dispatch(getMyOrderFood(selectedItems));
-    dispatch(deleteMyCartItems(selectedItems));
     foodOrderModal();
     setModalOpen(true);
-    localStorage.removeItem('serving time');
-    localStorage.removeItem('servingType');
+    localStorage.removeItem("serving time");
+    localStorage.removeItem("servingType");
   };
-  
 
   return (
     <div>
@@ -179,52 +175,36 @@ function MyCart() {
                     border: "1px solid black",
                   }}
                 >
-                  {item.quantity == 0 ? (
-                    <span style={{ fontWeight: "bold" }}>ADD</span>
-                  ) : null}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-around",
-                      marginTop: "-4%",
-                    }}
-                  >
-                    {item.quantity == 0 ? null : (
+                  {item.quantity === 0 ? (
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        color: "black",
+                        pointerEvents: "auto",
+                      }}
+                      onClick={() => dispatch(incrementCartItem(item))}
+                    >
+                      ADD
+                    </span>
+                  ) : (
+                    <>
                       <span
                         style={{ fontWeight: "bold" }}
-                        onClick={() => {
-                          if (item.quantity > 1) {
-                            dispatch(removeMyCartItem(item));
-                          } else {
-                            dispatch(deleteSingleCartItem(item.itemid));
-                            if (my_cart_items.length === 1) {
-                              navigate("/food&Beverages");
-                              localStorage.removeItem('serving time');
-                              localStorage.removeItem('servingType');
-                            }
-                          }
-                        }}
+                        onClick={() => dispatch(decrementCartItem(item))}
                       >
                         -
                       </span>
-                    )}
-                    {item.quantity == 0 ? null : (
                       <span style={{ fontWeight: "bold" }}>
                         {item.quantity}
                       </span>
-                    )}
-                    {item.quantity == 0 ? null : (
                       <span
                         style={{ fontWeight: "bold" }}
-                        onClick={() => {
-                          dispatch(addFoodToMyCart(item));
-                          dispatch(increaseQty(item.itemid));
-                        }}
+                        onClick={() => dispatch(incrementCartItem(item))}
                       >
                         +
                       </span>
-                    )}
-                  </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -263,7 +243,7 @@ function MyCart() {
           marginLeft: "4%",
         }}
       >
-        <div style={{ display: "flex"}}>
+        <div style={{ display: "flex" }}>
           <div
             style={{
               width: "10%",
@@ -284,24 +264,23 @@ function MyCart() {
             </p>
           </div>
           <div style={{ marginLeft: "68%", marginTop: "3%" }}>
-              <img
-                src={Rupee}
-                width={10}
-                height={14}
-                style={{ padding: "2%", marginBottom: '5px'}}
-              />
-              <span style={{ fontSize: "16px", fontWeight: "bold"}}>
-                {subTotal()}
-              </span>
+            <img
+              src={Rupee}
+              width={10}
+              height={14}
+              style={{ padding: "2%", marginBottom: "5px" }}
+            />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+              {subTotal()}
+            </span>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  marginTop: "-4%",
-                }}
-              >
-              </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                marginTop: "-4%",
+              }}
+            ></div>
           </div>
         </div>
         <div style={{ width: "100%", border: "0.9px solid grey" }}></div>
@@ -312,7 +291,7 @@ function MyCart() {
               height: "60px",
               whiteSpace: "nowrap",
               marginLeft: "5%",
-              marginTop: '2%'
+              marginTop: "2%",
             }}
           >
             <p
@@ -365,7 +344,7 @@ function MyCart() {
       </div>
       <Dimmer active={modalOpen}>
         <img src={order} width={60} height={60} />
-        <p style={{marginTop: '10%', fontSize: '20px'}}>Order Placed</p>
+        <p style={{ marginTop: "10%", fontSize: "20px" }}>Order Placed</p>
       </Dimmer>
       <BackgroundImage />
     </div>
@@ -374,20 +353,18 @@ function MyCart() {
 
 export default MyCart;
 
+//  const handleProceedToPay = () => {
 
+//   const selectedItems = {
+//     "unit_id": localStorage.getItem('unit_code'),
+//     "patient_ipno": localStorage.getItem('admissionno'),
+//     "delivery_address": "",
+//     "serving_time": localStorage.getItem('serving time'),
+//   my_cart_items,
+//   };
 
-  //  const handleProceedToPay = () => {
+//   console.log("selected items:::",selectedItems);
 
-  //   const selectedItems = {
-  //     "unit_id": localStorage.getItem('unit_code'),
-  //     "patient_ipno": localStorage.getItem('admissionno'),
-  //     "delivery_address": "",
-  //     "serving_time": localStorage.getItem('serving time'),
-  //   my_cart_items,
-  //   };
-
-  //   console.log("selected items:::",selectedItems);
-
-  //   dispatch(addToCart(selectedItems));
-  //   console.log(selectedItems);
-  // };
+//   dispatch(addToCart(selectedItems));
+//   console.log(selectedItems);
+// };

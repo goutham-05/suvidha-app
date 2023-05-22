@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../nav-bar";
 import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
@@ -9,7 +9,10 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-import { addFoodToMyCart } from "../../reduxtoolkit/myCartSlice";
+import {
+  decrementCartItem,
+  incrementCartItem,
+} from "../../reduxtoolkit/myCartSlice";
 import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
 
@@ -54,117 +57,121 @@ function FoodBeverages() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const myCartItems = useAppSelector((state) => state.cart);
-
-  const quantity = myCartItems[0]?.quantity ?? 0;
-
-  console.log("CartItems", quantity);
-
   const getMyServicesTypes = useAppSelector((state) => state.getMyServingTime);
-  const incrementItems = useAppSelector((state) => state.myFood);
   const getItemsServingTime = useAppSelector(
     (state) => state.getItemServiceTime
   );
-
-  const [servingTimeData, setServingTimeData] = useState(
-    getItemsServingTime?.data || []
-  );
-
-  useEffect(() => {
-    setServingTimeData(getItemsServingTime?.data);
-  }, [getItemsServingTime?.data]);
-
-  console.log("servingItems:::::::", getItemsServingTime);
-
-  const goBack = () => {
-    navigate("/service");
-    if (quantity === 0) {
-      localStorage.removeItem("servingType");
-      localStorage.removeItem("serving time");
-    } else return;
-  };
-
-  const goCart = () => {
-    navigate("/cart");
-  };
+  const cartItems = useAppSelector((state) => state.cart);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [servingListData, setServingListData] = useState(false);
+  const [remarksList, setRemarksList] = useState<string[]>([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [menuItems, setMenuItems] = useState<any[]>([]);
+  const [unitId, setUnitId] = useState("");
 
   const [selectedServingType, setSelectedServingType] = useState(() => {
     const servingType = localStorage.getItem("servingType");
     return servingType ? servingType : "Serving Type";
   });
 
-  const handleServingTypeSelection = (
-    selectedType: string,
-    selectedServingType: string
-  ) => {
-    if (selectedType) {
-      dispatch(
-        getItemServiceTime({
-          unit_id: unit_id,
-          servingtime_id: selectedType.toString(),
-        })
-      );
-    }
-
-    setSelectedServingType(selectedServingType);
-    localStorage.setItem("serving time", selectedType);
-    localStorage.setItem("servingType", selectedServingType);
-    setServingListData(true);
-    setIsOpen(!isOpen);
-  };
-
-  let unit_id = "";
-  const unitCodeStr = localStorage.getItem("unit_code");
-  const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-  if (unit_code) {
-    unit_id = unit_code.unit;
-  }
-
   useEffect(() => {
+    const unitCodeStr = localStorage.getItem("unit_code");
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    setUnitId(unit_code.unit);
     dispatch(
       getMyServingTime({
-        unit_id: unit_id,
+        unit_id: unit_code.unit,
       })
     );
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(
       getItemServiceTime({
-        unit_id: unit_id,
+        unit_id: unitId,
         servingtime_id: "1",
       })
     );
-  }, [unit_id, dispatch]);
-
-  const [remarksList, setRemarksList] = useState<string[]>([]);
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const [servingTypeSelecting, setServingTypeSelecting] =
-    useState("Serving Type");
-
-  const [searchInput, setSearchInput] = useState("");
-  // Initialize an array of disabled states for each item
-const [disabledItems, setDisabledItems] = useState([]);
-
-  const [filteredServingTimeData, setFilteredServingTimeData] =
-    useState(servingTimeData);
+  }, [unitId, dispatch]);
 
   useEffect(() => {
-    // Filter the servingTimeData based on the search input
-    const filteredData =
-      servingTimeData &&
-      servingTimeData.filter((item: any) =>
-        item?.item?.toLowerCase().includes(searchInput.toLowerCase())
+    const updatedItems = menuItems?.map((item) => {
+      const cartItem = cartItems.find(
+        (cartItem) => cartItem.itemid === item.itemid
       );
-    setFilteredServingTimeData(filteredData || []);
-  }, [searchInput, servingTimeData]);
+      if (cartItem) {
+        return { ...item, quantity: cartItem.quantity };
+      }
+      return item;
+    });
 
-  const handleSearchInputChange = (event: any) => {
+    if (updatedItems?.length > 0) {
+      setMenuItems(updatedItems);
+    } else {
+      setMenuItems(
+        getItemsServingTime?.data?.map((item: any) => ({
+          ...item,
+          quantity: 0,
+        }))
+      );
+    }
+  }, [cartItems, getItemsServingTime]);
+
+  const goBack = useCallback(() => {
+    navigate("/service");
+    // if (quantity === 0) {
+    localStorage.removeItem("servingType");
+    localStorage.removeItem("serving time");
+    // } else return;
+  }, [navigate]);
+
+  const goCart = useCallback(() => {
+    navigate("/cart");
+  }, [navigate]);
+
+  const handleServingTypeSelection = useCallback(
+    (selectedType: string, selectedServingType: string) => {
+      if (selectedType) {
+        dispatch(
+          getItemServiceTime({
+            unit_id: unitId,
+            servingtime_id: selectedType.toString(),
+          })
+        );
+      }
+
+      setSelectedServingType(selectedServingType);
+      localStorage.setItem("serving time", selectedType);
+      localStorage.setItem("servingType", selectedServingType);
+      setIsOpen((prev) => !prev);
+    },
+    [unitId, dispatch, setIsOpen, setSelectedServingType]
+  );
+
+  const handleSearchInputChange = useCallback((event: any) => {
     setSearchInput(event.target.value);
-  };
+  }, []);
+
+  const onAddCartItem = useCallback(
+    (index: number, newItem: any) => {
+      const updatedItems = [...menuItems];
+      updatedItems[index] = newItem;
+
+      setMenuItems(updatedItems);
+      dispatch(incrementCartItem(newItem));
+    },
+    [dispatch, menuItems]
+  );
+
+  const onRemoveCartItem = useCallback(
+    (index: number, newItem: any) => {
+      const updatedItems = [...menuItems];
+      updatedItems[index] = newItem;
+      setMenuItems(updatedItems);
+      dispatch(decrementCartItem(newItem));
+    },
+    [dispatch, menuItems]
+  );
 
   return (
     <>
@@ -266,9 +273,9 @@ const [disabledItems, setDisabledItems] = useState([]);
       >
         {localStorage.getItem("serving time") ? (
           <div>
-            {Array.isArray(getItemsServingTime.data) ? (
-              filteredServingTimeData.length > 0 ? (
-                filteredServingTimeData?.map((item: any, index: any) => (
+            {Array.isArray(menuItems) ? (
+              menuItems.length > 0 ? (
+                menuItems?.map((item: any, index: any) => (
                   <div
                     style={{
                       width: "92%",
@@ -278,9 +285,7 @@ const [disabledItems, setDisabledItems] = useState([]);
                       margin: "5%",
                       border: "1px solid grey",
                       boxShadow: "0px 2px 4px grey",
-                      background: selectedItems.includes(index)
-                        ? "#4A98CD"
-                        : "white",
+                      background: "white",
                     }}
                   >
                     <div style={{ display: "flex" }}>
@@ -297,24 +302,16 @@ const [disabledItems, setDisabledItems] = useState([]);
                             fontWeight: "bold",
                             fontSize: "14px",
                             float: "left",
-                            color: selectedItems.includes(index)
-                              ? "white"
-                              : "black",
+                            color: "black",
                           }}
                         >
                           {item.item}
                         </p>
                         <div style={{ float: "left", display: "flex" }}>
-                          {selectedItems.includes(index) ? (
-                            <Icon inverted color="grey" name="rupee" />
-                          ) : (
-                            <Icon color="black" name="rupee" />
-                          )}
+                          <Icon color="black" name="rupee" />
                           <p
                             style={{
-                              color: selectedItems.includes(index)
-                                ? "white"
-                                : "black",
+                              color: "black",
                             }}
                           >
                             {item.price_att}
@@ -340,7 +337,6 @@ const [disabledItems, setDisabledItems] = useState([]);
                               updatedRemarksList[index] = event.target.value;
                               setRemarksList(updatedRemarksList);
                             }}
-                            disabled={selectedItems.includes(index) && !remarksList[index]}
                           />
                         </div>
                       </div>
@@ -368,74 +364,48 @@ const [disabledItems, setDisabledItems] = useState([]);
                           >
                             {item.quantity === 0 ? (
                               <span
-                                // style={{ fontWeight: "bold" }}
-                                // onClick={() => {
-                                //   dispatch(
-                                //     addFoodToMyCart({
-                                //       ...item,
-                                //       remarks: remarksList[index],
-                                //     })
-                                //   );
-
-                                //   setSelectedItems((prevSelectedItems) => [
-                                //     ...prevSelectedItems,
-                                //     index,
-                                //   ]);
-                                //   // Clear the input field
-                                //   const updatedRemarksList = [...remarksList];
-                                //   updatedRemarksList[index] = "";
-                                //   setRemarksList(updatedRemarksList);
-                              
-                                // }}
                                 style={{
                                   fontWeight: "bold",
-                                  color: selectedItems.includes(index) && !remarksList[index] ? "gray" : "black",
-                                  pointerEvents: selectedItems.includes(index) && !remarksList[index] ? "none" : "auto",
+                                  color: "black",
+                                  pointerEvents: "auto",
                                 }}
-                                // onClick={() => {
-                                //   if (selectedItems.includes(index) && !remarksList[index]) return; // Exit if input field is disabled
-                          
-                                //   setSelectedItems((prevSelectedItems) => [
-                                //     ...prevSelectedItems,
-                                //     index,
-                                //   ]);
-                                  
-                                //   dispatch(
-                                //     addFoodToMyCart({
-                                //       ...item,
-                                //       remarks: remarksList[index],
-                                //     })
-                                //   );
-                                // }}
-                                onClick={() => {
-                                  if (selectedItems.includes(index) && !remarksList[index]) return; // Exit if input field is disabled
-                              
-                                  setSelectedItems((prevSelectedItems) => [
-                                    ...prevSelectedItems,
-                                    index,
-                                  ]);
-                              
-                                  dispatch(
-                                    addFoodToMyCart({
-                                      ...item,
-                                      remarks: remarksList[index],
-                                    })
-                                  );
-                                }}
+                                onClick={() =>
+                                  onAddCartItem(index, {
+                                    ...item,
+                                    quantity: item.quantity + 1,
+                                  })
+                                }
                               >
                                 ADD
                               </span>
-                            ) : null}
-                            {item.quantity === 0 ? null : (
-                              <span style={{ fontWeight: "bold" }}>-</span>
-                            )}
-                            {item.quantity === 0 ? null : (
-                              <span style={{ fontWeight: "bold" }}>
-                                {quantity}
-                              </span>
-                            )}
-                            {item.quantity === 0 ? null : (
-                              <span style={{ fontWeight: "bold" }}>+</span>
+                            ) : (
+                              <>
+                                <span
+                                  style={{ fontWeight: "bold" }}
+                                  onClick={() =>
+                                    onRemoveCartItem(index, {
+                                      ...item,
+                                      quantity: item.quantity - 1,
+                                    })
+                                  }
+                                >
+                                  -
+                                </span>
+                                <span style={{ fontWeight: "bold" }}>
+                                  {item.quantity}
+                                </span>
+                                <span
+                                  style={{ fontWeight: "bold" }}
+                                  onClick={() =>
+                                    onAddCartItem(index, {
+                                      ...item,
+                                      quantity: item.quantity + 1,
+                                    })
+                                  }
+                                >
+                                  +
+                                </span>
+                              </>
                             )}
                           </div>
                         </div>
@@ -472,51 +442,51 @@ const [disabledItems, setDisabledItems] = useState([]);
           </p>
         )}
       </div>
-      {myCartItems.length > 0 ? (
+      {/* {myCartItems.length > 0 ? ( */}
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "60px",
+          marginTop: "8%",
+          background: "white",
+          borderRadius: "10px",
+          boxShadow: "0px 2px 4px grey",
+          marginLeft: "1%",
+        }}
+      >
+        <div style={{ marginLeft: "10%", marginTop: "6%" }}>
+          <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
+            {/* <div>{`${myCartItems.length} ITEM${
+                myCartItems.length === 1 ? "" : "S"
+              } ADDED`}</div> */}
+          </p>
+        </div>
         <div
           style={{
-            display: "flex",
-            width: "100%",
-            height: "60px",
-            marginTop: "8%",
-            background: "white",
-            borderRadius: "10px",
-            boxShadow: "0px 2px 4px grey",
-            marginLeft: "1%",
+            marginLeft: "22%",
+            marginTop: "5%",
+            height: "26px",
+            width: "30%",
+            borderRadius: "5px",
+            background: "#4A98CD",
           }}
+          onClick={goCart}
         >
-          <div style={{ marginLeft: "10%", marginTop: "6%" }}>
-            <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-              <div>{`${myCartItems.length} ITEM${
-                myCartItems.length === 1 ? "" : "S"
-              } ADDED`}</div>
-            </p>
-          </div>
-          <div
+          <span
             style={{
-              marginLeft: "22%",
-              marginTop: "5%",
-              height: "26px",
-              width: "30%",
-              borderRadius: "5px",
-              background: "#4A98CD",
+              fontSize: "16px",
+              fontWeight: "bold",
+              marginTop: "10%",
+              color: "white",
             }}
-            onClick={goCart}
           >
-            <span
-              style={{
-                fontSize: "16px",
-                fontWeight: "bold",
-                marginTop: "10%",
-                color: "white",
-              }}
-            >
-              View Cart
-            </span>
-            <Icon name="caret right" inverted color="grey" />
-          </div>
+            View Cart
+          </span>
+          <Icon name="caret right" inverted color="grey" />
         </div>
-      ) : null}
+      </div>
+      {/* ) : null} */}
     </>
   );
 }
