@@ -135,7 +135,7 @@ function QrCode() {
           <button onClick={() => handlePrint()}>Print QR Code</button>
           <div id="print_qr_code">
             <nav className="navbar">
-              <img src={KLogo} alt="Logo" className="navbar-logo"  onLoad={handlePrint} />
+              <img src={KLogo} alt="Logo" className="navbar-logo" />
               <img src={Logo} className="navbar-suvidhaLogo" alt="SuvidhaLogo" />
               <ul className="navbar-links">
                 <li>
