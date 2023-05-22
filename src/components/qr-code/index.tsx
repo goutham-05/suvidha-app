@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import KLogo from "../../assets/kimslogo.png";
+import kimsLogo from "../../assets/klogo.png";
 import "./index.css";
 import QRCode from "qrcode";
 import MessageNotification from "../../common/notification";
@@ -12,6 +13,7 @@ import {
 } from "../../config/redux-store";
 import html2canvas from "html2canvas";
 import Logo from '../../assets/Logo.png';
+import logoImage from '../../assets/kimslogo.png';
 function QrCode() {
   const dispatch = useAppDispatch();
   const qrCodeRef = useRef(null);
@@ -50,22 +52,70 @@ function QrCode() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const ksUrl = formData.qr_code_data + "/" + formData.unit_code;
-      const logoUrl = "https://www.kimshospitals.com/_nuxt/img/kims_logo.63a8855.png";
-      const qrCodeDataUrl = await QRCode.toDataURL(ksUrl);
-      setQRCodeData(qrCodeDataUrl);
-      dispatch(
-        storQRCode({
-          unit_name: formData.unit_name,
-          unit_code: formData.unit_code,
-          ks_url: ksUrl,
-          qr_code: qrCodeDataUrl,
-        })
-      );
+      const ksUrl = `${formData.qr_code_data}/${formData.unit_code}`;
+
+      const qrCodeDataUrl = await QRCode.toDataURL(ksUrl, {
+        width: 256,
+        margin: 1,
+        color: {
+          dark: '#000000',
+          light: '#ffffff',
+        },
+      });
+
+      const qrCodeImage = new Image();
+      qrCodeImage.src = qrCodeDataUrl;
+
+      qrCodeImage.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = qrCodeImage.width;
+        canvas.height = qrCodeImage.height;
+
+        const context = canvas.getContext('2d');
+        if (context) {
+          context.drawImage(qrCodeImage, 0, 0);
+
+          const logoImage = new Image();
+          logoImage.src = kimsLogo;
+
+          logoImage.onload = () => {
+            const logoSize = Math.min(
+              qrCodeImage.width,
+              qrCodeImage.height
+            ) * 0.25;
+            const logoX =
+              (qrCodeImage.width - logoSize) / 2;
+            const logoY =
+              (qrCodeImage.height - logoSize) / 2;
+
+            context.drawImage(
+              logoImage,
+              logoX,
+              logoY,
+              logoSize,
+              logoSize
+            );
+
+            const qrCodeWithLogoDataUrl = canvas.toDataURL();
+
+            setQRCodeData(qrCodeWithLogoDataUrl);
+
+            dispatch(
+              storQRCode({
+                unit_name: formData.unit_name,
+                unit_code: formData.unit_code,
+                ks_url: ksUrl,
+                qr_code: qrCodeWithLogoDataUrl,
+              })
+            );
+          };
+        }
+      };
     } catch (error) {
       console.error(error);
     }
   };
+  
   const handlePrint = async () => {
     const printContent = document.getElementById("print_qr_code");
     if(!printContent){
@@ -135,7 +185,7 @@ function QrCode() {
           <button onClick={() => handlePrint()}>Print QR Code</button>
           <div id="print_qr_code">
             <nav className="navbar">
-              <img src={KLogo} alt="Logo" className="navbar-logo"  onLoad={handlePrint} />
+              <img src={KLogo} alt="Logo" className="navbar-logo" />
               <img src={Logo} className="navbar-suvidhaLogo" alt="SuvidhaLogo" />
               <ul className="navbar-links">
                 <li>
@@ -164,8 +214,8 @@ function QrCode() {
                     marginTop: "20px",
                   }}
                 >
-                  फीडबैक/सेवाओं/शिकायतों के लिए कृपया इस क्यूआर कोड को स्कैन
-                  करें
+                  {/* फीडबैक/सेवाओं/शिकायतों के लिए कृपया इस क्यूआर कोड को स्कैन
+                  करें */}
                 </p>
               </div>
             </div>
