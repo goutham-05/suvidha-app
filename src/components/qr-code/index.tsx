@@ -13,7 +13,6 @@ import {
 } from "../../config/redux-store";
 import html2canvas from "html2canvas";
 import Logo from '../../assets/Logo.png';
-import logoImage from '../../assets/kimslogo.png';
 function QrCode() {
   const dispatch = useAppDispatch();
   const qrCodeRef = useRef(null);
