@@ -20,6 +20,7 @@ import order from "../../../src/assets/fb/orderplaced.png";
 import {
   decrementCartItem,
   incrementCartItem,
+  selectAllCartItems,
 } from "../../reduxtoolkit/myCartSlice";
 
 function MyCart() {
@@ -27,6 +28,8 @@ function MyCart() {
   const dispatch = useAppDispatch();
 
   const my_cart_items = useAppSelector((state) => state.cart);
+
+  const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
 
   const goBack = () => {
     navigate("/food&Beverages");
@@ -87,6 +90,8 @@ function MyCart() {
     localStorage.removeItem("servingType");
   };
 
+  console.log("cartItems", cartItems);
+
   return (
     <div>
       <Navbar />
@@ -117,7 +122,7 @@ function MyCart() {
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
-      {my_cart_items?.map((item, index) => (
+      {cartItems?.map((item: any, index: number) => (
         <div
           key={index}
           style={{
@@ -140,7 +145,7 @@ function MyCart() {
                 marginTop: "5%",
               }}
             >
-              <p
+              <div
                 style={{
                   fontWeight: "bold",
                   fontSize: "12px",
@@ -159,7 +164,7 @@ function MyCart() {
                     {item.price_att}
                   </span>
                 </div>
-              </p>
+              </div>
             </div>
             <div style={{ marginLeft: "56%" }}>
               <div>

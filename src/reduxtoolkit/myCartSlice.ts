@@ -46,5 +46,8 @@ const myCartSlice = createSlice({
   },
 });
 
+export const selectAllCartItems = (state: any) =>
+  state.cart.filter((item: any) => item.quantity !== 0);
+
 export const { incrementCartItem, decrementCartItem } = myCartSlice.actions;
 export default myCartSlice.reducer;
