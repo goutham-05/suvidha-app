@@ -154,6 +154,9 @@ const OtpForm: React.FC<Props> = ({}) => {
             error={errors["otp"] ? true : false}
             fluid={true}
             loading={false}
+            type="number"
+            minLength={6}
+            maxLength={6}
           />
           {errors.otp?.type === "required" && (
             <Label color="orange" pointing prompt>

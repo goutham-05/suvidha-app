@@ -137,6 +137,9 @@ const UserForm: React.FC<Props> = ({ history }) => {
                 error={errors["Mobile Number / Email"] ? true : false}
                 fluid={true}
                 loading={false}
+                type="text"
+                minLength={8}
+                maxLength={10}
               />
               {errors.mobile_number?.type === "required" && (
                 <Label color="orange" pointing prompt>

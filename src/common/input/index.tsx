@@ -36,6 +36,9 @@ interface Props {
   focus?: boolean;
   iconPosition?: "left" | "right";
   label: string;
+  type?: "text" | "number"; // Added type property
+  maxLength?: number; // Added maxLength property
+  minLength?: number; // Added minLength property
 }
 
 const CInput: React.FC<Props> = ({
@@ -43,11 +46,41 @@ const CInput: React.FC<Props> = ({
   register,
   required,
   label,
+  type = "text", // Set default value for type
+  maxLength, // Received maxLength property
+  minLength, // Received minLength property
 }) => {
-  // to do use of Input component from semantic-ui-react
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (type === "number") {
+      const keyCode = event.keyCode || event.which;
+      const keyValue = String.fromCharCode(keyCode);
+
+      // Allow numeric values or empty input
+      if (keyValue !== "" && !/^[0-9]+$/.test(keyValue)) {
+        event.preventDefault();
+      }
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = event.target.value;
+
+    // Trim the input value if it exceeds maxLength
+    if (maxLength && inputValue.length > maxLength) {
+      inputValue = inputValue.slice(0, maxLength);
+    }
+
+    // Convert input value to number if possible (only for type "number")
+    const parsedValue = type === "number" ? /^\d+$/.test(inputValue) ? parseInt(inputValue) : inputValue : inputValue;
+
+    // Do something with the parsed value, like updating state or calling a callback
+    console.log(parsedValue);
+  };
+
   return (
     <input
       {...register(label, { required })}
+      type={type} // Set the type attribute
       placeholder={placeholder}
       style={{
         borderRadius: "100px",
@@ -55,6 +88,10 @@ const CInput: React.FC<Props> = ({
         border: "1px solid gray",
         textAlign: "center",
       }}
+      onKeyPress={handleKeyPress}
+      onChange={handleInputChange}
+      maxLength={maxLength} // Set the maxLength attribute
+      minLength={minLength} // Set the minLength attribute
     />
   );
 };
