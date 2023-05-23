@@ -66,6 +66,8 @@ function FoodBeverages() {
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const [menuItems, setMenuItems] = useState<any[]>([]);
   const [unitId, setUnitId] = useState("");
 
@@ -132,6 +134,8 @@ function FoodBeverages() {
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
       if (selectedType) {
+        console.log(selectedType);
+
         dispatch(
           getItemServiceTime({
             unit_id: unitId,
@@ -173,6 +177,52 @@ function FoodBeverages() {
     [dispatch, menuItems]
   );
 
+  const onSearchMenuItems = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSearchInput(value);
+      console.log(value);
+
+      if (value) {
+        const filteredItems = getItemsServingTime?.data.filter((item: any) =>
+          item.item.toLowerCase().includes(value.toLowerCase())
+        );
+        console.log(filteredItems);
+
+        setMenuItems(filteredItems);
+      } else {
+        setMenuItems(getItemsServingTime?.data);
+      }
+    },
+    [menuItems, getItemsServingTime]
+  );
+
+  const onSelectCategory = useCallback(
+    (category: string) => {
+      setSelectedCategory(category);
+      const filterValue =
+        category === "Non Veg"
+          ? 1
+          : category === "Veg"
+          ? 0
+          : category === "Drinks"
+          ? 2
+          : "All";
+      const filteredItems = getItemsServingTime?.data.filter(
+        (item: any) => item.item_type === filterValue
+      );
+      console.log(filteredItems);
+
+      if (category === "All") {
+        setMenuItems(getItemsServingTime?.data);
+        setSearchInput("");
+      } else {
+        setMenuItems(filteredItems);
+      }
+    },
+    [getItemsServingTime]
+  );
+
   return (
     <>
       <Navbar />
@@ -186,7 +236,7 @@ function FoodBeverages() {
         placeholder="Search Menu..."
         style={{ marginBottom: "10px", height: "40px" }}
         value={searchInput}
-        onChange={handleSearchInputChange}
+        onChange={onSearchMenuItems}
       />
       <div>
         <div style={{ display: "flex", marginTop: "4%" }}>
@@ -223,7 +273,10 @@ function FoodBeverages() {
                 boxShadow: "0px 2px 4px grey",
                 borderRadius: "10px",
                 whiteSpace: "nowrap",
+                backgroundColor:
+                  selectedCategory === item.category ? "grey" : "",
               }}
+              onClick={() => onSelectCategory(item.category)}
             >
               <div>{item.title}</div>
             </div>
