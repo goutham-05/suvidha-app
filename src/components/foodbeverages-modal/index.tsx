@@ -101,8 +101,15 @@ function FoodBeverages() {
       const cartItem = cartItems.find(
         (cartItem) => cartItem.itemid === item.itemid
       );
+      console.log(cartItem);
+
       if (cartItem) {
-        return { ...item, quantity: cartItem.quantity };
+        return {
+          ...item,
+          quantity: cartItem.quantity,
+          other_remark: cartItem.other_remark,
+          remarkId: undefined,
+        };
       }
       return item;
     });
@@ -114,7 +121,7 @@ function FoodBeverages() {
         getItemsServingTime?.data?.map((item: any) => ({
           ...item,
           quantity: 0,
-          remark: "",
+          other_remark: "",
         }))
       );
     }
@@ -231,8 +238,8 @@ function FoodBeverages() {
 
       const updatedMenu = menuItems.map((menuItem) =>
         menuItem.itemid === itemId
-          ? { ...menuItem, remark: value, remarks: undefined }
-          : { ...menuItem, remarks: undefined }
+          ? { ...menuItem, other_remark: value, remarkId: undefined }
+          : { ...menuItem, remarkId: undefined }
       );
 
       setMenuItems(updatedMenu);
@@ -403,7 +410,7 @@ function FoodBeverages() {
                               borderRadius: "5px",
                             }}
                             type="text"
-                            value={item.remark || ""}
+                            value={item.other_remark || ""}
                             onChange={(event) =>
                               onAddRemark(event, item.itemid)
                             }
