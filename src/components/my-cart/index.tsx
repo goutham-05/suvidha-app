@@ -82,7 +82,7 @@ function MyCart() {
       serving_time: localStorage.getItem("serving time"),
       my_cart_items: cartItems.map((item: any) => ({
         itemid: item.itemid,
-        remarkid: undefined,
+        remarkid: [],
         other_remark: item.other_remark,
         quantity: item.quantity,
       })),
