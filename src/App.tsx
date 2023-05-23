@@ -17,12 +17,13 @@ function App() {
       const { isProtected, ...rest } = route;
       return {
         ...rest,
-        element: route.element,
-        // element: isProtected && !isLoggedIn ? (
-        //   <Navigate to="/login" replace />
-        // ) : (
-        //   route.element
-        // ),
+        // element: route.element,
+        element:
+          isProtected && !isLoggedIn ? (
+            <Navigate to="/login" replace />
+          ) : (
+            route.element
+          ),
       };
     })
   );
