@@ -131,7 +131,7 @@ function MyCart() {
           key={index}
           style={{
             width: "94%",
-            height: "70px",
+            height: "90px",
             borderRadius: "10px",
             margin: "5%",
             border: "1px solid grey",
@@ -157,18 +157,20 @@ function MyCart() {
                 }}
               >
                 {item.item}
-                <div style={{ float: "left", display: "flex" }}>
+                <div style={{ float: "left"}}>
+                  <div>
                   <img
                     src={Rupee}
                     width={8}
                     height={10}
-                    style={{ marginTop: "7px", padding: "1%" }}
+                    style={{ marginTop: "1px", padding: "1%" }}
                   />
-                  <span style={{ fontSize: "14px", marginTop: "4%" }}>
-                    {item.other_remark}
-                  </span>
-                  <span style={{ fontSize: "14px", marginTop: "4%" }}>
+                  <span style={{ fontSize: "14px", marginTop: "10%" }}>
                     {item.price_att}
+                  </span>
+                  </div>
+                  <span style={{fontSize:'14px', marginTop: '2%'}}>
+                    {item.other_remark}
                   </span>
                 </div>
               </div>
@@ -199,9 +201,9 @@ function MyCart() {
                       ADD
                     </span>
                   ) : (
-                    <>
+                    <div style={{marginTop: '-5%'}}>
                       <span
-                        style={{ fontWeight: "bold" }}
+                        style={{ fontWeight: "bold", marginRight: '20%'}}
                         onClick={() => dispatch(decrementCartItem(item))}
                       >
                         -
@@ -210,12 +212,12 @@ function MyCart() {
                         {item.quantity}
                       </span>
                       <span
-                        style={{ fontWeight: "bold" }}
+                        style={{ fontWeight: "bold", marginLeft: '20%'}}
                         onClick={() => dispatch(incrementCartItem(item))}
                       >
                         +
                       </span>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
@@ -247,7 +249,6 @@ function MyCart() {
       <div
         style={{
           width: "94%",
-          height: "100px",
           borderRadius: "10px",
           margin: "5%",
           border: "1px solid grey",
@@ -255,7 +256,7 @@ function MyCart() {
           marginLeft: "4%",
         }}
       >
-        <div style={{ display: "flex" }}>
+        {/* <div style={{ display: "flex" }}>
           <div
             style={{
               width: "10%",
@@ -294,13 +295,12 @@ function MyCart() {
               }}
             ></div>
           </div>
-        </div>
-        <div style={{ width: "100%", border: "0.9px solid grey" }}></div>
+        </div> */}
+        {/* <div style={{ width: "100%", border: "0.9px solid grey" }}></div> */}
         <div style={{ display: "flex" }}>
           <div
             style={{
               width: "10%",
-              height: "60px",
               whiteSpace: "nowrap",
               marginLeft: "5%",
               marginTop: "2%",
@@ -311,6 +311,7 @@ function MyCart() {
                 fontWeight: "bold",
                 fontSize: "18px",
                 float: "left",
+                marginTop: '20%'
               }}
             >
               Grand Total

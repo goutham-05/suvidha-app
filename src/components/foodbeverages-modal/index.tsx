@@ -63,6 +63,7 @@ function FoodBeverages() {
     (state) => state.getItemServiceTime
   );
   const cartItems = useAppSelector((state) => state.cart);
+  console.log('CartItems', cartItems);
 
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
@@ -288,7 +289,7 @@ function FoodBeverages() {
               boxShadow: "0px 2px 4px grey",
               borderRadius: "10px",
               whiteSpace: "nowrap",
-              marginLeft: "6%",
+              marginLeft: "4%",
             }}
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -302,16 +303,15 @@ function FoodBeverages() {
               key={index}
               style={{
                 marginRight: "20px",
-                width: "20%",
-                height: "20px",
-                padding: "3px",
+                width: "30%",
+                padding: "1%",
                 fontSize: "10px",
                 background: "white",
                 boxShadow: "0px 2px 4px grey",
                 borderRadius: "10px",
                 whiteSpace: "nowrap",
                 backgroundColor:
-                  selectedCategory === item.category ? "grey" : "",
+                  selectedCategory === item.category ? "#7bb5d2" : "",
               }}
               onClick={() => onSelectCategory(item.category)}
             >
@@ -358,7 +358,7 @@ function FoodBeverages() {
           minHeight: "10px",
           maxHeight: "400px",
           overflowY: "scroll",
-          marginTop: "10%",
+          marginTop: "2%",
         }}
       >
         {localStorage.getItem("serving time") ? (
@@ -390,7 +390,7 @@ function FoodBeverages() {
                         <p
                           style={{
                             fontWeight: "bold",
-                            fontSize: "14px",
+                            fontSize: "10px",
                             float: "left",
                             color: "black",
                           }}
@@ -428,7 +428,7 @@ function FoodBeverages() {
                           />
                         </div>
                       </div>
-                      <div style={{ marginLeft: "56%", position: "relative" }}>
+                      <div style={{ marginLeft: "54%", position: "relative" }}>
                         <img
                           src={veg}
                           width={100}
@@ -441,7 +441,7 @@ function FoodBeverages() {
                               position: "absolute",
                               left: "50%",
                               transform: "translate(-50%, -50%)",
-                              width: "50%",
+                              width: "80%",
                               height: "20px",
                               background: "white",
                               borderRadius: "6px",
@@ -467,11 +467,11 @@ function FoodBeverages() {
                                 ADD
                               </span>
                             ) : (
-                              <div style={{marginTop: '-5%'}}>
+                              <div style={{marginTop: '-2%'}}>
                                 <span
                                   style={{
                                     fontWeight: "bold",
-                                    marginRight: "8px",
+                                    marginRight: "20px",
                                   }}
                                   onClick={() =>
                                     onRemoveCartItem(index, {
@@ -488,7 +488,7 @@ function FoodBeverages() {
                                 <span
                                   style={{
                                     fontWeight: "bold",
-                                    marginLeft: "5px",
+                                    marginLeft: "20px",
                                   }}
                                   onClick={() =>
                                     onAddCartItem(index, {
@@ -552,9 +552,9 @@ function FoodBeverages() {
         >
           <div style={{ marginLeft: "10%", marginTop: "6%" }}>
             <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-              {/* <div>{`${myCartItems.length} ITEM${
-                myCartItems.length === 1 ? "" : "S"
-              } ADDED`}</div> */}
+              <div>{`${cartItems.length} ITEM${
+                cartItems.length === 1 ? "" : "S"
+              } ADDED`}</div>
             </p>
           </div>
           <div
