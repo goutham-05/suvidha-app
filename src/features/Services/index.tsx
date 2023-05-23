@@ -45,7 +45,7 @@ const mockServicesList: Services[] = [
   {
     title: "Food & Beverages",
     icon: Food,
-    path: "/food&Beverages",
+    path: "/fnb",
   },
   // {
   //   title: "Facilities",

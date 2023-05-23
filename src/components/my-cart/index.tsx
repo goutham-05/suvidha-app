@@ -32,7 +32,7 @@ function MyCart() {
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
 
   const goBack = () => {
-    navigate("/food&Beverages");
+    navigate("/fnb");
   };
 
   const subTotal = () => {
@@ -63,7 +63,7 @@ function MyCart() {
 
     const timeout = setTimeout(() => {
       setModalOpen(false);
-      navigate("/food&Beverages");
+      navigate("/fnb");
     }, 2000);
     return () => {
       clearTimeout(timeout);
