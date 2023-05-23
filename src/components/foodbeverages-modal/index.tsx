@@ -133,17 +133,15 @@ function FoodBeverages() {
     console.log("in here");
   }, [cartItems, getItemsServingTime]);
 
-  const goBack = useCallback(() => {
-    navigate("/service");
-    // if (quantity === 0) {
+  const goBack = () => {
+    navigate("/services");
     localStorage.removeItem("servingType");
     localStorage.removeItem("serving time");
-    // } else return;
-  }, [navigate]);
+  };
 
-  const goCart = useCallback(() => {
+  const goCart = () => {
     navigate("/cart");
-  }, [navigate]);
+  };
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {

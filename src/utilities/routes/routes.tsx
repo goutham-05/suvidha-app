@@ -22,6 +22,7 @@ import ServiceDisabled from "../../common/service-disabled";
 import FoodBeverages from "../../components/foodbeverages-modal";
 import PortalService from "../../features/PortalServices";
 import MyCart from "../../components/my-cart";
+import Ambulance from "../../components/ambulance-modal";
 
 type ProtectedRoute = RouteObject & { isProtected?: boolean };
 export const routes: ProtectedRoute[] = [
@@ -132,6 +133,11 @@ export const routes: ProtectedRoute[] = [
   {
     path:'/cart',
     element: <MyCart />,
+    isProtected: true,
+  },
+  {
+    path:'/ambulance',
+    element:<Ambulance />,
     isProtected: true,
   }
 ];
