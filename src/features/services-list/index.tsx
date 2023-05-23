@@ -68,7 +68,7 @@ const ServiceRequestList: ServiceList[] = [
   {
     title: "Food & Beverages",
     icon: food,
-    path: "/foodBeverages",
+    path: "/fnb",
   },
   // {
   //   title: "Facilities",
