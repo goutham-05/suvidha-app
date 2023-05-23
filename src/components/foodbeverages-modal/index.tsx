@@ -114,9 +114,11 @@ function FoodBeverages() {
         getItemsServingTime?.data?.map((item: any) => ({
           ...item,
           quantity: 0,
+          remark: "",
         }))
       );
     }
+    console.log("in here");
   }, [cartItems, getItemsServingTime]);
 
   const goBack = useCallback(() => {
@@ -222,6 +224,23 @@ function FoodBeverages() {
     },
     [getItemsServingTime]
   );
+
+  const onAddRemark = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
+      const value = e.target.value;
+
+      const updatedMenu = menuItems.map((menuItem) =>
+        menuItem.itemid === itemId
+          ? { ...menuItem, remark: value, remarks: undefined }
+          : { ...menuItem, remarks: undefined }
+      );
+
+      setMenuItems(updatedMenu);
+    },
+    [menuItems]
+  );
+
+  const showViewCartOption = menuItems?.some((item) => item.quantity > 0);
 
   return (
     <>
@@ -384,12 +403,10 @@ function FoodBeverages() {
                               borderRadius: "5px",
                             }}
                             type="text"
-                            value={remarksList[index] || ""}
-                            onChange={(event) => {
-                              const updatedRemarksList = [...remarksList];
-                              updatedRemarksList[index] = event.target.value;
-                              setRemarksList(updatedRemarksList);
-                            }}
+                            value={item.remark || ""}
+                            onChange={(event) =>
+                              onAddRemark(event, item.itemid)
+                            }
                           />
                         </div>
                       </div>
@@ -496,49 +513,51 @@ function FoodBeverages() {
         )}
       </div>
       {/* {myCartItems.length > 0 ? ( */}
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          height: "60px",
-          marginTop: "8%",
-          background: "white",
-          borderRadius: "10px",
-          boxShadow: "0px 2px 4px grey",
-          marginLeft: "1%",
-        }}
-      >
-        <div style={{ marginLeft: "10%", marginTop: "6%" }}>
-          <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-            {/* <div>{`${myCartItems.length} ITEM${
-                myCartItems.length === 1 ? "" : "S"
-              } ADDED`}</div> */}
-          </p>
-        </div>
+      {showViewCartOption && (
         <div
           style={{
-            marginLeft: "22%",
-            marginTop: "5%",
-            height: "26px",
-            width: "30%",
-            borderRadius: "5px",
-            background: "#4A98CD",
+            display: "flex",
+            width: "100%",
+            height: "60px",
+            marginTop: "8%",
+            background: "white",
+            borderRadius: "10px",
+            boxShadow: "0px 2px 4px grey",
+            marginLeft: "1%",
           }}
-          onClick={goCart}
         >
-          <span
+          <div style={{ marginLeft: "10%", marginTop: "6%" }}>
+            <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
+              {/* <div>{`${myCartItems.length} ITEM${
+                myCartItems.length === 1 ? "" : "S"
+              } ADDED`}</div> */}
+            </p>
+          </div>
+          <div
             style={{
-              fontSize: "16px",
-              fontWeight: "bold",
-              marginTop: "10%",
-              color: "white",
+              marginLeft: "22%",
+              marginTop: "5%",
+              height: "26px",
+              width: "30%",
+              borderRadius: "5px",
+              background: "#4A98CD",
             }}
+            onClick={goCart}
           >
-            View Cart
-          </span>
-          <Icon name="caret right" inverted color="grey" />
+            <span
+              style={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                marginTop: "10%",
+                color: "white",
+              }}
+            >
+              View Cart
+            </span>
+            <Icon name="caret right" inverted color="grey" />
+          </div>
         </div>
-      </div>
+      )}
       {/* ) : null} */}
     </>
   );
