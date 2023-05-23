@@ -34,7 +34,7 @@ function Login() {
 
   return (
     <Container>
-      <MessageNotification status={status} message={message} theme="dark" />
+      <MessageNotification status={status} message={message} theme="dark" autoClose={5000}/>
       {/* <BrandLogo styles={{
           width: "20%",
           marginLeft: "auto",

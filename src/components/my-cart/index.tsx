@@ -32,7 +32,7 @@ function MyCart() {
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
 
   const goBack = () => {
-    navigate("/food&Beverages");
+    navigate("/fnb");
   };
 
   const subTotal = () => {
@@ -63,7 +63,7 @@ function MyCart() {
 
     const timeout = setTimeout(() => {
       setModalOpen(false);
-      navigate("/food&Beverages");
+      navigate("/fnb");
     }, 2000);
     return () => {
       clearTimeout(timeout);
@@ -80,9 +80,13 @@ function MyCart() {
       patient_ipno: localStorage.getItem("admissionno"),
       delivery_address: "",
       serving_time: localStorage.getItem("serving time"),
-      my_cart_items,
+      my_cart_items: cartItems.map((item: any) => ({
+        itemid: item.itemid,
+        remarkid: [],
+        other_remark: item.other_remark,
+        quantity: item.quantity,
+      })),
     };
-    console.log("selectedItems", selectedItems);
     dispatch(getMyOrderFood(selectedItems));
     foodOrderModal();
     setModalOpen(true);
@@ -160,6 +164,9 @@ function MyCart() {
                     height={10}
                     style={{ marginTop: "7px", padding: "1%" }}
                   />
+                  <span style={{ fontSize: "14px", marginTop: "4%" }}>
+                    {item.other_remark}
+                  </span>
                   <span style={{ fontSize: "14px", marginTop: "4%" }}>
                     {item.price_att}
                   </span>

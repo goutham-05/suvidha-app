@@ -126,7 +126,7 @@ export const routes: ProtectedRoute[] = [
     isProtected: true,
   },
   {
-    path:'/foodBeverages',
+    path:'/fnb',
     element: <FoodBeverages />,
     isProtected: true,
   },

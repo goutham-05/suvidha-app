@@ -114,7 +114,7 @@ const OtpForm: React.FC<Props> = ({}) => {
         <img src={Logo} width={150} height={150} />
       </div>
       <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-        <MessageNotification message={message} status={status} theme="dark" />
+        <MessageNotification message={message} status={status} theme="dark" autoClose={5000} />
         <Message
           style={{
             fontSize: "1.2rem",

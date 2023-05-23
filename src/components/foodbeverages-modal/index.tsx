@@ -12,6 +12,7 @@ import {
 import {
   decrementCartItem,
   incrementCartItem,
+  updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
 import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
@@ -66,6 +67,8 @@ function FoodBeverages() {
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const [menuItems, setMenuItems] = useState<any[]>([]);
   const [unitId, setUnitId] = useState("");
 
@@ -77,21 +80,26 @@ function FoodBeverages() {
   useEffect(() => {
     const unitCodeStr = localStorage.getItem("unit_code");
     const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-    setUnitId(unit_code.unit);
-    dispatch(
-      getMyServingTime({
-        unit_id: unit_code.unit,
-      })
-    );
+    if (unit_code) {
+      setUnitId(unit_code.unit);
+
+      dispatch(
+        getMyServingTime({
+          unit_id: unit_code.unit,
+        })
+      );
+    }
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(
-      getItemServiceTime({
-        unit_id: unitId,
-        servingtime_id: "1",
-      })
-    );
+    if (unitId) {
+      dispatch(
+        getItemServiceTime({
+          unit_id: unitId,
+          servingtime_id: "1",
+        })
+      );
+    }
   }, [unitId, dispatch]);
 
   useEffect(() => {
@@ -99,8 +107,15 @@ function FoodBeverages() {
       const cartItem = cartItems.find(
         (cartItem) => cartItem.itemid === item.itemid
       );
+      console.log(cartItem);
+
       if (cartItem) {
-        return { ...item, quantity: cartItem.quantity };
+        return {
+          ...item,
+          quantity: cartItem.quantity,
+          other_remark: cartItem.other_remark,
+          remarkId: undefined,
+        };
       }
       return item;
     });
@@ -115,6 +130,7 @@ function FoodBeverages() {
         }))
       );
     }
+    console.log("in here");
   }, [cartItems, getItemsServingTime]);
 
   const goBack = () => {
@@ -129,7 +145,9 @@ function FoodBeverages() {
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
-      if (selectedType) {
+      if (selectedType && unitId) {
+        console.log(selectedType);
+
         dispatch(
           getItemServiceTime({
             unit_id: unitId,
@@ -171,6 +189,77 @@ function FoodBeverages() {
     [dispatch, menuItems]
   );
 
+  const onSearchMenuItems = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setSearchInput(value);
+      console.log(value);
+
+      if (value) {
+        const filteredItems = getItemsServingTime?.data.filter((item: any) =>
+          item.item.toLowerCase().includes(value.toLowerCase())
+        );
+        console.log(filteredItems);
+
+        setMenuItems(filteredItems);
+      } else {
+        setMenuItems(getItemsServingTime?.data);
+      }
+    },
+    [menuItems, getItemsServingTime]
+  );
+
+  const onSelectCategory = useCallback(
+    (category: string) => {
+      setSelectedCategory(category);
+      const filterValue =
+        category === "Non Veg"
+          ? 1
+          : category === "Veg"
+          ? 0
+          : category === "Drinks"
+          ? 2
+          : "All";
+      const filteredItems = getItemsServingTime?.data.filter(
+        (item: any) => item.item_type === filterValue
+      );
+      console.log(filteredItems);
+
+      if (category === "All") {
+        setMenuItems(getItemsServingTime?.data);
+        setSearchInput("");
+      } else {
+        setMenuItems(filteredItems);
+      }
+    },
+    [getItemsServingTime]
+  );
+
+  const onAddRemark = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
+      const value = e.target.value;
+
+      const updatedMenu = menuItems.map((menuItem) =>
+        menuItem.itemid === itemId
+          ? { ...menuItem, other_remark: value, remarkId: undefined }
+          : {
+              ...menuItem,
+              remarkId: undefined,
+            }
+      );
+
+      const updatedCartItem = updatedMenu?.find(
+        (item) => item.itemid === itemId
+      );
+
+      setMenuItems(updatedMenu);
+      dispatch(updateCartItem(updatedCartItem));
+    },
+    [menuItems]
+  );
+
+  const showViewCartOption = menuItems?.some((item) => item.quantity > 0);
+
   return (
     <>
       <Navbar />
@@ -184,7 +273,7 @@ function FoodBeverages() {
         placeholder="Search Menu..."
         style={{ marginBottom: "10px", height: "40px" }}
         value={searchInput}
-        onChange={handleSearchInputChange}
+        onChange={onSearchMenuItems}
       />
       <div>
         <div style={{ display: "flex", marginTop: "4%" }}>
@@ -221,7 +310,10 @@ function FoodBeverages() {
                 boxShadow: "0px 2px 4px grey",
                 borderRadius: "10px",
                 whiteSpace: "nowrap",
+                backgroundColor:
+                  selectedCategory === item.category ? "grey" : "",
               }}
+              onClick={() => onSelectCategory(item.category)}
             >
               <div>{item.title}</div>
             </div>
@@ -329,12 +421,10 @@ function FoodBeverages() {
                               borderRadius: "5px",
                             }}
                             type="text"
-                            value={remarksList[index] || ""}
-                            onChange={(event) => {
-                              const updatedRemarksList = [...remarksList];
-                              updatedRemarksList[index] = event.target.value;
-                              setRemarksList(updatedRemarksList);
-                            }}
+                            value={item.other_remark || ""}
+                            onChange={(event) =>
+                              onAddRemark(event, item.itemid)
+                            }
                           />
                         </div>
                       </div>
@@ -441,49 +531,51 @@ function FoodBeverages() {
         )}
       </div>
       {/* {myCartItems.length > 0 ? ( */}
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          height: "60px",
-          marginTop: "8%",
-          background: "white",
-          borderRadius: "10px",
-          boxShadow: "0px 2px 4px grey",
-          marginLeft: "1%",
-        }}
-      >
-        <div style={{ marginLeft: "10%", marginTop: "6%" }}>
-          <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-            {/* <div>{`${myCartItems.length} ITEM${
-                myCartItems.length === 1 ? "" : "S"
-              } ADDED`}</div> */}
-          </p>
-        </div>
+      {showViewCartOption && (
         <div
           style={{
-            marginLeft: "22%",
-            marginTop: "5%",
-            height: "26px",
-            width: "30%",
-            borderRadius: "5px",
-            background: "#4A98CD",
+            display: "flex",
+            width: "100%",
+            height: "60px",
+            marginTop: "8%",
+            background: "white",
+            borderRadius: "10px",
+            boxShadow: "0px 2px 4px grey",
+            marginLeft: "1%",
           }}
-          onClick={goCart}
         >
-          <span
+          <div style={{ marginLeft: "10%", marginTop: "6%" }}>
+            <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
+              {/* <div>{`${myCartItems.length} ITEM${
+                myCartItems.length === 1 ? "" : "S"
+              } ADDED`}</div> */}
+            </p>
+          </div>
+          <div
             style={{
-              fontSize: "16px",
-              fontWeight: "bold",
-              marginTop: "10%",
-              color: "white",
+              marginLeft: "22%",
+              marginTop: "5%",
+              height: "26px",
+              width: "30%",
+              borderRadius: "5px",
+              background: "#4A98CD",
             }}
+            onClick={goCart}
           >
-            View Cart
-          </span>
-          <Icon name="caret right" inverted color="grey" />
+            <span
+              style={{
+                fontSize: "16px",
+                fontWeight: "bold",
+                marginTop: "10%",
+                color: "white",
+              }}
+            >
+              View Cart
+            </span>
+            <Icon name="caret right" inverted color="grey" />
+          </div>
         </div>
-      </div>
+      )}
       {/* ) : null} */}
     </>
   );
