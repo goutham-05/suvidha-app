@@ -8,7 +8,7 @@ function ServiceDisabled() {
   const { t } = useTranslation(["mydetails"]);
 
   const goBack = () => {
-    navigate('/service')
+    navigate('/services')
   }
   return (
     <>

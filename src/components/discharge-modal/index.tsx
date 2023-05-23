@@ -79,7 +79,7 @@ const MyDischargeModal = () => {
   ];
 
   const Back = () => {
-    navigate("/mydetails");
+    navigate("/services");
   };
 
   return (

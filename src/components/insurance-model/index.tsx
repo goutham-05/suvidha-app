@@ -22,7 +22,7 @@ const MyInsuranceModal = () => {
   const { t } = useTranslation(["mydetails"]);
 
   const Back = () => {
-    navigate("/mydetails");
+    navigate("/services");
   };
 
   // useEffect(() => {

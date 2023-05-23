@@ -4,14 +4,16 @@ import Container from "semantic-ui-react/dist/commonjs/elements/Container";
 import Navbar from "../../components/nav-bar";
 import ServiceModal from "../../components/service-modal";
 import { ServiceInfo, serviceInfo } from "../../config/services";
-import AmbulanceIcon from "../../assets/AmbulanceIcon.png";
-import FeedBack from "../../assets/Feedback.png";
-import CallSup from "../../assets/callsupport.png";
-import MyDetails from "../../assets/My-details.png";
-import ServiceReq from "../../assets/Service-Request.png";
-import PortalSer from "../../assets/Porter-services.png";
+import food from '../../assets/food.png';
+import myBill from "../../assets/bills.png";
+import myDischarge from "../../assets/discharge.png";
+import insurance from "../../assets/insurance.png";
+import houseKepping from '../../assets/HK.png';
+import facilities from '../../assets/facility.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
+import porter from '../../assets/porter.png';
+import ambulance from '../../assets/AmbulanceIcon (2).png';
 import { useTranslation } from "react-i18next";
 import {
   RootState,
@@ -19,7 +21,9 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import "./index.css";
-import { Grid, Icon } from "semantic-ui-react";
+import { Grid, Icon, Image } from "semantic-ui-react";
+import { patientCheck } from '../../reduxtoolkit/patientCheckSlice';
+
 interface ServiceList {
   title: string;
   icon: string;
@@ -27,31 +31,62 @@ interface ServiceList {
   size?: "mini" | "tiny" | "small" | "large" | "big" | "huge" | "massive";
 }
 
-const mockServicesList: ServiceList[] = [
+const myDetailsList: ServiceList[] = [
   {
-    title: "My Details",
-    icon: MyDetails,
-    path: "/mydetails",
+    title: "My Bill",
+    icon: myBill,
+    path: "/mybills",
   },
   {
-    title: "Service Request",
-    icon: ServiceReq,
-    path: "/service",
+    title: "My Discharge",
+    icon: myDischarge,
+    path: "/mydischarge",
   },
   {
-    title: "Porter Services",
-    icon: PortalSer,
-    path: "/portalservices",
+    title: "Insurance Status",
+    icon: insurance,
+    path: "/myinsurance",
   },
   // {
   //   title: "Grievance/Feedback",
   //   icon: FeedBack,
+  //   path: "/servicedisabled",  
+  // },
+  // {
+  //   title: "Call Support",
+  //   icon: CallSup,
+  //   path: "/callsupport",
+  // },
+];
+
+const ServiceRequestList: ServiceList[] = [
+  // {
+  //   title: "House Keeping",
+  //   icon: houseKepping,
   //   path: "/servicedisabled",
   // },
   {
-    title: "Call Support",
-    icon: CallSup,
-    path: "/callsupport",
+    title: "Food & Beverages",
+    icon: food,
+    path: "/foodBeverages",
+  },
+  // {
+  //   title: "Facilities",
+  //   icon: facilities,
+  //   path: "/servicedisabled",
+  // },
+];
+
+const othersList: ServiceList[] = [
+  {
+    title: "Porter Services",
+    icon: porter,
+    path: "/portalservices",
+  },
+  {
+    title: "Ambulance",
+    icon: ambulance,
+    path: "/ambulance",
   },
 ];
 
@@ -66,7 +101,25 @@ function ServicesList() {
 
   const userData = useAppSelector((state) => state.user);
 
-  console.log("dashboard", userData);
+  const dispatch = useAppDispatch();
+
+
+  const patientCheckInDK = useAppSelector((state) => state.patientCheck);
+
+  useEffect(() => {
+    const unitIdString = localStorage.getItem("unit_code");
+    const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+    const unitId = unitIdObject.unit;
+    dispatch(patientCheck({
+      unit_id: unitId,
+      patient_ipno: localStorage.getItem('admissionno')
+    }))
+  }, [])
+
+  const filteredServicesList = patientCheckInDK.data?.length > 0
+  ? ServiceRequestList
+  : ServiceRequestList.filter(item => item.title !== "Food & Beverages");
+
 
   const { t } = useTranslation(["serviceslist"]);
   const onClick = useCallback((title: string, path: string) => {
@@ -81,43 +134,308 @@ function ServicesList() {
     }
   }, []);
 
-
   return (
     <div>
       <Navbar />
-      <div style={{marginTop: '10%'}}>
-      <Grid columns={2} rows={3} padded>
-        {mockServicesList.map((item, index, path) => (
-          <Grid.Column
-            key={`col-${index}`}
-            onClick={() => onClick(item.title, item.path)}
-            className="grid-item"
+      <Grid
+        columns={3}
+        style={{ marginTop: "10%", width: "105%", marginLeft: "2%"}}
+      >
+        <Grid.Row
+          style={{
+            background: "white",
+            width: "100%",
+            borderRadius: "10px",
+            boxShadow: "0px 2px 4px grey",
+            marginBottom: '5%'
+          }}
+        >
+          <h1
             style={{
-              marginLeft: "6%",
-              background: "#4A98CD",
-              width: "40%",
-              height:'95px',
-              borderRadius: "25px",
+              fontSize: "14px",
+              fontWeight: "bold",
+              float: "left",
+              textAlign: "left",
             }}
           >
-                    <img src={item.icon} width={50} height={50} />
-              <div>
-                <h1
+            My Details
+          </h1>
+          {myDetailsList.map((item, index) => (
+            <Grid.Column key={`col-${index}`}
+            onClick={() => onClick(item.title, item.path)}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "auto",
+                  width: "100%",
+                  marginTop: "10%",
+                }}
+              >
+                <img src={item.icon} width={50} height={50} />
+                <p
                   style={{
-                    fontSize: 12,
-                    textAlign: "center",
-                    color: "white",
-                    paddingBottom: 20,
+                    whiteSpace: "nowrap",
+                    fontSize: "11px",
+                    fontWeight: "500",
+                    paddingTop: "10%",
                   }}
                 >
                   {t(item.title)}
-                </h1>
+                </p>
               </div>
- 
-          </Grid.Column>
-        ))}
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+
+        <Grid.Row
+          style={{
+            background: "white",
+            width: "100%",
+            borderRadius: "10px",
+            boxShadow: "0px 2px 4px grey",
+            marginBottom: '5%'
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              float: "left",
+              textAlign: "left",
+            }}
+          >
+            Service Request
+          </h1>
+          {filteredServicesList.map((item, index) => (
+            <Grid.Column onClick={() => onClick(item.title, item.path)}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "auto",
+                  width: "100%",
+                  marginTop: "10%",
+                }}
+              >
+                <img src={item.icon} width={50} height={50} />
+                <p
+                  style={{
+                    whiteSpace: "nowrap",
+                    fontSize: "11px",
+                    fontWeight: "500",
+                    paddingTop: "10%",
+                  }}
+                >
+                  {t(item.title)}
+                </p>
+              </div>
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+
+        <Grid.Row
+          style={{
+            background: "white",
+            width: "100%",
+            borderRadius: "10px",
+            boxShadow: "0px 2px 4px grey",
+            marginBottom: '5%'
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              float: "left",
+              textAlign: "left",
+            }}
+          >
+            Others
+          </h1>
+          {othersList.map((item, index) => (
+            <Grid.Column onClick={() => onClick(item.title, item.path)}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginRight: "auto",
+                  width: "100%",
+                  marginTop: "10%",
+                }}
+              >
+                <img src={item.icon} width={50} height={50} />
+                <p
+                  style={{
+                    whiteSpace: "nowrap",
+                    fontSize: "11px",
+                    fontWeight: "500",
+                    paddingTop: "10%",
+                  }}
+                >
+                  {t(item.title)}
+                </p>
+              </div>
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+
       </Grid>
-      </div>
+      {/* <Grid columns={3} style={{ marginTop: "10%" }}>
+        <Grid.Row>
+          <div className="detailsContainer">
+            <h1
+              style={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                float: "left",
+                marginTop: "4%",
+                marginLeft: "4%",
+              }}
+            >
+              My Details
+            </h1>
+
+            <Grid columns={3} style={{ width: "90%" }}>
+              <Grid.Row style={{ marginTop: "-2%" }}>
+                {mockServicesList.map((item, index) => (
+                  <Grid.Column
+                    key={`col-${index}`}
+                    onClick={() => onClick(item.title, item.path)}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginLeft: "70%",
+                        marginRight: "auto",
+                        width: "fit-content",
+                      }}
+                    >
+                      <img src={item.icon} width={50} height={50} />
+                      <p
+                        style={{
+                          whiteSpace: "nowrap",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          paddingTop: "10%",
+                        }}
+                      >
+                        {t(item.title)}
+                      </p>
+                    </div>
+                  </Grid.Column>
+                ))}
+              </Grid.Row>
+            </Grid>
+          </div>
+        </Grid.Row>
+
+        <Grid.Row>
+          <div className="detailsContainer">
+            <h1
+              style={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                float: "left",
+                marginTop: "4%",
+                marginLeft: "4%",
+              }}
+            >
+              My Details
+            </h1>
+
+            <Grid columns={3} style={{ width: "90%" }}>
+              <Grid.Row style={{ marginTop: "-2%" }}>
+                {mockServicesList.map((item, index) => (
+                  <Grid.Column
+                    key={`col-${index}`}
+                    onClick={() => onClick(item.title, item.path)}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginLeft: "70%",
+                        marginRight: "auto",
+                        width: "fit-content",
+                      }}
+                    >
+                      <img src={item.icon} width={50} height={50} />
+                      <p
+                        style={{
+                          whiteSpace: "nowrap",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          paddingTop: "10%",
+                        }}
+                      >
+                        {t(item.title)}
+                      </p>
+                    </div>
+                  </Grid.Column>
+                ))}
+              </Grid.Row>
+            </Grid>
+          </div>
+        </Grid.Row>
+
+        <Grid.Row>
+          <div className="detailsContainer">
+            <h1
+              style={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                float: "left",
+                marginTop: "4%",
+                marginLeft: "4%",
+              }}
+            >
+              My Details
+            </h1>
+
+            <Grid columns={3} style={{ width: "90%" }}>
+              <Grid.Row style={{ marginTop: "-2%" }}>
+                {mockServicesList.map((item, index) => (
+                  <Grid.Column
+                    key={`col-${index}`}
+                    onClick={() => onClick(item.title, item.path)}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginLeft: "70%",
+                        marginRight: "auto",
+                        width: "fit-content",
+                      }}
+                    >
+                      <img src={item.icon} width={50} height={50} />
+                      <p
+                        style={{
+                          whiteSpace: "nowrap",
+                          fontSize: "11px",
+                          fontWeight: "500",
+                          paddingTop: "10%",
+                        }}
+                      >
+                        {t(item.title)}
+                      </p>
+                    </div>
+                  </Grid.Column>
+                ))}
+              </Grid.Row>
+            </Grid>
+          </div>
+        </Grid.Row>
+
+      </Grid> */}
       <BackgroundImage />
       <Footer />
     </div>
@@ -125,3 +443,72 @@ function ServicesList() {
 }
 
 export default ServicesList;
+
+{
+  /* <div className="dashboardContainer">
+        <div className="detailsContainer">
+          <h1
+            style={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              float: "left",
+              marginTop: "4%",
+              marginLeft: "4%",
+            }}
+          >
+            My Details
+          </h1>
+
+          <Grid columns={3} style={{width: '90%'}}>
+  <Grid.Row style={{marginTop: '-2%'}}>
+    {mockServicesList.map((item, index) => (
+      <Grid.Column
+        key={`col-${index}`}
+        onClick={() => onClick(item.title, item.path)}
+      >
+         <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginLeft: "70%",
+            marginRight: "auto",
+            width: "fit-content",
+          }}
+        >
+          <img src={item.icon} width={50} height={50} />
+          <p style={{ whiteSpace: "nowrap", fontSize: '11px', fontWeight: '500', paddingTop: '10%'}}>{t(item.title)}</p>
+        </div>
+      </Grid.Column>
+    ))}
+  </Grid.Row>
+</Grid>
+        </div>
+        <div className="detailsContainer">
+          <h1
+            style={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              float: "left",
+              marginTop: "4%",
+              marginLeft: "4%",
+            }}
+          >
+            Service Request
+          </h1>
+        </div>
+        <div className="detailsContainer">
+          <h1
+            style={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              float: "left",
+              marginTop: "4%",
+              marginLeft: "4%",
+            }}
+          >
+            Others
+          </h1>
+        </div>
+      </div> */
+}

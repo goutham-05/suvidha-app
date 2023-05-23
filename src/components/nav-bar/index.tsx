@@ -47,8 +47,6 @@ const Navbar = () => {
     localStorage.removeItem("patient_floor");
     localStorage.removeItem("patient_bed");
     localStorage.removeItem("patient_room");
-    localStorage.removeItem("serving time");
-    localStorage.removeItem("patient_type");
     navigate(redirectUrl + "" + unit_id);
   };
 

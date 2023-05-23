@@ -72,7 +72,7 @@ const MyBillModal = () => {
   }, []);
 
   const Back = () => {
-    navigate("/mydetails");
+    navigate("/services");
   };
 
   return (
