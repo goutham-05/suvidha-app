@@ -79,21 +79,26 @@ function FoodBeverages() {
   useEffect(() => {
     const unitCodeStr = localStorage.getItem("unit_code");
     const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-    setUnitId(unit_code.unit);
-    dispatch(
-      getMyServingTime({
-        unit_id: unit_code.unit,
-      })
-    );
+    if (unit_code) {
+      setUnitId(unit_code.unit);
+
+      dispatch(
+        getMyServingTime({
+          unit_id: unit_code.unit,
+        })
+      );
+    }
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(
-      getItemServiceTime({
-        unit_id: unitId,
-        servingtime_id: "1",
-      })
-    );
+    if (unitId) {
+      dispatch(
+        getItemServiceTime({
+          unit_id: unitId,
+          servingtime_id: "1",
+        })
+      );
+    }
   }, [unitId, dispatch]);
 
   useEffect(() => {
@@ -142,7 +147,7 @@ function FoodBeverages() {
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
-      if (selectedType) {
+      if (selectedType && unitId) {
         console.log(selectedType);
 
         dispatch(
