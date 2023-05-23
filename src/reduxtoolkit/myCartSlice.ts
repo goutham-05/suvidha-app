@@ -43,11 +43,17 @@ const myCartSlice = createSlice({
         state[findIndex].quantity -= 1;
       }
     },
+    updateCartItem: (state, action) => {
+      const item = action.payload;
+      const findIndex = state.findIndex((value) => value.itemid == item.itemid);
+      state[findIndex] = item;
+    },
   },
 });
 
 export const selectAllCartItems = (state: any) =>
   state.cart.filter((item: any) => item.quantity !== 0);
 
-export const { incrementCartItem, decrementCartItem } = myCartSlice.actions;
+export const { incrementCartItem, decrementCartItem, updateCartItem } =
+  myCartSlice.actions;
 export default myCartSlice.reducer;

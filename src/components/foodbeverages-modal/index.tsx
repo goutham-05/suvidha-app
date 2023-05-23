@@ -12,6 +12,7 @@ import {
 import {
   decrementCartItem,
   incrementCartItem,
+  updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
 import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
@@ -126,7 +127,6 @@ function FoodBeverages() {
         getItemsServingTime?.data?.map((item: any) => ({
           ...item,
           quantity: 0,
-          other_remark: "",
         }))
       );
     }
@@ -244,10 +244,18 @@ function FoodBeverages() {
       const updatedMenu = menuItems.map((menuItem) =>
         menuItem.itemid === itemId
           ? { ...menuItem, other_remark: value, remarkId: undefined }
-          : { ...menuItem, remarkId: undefined }
+          : {
+              ...menuItem,
+              remarkId: undefined,
+            }
+      );
+
+      const updatedCartItem = updatedMenu?.find(
+        (item) => item.itemid === itemId
       );
 
       setMenuItems(updatedMenu);
+      dispatch(updateCartItem(updatedCartItem));
     },
     [menuItems]
   );
