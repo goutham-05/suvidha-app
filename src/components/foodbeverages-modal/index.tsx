@@ -439,7 +439,6 @@ function FoodBeverages() {
                           <div
                             style={{
                               position: "absolute",
-                              top: "90%",
                               left: "50%",
                               transform: "translate(-50%, -50%)",
                               width: "50%",
@@ -448,6 +447,7 @@ function FoodBeverages() {
                               borderRadius: "6px",
                               boxShadow: "0px 2px 4px grey",
                               zIndex: 1,
+                              justifyContent: "space-between",
                             }}
                           >
                             {item.quantity === 0 ? (
@@ -467,9 +467,12 @@ function FoodBeverages() {
                                 ADD
                               </span>
                             ) : (
-                              <>
+                              <div style={{marginTop: '-5%'}}>
                                 <span
-                                  style={{ fontWeight: "bold" }}
+                                  style={{
+                                    fontWeight: "bold",
+                                    marginRight: "8px",
+                                  }}
                                   onClick={() =>
                                     onRemoveCartItem(index, {
                                       ...item,
@@ -483,7 +486,10 @@ function FoodBeverages() {
                                   {item.quantity}
                                 </span>
                                 <span
-                                  style={{ fontWeight: "bold" }}
+                                  style={{
+                                    fontWeight: "bold",
+                                    marginLeft: "5px",
+                                  }}
                                   onClick={() =>
                                     onAddCartItem(index, {
                                       ...item,
@@ -493,7 +499,7 @@ function FoodBeverages() {
                                 >
                                   +
                                 </span>
-                              </>
+                              </div>
                             )}
                           </div>
                         </div>
