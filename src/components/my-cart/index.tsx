@@ -23,7 +23,8 @@ import {
   selectAllCartItems,
   updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
-import { clearCart } from "../../reduxtoolkit/myCartItemsSlice";
+import clearCart  from "../../reduxtoolkit/myCartSlice";
+
 
 function MyCart() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function MyCart() {
     const timeout = setTimeout(() => {
       setModalOpen(false);
       navigate("/fnb");
+      window.location.reload(); // Refresh the page
     }, 2000);
     return () => {
       clearTimeout(timeout);
@@ -256,47 +258,6 @@ function MyCart() {
           marginLeft: "4%",
         }}
       >
-        {/* <div style={{ display: "flex" }}>
-          <div
-            style={{
-              width: "10%",
-              height: "45px",
-              whiteSpace: "nowrap",
-              marginLeft: "20px",
-              marginTop: "3%",
-            }}
-          >
-            <p
-              style={{
-                fontWeight: "bold",
-                fontSize: "18px",
-                float: "left",
-              }}
-            >
-              Subtotal
-            </p>
-          </div>
-          <div style={{ marginLeft: "68%", marginTop: "3%" }}>
-            <img
-              src={Rupee}
-              width={10}
-              height={14}
-              style={{ padding: "2%", marginBottom: "5px" }}
-            />
-            <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-              {subTotal()}
-            </span>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                marginTop: "-4%",
-              }}
-            ></div>
-          </div>
-        </div> */}
-        {/* <div style={{ width: "100%", border: "0.9px solid grey" }}></div> */}
         <div style={{ display: "flex" }}>
           <div
             style={{
