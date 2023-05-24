@@ -134,7 +134,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
                 label="mobile_number"
                 required={true}
                 size="large"
-                error={errors["Mobile Number / Email"] ? true : false}
+                error={errors["Mobile Number"] ? true : false}
                 fluid={true}
                 loading={false}
                 type="text"
@@ -143,7 +143,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
               />
               {errors.mobile_number?.type === "required" && (
                 <Label color="orange" pointing prompt>
-                  Mobile Number / Email is required
+                  {t("mobile_number_required")}
                 </Label>
               )}
             </Grid.Column>
