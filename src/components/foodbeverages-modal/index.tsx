@@ -77,6 +77,15 @@ function FoodBeverages() {
     return servingType ? servingType : "Serving Type";
   });
 
+  // useEffect(() => {
+  //     if (getItemsServingTime.data) {
+  //       console.log('items call');
+  //       setMenuItems(getItemsServingTime.data);
+  //     }
+  // }, [getItemsServingTime])
+
+  console.log('Menu Items', menuItems?.length);
+
   useEffect(() => {
     const unitCodeStr = localStorage.getItem("unit_code");
     const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
@@ -103,7 +112,8 @@ function FoodBeverages() {
   }, [unitId, dispatch]);
 
   useEffect(() => {
-    const updatedItems = menuItems?.map((item) => {
+    const hasQuantity = cartItems?.some((item) => item.quantity > 0);
+    const updatedItems = hasQuantity ? menuItems?.map((item) => {
       const cartItem = cartItems.find(
         (cartItem) => cartItem.itemid === item.itemid
       );
@@ -118,11 +128,15 @@ function FoodBeverages() {
         };
       }
       return item;
-    });
+    }) : []
 
+    console.log('hasQuantity',hasQuantity);
+    
     if (updatedItems?.length > 0) {
       setMenuItems(updatedItems);
+      console.log("am here in items")
     } else {
+      console.log('itemms');
       setMenuItems(
         getItemsServingTime?.data?.map((item: any) => ({
           ...item,
