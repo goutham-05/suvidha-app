@@ -27,7 +27,7 @@ const DropDown: React.FC<Props> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const { i18n} = useTranslation();
-  const options = ['English', 'తెలుగు', 'हिन्दी', 'मराठी'];
+  const options = ['English', 'తెలుగు', 'हिन्दी', 'मराठी','தமிழ்','ಕನ', 'اردو', 'ଓଡିଆ', 'മലയാളം'];
   //, 'मराठी','தமிழ்','ಕನ', 'اردو', 'ଓଡିଆ', 'മലയാളം'
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
