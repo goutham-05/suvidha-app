@@ -48,6 +48,9 @@ const myCartSlice = createSlice({
       const findIndex = state.findIndex((value) => value.itemid == item.itemid);
       state[findIndex] = item;
     },
+    clearCart: (state) => {
+      state = [];
+    },
   },
 });
 

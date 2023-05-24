@@ -21,7 +21,9 @@ import {
   decrementCartItem,
   incrementCartItem,
   selectAllCartItems,
+  updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
+import { clearCart } from "../../reduxtoolkit/myCartItemsSlice";
 
 function MyCart() {
   const navigate = useNavigate();
@@ -93,8 +95,6 @@ function MyCart() {
     localStorage.removeItem("serving time");
     localStorage.removeItem("servingType");
   };
-
-  console.log("cartItems", cartItems);
 
   return (
     <div>

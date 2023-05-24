@@ -134,6 +134,16 @@ function FoodBeverages() {
     console.log("in here");
   }, [cartItems, getItemsServingTime]);
 
+//   // New useEffect to update menuItems when serving type changes
+useEffect(() => {
+  setMenuItems(
+    getItemsServingTime?.data?.map((item: any) => ({
+      ...item,
+      quantity: 0,
+    }))
+  );
+}, [getItemsServingTime]);
+
   const goBack = () => {
     navigate("/services");
     localStorage.removeItem("servingType");
