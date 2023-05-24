@@ -1,5 +1,7 @@
 {
 	"Enter OTP": "ఎంటర్ ఓటీపీ",
 	"Submit": "సమర్పించండి",
-	"Enter OTP sent to":"పంపిన OTP ని నమోదు చేయండి"
+	"Enter OTP sent to":"పంపిన OTP ని నమోదు చేయండి",
+	"Dint_Receive_A_Otp":"OTPని అందుకోలేదా?",
+	"Resend_Otp":"OTP ను మళ్ళీ పంపు"
 }

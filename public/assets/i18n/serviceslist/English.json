@@ -1,15 +1,11 @@
 {
-    "MyDetails": "MyDetails",
-    "ServiceRequest": "ServiceRequest",
-    "PorterServices": "PorterServices",
-    "Grievance/Feedback": "Grievance/Feedback",
-    "CallSupport": "CallSupport",
-    "Grievance":"Grievance",
-    "Feedback":"Feedback",
-    "EnterText":"EnterText",
-    "Submit":"Submit",
-    "Attach":"Attach",
-    "IP":"IP",
-    "Room":"Room",
-    "Book Ambulance":"Book Ambulance"
+    "my_Details": "My Details",
+    "service_Request": "Service Request",
+    "others":"Others",
+    "my_bill": "My Bill",
+    "my_discharge":"My Discharge",
+    "insurance_status": "Insurance Status",
+    "food_Beverages":"Food & Beverages",
+    "porter_services": "Porter Services",
+    "ambulance":"Ambulance"
 }

@@ -1,15 +1,11 @@
 {
-  "MyDetails": "ମୋ ବିବରଣୀ",
-  "ServiceRequest": "ସେବା ଅଭିଯାନ୍ତା",
-  "PorterServices": "ପୋର୍ଟର ସେବା",
-  "Grievance/Feedback": "ଅଭିଯୋଗ / ମତାମତ",
-  "CallSupport": "କଲ୍ ସପୋର୍ଟ",
-  "Grievance": "ଅଭିଯୋଗ",
-  "Feedback": "ମତାମତ",
-  "EnterText": "ମାଟି ଲେଖନ୍ତୁ",
-  "Submit": "ଦାଖଲ କରନ୍ତୁ",
-  "Attach": "ସଂଯୁକ୍ତ କରନ୍ତୁ",
-  "IP": "ଆଇପି",
-  "Room": "କକ୍ଷ",
-  "Book Ambulance": "ଅମ୍ବୁଲାନ୍ସ ବୁକ୍ କରନ୍ତୁ"
+  "my_Details": "ମୋ ବିବରଣୀ",
+  "service_Request": "ସେବା ଅନୁରୋଧ",
+  "others": "ଅନ୍ୟ",
+  "my_bill": "ମୋ ବିଲ",
+  "my_discharge": "ମୋ ଡିସ୍ଚାର୍ଜ",
+  "insurance_status": "ବୀମା ସ୍ଥିତି",
+  "food_Beverages": "ଖାଦ୍ୟ ଏବଂ ପ୍ରଶ୍ୱାସ",
+  "porter_services": "ପୋର୍ଟର ସେବା",
+  "ambulance": "ଏମ୍ବୁଲାନ୍ସ"
 }

@@ -158,7 +158,8 @@ function ServicesList() {
               textAlign: "left",
             }}
           >
-            My Details
+            {/* My Details */}
+            {t('my_Details')}
           </h1>
           {myDetailsList.map((item, index) => (
             <Grid.Column key={`col-${index}`}
@@ -206,7 +207,7 @@ function ServicesList() {
               textAlign: "left",
             }}
           >
-            Service Request
+            {t('service_Request')}
           </h1>
           {filteredServicesList.map((item, index) => (
             <Grid.Column onClick={() => onClick(item.title, item.path)}>
@@ -253,7 +254,7 @@ function ServicesList() {
               textAlign: "left",
             }}
           >
-            Others
+            {t('others')}
           </h1>
           {othersList.map((item, index) => (
             <Grid.Column onClick={() => onClick(item.title, item.path)}>

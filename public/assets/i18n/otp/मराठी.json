@@ -1,5 +1,7 @@
 {
     "Enter OTP": "OTP प्रविष्ट करा",
     "Submit": "सबमिट करा",
-    "Enter OTP sent to": "पाठवलेल्या OTP प्रविष्ट करा"
+    "Enter OTP sent to": "पाठवलेल्या OTP प्रविष्ट करा",
+    "Dint_Receive_A_Otp":"OTP प्राप्त झाला नाही?",
+    "Resend_Otp":"OTP पुन्हा पाठवा"
     }

@@ -17,17 +17,15 @@ interface CartItem {
 
 const initialState: CartItem[] = [];
 
-// const cartAdapter = createEntityAdapter();
-
 const myCartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     incrementCartItem: (state, action) => {
       const item = action.payload;
-      const findIndex = state.findIndex((value) => value.itemid == item.itemid);
+      const findIndex = state.findIndex((value) => value.itemid === item.itemid);
 
-      if (findIndex == -1) {
+      if (findIndex === -1) {
         state.push(item);
       } else {
         state[findIndex].quantity += 1;
@@ -35,9 +33,9 @@ const myCartSlice = createSlice({
     },
     decrementCartItem: (state, action) => {
       const item = action.payload;
-      const findIndex = state.findIndex((value) => value.itemid == item.itemid);
+      const findIndex = state.findIndex((value) => value.itemid === item.itemid);
 
-      if (findIndex == -1) {
+      if (findIndex === -1) {
         state.push(item);
       } else {
         state[findIndex].quantity -= 1;
@@ -45,18 +43,16 @@ const myCartSlice = createSlice({
     },
     updateCartItem: (state, action) => {
       const item = action.payload;
-      const findIndex = state.findIndex((value) => value.itemid == item.itemid);
+      const findIndex = state.findIndex((value) => value.itemid === item.itemid);
       state[findIndex] = item;
     },
-    clearCart: (state) => {
-      state = [];
-    },
+    clearCart: () => initialState, // Set state to initialState
   },
 });
 
 export const selectAllCartItems = (state: any) =>
   state.cart.filter((item: any) => item.quantity !== 0);
 
-export const { incrementCartItem, decrementCartItem, updateCartItem } =
+export const { incrementCartItem, decrementCartItem, updateCartItem, clearCart } =
   myCartSlice.actions;
 export default myCartSlice.reducer;

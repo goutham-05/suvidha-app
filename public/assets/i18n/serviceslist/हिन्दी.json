@@ -1,18 +1,11 @@
 {
-    "My Details": "मेरे विवरण",
-    "Service Request": "सेवा अनुरोध",
-    "Porter Services": "कुली सेवाएं",
-    "Grievance/Feedback": "शिकायत/प्रतिक्रिया",
-    "Call Support": "कॉल सपोर्ट",
-    "Grievance":"शिकायत",
-    "Feedback":"प्रतिक्रिया",
-    "EnterText":"पाठ दर्ज करें",
-    "Submit":"जमा करना",
-    "Attach":"संलग्न करना",
-    "IP":"आई पी",
-    "Room":"कमरा",
-    "Ambulance":"रोगी वाहन",
-    "Contact Support":"समर्थन से संपर्क करें",
-    "Book Ambulance":"बुक एम्बुलेंस",
-    "Call":"पुकारना"
+    "my_Details": "मेरा विवरण",
+    "service_Request": "सेवा अनुरोध",
+    "others": "अन्य",
+    "my_bill": "मेरा बिल",
+    "my_discharge": "मेरा डिस्चार्ज",
+    "insurance_status": "बीमा स्थिति",
+    "food_Beverages": "खाद्य और पेय",
+    "porter_services": "पोर्टर सेवाएं",
+    "ambulance": "एम्बुलेंस"
 }

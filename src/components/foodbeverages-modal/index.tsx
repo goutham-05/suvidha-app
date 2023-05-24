@@ -16,6 +16,7 @@ import {
 } from "../../reduxtoolkit/myCartSlice";
 import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
+import { clearCart } from "../../reduxtoolkit/myCartSlice";
 
 interface Item {
   title: string;
@@ -106,7 +107,7 @@ function FoodBeverages() {
       dispatch(
         getItemServiceTime({
           unit_id: unitId,
-          servingtime_id: "1",
+          servingtime_id: "2",
         })
       );
     }
@@ -161,10 +162,9 @@ function FoodBeverages() {
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
-      window.location.reload();
       if (selectedType && unitId) {
         console.log(selectedType);
-
+        dispatch(clearCart());
         dispatch(
           getItemServiceTime({
             unit_id: unitId,

@@ -92,7 +92,7 @@ const OtpForm: React.FC<Props> = ({}) => {
   if (unit_code) {
     unit_id = unit_code.unit;
   }
-  const resendOTP = async() => {
+  const resendOTP = async () => {
     //setIsLoading(true);
     await dispatch(
       getOtp({
@@ -114,7 +114,12 @@ const OtpForm: React.FC<Props> = ({}) => {
         <img src={Logo} width={150} height={150} />
       </div>
       <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-        <MessageNotification message={message} status={status} theme="dark" autoClose={5000} />
+        <MessageNotification
+          message={message}
+          status={status}
+          theme="dark"
+          autoClose={5000}
+        />
         <Message
           style={{
             fontSize: "1.2rem",
@@ -164,39 +169,52 @@ const OtpForm: React.FC<Props> = ({}) => {
             </Label>
           )}
 
-          <div  style={{
+          <div
+            style={{
               width: "25%",
               height: "25px",
               padding: "3px",
               fontSize: "13px",
               whiteSpace: "nowrap",
-              marginLeft: '12%'
-            }}>
-              Didn't receive a OTP?<span style={{textDecoration: 'underline', padding:'5px', fontWeight: 'bold', color: '#0075AD'}} onClick={resendOTP}>Resend OTP</span>
-          </div>
-          {
-            isLoading ? (
-              <Loader active={isLoading} inline="centered" />
-            ) : (
-          <Button
-            type="submit"
-            loading={false}
-            style={{
-              borderRadius: "100px",
+              marginLeft: "12%",
               textAlign: "center",
-              fontWeight: "lighter",
-              fontSize: "1.4rem",
-              background: "#0075ad",
-              width: "100%",
-              maxWidth: "300px", // set a maximum width for the button
-              margin: "0 auto", // center the button horizontally
             }}
           >
-            <h1 style={{ color: "white", fontSize: "1.2rem" }}>
-              {t("Submit")}
-            </h1>
-          </Button>)
-}
+            {t("Dint_Receive_A_Otp")}
+            <span
+              style={{
+                textDecoration: "underline",
+                padding: "5px",
+                fontWeight: "bold",
+                color: "#0075AD",
+              }}
+              onClick={resendOTP}
+            >
+              {t("Resend_Otp")}
+            </span>
+          </div>
+          {isLoading ? (
+            <Loader active={isLoading} inline="centered" />
+          ) : (
+            <Button
+              type="submit"
+              loading={false}
+              style={{
+                borderRadius: "100px",
+                textAlign: "center",
+                fontWeight: "lighter",
+                fontSize: "1.4rem",
+                background: "#0075ad",
+                width: "100%",
+                maxWidth: "300px", // set a maximum width for the button
+                margin: "0 auto", // center the button horizontally
+              }}
+            >
+              <h1 style={{ color: "white", fontSize: "1.2rem" }}>
+                {t("Submit")}
+              </h1>
+            </Button>
+          )}
         </Form>
         <BackgroundImage />
       </div>

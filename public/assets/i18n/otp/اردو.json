@@ -1,5 +1,7 @@
 {
   "Enter OTP": "OTP درج کریں",
   "Submit": "جمع کرائیں",
-  "Enter OTP sent to": "بھیجا گیا OTP درج کریں"
+  "Enter OTP sent to": "بھیجا گیا OTP درج کریں",
+  "Dint_Receive_A_Otp":"OTPموصول نہیں ہوا؟",
+  "Resend_Otp":"OTP دوبارہ بھیجیں۔"
 }

@@ -17,13 +17,14 @@ import { increaseQty } from "../../reduxtoolkit/myFoodSlice";
 import { Dimmer } from "semantic-ui-react";
 import { useState } from "react";
 import order from "../../../src/assets/fb/orderplaced.png";
+import { clearCart } from "../../reduxtoolkit/myCartSlice";
 import {
   decrementCartItem,
   incrementCartItem,
   selectAllCartItems,
   updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
-import clearCart  from "../../reduxtoolkit/myCartSlice";
+
 
 
 function MyCart() {
@@ -67,7 +68,6 @@ function MyCart() {
     const timeout = setTimeout(() => {
       setModalOpen(false);
       navigate("/fnb");
-      window.location.reload(); // Refresh the page
     }, 2000);
     return () => {
       clearTimeout(timeout);
@@ -92,6 +92,7 @@ function MyCart() {
       })),
     };
     dispatch(getMyOrderFood(selectedItems));
+    dispatch(clearCart());
     foodOrderModal();
     setModalOpen(true);
     localStorage.removeItem("serving time");
