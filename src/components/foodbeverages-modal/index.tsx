@@ -63,6 +63,7 @@ function FoodBeverages() {
     (state) => state.getItemServiceTime
   );
   const cartItems = useAppSelector((state) => state.cart);
+  console.log('CartItems', cartItems);
 
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
@@ -146,6 +147,16 @@ function FoodBeverages() {
     }
     console.log("in here");
   }, [cartItems, getItemsServingTime]);
+
+//   // New useEffect to update menuItems when serving type changes
+useEffect(() => {
+  setMenuItems(
+    getItemsServingTime?.data?.map((item: any) => ({
+      ...item,
+      quantity: 0,
+    }))
+  );
+}, [getItemsServingTime]);
 
   const goBack = () => {
     navigate("/services");
@@ -302,7 +313,7 @@ function FoodBeverages() {
               boxShadow: "0px 2px 4px grey",
               borderRadius: "10px",
               whiteSpace: "nowrap",
-              marginLeft: "6%",
+              marginLeft: "4%",
             }}
             onClick={() => setIsOpen(!isOpen)}
           >
@@ -316,16 +327,15 @@ function FoodBeverages() {
               key={index}
               style={{
                 marginRight: "20px",
-                width: "20%",
-                height: "20px",
-                padding: "3px",
+                width: "30%",
+                padding: "1%",
                 fontSize: "10px",
                 background: "white",
                 boxShadow: "0px 2px 4px grey",
                 borderRadius: "10px",
                 whiteSpace: "nowrap",
                 backgroundColor:
-                  selectedCategory === item.category ? "grey" : "",
+                  selectedCategory === item.category ? "#7bb5d2" : "",
               }}
               onClick={() => onSelectCategory(item.category)}
             >
@@ -372,7 +382,7 @@ function FoodBeverages() {
           minHeight: "10px",
           maxHeight: "400px",
           overflowY: "scroll",
-          marginTop: "10%",
+          marginTop: "2%",
         }}
       >
         {localStorage.getItem("serving time") ? (
@@ -404,7 +414,7 @@ function FoodBeverages() {
                         <p
                           style={{
                             fontWeight: "bold",
-                            fontSize: "14px",
+                            fontSize: "10px",
                             float: "left",
                             color: "black",
                           }}
@@ -442,7 +452,7 @@ function FoodBeverages() {
                           />
                         </div>
                       </div>
-                      <div style={{ marginLeft: "56%", position: "relative" }}>
+                      <div style={{ marginLeft: "54%", position: "relative" }}>
                         <img
                           src={veg}
                           width={100}
@@ -453,15 +463,15 @@ function FoodBeverages() {
                           <div
                             style={{
                               position: "absolute",
-                              top: "90%",
                               left: "50%",
                               transform: "translate(-50%, -50%)",
-                              width: "50%",
+                              width: "80%",
                               height: "20px",
                               background: "white",
                               borderRadius: "6px",
                               boxShadow: "0px 2px 4px grey",
                               zIndex: 1,
+                              justifyContent: "space-between",
                             }}
                           >
                             {item.quantity === 0 ? (
@@ -481,9 +491,12 @@ function FoodBeverages() {
                                 ADD
                               </span>
                             ) : (
-                              <>
+                              <div style={{marginTop: '-2%'}}>
                                 <span
-                                  style={{ fontWeight: "bold" }}
+                                  style={{
+                                    fontWeight: "bold",
+                                    marginRight: "20px",
+                                  }}
                                   onClick={() =>
                                     onRemoveCartItem(index, {
                                       ...item,
@@ -497,7 +510,10 @@ function FoodBeverages() {
                                   {item.quantity}
                                 </span>
                                 <span
-                                  style={{ fontWeight: "bold" }}
+                                  style={{
+                                    fontWeight: "bold",
+                                    marginLeft: "20px",
+                                  }}
                                   onClick={() =>
                                     onAddCartItem(index, {
                                       ...item,
@@ -507,7 +523,7 @@ function FoodBeverages() {
                                 >
                                   +
                                 </span>
-                              </>
+                              </div>
                             )}
                           </div>
                         </div>
@@ -560,9 +576,9 @@ function FoodBeverages() {
         >
           <div style={{ marginLeft: "10%", marginTop: "6%" }}>
             <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-              {/* <div>{`${myCartItems.length} ITEM${
-                myCartItems.length === 1 ? "" : "S"
-              } ADDED`}</div> */}
+              <div>{`${cartItems.length} ITEM${
+                cartItems.length === 1 ? "" : "S"
+              } ADDED`}</div>
             </p>
           </div>
           <div

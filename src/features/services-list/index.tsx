@@ -13,7 +13,7 @@ import facilities from '../../assets/facility.png';
 import BackgroundImage from "../../components/background";
 import Footer from "../../components/footer";
 import porter from '../../assets/porter.png';
-import ambulance from '../../assets/AmbulanceIcon (2).png';
+import ambulance from '../../assets/AmbIcon.png';
 import { useTranslation } from "react-i18next";
 import {
   RootState,
