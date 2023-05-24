@@ -64,9 +64,9 @@ const Navbar = () => {
     >
       <img
         src={logo}
-        width={90}
-        height={90}
-        style={{ marginTop: "5%", marginLeft: "5%" }}
+        width={110}
+        height={110}
+        style={{ marginTop: "3%", marginLeft: "0%" }}
       />
       <div
         className="data-container"

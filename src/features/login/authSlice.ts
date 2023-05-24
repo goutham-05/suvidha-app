@@ -88,7 +88,7 @@ const authSlice = createSlice({
     [getOtp.rejected.type]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
-      state.message =  "Please enter mobile number which given while admission ";
+      state.message =  "Please enter registered mobile number";
     },
     [validateOtp.pending.type]: (state) => {
       state.status = "loading";
