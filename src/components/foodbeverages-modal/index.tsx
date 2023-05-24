@@ -161,6 +161,7 @@ function FoodBeverages() {
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
+      window.location.reload();
       if (selectedType && unitId) {
         console.log(selectedType);
 

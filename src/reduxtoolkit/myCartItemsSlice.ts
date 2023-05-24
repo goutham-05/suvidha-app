@@ -33,7 +33,6 @@ const initialState = {
       },
       clearCart: (state) => {
         state.selectedItems = [];
-        state.grandTotal = 0;
       },
     },
   });
