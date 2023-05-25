@@ -3,5 +3,6 @@
   "Submit": "ଜମା କରନ୍ତୁ",
   "Enter OTP sent to": "ପଠାଗଲା ଓଟିପି ଦିଅନ୍ତୁ",
   "Dint_Receive_A_Otp":"ଏକ OTP ଗ୍ରହଣ କରିନାହାଁନ୍ତି କି?",
-  "Resend_Otp":"OTP ପଠାନ୍ତୁ |"
+  "Resend_Otp":"OTP ପଠାନ୍ତୁ |",
+  "otp_is_required": "OTP ଆବଶ୍ୟକ ଅଛି"
 }

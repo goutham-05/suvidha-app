@@ -1,7 +1,7 @@
 {
-  "My Bill": "माझे बिल",
-  "My Discharge": "माझे निवर्तन",
-  "Advancepaid": "अग्रिम भरलेले",
-  "Book Ambulance": "रुग्णवाहिनी बुक करा",
-  "Insurance Status": "विमा स्थिती"
-}
+  "ip": "आयपी",
+  "bed": "बेड",
+  "room": "कक्ष",
+  "floor": "मजला",
+  "ward_name": "वार्डचे नाव"
+  }

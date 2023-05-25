@@ -1,0 +1,17 @@
+
+{
+	"my_bill": "माझे बिल",
+	"advance_paid": "अग्रिम भरलेले",
+	"approximate_bill": "प्रामाणिक बिल",
+	"estimated_amount": "अंदाजित रक्कम",
+	"due_amt": "बाकी रक्कम",
+	"my_discharge": "माझे डिस्चार्ज",
+	"discharge_initiated": "डिस्चार्ज सुरू झाले",
+	"discharge_initiated_date": "डिस्चार्ज सुरू होणारी तारीख",
+	"discharge_started": "डिस्चार्ज सुरू झाले",
+	"discharge_approved": "डिस्चार्ज मंजूर झाले",
+	"summary_status": "संक्षेप स्थिती",
+	"insurance_claim_status": "विमा दावा स्थिती",
+	"status": "स्थिती",
+	"approved_date": "मंजूर झालेली तारीख"
+	}

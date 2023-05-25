@@ -3,5 +3,6 @@
   "Submit": "சமர்ப்பிக்கவும்",
   "Enter OTP sent to": "அனுப்பப்பட்ட OTP-ஐ உள்ளிடவும்",
   "Dint_Receive_A_Otp":"OTP பெறவில்லையா?",
-  "Resend_Otp":"OTP ஐ மீண்டும் அனுப்பவும்"
+  "Resend_Otp":"OTP ஐ மீண்டும் அனுப்பவும்",
+  "otp_is_required": "OTP தேவையானது"
 }
