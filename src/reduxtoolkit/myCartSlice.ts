@@ -34,13 +34,25 @@ const myCartSlice = createSlice({
     decrementCartItem: (state, action) => {
       const item = action.payload;
       const findIndex = state.findIndex((value) => value.itemid === item.itemid);
-
-      if (findIndex === -1) {
-        state.push(item);
-      } else {
+    
+      if (findIndex !== -1) {
         state[findIndex].quantity -= 1;
+    
+        if (state[findIndex].quantity === 0) {
+          state.splice(findIndex, 1); // Remove the item from the state
+        }
       }
     },
+    // decrementCartItem: (state, action) => {
+    //   const item = action.payload;
+    //   const findIndex = state.findIndex((value) => value.itemid === item.itemid);
+
+    //   if (findIndex === -1) {
+    //     state.push(item);
+    //   } else {
+    //     state[findIndex].quantity -= 1;
+    //   }
+    // },
     updateCartItem: (state, action) => {
       const item = action.payload;
       const findIndex = state.findIndex((value) => value.itemid === item.itemid);

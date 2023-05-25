@@ -1,15 +1,11 @@
 {
-  "MyDetails": "माझे तपशील",
-  "ServiceRequest": "सेवा विनंती",
-  "PorterServices": "पोर्टर सेवा",
-  "Grievance/Feedback": "तक्रार / प्रतिक्रिया",
-  "CallSupport": "समर्थन कॉल करा",
-  "Grievance": "तक्रार",
-  "Feedback": "प्रतिक्रिया",
-  "EnterText": "मजकूर प्रविष्ट करा",
-  "Submit": "सबमिट करा",
-  "Attach": "संलग्न करा",
-  "IP": "आयपी",
-  "Room": "कक्ष",
-  "Book Ambulance": "एंबुलेंस बुक करा"
+  "my_Details": "माझी माहिती",
+  "service_Request": "सेवा विनंती",
+  "others": "इतर",
+  "my_bill": "माझे बिल",
+  "my_discharge": "माझी राहण्याची परवानगी",
+  "insurance_status": "विमा स्थिती",
+  "food_Beverages": "अन्न आणि पेय",
+  "porter_services": "पोर्टर सेवा",
+  "ambulance": "रुग्णवाहिका"
 }

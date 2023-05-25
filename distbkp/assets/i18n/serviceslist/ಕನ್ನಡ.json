@@ -1,6 +1,7 @@
 {
-  "MyDetails": "ನನ್ನ ವಿವರಗಳು",
-  "ServiceRequest": "ಸೇವೆ ವಿನಂತಿ",
+  "my_Details": "ನನ್ನ ವಿವರಗಳು",
+  "service_Request": "ಸೇವಾ ಕೋರಿಕೆ",
+  "others":"ಇತರರು",
   "PorterServices": "ಪೋರ್ಟರ್ ಸೇವೆಗಳು",
   "Grievance/Feedback": "ತಪ್ಪುಗಳು / ಪ್ರತಿಕ್ರಿಯೆ",
   "CallSupport": "ಕಾಲ್ ಬೆಂಬಲ",

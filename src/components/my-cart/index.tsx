@@ -26,13 +26,10 @@ import {
 } from "../../reduxtoolkit/myCartSlice";
 import { useTranslation } from "react-i18next";
 
-
-
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation(["fb"]);
-
 
   const my_cart_items = useAppSelector((state) => state.cart);
 
@@ -128,7 +125,7 @@ function MyCart() {
             fontWeight: "bold",
           }}
         >
-          {t('item(s)_added')}
+          {t("item(s)_added")}
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
@@ -163,19 +160,19 @@ function MyCart() {
                 }}
               >
                 {item.item}
-                <div style={{ float: "left"}}>
+                <div style={{ float: "left" }}>
                   <div>
-                  <img
-                    src={Rupee}
-                    width={8}
-                    height={10}
-                    style={{ marginTop: "1px", padding: "1%" }}
-                  />
-                  <span style={{ fontSize: "14px", marginTop: "10%" }}>
-                    {item.price_att}
-                  </span>
+                    <img
+                      src={Rupee}
+                      width={8}
+                      height={10}
+                      style={{ marginTop: "1px", padding: "1%" }}
+                    />
+                    <span style={{ fontSize: "14px", marginTop: "10%" }}>
+                      {item.price_att}
+                    </span>
                   </div>
-                  <span style={{fontSize:'14px', marginTop: '2%'}}>
+                  <span style={{ fontSize: "14px", marginTop: "2%" }}>
                     {item.other_remark}
                   </span>
                 </div>
@@ -204,12 +201,12 @@ function MyCart() {
                       }}
                       onClick={() => dispatch(incrementCartItem(item))}
                     >
-                      {t('add')}
+                      {t("add")}
                     </span>
                   ) : (
-                    <div style={{marginTop: '-5%'}}>
+                    <div style={{ marginTop: "-5%" }}>
                       <span
-                        style={{ fontWeight: "bold", marginRight: '20%'}}
+                        style={{ fontWeight: "bold", marginRight: "20%" }}
                         onClick={() => dispatch(decrementCartItem(item))}
                       >
                         -
@@ -218,7 +215,7 @@ function MyCart() {
                         {item.quantity}
                       </span>
                       <span
-                        style={{ fontWeight: "bold", marginLeft: '20%'}}
+                        style={{ fontWeight: "bold", marginLeft: "20%" }}
                         onClick={() => dispatch(incrementCartItem(item))}
                       >
                         +
@@ -247,7 +244,7 @@ function MyCart() {
             fontWeight: "bold",
           }}
         >
-          {t('bill_summary')}
+          {t("bill_summary")}
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
@@ -276,10 +273,10 @@ function MyCart() {
                 fontWeight: "bold",
                 fontSize: "18px",
                 float: "left",
-                marginTop: '20%'
+                marginTop: "20%",
               }}
             >
-              {t('grand_total')}
+              {t("grand_total")}
             </p>
             <div style={{ marginLeft: "56%" }}>
               <div>
@@ -316,9 +313,9 @@ function MyCart() {
           borderRadius: "6px",
           marginLeft: "2%",
         }}
-        onClick={handleProceedToPay}
+        onClick={() => cartItems.length > 0 && handleProceedToPay()}
       >
-        <p style={{ padding: "2%", color: "white" }}>{t('add_to_my_bill')}</p>
+        <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
       </div>
       <Dimmer active={modalOpen}>
         <img src={order} width={60} height={60} />

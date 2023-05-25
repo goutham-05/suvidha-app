@@ -72,7 +72,7 @@ const Navbar = () => {
       />
       <div
         className="data-container"
-        style={{ whiteSpace: "nowrap", marginLeft: "40%", marginTop: "2%" }}
+        style={{ whiteSpace: "nowrap", marginLeft: "36%", marginTop: "2%" }}
       >
         <div className="patientData">
           <p> {patientName}</p>

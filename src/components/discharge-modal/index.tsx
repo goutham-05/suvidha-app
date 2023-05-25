@@ -100,48 +100,15 @@ const MyDischargeModal = () => {
             />
           </div>
         </div>
-
-        <div style={{ display: "flex" }}>
-          <Grid>
-            <div
-              style={{
-                marginTop: "30px",
-                textAlign: "left",
-              }}
-            >
-              {[
+        <div style={{ display: "flex", marginLeft: '-4%'}}>
+        <Grid stackable style={{marginTop:'12px'}}>
+        {[
                 "discharge_initiated",
                 "discharge_initiated_date",
                 "discharge_started",
                 "discharge_approved",
                 "summary_status",
               ].map((item, index) => (
-                <Grid.Column
-                  width={8}
-                  textAlign="justified"
-                  style={{ marginBottom: "15px" }}
-                >
-                  <span
-                    style={{
-                      padding: "10px",
-                      fontSize: "13px",
-                      fontWeight: "bold",
-                      color: "black",
-                      float:'left',
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {t(item)}
-                  </span>
-                </Grid.Column>
-              ))}
-            </div>
-          </Grid>
-          <Grid>
-            <div
-              style={{ marginTop: "10%", marginLeft: "-8%", textAlign: "left" }}
-            >
-              {myDischargeData.map((item, index) => (
                 <Grid.Column
                   textAlign="justified"
                   style={{ marginBottom: "12%" }}
@@ -155,11 +122,31 @@ const MyDischargeModal = () => {
                       whiteSpace: "nowrap",
                     }}
                   >
+                    {t(item)}
+                  </span>
+                </Grid.Column>
+              ))}
+          </Grid>
+          <Grid stackable>
+              {myDischargeData.map((item, index) => (
+                <Grid.Column
+                  textAlign="justified"
+                  style={{ marginBottom: "12%" }}
+                >
+                  <span
+                    style={{
+                      padding: "10px",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      color: "black",
+                      whiteSpace: "nowrap",
+                      marginLeft: '-30%'
+                    }}
+                  >
                     :<span style={{ marginLeft: "4%" }}>{item}</span>
                   </span>
                 </Grid.Column>
               ))}
-            </div>
           </Grid>
         </div>
       </div>

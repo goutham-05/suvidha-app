@@ -141,7 +141,7 @@ function ServicesList() {
   }, []);
 
   return (
-    <div>
+    <div style={{width: '100%'}}>
       <Navbar />
       <Grid
         columns={3}

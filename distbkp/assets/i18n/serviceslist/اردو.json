@@ -1,15 +1,11 @@
 {
-  "MyDetails": "میری تفصیلات",
-  "ServiceRequest": "خدمت کی درخواست",
-  "PorterServices": "پورٹر خدمات",
-  "Grievance/Feedback": "شکایت / تاثرات",
-  "CallSupport": "کال سپورٹ",
-  "Grievance": "شکایت",
-  "Feedback": "تاثرات",
-  "EnterText": "متن درج کریں",
-  "Submit": "جمع کرائیں",
-  "Attach": "منسلک کریں",
-  "IP": "آئی پی",
-  "Room": "کمرہ",
-  "Book Ambulance": "ایمبولینس کتاب کریں"
+  "my_Details": "میری تفصیلات",
+  "service_Request": "خدمت کی درخواست",
+  "others": "دیگر",
+  "my_bill": "میرا بل",
+  "my_discharge": "میرا مرخصی",
+  "insurance_status": "بیمہ کی حیثیت",
+  "food_Beverages": "کھانا اور مشروبات",
+  "porter_services": "پورٹر خدمات",
+  "ambulance": "ایمبولینس"
 }

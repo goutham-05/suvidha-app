@@ -1,15 +1,11 @@
 {
-  "MyDetails": "என் விவரங்கள்",
-  "ServiceRequest": "சேவை கேட்கை",
-  "PorterServices": "போர்ட்டர் சேவைகள்",
-  "Grievance/Feedback": "பரிந்துரை / பின்னூட்டம்",
-  "CallSupport": "ஆதரவை அழை",
-  "Grievance": "பரிந்துரை",
-  "Feedback": "பின்னூட்டம்",
-  "EnterText": "உரையை உள்ளிடவும்",
-  "Submit": "சமர்ப்பிக்கவும்",
-  "Attach": "இணைப்பு",
-  "IP": "ஐபி",
-  "Room": "அறை",
-  "Book Ambulance": "அம்புலன்ஸ் பதிவு"
+  "my_Details": "என் விபரங்கள்",
+  "service_Request": "சேவை கேள்வி",
+  "others": "மற்றவை",
+  "my_bill": "என் பில்",
+  "my_discharge": "என் விடுபட்டி",
+  "insurance_status": "காப்பீட்டு நிலை",
+  "food_Beverages": "உணவு மற்றும் பானங்கள்",
+  "porter_services": "போர்ட்டர் சேவைகள்",
+  "ambulance": "அம்புலன்ஸ்"
 }

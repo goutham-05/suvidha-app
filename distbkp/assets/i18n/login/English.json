@@ -2,5 +2,6 @@
 	"mobileNumber": "Mobile Number",
 	"IpNumber": "IP Number",
 	"GetOTP": "Get OTP",
-	"login_text":"Please Login With Your Registered Mobile Number"
+	"login_text":"Please Login With Your Registered Mobile Number",
+	"mobile_number_required":"Mobile Number Required"
 }
