@@ -6,7 +6,7 @@ import Call from "../../assets/phone-call.png";
 
 const Ambulance = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation(["mydetails"]);
+  const { t } = useTranslation(["ambulance"]);
 
   const goBack = () => {
     navigate("/services");
@@ -48,7 +48,7 @@ const Ambulance = () => {
                       }}
                     >
                       <p style={{ paddingTop: "3%", color: "white" }}>
-                        {t("Ambulance")}
+                        {t("ambulance")}
                       </p>
                     </Header>
                     <div
@@ -80,7 +80,7 @@ const Ambulance = () => {
                           paddingTop: "4%",
                         }}
                       >
-                        {t("Book Ambulance")}
+                        {t("book_ambulance")}
                       </p>
                     </div>
                   </div>
@@ -110,7 +110,7 @@ const Ambulance = () => {
                             fontSize: "18px",
                           }}
                         >
-                          {t("Call")}
+                          {t("call")}
                         </a>
                       </div>
                     </div>

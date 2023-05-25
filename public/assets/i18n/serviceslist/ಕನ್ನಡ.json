@@ -1,16 +1,11 @@
 {
   "my_Details": "ನನ್ನ ವಿವರಗಳು",
-  "service_Request": "ಸೇವಾ ಕೋರಿಕೆ",
-  "others":"ಇತರರು",
-  "PorterServices": "ಪೋರ್ಟರ್ ಸೇವೆಗಳು",
-  "Grievance/Feedback": "ತಪ್ಪುಗಳು / ಪ್ರತಿಕ್ರಿಯೆ",
-  "CallSupport": "ಕಾಲ್ ಬೆಂಬಲ",
-  "Grievance": "ತಪ್ಪುಗಳು",
-  "Feedback": "ಪ್ರತಿಕ್ರಿಯೆ",
-  "EnterText": "ಪಠ್ಯ ನಮೂದಿಸಿ",
-  "Submit": "ಸಲ್ಲಿಸು",
-  "Attach": "ಲಗತ್ತಿಸು",
-  "IP": "ಐಪಿ",
-  "Room": "ಕೊಠಡಿ",
-  "Book Ambulance": "ಆಂಬ್ಯುಲೆನ್ಸ್ ಬುಕ್ ಮಾಡಿ"
-}
+  "service_Request": "ಸೇವೆ ಅರ್ಜಿ",
+  "others": "ಇತರೆ",
+  "my_bill": "ನನ್ನ ಬಿಲ್",
+  "my_discharge": "ನನ್ನ ಡಿಸ್ಚಾರ್ಜ್",
+  "insurance_status": "ಬೀಮಾ ಸ್ಥಿತಿ",
+  "food_Beverages": "ಆಹಾರ",
+  "porter_services": "ಪೋರ್ಟರ್ ಸೇವೆಗಳು",
+  "ambulance": "ಆಂಬುಲೆನ್ಸ್"
+  }

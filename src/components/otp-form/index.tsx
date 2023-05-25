@@ -165,7 +165,7 @@ const OtpForm: React.FC<Props> = ({}) => {
           />
           {errors.otp?.type === "required" && (
             <Label color="orange" pointing prompt>
-              OTP is required
+              {t('otp_is_required')}
             </Label>
           )}
 

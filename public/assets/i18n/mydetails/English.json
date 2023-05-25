@@ -1,8 +1,7 @@
 {
-    "my_details": "My Details",
-    "My Bill": "My Bill",
-    "My Discharge":"My Discharge",
-    "Advancepaid": "Advancepaid",
-    "Book Ambulance":"Book Ambulance",
-    "Insurance Status":"Insurance Status"
+    "ip":"IP",
+    "bed":"Bed",
+    "room":"Room",
+    "floor":"Floor",
+    "ward_name":"WardName"
 }

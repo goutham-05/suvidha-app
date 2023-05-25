@@ -1,7 +1,7 @@
 {
-  "My Bill": "ମୋ ବିଲ",
-  "My Discharge": "ମୋ ଛୁଟି",
-  "Advancepaid": "ଅଗ୍ରିମ୍‌ଭୁଗତା",
-  "Book Ambulance": "ଆମ୍ବୁଲାନ୍ସ୍‌ ବୁକ୍ କରନ୍ତୁ",
-  "Insurance Status": "ବୀମା ଅବସ୍ଥା"
-}
+  "ip":"ଆଇପି",
+  "bed":"ବିଛାର",
+  "room":"କକ୍ଷ",
+  "floor":"ମଞ୍ଚ",
+  "ward_name":"ପଟାଗାର ନାମ"
+  }

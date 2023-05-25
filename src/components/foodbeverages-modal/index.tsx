@@ -17,6 +17,7 @@ import {
 import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
 import { clearCart } from "../../reduxtoolkit/myCartSlice";
+import { useTranslation } from "react-i18next";
 
 interface Item {
   title: string;
@@ -31,25 +32,25 @@ interface Item {
 const data = [
   {
     itemId: 1,
-    title: "All",
+    title: "all",
     category: "All",
     status: false,
   },
   {
     itemId: 2,
-    title: "Veg",
+    title: "veg",
     category: "Veg",
     status: false,
   },
   {
     itemId: 3,
-    title: "Non Veg",
+    title: "non_veg",
     category: "Non Veg",
     status: false,
   },
   {
     itemId: 4,
-    title: "Drinks & Juices",
+    title: "drinks_juices",
     category: "Drinks",
     status: false,
   },
@@ -58,6 +59,8 @@ const data = [
 function FoodBeverages() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  
+  const { t } = useTranslation(["fb"]);
 
   const getMyServicesTypes = useAppSelector((state) => state.getMyServingTime);
   const getItemsServingTime = useAppSelector(
@@ -76,7 +79,7 @@ function FoodBeverages() {
 
   const [selectedServingType, setSelectedServingType] = useState(() => {
     const servingType = localStorage.getItem("servingType");
-    return servingType ? servingType : "Serving Type";
+    return servingType ? servingType : "serving_type";
   });
 
   // useEffect(() => {
@@ -287,7 +290,7 @@ function FoodBeverages() {
         <Icon disabled name="arrow left" size="large" />
       </div>
       <input
-        placeholder="Search Menu..."
+        placeholder={t('search_menu...')}
         style={{ marginBottom: "10px", height: "40px" }}
         value={searchInput}
         onChange={onSearchMenuItems}
@@ -331,7 +334,7 @@ function FoodBeverages() {
               }}
               onClick={() => onSelectCategory(item.category)}
             >
-              <div>{item.title}</div>
+              <div>{t(item.title)}</div>
             </div>
           ))}
         </div>
@@ -480,7 +483,7 @@ function FoodBeverages() {
                                   })
                                 }
                               >
-                                ADD
+                                {t('add')}
                               </span>
                             ) : (
                               <div style={{marginTop: '-2%'}}>
@@ -568,9 +571,7 @@ function FoodBeverages() {
         >
           <div style={{ marginLeft: "10%", marginTop: "6%" }}>
             <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-              <div>{`${cartItems.length} ITEM${
-                cartItems.length === 1 ? "" : "S"
-              } ADDED`}</div>
+              <div>{`${cartItems.length}`} {t('item(s)_added')}</div>
             </p>
           </div>
           <div
@@ -592,7 +593,7 @@ function FoodBeverages() {
                 color: "white",
               }}
             >
-              View Cart
+              {t('view_cart')}
             </span>
             <Icon name="caret right" inverted color="grey" />
           </div>

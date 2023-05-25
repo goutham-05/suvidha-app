@@ -17,7 +17,7 @@ import { getMyDischarge } from "../../reduxtoolkit/myDischargeSlice";
 
 const MyDischargeModal = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation(["mydetails"]);
+  const { t } = useTranslation(["mydetailsdata"]);
   const dispatch = useAppDispatch();
 
   let unit_id = "";
@@ -88,7 +88,7 @@ const MyDischargeModal = () => {
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            {t("My Discharge")}
+            {t("my_discharge")}
           </span>
           <div onClick={Back}>
             <Icon
@@ -105,16 +105,16 @@ const MyDischargeModal = () => {
           <Grid>
             <div
               style={{
-                marginTop: "45px",
+                marginTop: "30px",
                 textAlign: "left",
               }}
             >
               {[
-                "Discharge Initiated",
-                "Discharge Initiated Date",
-                "Discharge Started",
-                "Discharge Approved",
-                "Summary Status",
+                "discharge_initiated",
+                "discharge_initiated_date",
+                "discharge_started",
+                "discharge_approved",
+                "summary_status",
               ].map((item, index) => (
                 <Grid.Column
                   width={8}
@@ -127,6 +127,7 @@ const MyDischargeModal = () => {
                       fontSize: "13px",
                       fontWeight: "bold",
                       color: "black",
+                      float:'left',
                       whiteSpace: "nowrap",
                     }}
                   >
@@ -147,7 +148,7 @@ const MyDischargeModal = () => {
                 >
                   <span
                     style={{
-                      padding: "6px",
+                      padding: "10px",
                       fontSize: "12px",
                       fontWeight: "bold",
                       color: "black",

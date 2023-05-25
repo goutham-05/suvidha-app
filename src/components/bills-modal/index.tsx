@@ -19,7 +19,7 @@ import { getMyBill } from "../../reduxtoolkit/myBillSlice";
 const MyBillModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation(["mydetails"]);
+  const { t } = useTranslation(["mydetailsdata"]);
   useEffect(() => {
     let unit_id = "";
     const unitCodeStr = localStorage.getItem("unit_code");
@@ -49,13 +49,13 @@ const MyBillModal = () => {
 
   const billData = () => {
     if (userData.data?.patient_type !== "GENERAL") {
-      const billProps = ["Advance Paid", "Estimated Amount"];
+      const billProps = ["advance_paid", "approximate_bill"];
       const billValues = userData.data?.length === 0 ? ["No Data", "No"] : [userData.data?.total_advance, userData.data?.latest_estimated_amt];
       setPatientTypeChecking(billValues);
       console.log(billValues)
       setBillProperties(billProps);
     } else {
-      const billProps = ["Advance Paid", "Approximate Bill", "Estimated Amount", "Due Amt"];
+      const billProps = ["advance_paid", "approximate_bill", "estimated_amount", "due_amt"];
       const billValues = [
         userData.data?.app_bill_amount || "No Data",
         userData.data?.balance_amt || "No Data",
@@ -81,7 +81,7 @@ const MyBillModal = () => {
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            {t('My Bill')}
+            {t('my_bill')}
           </span>
           <div onClick={Back}>
             <Icon

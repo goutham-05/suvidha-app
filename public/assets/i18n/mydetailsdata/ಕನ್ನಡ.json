@@ -1,0 +1,17 @@
+
+{
+	"my_bill": "ನನ್ನ ಬಿಲ್",
+	"advance_paid": "ಅಗ್ರಿಮ ಪಾವತಿಸಲಾಗಿದೆ",
+	"approximate_bill": "ಸುಮಾರು ಬಿಲ್",
+	"estimated_amount": "ಅಂದಾಜು ಮೊತ್ತ",
+	"due_amt": "ಬಾಕಿ ಮೊತ್ತ",
+	"my_discharge": "ನನ್ನ ಡಿಸ್ಚಾರ್ಜ್",
+	"discharge_initiated": "ಡಿಸ್ಚಾರ್ಜ್ ಪ್ರಾರಂಭಗೊಂಡಿದೆ",
+	"discharge_initiated_date": "ಡಿಸ್ಚಾರ್ಜ್ ಪ್ರಾರಂಭಗೊಳ್ಳುವ ದಿನಾಂಕ",
+	"discharge_started": "ಡಿಸ್ಚಾರ್ಜ್ ಆರಂಭವಾಗಿದೆ",
+	"discharge_approved": "ಡಿಸ್ಚಾರ್ಜ್ ಅನುಮೋದಿತವಾಗಿದೆ",
+	"summary_status": "ಸಾರಾಂಶ ಸ್ಥಿತಿ",
+	"insurance_claim_status": "ಬೀಮಾ ದಾವಾ ಸ್ಥಿತಿ",
+	"status": "ಸ್ಥಿತಿ",
+	"approved_date": "ಅನುಮೋದಿತ ದಿನಾಂಕ"
+	}

@@ -24,12 +24,15 @@ import {
   selectAllCartItems,
   updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
+import { useTranslation } from "react-i18next";
 
 
 
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation(["fb"]);
+
 
   const my_cart_items = useAppSelector((state) => state.cart);
 
@@ -125,7 +128,7 @@ function MyCart() {
             fontWeight: "bold",
           }}
         >
-          ITEM(S) ADDED
+          {t('item(s)_added')}
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
@@ -201,7 +204,7 @@ function MyCart() {
                       }}
                       onClick={() => dispatch(incrementCartItem(item))}
                     >
-                      ADD
+                      {t('add')}
                     </span>
                   ) : (
                     <div style={{marginTop: '-5%'}}>
@@ -244,7 +247,7 @@ function MyCart() {
             fontWeight: "bold",
           }}
         >
-          BILL SUMMARY
+          {t('bill_summary')}
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
@@ -276,7 +279,7 @@ function MyCart() {
                 marginTop: '20%'
               }}
             >
-              Grand Total
+              {t('grand_total')}
             </p>
             <div style={{ marginLeft: "56%" }}>
               <div>
@@ -315,7 +318,7 @@ function MyCart() {
         }}
         onClick={handleProceedToPay}
       >
-        <p style={{ padding: "2%", color: "white" }}>Add To My Bill</p>
+        <p style={{ padding: "2%", color: "white" }}>{t('add_to_my_bill')}</p>
       </div>
       <Dimmer active={modalOpen}>
         <img src={order} width={60} height={60} />

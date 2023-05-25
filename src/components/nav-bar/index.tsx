@@ -77,20 +77,20 @@ const Navbar = () => {
         <div className="patientData">
           <p> {patientName}</p>
           <p>
-            <strong> {t("IP")}:</strong> {ipNumber}
+            <strong> {t("mydetails:ip")}:</strong> {ipNumber}
           </p>
           <p>
-            <strong>{t("mydetails:Bed")}: </strong>
+            <strong>{t("mydetails:bed")}: </strong>
             {myBed}
           </p>
           <p>
             <strong>
-              {t("Room")}/{t("mydetails:Floor")}:{" "}
+              {t("mydetails:room")}/{t("mydetails:floor")}:{" "}
             </strong>
             {myRoom}/{floorNo}
           </p>
           <p>
-            <strong>{t("mydetails:WardName")}:</strong> {wardName}
+            <strong>{t("mydetails:ward_name")}:</strong> {wardName}
           </p>
           <p
             style={{

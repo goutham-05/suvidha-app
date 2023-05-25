@@ -1,7 +1,7 @@
 {
-  "My Bill": "میرا بل",
-  "My Discharge": "میرا ڈسچارج",
-  "Advancepaid": "اعلیٰ ادائیگی",
-  "Book Ambulance": "ایمبولینس بک کریں",
-  "Insurance Status": "انشورنس کی حیثیت"
-}
+  "ip":"آئی پی",
+  "bed":"بستر",
+  "room":"کمرہ",
+  "floor":"منزل",
+  "ward_name":"ورڈ کا نام"
+  }

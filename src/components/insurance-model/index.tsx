@@ -19,7 +19,7 @@ import BackgroundImage from "../background";
 const MyInsuranceModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation(["mydetails"]);
+  const { t } = useTranslation(["mydetailsdata"]);
 
   const Back = () => {
     navigate("/services");
@@ -87,7 +87,7 @@ const MyInsuranceModal = () => {
       <div className="mydischargeContainer">
         <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            {t('Insurance Claim Status')}
+            {t('insurance_claim_status')}
           </span>
           <div onClick={Back}>
             <Icon
@@ -104,8 +104,8 @@ const MyInsuranceModal = () => {
                 <Grid>
         <div style={{marginTop: '45px',  textAlign: 'left'}}>
           {[
-            "Status",
-            "Approved Date",
+            "status",
+            "approved_date",
           ].map((item, index) => (
             <Grid.Column width={8} textAlign="justified" style={{marginBottom: '10px'}}>
               <span

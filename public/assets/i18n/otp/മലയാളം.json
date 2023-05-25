@@ -3,5 +3,6 @@
   "Submit": "സമർപ്പിക്കുക",
   "Enter OTP sent to": "അയയ്‌ക്കുന്ന OTP നൽകുക",
   "Dint_Receive_A_Otp":"OTP ലഭിച്ചില്ലേ?",
-  "Resend_Otp":"OTP വീണ്ടും അയയ്‌ക്കുക"
+  "Resend_Otp":"OTP വീണ്ടും അയയ്‌ക്കുക",
+  "otp_is_required": "OTP ആവശ്യമാണ്"
 }

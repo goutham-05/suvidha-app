@@ -1,22 +1,8 @@
+
 {
-    "My Bill": "నా బిల్లు",
-    "My Discharge":"నా డిశ్చార్జ్",
-    "Insurance Status":"నా బీమా",
-    "Advance paid": "అడ్వాన్స్ చెల్లించారు",
-    "Room": "గది",
-    "Floor": "అంతస్తు",
-    "Bed":"మం చం",
-    "WardName": "వార్డు పేరు",
-    "Advance Paid": "అడ్వాన్స్ చెల్లించారు",
-    "Approximate Bill":"ఉజ్జాయింపు బిల్లు",
-    "Estimated Amount":"అంచనా మొత్తం",
-    "Due Amt":"బకాయి మొత్తం",
-    "Discharge Initiated":"డిశ్చార్జి ప్రారంభించబడింది",
-    "Summary Created":"సారాంశం రూపొందించబడింది",
-    "Insurance Claim Status":"బీమా క్లెయిమ్ స్థితి",
-    "Status":"స్థితి",
-    "Remarks":"వ్యాఖ్యలు",
-    "In Progress": "పురోగతిలో ఉంది",
-    "We regret to inform you that the feature you have requested is currently undergoing development and is not yet available":"మీరు అభ్యర్థించిన ఫీచర్ అని మీకు తెలియజేయడానికి మేము చింతిస్తున్నాము ప్రస్తుతం అభివృద్ధిలో ఉంది మరియు ఇంకా అందుబాటులో లేదు",
-    "Book Ambulance":"అంబులెన్స్ బుక్ చేయండి"
-}
+    "ip":"ఐపి",
+    "bed":"మంచం",
+    "room":"గది",
+    "floor":"మేరకు",
+    "ward_name":"వార్డు పేరు"
+    }

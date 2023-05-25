@@ -1,0 +1,16 @@
+{
+	"my_bill": "నా బిల్",
+	"advance_paid": "పూర్వముగా చెల్లించబడినది",
+	"approximate_bill": "అంచుకొని ఉంచిన బిల్",
+	"estimated_amount": "అంచనా మొత్తం",
+	"due_amt": "బకాయి మొత్తం",
+	"my_discharge": "నా డిశ్చార్జ్",
+	"discharge_initiated": "రద్దు ప్రారంభించబడింది",
+	"discharge_initiated_date": "రద్దు ప్రారంభం చేయబడుతుంది తేదీ",
+	"discharge_started": "రద్దు ప్రారంభించబడింది",
+	"discharge_approved": "రద్దు ఆమోదించబడింది",
+	"summary_status": "సారాంశ స్థితి",
+	"insurance_claim_status": "వీమా దావా స్థితి",
+	"status": "స్థితి",
+	"approved_date": "ఆమోదించబడింది తేదీ"
+	}
