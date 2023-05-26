@@ -451,16 +451,6 @@ function MyCart() {
          </Dimmer>
        </div>
       )}
-      {/* <Dimmer active={modalOpen}>
-        {loading ? (
-          <div>
-          <img src={order} width={60} height={60} />
-          <p style={{ marginTop: "10%", fontSize: "20px" }}>Order Placed</p>
-        </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </Dimmer> */}
       <BackgroundImage />
     </div>
   );
