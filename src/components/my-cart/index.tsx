@@ -26,7 +26,7 @@ import {
   updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
 import { useTranslation } from "react-i18next";
-import MessageNotification from "../../common/notification";
+import { Loader } from "semantic-ui-react";
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -431,6 +431,7 @@ function MyCart() {
           <Dimmer active>
             {/* <img src={order} width={60} height={60} /> */}
             <p style={{ marginTop: "10%", fontSize: "20px" }}>Loading</p>
+            <Loader />
           </Dimmer>
         </div>
       )}
