@@ -51,6 +51,9 @@ const getMyOrderFoodSlice = createSlice({
       state.error = "";
       state.status = "idle";
     },
+    resetStatus(state) {
+      state.status = "idle";
+    },
   },
   extraReducers: {
     [getMyOrderFood.pending.type]: (state) => {
@@ -59,17 +62,17 @@ const getMyOrderFoodSlice = createSlice({
     [getMyOrderFood.fulfilled.type]: (state, action) => {
       state.status = "succeeded";
       state.data = action.payload;
-      state.message = "OTP sent successfully";
+      state.message = "Order Placed Successfully";
     },
     [getMyOrderFood.rejected.type]: (state, action) => {
       state.status = "failed";
       state.error = action.payload.message;
-      state.message = "Invalid Details";
+      state.message = "Server Down";
     },
   },
 });
 
-export const { clearNotification } = getMyOrderFoodSlice.actions;
+export const { clearNotification, resetStatus } = getMyOrderFoodSlice.actions;
 
 // export default auth.reducer;
 

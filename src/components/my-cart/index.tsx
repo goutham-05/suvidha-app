@@ -12,10 +12,11 @@ import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
 
 import getMyOrderFoodSlice, {
   getMyOrderFood,
+  resetStatus
 } from "../../reduxtoolkit/orderFoodSlice";
 import { increaseQty } from "../../reduxtoolkit/myFoodSlice";
 import { Dimmer } from "semantic-ui-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import order from "../../../src/assets/fb/orderplaced.png";
 import { clearCart } from "../../reduxtoolkit/myCartSlice";
 import {
@@ -25,7 +26,7 @@ import {
   updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
 import { useTranslation } from "react-i18next";
-
+import MessageNotification from "../../common/notification";
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -34,6 +35,8 @@ function MyCart() {
   const my_cart_items = useAppSelector((state) => state.cart);
 
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
+
+  // const order:any = useAppSelector(state => state => )
 
   const goBack = () => {
     navigate("/fnb");
@@ -60,24 +63,115 @@ function MyCart() {
     }
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
 
-  const foodOrderModal = () => {
-    setModalOpen(true);
+  // const foodOrderModal = () => {
+  //   setModalOpen(true);
 
-    const timeout = setTimeout(() => {
-      setModalOpen(false);
-      navigate("/fnb");
-    }, 2000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  };
+  //   const timeout = setTimeout(() => {
+  //     setModalOpen(false);
+  //     //navigate("/fnb");
+  //   }, 2000);
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   };
+  // };
 
-  const handleProceedToPay = () => {
+  // const handleProceedToPay = () => {
+  //   const unitIdString = localStorage.getItem("unit_code");
+  //   const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+  //   const unitId = unitIdObject.unit;
+
+  //   const selectedItems = {
+  //     unit_id: unitId,
+  //     patient_ipno: localStorage.getItem("admissionno"),
+  //     delivery_address: "",
+  //     serving_time: localStorage.getItem("serving time"),
+  //     my_cart_items: cartItems.map((item: any) => ({
+  //       itemid: item.itemid,
+  //       remarkid: [],
+  //       other_remark: item.other_remark,
+  //       quantity: item.quantity,
+  //     })),
+  //   };
+  //   dispatch(getMyOrderFood(selectedItems));
+  //   dispatch(clearCart());
+  //   foodOrderModal();
+  //   setModalOpen(true);
+  //   localStorage.removeItem("serving time");
+  //   localStorage.removeItem("servingType");
+  // };
+
+  // const [loading, setLoading] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [showError, setShowError] = useState(false);
+
+  // useEffect(() => {
+  //   let timeout:any;
+
+  //   if (modalOpen && !showError) {
+  //     timeout = setTimeout(() => {
+  //       setModalOpen(false);
+  //     }, 2000);
+  //   }
+
+  //   return () => clearTimeout(timeout);
+  // }, [modalOpen, showError]);
+
+  // const foodOrderModal = () => {
+  //   setModalOpen(true);
+  // };
+
+  // const handleProceedToPay = async () => {
+  //   const unitIdString = localStorage.getItem("unit_code");
+  //   const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+  //   const unitId = unitIdObject?.unit;
+
+  //   const selectedItems = {
+  //     unit_id: unitId,
+  //     patient_ipno: localStorage.getItem("admissionno"),
+  //     delivery_address: "",
+  //     serving_time: localStorage.getItem("serving time"),
+  //     my_cart_items: cartItems.map((item: any) => ({
+  //       itemid: item.itemid,
+  //       remarkid: [],
+  //       other_remark: item.other_remark,
+  //       quantity: item.quantity,
+  //     })),
+  //   };
+
+  //   try {
+  //     setLoading(true);
+  //     const response = await Promise.race([
+  //       dispatch(getMyOrderFood(selectedItems)),
+  //       new Promise((_, reject) =>
+  //         setTimeout(() => reject(new Error("Timeout")), 120000)
+  //       ),
+  //     ]);
+
+  //     if (response && !showError) {
+  //       dispatch(clearCart());
+  //       foodOrderModal();
+  //       localStorage.removeItem("serving time");
+  //       localStorage.removeItem("servingType");
+  //     } else if (!response && !showError) {
+  //       setShowError(true);
+  //     }
+  //   } catch (error) {
+  //     setShowError(true);
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const { data, status, error, message} = useAppSelector((state) => state.order);
+  // const [message, setMessage] = useState("");
+
+  const handleProceedToPay = async () => {
     const unitIdString = localStorage.getItem("unit_code");
     const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
-    const unitId = unitIdObject.unit;
+    const unitId = unitIdObject?.unit;
 
     const selectedItems = {
       unit_id: unitId,
@@ -91,13 +185,28 @@ function MyCart() {
         quantity: item.quantity,
       })),
     };
-    dispatch(getMyOrderFood(selectedItems));
-    dispatch(clearCart());
-    foodOrderModal();
-    setModalOpen(true);
-    localStorage.removeItem("serving time");
-    localStorage.removeItem("servingType");
+
+    try {
+      await dispatch(getMyOrderFood(selectedItems));
+      setTimeout(() => {
+        dispatch(clearCart());
+        localStorage.removeItem("serving time");
+        localStorage.removeItem("servingType");
+      }, 120000);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
   };
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      dispatch(clearCart());
+      localStorage.removeItem("serving time");
+      localStorage.removeItem("servingType");
+      navigate("/fnb");
+    }
+  }, [status, dispatch]);
 
   return (
     <div>
@@ -317,10 +426,40 @@ function MyCart() {
       >
         <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
       </div>
-      <Dimmer active={modalOpen}>
-        <img src={order} width={60} height={60} />
-        <p style={{ marginTop: "10%", fontSize: "20px" }}>Order Placed</p>
-      </Dimmer>
+      {status === "loading" && (
+        <div>
+          <Dimmer active>
+            {/* <img src={order} width={60} height={60} /> */}
+            <p style={{ marginTop: "10%", fontSize: "20px" }}>Loading</p>
+          </Dimmer>
+        </div>
+      )}
+      {status === "succeeded" && (
+        <Dimmer active>
+          <div>
+            <img src={order} width={60} height={60} />
+            <p style={{ marginTop: "10%", fontSize: "20px" }}>Order Placed</p>
+          </div>
+        </Dimmer>
+      )}
+      {status === "failed" && (
+         <div>
+         <Dimmer active>
+           {/* <img src={order} width={60} height={60} /> */}
+           <p style={{ marginTop: "10%", fontSize: "20px" }}>Error</p>
+         </Dimmer>
+       </div>
+      )}
+      {/* <Dimmer active={modalOpen}>
+        {loading ? (
+          <div>
+          <img src={order} width={60} height={60} />
+          <p style={{ marginTop: "10%", fontSize: "20px" }}>Order Placed</p>
+        </div>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Dimmer> */}
       <BackgroundImage />
     </div>
   );

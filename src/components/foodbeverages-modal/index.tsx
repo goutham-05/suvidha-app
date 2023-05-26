@@ -4,6 +4,7 @@ import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import veg from "../../assets/fb/vegbiryani.webp";
+import cart from '../../assets/fb/shopping-bag.png';
 import {
   RootState,
   useAppDispatch,
@@ -18,6 +19,8 @@ import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
 import { clearCart } from "../../reduxtoolkit/myCartSlice";
 import { useTranslation } from "react-i18next";
+import MessageNotification from "../../common/notification";
+import order from '../../reduxtoolkit/orderFoodSlice';
 
 interface Item {
   title: string;
@@ -68,6 +71,8 @@ function FoodBeverages() {
   );
   const cartItems = useAppSelector((state) => state.cart);
   console.log("CartItems", cartItems);
+
+  const {status, message} = useAppSelector(state => state.order);
 
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
@@ -283,6 +288,12 @@ function FoodBeverages() {
 
   return (
     <>
+           <MessageNotification
+          message={message}
+          status={status}
+          theme="dark"
+          autoClose={5000}
+        />
       <Navbar />
       <div
         onClick={goBack}
@@ -301,13 +312,14 @@ function FoodBeverages() {
           style={{
             width: "60px",
             height: "40px",
-            background: "lightblue",
+            border: "1px solid #0075ad",
+            background:'#0075ad',
             borderRadius: "10px",
             marginLeft: "4%",
           }}
           onClick={() => cartItems.length > 0 && goCart()}
         >
-          <Icon name="cart" size="large" style={{ marginTop: "20%" }} />
+          <img src={cart} width={26} height={26} style={{marginTop: '8%'}}/>
           {cartItems.length > 0 ? (
             <div
               style={{
@@ -318,9 +330,10 @@ function FoodBeverages() {
                 background: "white",
                 position: "absolute",
                 marginTop: "-8%",
+                color: 'black'
               }}
             >
-              {cartItems.length}
+              <p>{cartItems.length}</p>
             </div>
           ) : null}
         </div>
@@ -328,18 +341,18 @@ function FoodBeverages() {
       <div style={{ display: "flex", marginTop: "4%" }}>
         <div
           style={{
-            marginRight: "2%",
+            marginRight: "4%",
             padding: "3px",
             fontSize: "10px",
             background: "white",
             boxShadow: "0px 2px 4px grey",
             borderRadius: "10px",
             whiteSpace: "nowrap",
-            marginLeft: "4%",
+            marginLeft: "5%",
           }}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <p style={{ width: "100px" }}>
+          <p style={{ width: "70px", paddingTop: '6%'}}>
             {selectedServingType}
             {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
           </p>
@@ -348,15 +361,16 @@ function FoodBeverages() {
           <div
             key={index}
             style={{
-              marginRight: "2%",
-              padding: "1%",
+              marginRight: "4%",
+              padding: "2%",
               fontSize: "10px",
               background: "white",
               boxShadow: "0px 2px 4px grey",
               borderRadius: "10px",
               whiteSpace: "nowrap",
               backgroundColor:
-                selectedCategory === item.category ? "#7bb5d2" : "",
+                selectedCategory === item.category ? "#0075ad" : "",
+                color: selectedCategory === item.category ? "white" : "black"
             }}
             onClick={() => onSelectCategory(item.category)}
           >
@@ -409,9 +423,9 @@ function FoodBeverages() {
       <div
         style={{
           minHeight: "10px",
-          maxHeight: "400px",
+          maxHeight: "420px",
           overflowY: "scroll",
-          marginTop: "2%",
+          marginTop: "6%",
         }}
       >
         {localStorage.getItem("serving time") ? (
@@ -421,8 +435,8 @@ function FoodBeverages() {
                 menuItems?.map((item: any, index: any) => (
                   <div
                     style={{
-                      width: "100%",
-                      height: "120px",
+                      width: "94%",
+                      height: "130px",
                       padding: "10px",
                       borderRadius: "10px",
                       margin: "5%",
@@ -441,16 +455,26 @@ function FoodBeverages() {
                         key={item.itemid}
                       >
                         <p
+                          // style={{
+                          //   fontWeight: "bold",
+                          //   fontSize: "10px",
+                          //   float: "left",
+                          //   color: "black",
+                          // }}
+
                           style={{
                             fontWeight: "bold",
-                            fontSize: "10px",
-                            float: "left",
+                            fontSize: "12px",
+                            //float: "left",
                             color: "black",
+                            width: "200px",
+                            whiteSpace: "normal",
+                            textAlign: "left", 
                           }}
                         >
                           {item.item}
                         </p>
-                        <div style={{ float: "left", display: "flex" }}>
+                        <div style={{ float: "left", display: "flex", marginTop: '-30%'}}>
                           <Icon color="black" name="rupee" />
                           <p
                             style={{
@@ -464,7 +488,7 @@ function FoodBeverages() {
                         </div>
                         <div
                           style={{
-                            marginTop: "60px",
+                            marginTop: "30px",
                             borderRadius: "10px  ",
                           }}
                         >
