@@ -301,10 +301,10 @@ function FoodBeverages() {
       >
         <Icon disabled name="arrow left" size="large" />
       </div>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", marginLeft: '4%'}}>
         <input
           placeholder={t("search_menu...")}
-          style={{ marginBottom: "10px", height: "40px", width: "86%" }}
+          style={{ marginBottom: "10px", height: "40px", width: "80%" }}
           value={searchInput}
           onChange={onSearchMenuItems}
         />
