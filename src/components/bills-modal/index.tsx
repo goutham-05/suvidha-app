@@ -113,7 +113,7 @@ const MyBillModal = () => {
                     fontSize: "100%",
                     fontWeight: "bold",
                     color: "black",
-                    marginLeft: "2%",
+                    marginLeft: "20%",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -142,7 +142,7 @@ const MyBillModal = () => {
                     fontSize: "100%",
                     fontWeight: "bold",
                     color: "black",
-                    marginLeft: "10px",
+                    marginLeft: "-20px",
                   }}
                 >
                   :  {item}

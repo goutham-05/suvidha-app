@@ -4,7 +4,7 @@ import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import veg from "../../assets/fb/vegbiryani.webp";
-import cart from '../../assets/fb/shopping-bag.png';
+import cart from "../../assets/fb/shopping-bag.png";
 import {
   RootState,
   useAppDispatch,
@@ -20,7 +20,9 @@ import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
 import { clearCart } from "../../reduxtoolkit/myCartSlice";
 import { useTranslation } from "react-i18next";
 import MessageNotification from "../../common/notification";
-import order from '../../reduxtoolkit/orderFoodSlice';
+import order from "../../reduxtoolkit/orderFoodSlice";
+import { getItemsList } from "../../reduxtoolkit/getItemsListSlice";
+import { orderHistoryList } from "../../reduxtoolkit/orderHistorySlice";
 
 interface Item {
   title: string;
@@ -69,10 +71,18 @@ function FoodBeverages() {
   const getItemsServingTime = useAppSelector(
     (state) => state.getItemServiceTime
   );
+
+  const {
+    data: foodItemsList,
+    status: foodItemsStatus,
+    error,
+    message: foodItemsMsg,
+  } = useAppSelector((state) => state.foodItems);
+
   const cartItems = useAppSelector((state) => state.cart);
   console.log("CartItems", cartItems);
 
-  const {status, message} = useAppSelector(state => state.order);
+  const { status, message } = useAppSelector((state) => state.order);
 
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
@@ -80,19 +90,8 @@ function FoodBeverages() {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const [menuItems, setMenuItems] = useState<any[]>([]);
+
   const [unitId, setUnitId] = useState("");
-
-  const [selectedServingType, setSelectedServingType] = useState(() => {
-    const servingType = localStorage.getItem("servingType");
-    return servingType ? servingType : "Serving Type";
-  });
-
-  // useEffect(() => {
-  //     if (getItemsServingTime.data) {
-  //       console.log('items call');
-  //       setMenuItems(getItemsServingTime.data);
-  //     }
-  // }, [getItemsServingTime])
 
   console.log("Menu Items", menuItems?.length);
 
@@ -101,30 +100,18 @@ function FoodBeverages() {
     const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
     if (unit_code) {
       setUnitId(unit_code.unit);
-
-      dispatch(
-        getMyServingTime({
-          unit_id: unit_code.unit,
-        })
-      );
     }
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (unitId) {
-      dispatch(
-        getItemServiceTime({
-          unit_id: unitId,
-          servingtime_id: "2",
-        })
-      );
-    }
-  }, [unitId, dispatch]);
+    dispatch(
+      getItemsList({
+        unit_id: unit_code.unit,
+      })
+    );
+  }, []);
 
   useEffect(() => {
     const hasQuantity = cartItems?.some((item) => item.quantity > 0);
     const updatedItems = hasQuantity
-      ? menuItems?.map((item) => {
+      ? menuItems?.map((item: any) => {
           const cartItem = cartItems.find(
             (cartItem) => cartItem.itemid === item.itemid
           );
@@ -150,14 +137,14 @@ function FoodBeverages() {
     } else {
       console.log("itemms");
       setMenuItems(
-        getItemsServingTime?.data?.map((item: any) => ({
+        foodItemsList?.map((item: any) => ({
           ...item,
           quantity: 0,
         }))
       );
     }
     console.log("in here");
-  }, [cartItems, getItemsServingTime]);
+  }, [cartItems, foodItemsList]);
 
   const goBack = () => {
     navigate("/services");
@@ -168,31 +155,6 @@ function FoodBeverages() {
   const goCart = () => {
     navigate("/cart");
   };
-
-  const handleServingTypeSelection = useCallback(
-    (selectedType: string, selectedServingType: string) => {
-      if (selectedType && unitId) {
-        console.log(selectedType);
-        dispatch(clearCart());
-        dispatch(
-          getItemServiceTime({
-            unit_id: unitId,
-            servingtime_id: selectedType.toString(),
-          })
-        );
-      }
-
-      setSelectedServingType(selectedServingType);
-      localStorage.setItem("serving time", selectedType);
-      localStorage.setItem("servingType", selectedServingType);
-      setIsOpen((prev) => !prev);
-    },
-    [unitId, dispatch, setIsOpen, setSelectedServingType]
-  );
-
-  const handleSearchInputChange = useCallback((event: any) => {
-    setSearchInput(event.target.value);
-  }, []);
 
   const onAddCartItem = useCallback(
     (index: number, newItem: any) => {
@@ -222,17 +184,17 @@ function FoodBeverages() {
       console.log(value);
 
       if (value) {
-        const filteredItems = getItemsServingTime?.data.filter((item: any) =>
+        const filteredItems = foodItemsList?.filter((item: any) =>
           item.item.toLowerCase().includes(value.toLowerCase())
         );
         console.log(filteredItems);
 
         setMenuItems(filteredItems);
       } else {
-        setMenuItems(getItemsServingTime?.data);
+        setMenuItems(foodItemsList);
       }
     },
-    [menuItems, getItemsServingTime]
+    [menuItems, foodItemsList]
   );
 
   const onSelectCategory = useCallback(
@@ -246,19 +208,19 @@ function FoodBeverages() {
           : category === "Drinks"
           ? 2
           : "All";
-      const filteredItems = getItemsServingTime?.data.filter(
+      const filteredItems = foodItemsList?.filter(
         (item: any) => item.item_type === filterValue
       );
-      console.log(filteredItems);
+      console.log("filteredItems sai:::", filteredItems);
 
       if (category === "All") {
-        setMenuItems(getItemsServingTime?.data);
+        setMenuItems(foodItemsList);
         setSearchInput("");
       } else {
         setMenuItems(filteredItems);
       }
     },
-    [getItemsServingTime]
+    [foodItemsList]
   );
 
   const onAddRemark = useCallback(
@@ -284,24 +246,61 @@ function FoodBeverages() {
     [menuItems]
   );
 
-  const showViewCartOption = menuItems?.some((item) => item.quantity > 0);
+  const orderList = useAppSelector((state) => state.orderHistory);
+  const orderHistoryButton = () => {
+    let unit_id = "";
+    const unitCodeStr = localStorage.getItem("unit_code");
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      unit_id = unit_code.unit;
+    }
+    
+    const orderIds = localStorage.getItem('orderHistory');
+    const orderData = orderIds ? JSON.parse(orderIds) : [];
+ 
+    dispatch(orderHistoryList({
+      unit_id: unit_id, 
+      dietorder_id: orderData,
+    }))
+    navigate('/order-history')
+  }
 
   return (
     <>
-           <MessageNotification
-          message={message}
-          status={status}
-          theme="dark"
-          autoClose={5000}
-        />
+      <MessageNotification
+        message={message}
+        status={status}
+        theme="dark"
+        autoClose={5000}
+      />
       <Navbar />
       <div
-        onClick={goBack}
-        style={{ marginBottom: "5%", marginRight: "190%", marginTop: "6%" }}
+        style={{
+          marginTop: "6%",
+          display: "flex",
+          marginBottom: "5%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <Icon disabled name="arrow left" size="large" />
+        <div style={{ display: "flex", alignItems: "center" }} onClick={() => goBack()}>
+          <Icon disabled name="arrow left" size="large" />
+        </div>
+        <div style={{ marginLeft: "auto" }} onClick={() => orderHistoryButton()}>
+          <p
+            style={{
+              whiteSpace: "nowrap",
+              color: "#0075AD",
+              fontSize: "16px",
+              fontWeight: "bold",
+              textDecoration: "underline",
+            }}
+          >
+            Order History
+          </p>
+        </div>
       </div>
-      <div style={{ display: "flex", marginLeft: '4%'}}>
+      <div style={{ display: "flex", marginLeft: "4%" }}>
         <input
           placeholder={t("search_menu...")}
           style={{ marginBottom: "10px", height: "40px", width: "80%" }}
@@ -313,13 +312,13 @@ function FoodBeverages() {
             width: "60px",
             height: "40px",
             border: "1px solid #0075ad",
-            background:'#0075ad',
-            borderRadius: "10px",
+            background: "#0075ad",
+            borderRadius: "25px",
             marginLeft: "4%",
           }}
           onClick={() => cartItems.length > 0 && goCart()}
         >
-          <img src={cart} width={26} height={26} style={{marginTop: '8%'}}/>
+          <img src={cart} width={26} height={26} style={{ marginTop: "8%" }} />
           {cartItems.length > 0 ? (
             <div
               style={{
@@ -330,7 +329,7 @@ function FoodBeverages() {
                 background: "white",
                 position: "absolute",
                 marginTop: "-8%",
-                color: 'black'
+                color: "black",
               }}
             >
               <p>{cartItems.length}</p>
@@ -338,8 +337,249 @@ function FoodBeverages() {
           ) : null}
         </div>
       </div>
-      <div style={{ display: "flex", marginTop: "4%" }}>
-        <div
+      {/* <div style={{ display: "flex", marginTop: "4%", width: '100%'}}>
+        {data.map((item, index) => (
+          <div
+            key={index}
+            style={{
+              padding: "2%",
+              fontSize: "10px",
+              background: "white",
+              boxShadow: "0px 2px 4px grey",
+              borderRadius: "10px",
+              whiteSpace: "nowrap",
+              backgroundColor:
+                selectedCategory === item.category ? "#0075ad" : "",
+              color: selectedCategory === item.category ? "white" : "black",
+            }}
+            onClick={() => onSelectCategory(item.category)}
+          >
+            <div>{t(item.title)}</div>
+          </div>
+        ))}
+      </div> */}
+
+      <div
+        style={{
+          display: "flex",
+          marginTop: "4%",
+          width: "100%",
+          justifyContent: "center",
+          gap: "10px",
+          flexWrap: "wrap",
+        }}
+      >
+        {data.map((item, index) => (
+          <div
+            key={index}
+            style={{
+              minWidth: "20%",
+              padding: "2%",
+              fontSize: "12px",
+              background: "white",
+              boxShadow: "0px 2px 4px grey",
+              borderRadius: "25px",
+              whiteSpace: "nowrap",
+              marginBottom: "4%",
+              backgroundColor:
+                selectedCategory === item.category ? "#0075ad" : "",
+              color: selectedCategory === item.category ? "white" : "black",
+            }}
+            onClick={() => onSelectCategory(item.category)}
+          >
+            <div>{t(item.title)}</div>
+          </div>
+        ))}
+      </div>
+      <div
+        style={{
+          minHeight: "10px",
+          maxHeight: "420px",
+          overflowY: "scroll",
+          marginTop: "2%",
+        }}
+      >
+        <div>
+          {Array.isArray(menuItems) ? (
+            menuItems.length > 0 ? (
+              menuItems?.map((item: any, index: any) => (
+                <div
+                  key={index}
+                  style={{
+                    width: "94%",
+                    height: "130px",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    marginBottom: "4%",
+                    // margin: "5%",
+                    border: "1px solid grey",
+                    boxShadow: "0px 2px 4px grey",
+                    background: "white",
+                    marginLeft: "2%",
+                  }}
+                >
+                  <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        width: "10%",
+                        height: "80px",
+                        whiteSpace: "nowrap",
+                      }}
+                      key={item.itemid}
+                    >
+                      <p
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: "12px",
+                          color: "black",
+                          width: "200px",
+                          whiteSpace: "normal",
+                          textAlign: "left",
+                        }}
+                      >
+                        {item.item}
+                      </p>
+                      <div
+                        style={{
+                          float: "left",
+                          display: "flex",
+                          marginTop: "-30%",
+                        }}
+                      >
+                        <Icon color="black" name="rupee" />
+                        <p
+                          style={{
+                            color: "black",
+                            marginLeft: "-10%",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {item.price_att}
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          marginTop: "30px",
+                          borderRadius: "10px  ",
+                        }}
+                      >
+                        <input
+                          placeholder="Add Remarks"
+                          style={{
+                            width: "120px",
+                            height: "40px",
+                            borderRadius: "5px",
+                          }}
+                          type="text"
+                          value={item.other_remark || ""}
+                          onChange={(event) => onAddRemark(event, item.itemid)}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ marginLeft: "54%", position: "relative" }}>
+                      <img
+                        src={veg}
+                        width={100}
+                        height={70}
+                        style={{ borderRadius: "10px" }}
+                      />
+                      <div>
+                        <div
+                          style={{
+                            position: "absolute",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: "80%",
+                            height: "20px",
+                            background: "white",
+                            borderRadius: "6px",
+                            boxShadow: "0px 2px 4px grey",
+                            zIndex: 1,
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {item.quantity === 0 ? (
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                color: "black",
+                                pointerEvents: "auto",
+                              }}
+                              onClick={() =>
+                                onAddCartItem(index, {
+                                  ...item,
+                                  quantity: item.quantity + 1,
+                                })
+                              }
+                            >
+                              {t("add")}
+                            </span>
+                          ) : (
+                            <div style={{ marginTop: "-2%" }}>
+                              <span
+                                style={{
+                                  fontWeight: "bold",
+                                  marginRight: "20px",
+                                }}
+                                onClick={() =>
+                                  onRemoveCartItem(index, {
+                                    ...item,
+                                    quantity: item.quantity - 1,
+                                  })
+                                }
+                              >
+                                -
+                              </span>
+                              <span style={{ fontWeight: "bold" }}>
+                                {item.quantity}
+                              </span>
+                              <span
+                                style={{
+                                  fontWeight: "bold",
+                                  marginLeft: "20px",
+                                }}
+                                onClick={() =>
+                                  onAddCartItem(index, {
+                                    ...item,
+                                    quantity: item.quantity + 1,
+                                  })
+                                }
+                              >
+                                +
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  color: "#4A98CD",
+                  marginTop: "10%",
+                }}
+              >
+                Items not available
+              </p>
+            )
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default FoodBeverages;
+
+{
+  /* <div
           style={{
             marginRight: "4%",
             padding: "3px",
@@ -352,271 +592,18 @@ function FoodBeverages() {
           }}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <p style={{ width: "70px", paddingTop: '6%'}}>
+          <p style={{ width: "70px", paddingTop: "6%" }}>
             {selectedServingType}
             {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
           </p>
-        </div>
-        {data.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              marginRight: "4%",
-              padding: "2%",
-              fontSize: "10px",
-              background: "white",
-              boxShadow: "0px 2px 4px grey",
-              borderRadius: "10px",
-              whiteSpace: "nowrap",
-              backgroundColor:
-                selectedCategory === item.category ? "#0075ad" : "",
-                color: selectedCategory === item.category ? "white" : "black"
-            }}
-            onClick={() => onSelectCategory(item.category)}
-          >
-            <div>{t(item.title)}</div>
-          </div>
-        ))}
-      </div>
-      {isOpen && (
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 1,
-            background: "white",
-            boxShadow: "0px 2px 4px grey",
-            borderRadius: "10px",
-            marginTop: "5px",
-            width: "45%",
-            height: "250px",
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
-            {Array.isArray(getItemsServingTime.data) ? (
-              getMyServicesTypes.data?.map((item: any, index: any) => (
-                <div
-                  onClick={() => {
-                    handleServingTypeSelection(item.id, item.mealtime);
-                  }}
-                >
-                  <p
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "12px",
-                      padding: "2%",
-                    }}
-                  >
-                    {item.mealtime}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <p style={{ marginTop: "50%" }}>Loading...</p>
-            )}
-          </div>
-        </div>
-      )}
+        </div> */
+}
 
-      <div
-        style={{
-          minHeight: "10px",
-          maxHeight: "420px",
-          overflowY: "scroll",
-          marginTop: "6%",
-        }}
-      >
-        {localStorage.getItem("serving time") ? (
-          <div>
-            {Array.isArray(menuItems) ? (
-              menuItems.length > 0 ? (
-                menuItems?.map((item: any, index: any) => (
-                  <div
-                    style={{
-                      width: "94%",
-                      height: "130px",
-                      padding: "10px",
-                      borderRadius: "10px",
-                      margin: "5%",
-                      border: "1px solid grey",
-                      boxShadow: "0px 2px 4px grey",
-                      background: "white",
-                    }}
-                  >
-                    <div style={{ display: "flex" }}>
-                      <div
-                        style={{
-                          width: "10%",
-                          height: "80px",
-                          whiteSpace: "nowrap",
-                        }}
-                        key={item.itemid}
-                      >
-                        <p
-                          // style={{
-                          //   fontWeight: "bold",
-                          //   fontSize: "10px",
-                          //   float: "left",
-                          //   color: "black",
-                          // }}
-
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: "12px",
-                            //float: "left",
-                            color: "black",
-                            width: "200px",
-                            whiteSpace: "normal",
-                            textAlign: "left", 
-                          }}
-                        >
-                          {item.item}
-                        </p>
-                        <div style={{ float: "left", display: "flex", marginTop: '-30%'}}>
-                          <Icon color="black" name="rupee" />
-                          <p
-                            style={{
-                              color: "black",
-                              marginLeft: "-10%",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {item.price_att}
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            marginTop: "30px",
-                            borderRadius: "10px  ",
-                          }}
-                        >
-                          <input
-                            placeholder="Add Remarks"
-                            style={{
-                              width: "120px",
-                              height: "40px",
-                              borderRadius: "5px",
-                            }}
-                            type="text"
-                            value={item.other_remark || ""}
-                            onChange={(event) =>
-                              onAddRemark(event, item.itemid)
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div style={{ marginLeft: "54%", position: "relative" }}>
-                        <img
-                          src={veg}
-                          width={100}
-                          height={70}
-                          style={{ borderRadius: "10px" }}
-                        />
-                        <div>
-                          <div
-                            style={{
-                              position: "absolute",
-                              left: "50%",
-                              transform: "translate(-50%, -50%)",
-                              width: "80%",
-                              height: "20px",
-                              background: "white",
-                              borderRadius: "6px",
-                              boxShadow: "0px 2px 4px grey",
-                              zIndex: 1,
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            {item.quantity === 0 ? (
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  color: "black",
-                                  pointerEvents: "auto",
-                                }}
-                                onClick={() =>
-                                  onAddCartItem(index, {
-                                    ...item,
-                                    quantity: item.quantity + 1,
-                                  })
-                                }
-                              >
-                                {t("add")}
-                              </span>
-                            ) : (
-                              <div style={{ marginTop: "-2%" }}>
-                                <span
-                                  style={{
-                                    fontWeight: "bold",
-                                    marginRight: "20px",
-                                  }}
-                                  onClick={() =>
-                                    onRemoveCartItem(index, {
-                                      ...item,
-                                      quantity: item.quantity - 1,
-                                    })
-                                  }
-                                >
-                                  -
-                                </span>
-                                <span style={{ fontWeight: "bold" }}>
-                                  {item.quantity}
-                                </span>
-                                <span
-                                  style={{
-                                    fontWeight: "bold",
-                                    marginLeft: "20px",
-                                  }}
-                                  onClick={() =>
-                                    onAddCartItem(index, {
-                                      ...item,
-                                      quantity: item.quantity + 1,
-                                    })
-                                  }
-                                >
-                                  +
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    color: "#4A98CD",
-                    marginTop: "10%",
-                  }}
-                >
-                  Item not available
-                </p>
-              )
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
-        ) : (
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              color: "#4A98CD",
-              marginTop: "10% ",
-            }}
-          >
-            Please Select Serving Type
-          </p>
-        )}
-      </div>
-      {/* {myCartItems.length > 0 ? ( */}
-      {/* {showViewCartOption && (
+{
+  /* {myCartItems.length > 0 ? ( */
+}
+{
+  /* {showViewCartOption && (
         <div
           style={{
             display: "flex",
@@ -658,10 +645,52 @@ function FoodBeverages() {
             <Icon name="caret right" inverted color="grey" />
           </div>
         </div>
-      )} */}
-      {/* ) : null} */}
-    </>
-  );
+      )} */
+}
+{
+  /* ) : null} */
 }
 
-export default FoodBeverages;
+{
+  /* {isOpen && (
+        <div
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            background: "white",
+            boxShadow: "0px 2px 4px grey",
+            borderRadius: "10px",
+            marginTop: "5px",
+            width: "45%",
+            height: "250px",
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
+            {Array.isArray(getItemsServingTime.data) ? (
+              getMyServicesTypes.data?.map((item: any, index: any) => (
+                <div
+                  // onClick={() => {
+                  //   handleServingTypeSelection(item.id, item.mealtime);
+                  // }}
+                >
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "12px",
+                      padding: "2%",
+                    }}
+                  >
+                    {item.mealtime}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p style={{ marginTop: "50%" }}>Loading...</p>
+            )}
+          </div>
+        </div>
+      )} */
+}

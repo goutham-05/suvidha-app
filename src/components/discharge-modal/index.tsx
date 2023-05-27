@@ -86,7 +86,125 @@ const MyDischargeModal = () => {
     <div>
       <Navbar />
       <div className="mydischargeContainer">
-        <div className="mydischargeHeader">
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              background: "#4A98CD",
+              width: "100%",
+              height: "50px",
+              borderRadius: "30px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <p
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                marginLeft: '28%'
+              }}
+            >
+              {t("my_discharge")}
+            </p>
+            <p
+              onClick={Back}
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                cursor: "pointer",
+                marginLeft: '20%'
+              }}
+            >
+              X
+            </p>
+          </div>
+        </div>
+
+        {/* <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              background: "#4A98CD",
+              width: "100%",
+              height: "50px",
+              borderRadius: "30px",
+              marginTop: "-1px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <p
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                marginLeft: "100px",
+              }}
+            >
+              {t("my_discharge")}
+            </p>
+            <p
+              onClick={Back}
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                marginLeft: "70px",
+              }}
+              className="close-icon"
+            >
+              X
+            </p>
+          </div>
+        </div> */}
+
+        {/* <div style={{ display: "flex" }}>
+          <div
+            style={{
+              background: "#4A98CD",
+              width: "100%",
+              height: "50px",
+              borderRadius: "30px",
+              marginTop: "-1px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                marginLeft: "100px",
+              }}
+            >
+              {t("my_discharge")}
+            </span>
+            <div onClick={Back}>
+              <Icon
+                disabled
+                name="close"
+                size="large"
+                inverted
+                color="grey"
+                style={{ marginLeft: "60px" }}
+              />
+            </div>
+          </div>
+        </div> */}
+
+        {/* <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
             {t("my_discharge")}
           </span>
@@ -99,8 +217,8 @@ const MyDischargeModal = () => {
               style={{ marginTop: "10px", marginLeft: "20px" }}
             />
           </div>
-        </div>
-        <div style={{ display: "flex", marginLeft: '-4%'}}>
+        </div> */}
+        {/* <div style={{ display: "flex", marginLeft: '-4%'}}>
         <Grid stackable style={{marginTop:'12px'}}>
         {[
                 "discharge_initiated",
@@ -148,6 +266,70 @@ const MyDischargeModal = () => {
                 </Grid.Column>
               ))}
           </Grid>
+        </div> */}
+        <div className="two-column-container">
+          <div
+            className="column"
+            style={{
+              marginTop: "45px",
+              textAlign: "left",
+            }}
+          >
+            {[
+              "discharge_initiated",
+              "discharge_initiated_date",
+              "discharge_started",
+              "discharge_approved",
+              "summary_status",
+            ].map((item, index) => (
+              <Grid.Column
+                width={8}
+                textAlign="justified"
+                style={{ marginBottom: "10px", width: "100%" }}
+              >
+                <span
+                  style={{
+                    padding: "10%",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    color: "black",
+                    //marginLeft: "20%",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {t(item)}
+                </span>
+              </Grid.Column>
+            ))}
+          </div>
+          <div
+            className="column"
+            style={{
+              marginTop: "45px",
+              textAlign: "left",
+              marginLeft: "2%",
+            }}
+          >
+            {myDischargeData.map((item, index) => (
+              <Grid.Column
+                width={8}
+                textAlign="justified"
+                style={{ marginBottom: "10px" }}
+              >
+                <span
+                  style={{
+                    padding: "10%",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    color: "black",
+                    marginLeft: "-20px",
+                  }}
+                >
+                  : {item}
+                </span>
+              </Grid.Column>
+            ))}
+          </div>
         </div>
       </div>
       <BackgroundImage />

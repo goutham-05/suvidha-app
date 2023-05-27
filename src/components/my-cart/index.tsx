@@ -36,8 +36,6 @@ function MyCart() {
 
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
 
-  // const order:any = useAppSelector(state => state => )
-
   const goBack = () => {
     navigate("/fnb");
   };
@@ -165,14 +163,23 @@ function MyCart() {
   //   }
   // };
 
-  const { data, status, error, message} = useAppSelector((state) => state.order);
-  // const [message, setMessage] = useState("");
+  const { data:orderIds, status, error, message} = useAppSelector((state) => state.order);
+
+  // const existingArrayString = localStorage.getItem('orderHistory');
+  // const existingArray = existingArrayString ? JSON.parse(existingArrayString) : [];
+  
+  // const newData = orderIds; // Replace with your actual data
+  // const updatedArray = [...existingArray, newData];
+  // console.log('existed', existingArray)
+  
+  // localStorage.setItem('orderHistory', JSON.stringify(updatedArray));
+
 
   const handleProceedToPay = async () => {
     const unitIdString = localStorage.getItem("unit_code");
     const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
     const unitId = unitIdObject?.unit;
-
+  
     const selectedItems = {
       unit_id: unitId,
       patient_ipno: localStorage.getItem("admissionno"),
@@ -185,9 +192,21 @@ function MyCart() {
         quantity: item.quantity,
       })),
     };
-
+  
     try {
-      await dispatch(getMyOrderFood(selectedItems));
+      const response = await dispatch(getMyOrderFood(selectedItems));
+      //const orderIds = response.data; // Replace with the actual property containing the order ID from the response
+  
+      // Retrieve existing order history from local storage
+      const existingArrayString = localStorage.getItem('orderHistory');
+      const existingArray = existingArrayString ? JSON.parse(existingArrayString) : [];
+  
+      // Add new order data to the existing array
+      const updatedArray = [...existingArray, orderIds];
+  
+      // Store the updated array in local storage
+      localStorage.setItem('orderHistory', JSON.stringify(updatedArray));
+  
       setTimeout(() => {
         dispatch(clearCart());
         localStorage.removeItem("serving time");
@@ -195,9 +214,52 @@ function MyCart() {
       }, 120000);
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
+  
+
+
+
+  // const handleProceedToPay = async () => {
+  //   const unitIdString = localStorage.getItem("unit_code");
+  //   const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+  //   const unitId = unitIdObject?.unit;
+
+  //   const selectedItems = {
+  //     unit_id: unitId,
+  //     patient_ipno: localStorage.getItem("admissionno"),
+  //     delivery_address: "",
+  //     serving_time: localStorage.getItem("serving time"),
+  //     my_cart_items: cartItems.map((item: any) => ({
+  //       itemid: item.itemid,
+  //       remarkid: [],
+  //       other_remark: item.other_remark,
+  //       quantity: item.quantity,
+  //     })),
+  //   };
+
+  //   try {
+  //     await dispatch(getMyOrderFood(selectedItems));
+  //    // Retrieve existing order history from local storage
+  //    const existingArrayString = localStorage.getItem('orderHistory');
+  //    const existingArray = existingArrayString ? JSON.parse(existingArrayString) : [];
+     
+  //    // Add new order data to the existing array
+  //    const newData = orderIds; // Replace with your actual data
+  //    const updatedArray = [...existingArray, newData];
+     
+  //    // Store the updated array in local storage
+  //    localStorage.setItem('orderHistory', JSON.stringify(updatedArray));
+  //     setTimeout(() => {
+  //       dispatch(clearCart());
+  //       localStorage.removeItem("serving time");
+  //       localStorage.removeItem("servingType");
+  //     }, 120000);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //   }
+  // };
 
   useEffect(() => {
     if (status === "succeeded") {
