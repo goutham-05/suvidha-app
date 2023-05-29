@@ -74,7 +74,7 @@ const MyDischargeModal = () => {
     DischargeStatus.data?.discharge_initiated,
     disInitiatedDt,
     dsStartedTimeData,
-    dsApprovedTimeData,
+    //dsApprovedTimeData,
     dischargeStatusValue,
   ];
 
@@ -280,8 +280,8 @@ const MyDischargeModal = () => {
             {[
               "discharge_initiated",
               "discharge_initiated_date",
-              "discharge_started",
-              "discharge_approved",
+              "discharge_date",
+              // "discharge_approved",
               "summary_status",
             ].map((item, index) => (
               <Grid.Column
