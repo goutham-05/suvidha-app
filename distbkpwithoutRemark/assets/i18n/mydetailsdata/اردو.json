@@ -1,0 +1,16 @@
+{
+	"my_bill": "میرا بل",
+	"advance_paid": "اعلیٰ ادا کیا گیا",
+	"approximate_bill": "تخمینہ بل",
+	"estimated_amount": "تخمینہ کردہ رقم",
+	"due_amt": "بقایا رقم",
+	"my_discharge": "میرا ڈسچارج",
+	"discharge_initiated": "ڈسچارج شروع کیا گیا",
+	"discharge_initiated_date": "ڈسچارج شروع ہونے کی تاریخ",
+	"discharge_started": "ڈسچارج شروع ہوا",
+	"discharge_approved": "ڈسچارج منظور ہوا",
+	"summary_status": "خلاصے کی حیثیت",
+	"insurance_claim_status": "انشورنس کلیم کی حیثیت",
+	"status": "حیثیت",
+	"approved_date": "منظور کی تاریخ"
+	}
