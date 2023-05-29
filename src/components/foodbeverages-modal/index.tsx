@@ -3,7 +3,7 @@ import Navbar from "../nav-bar";
 import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import veg from "../../assets/FandB.jpg";
+import veg from "../../assets/FandB.svg";
 import cart from "../../assets/fb/shopping-bag.png";
 import {
   RootState,
@@ -254,16 +254,18 @@ function FoodBeverages() {
     if (unit_code) {
       unit_id = unit_code.unit;
     }
-    
-    const orderIds = localStorage.getItem('orderHistory');
+
+    const orderIds = localStorage.getItem("orderHistory");
     const orderData = orderIds ? JSON.parse(orderIds) : [];
- 
-    dispatch(orderHistoryList({
-      unit_id: unit_id, 
-      dietorder_id: orderData,
-    }))
-    navigate('/order-history')
-  }
+
+    dispatch(
+      orderHistoryList({
+        unit_id: unit_id,
+        dietorder_id: orderData,
+      })
+    );
+    navigate("/order-history");
+  };
 
   return (
     <>
@@ -283,10 +285,16 @@ function FoodBeverages() {
           alignItems: "center",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }} onClick={() => goBack()}>
+        <div
+          style={{ display: "flex", alignItems: "center" }}
+          onClick={() => goBack()}
+        >
           <Icon disabled name="arrow left" size="large" />
         </div>
-        <div style={{ marginLeft: "auto" }} onClick={() => orderHistoryButton()}>
+        <div
+          style={{ marginLeft: "auto" }}
+          onClick={() => orderHistoryButton()}
+        >
           <p
             style={{
               whiteSpace: "nowrap",
@@ -459,11 +467,87 @@ function FoodBeverages() {
                       </div>
                       <div
                         style={{
-                          marginTop: "30px",
-                          borderRadius: "10px  ",
+                          marginTop: "50px",
+                          borderRadius: "10px",
+                          width: '100%',
                         }}
                       >
-                        <input
+                        <div
+                          style={{
+                            background: '#0075AD',
+                            padding:'10px',
+                            width: '100px',
+                            height:'30px',
+                            borderRadius:'25px',
+                            marginTop:'-50%'
+                            // position: "relative",
+                            // left: "29%",
+                            // transform: "translate(-50%, -50%)",
+                            // width: "100%",
+                            // height: "20px",
+                            // background: "white",
+                            // borderRadius: "6px",
+                            // boxShadow: "0px 2px 4px grey",
+                            // zIndex: 1,
+                            // justifyContent: "space-between",
+                          }}
+                        >
+                          {item.quantity === 0 ? (
+                            <p
+                              style={{
+                                marginTop:'-5%',
+                                fontWeight: "bold",
+                                color:'white',
+                                pointerEvents: "auto",
+                              }}
+                              onClick={() =>
+                                onAddCartItem(index, {
+                                  ...item,
+                                  quantity: item.quantity + 1,
+                                })
+                              }
+                            >
+                              {t("add")}
+                            </p>
+                          ) : (
+                            <div style={{ marginTop: "-8%" }}>
+                              <span
+                                style={{
+                                  fontWeight: "bold",
+                                  marginRight: "20px",
+                                  color:'white'
+                                }}
+                                onClick={() =>
+                                  onRemoveCartItem(index, {
+                                    ...item,
+                                    quantity: item.quantity - 1,
+                                  })
+                                }
+                              >
+                                -
+                              </span>
+                              <span style={{ fontWeight: "bold",color:'white'}}>
+                                {item.quantity}
+                              </span>
+                              <span
+                                style={{
+                                  fontWeight: "bold",
+                                  marginLeft: "20px",
+                                  color:'white'
+                                }}
+                                onClick={() =>
+                                  onAddCartItem(index, {
+                                    ...item,
+                                    quantity: item.quantity + 1,
+                                  })
+                                }
+                              >
+                                +
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {/* <input
                           placeholder="Add Remarks"
                           style={{
                             width: "120px",
@@ -473,26 +557,26 @@ function FoodBeverages() {
                           type="text"
                           value={item.other_remark || ""}
                           onChange={(event) => onAddRemark(event, item.itemid)}
-                        />
+                        /> */}
                       </div>
                     </div>
-                    <div style={{ marginLeft: "54%", position: "relative" }}>
-                      {
-                        item.image ? (
-                            <img src={item.image} width={100}
-                            height={70}/>
-                        ):
-                        (
-                          <img
+                    <div style={{ marginLeft: "57%", position: "relative",
+    marginTop: '0.5%'}}>
+                      {item.image ? (
+                        <img src={item.image} width={100} height={90} />
+                      ) : (
+                        <img
                           src={veg}
-                          width={100}
-                          height={70}
-                          style={{ borderRadius: "10px" }}
+                          width={100} height={90}
+                          style={{
+                            borderRadius: "10px",
+                            //border:'1px solid #0075AD'
+                            //boxShadow: "0px 2px 4px grey",
+                          }}
                         />
-                        )
-                      }
+                      )}
                       <div>
-                        <div
+                        {/* <div
                           style={{
                             position: "absolute",
                             left: "50%",
@@ -557,7 +641,7 @@ function FoodBeverages() {
                               </span>
                             </div>
                           )}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
