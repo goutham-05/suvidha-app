@@ -407,7 +407,7 @@ function FoodBeverages() {
                   key={index}
                   style={{
                     width: "94%",
-                    height: "130px",
+                    height: "115px",
                     padding: "10px",
                     borderRadius: "10px",
                     marginBottom: "4%",

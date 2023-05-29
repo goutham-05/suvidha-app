@@ -66,7 +66,7 @@ function PortalService(props: any) {
     const timer = setTimeout(() => {
       setIsLoading(false);
       setShowIframe(true);
-    }, 10000);
+    }, 1000);
 
     setIsLoading(true);
 
@@ -90,18 +90,18 @@ function PortalService(props: any) {
         <>
           <div
             onClick={back}
-            style={{ marginBottom: "10%", marginRight: "190%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginRight: "190%", marginTop: "6%" }}
           >
             <Icon disabled name="arrow left" size="large" />{" "}
           </div>
 
-          <div style={{ width: "100%", height: "100px", marginLeft: "2%" }}>
+          <div style={{ width: "100%", height: "100px", marginLeft: "2%", marginBottom: '10%' }}>
           {isLoading ? (
-        <Loader active={isLoading} inline="centered" style={{marginTop: '50%'}}/>
+        <Loader active={isLoading} inline="centered" />
       ) : (
         <>
             {showIframe && (
-              <iframe title="my-iframe" src={url} width="100%" height="500px" />
+              <iframe title="my-iframe" src={url} width="100%" height="600px" style={{marginTop: '-10%'}} />
             )}
             </>
       )}
