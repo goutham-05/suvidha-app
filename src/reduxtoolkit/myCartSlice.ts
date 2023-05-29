@@ -43,20 +43,17 @@ const myCartSlice = createSlice({
         }
       }
     },
-    // decrementCartItem: (state, action) => {
+    // updateCartItem: (state, action) => {
     //   const item = action.payload;
     //   const findIndex = state.findIndex((value) => value.itemid === item.itemid);
-
-    //   if (findIndex === -1) {
-    //     state.push(item);
-    //   } else {
-    //     state[findIndex].quantity -= 1;
-    //   }
+    //   state[findIndex] = item;
     // },
     updateCartItem: (state, action) => {
-      const item = action.payload;
-      const findIndex = state.findIndex((value) => value.itemid === item.itemid);
-      state[findIndex] = item;
+      const updatedItem = action.payload;
+      const itemIndex = state.findIndex((item) => item.itemid === updatedItem.itemid);
+      if (itemIndex !== -1) {
+        state[itemIndex].other_remark = updatedItem.other_remark;
+      }
     },
     clearCart: () => initialState, // Set state to initialState
   },

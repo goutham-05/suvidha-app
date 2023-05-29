@@ -223,28 +223,28 @@ function FoodBeverages() {
     [foodItemsList]
   );
 
-  const onAddRemark = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
-      const value = e.target.value;
+  // const onAddRemark = useCallback(
+  //   (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
+  //     const value = e.target.value;
 
-      const updatedMenu = menuItems.map((menuItem) =>
-        menuItem.itemid === itemId
-          ? { ...menuItem, other_remark: value, remarkId: undefined }
-          : {
-              ...menuItem,
-              remarkId: undefined,
-            }
-      );
+  //     const updatedMenu = menuItems.map((menuItem) =>
+  //       menuItem.itemid === itemId
+  //         ? { ...menuItem, other_remark: value, remarkId: undefined }
+  //         : {
+  //             ...menuItem,
+  //             remarkId: undefined,
+  //           }
+  //     );
 
-      const updatedCartItem = updatedMenu?.find(
-        (item) => item.itemid === itemId
-      );
+  //     const updatedCartItem = updatedMenu?.find(
+  //       (item) => item.itemid === itemId
+  //     );
 
-      setMenuItems(updatedMenu);
-      dispatch(updateCartItem(updatedCartItem));
-    },
-    [menuItems]
-  );
+  //     setMenuItems(updatedMenu);
+  //     dispatch(updateCartItem(updatedCartItem));
+  //   },
+  //   [menuItems]
+  // );
 
   const orderList = useAppSelector((state) => state.orderHistory);
   const orderHistoryButton = () => {
