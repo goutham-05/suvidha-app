@@ -89,7 +89,7 @@ const MyDischargeModal = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
-              background: "#4A98CD",
+              //background: "#4A98CD",
               width: "100%",
               height: "50px",
               borderRadius: "30px",
@@ -104,8 +104,9 @@ const MyDischargeModal = () => {
                 margin: "0",
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "white",
-                marginLeft: '28%'
+                color: "#4A98CD",
+                marginLeft: '28%',
+                textDecoration: 'underline'
               }}
             >
               {t("my_discharge")}
@@ -117,7 +118,7 @@ const MyDischargeModal = () => {
                 margin: "0",
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "white",
+                color: "#4A98CD",
                 cursor: "pointer",
                 marginLeft: '20%'
               }}

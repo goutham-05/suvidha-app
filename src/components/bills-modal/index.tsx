@@ -82,7 +82,8 @@ const MyBillModal = () => {
       <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
-              background: "#4A98CD",
+              //border: '1px solid #4A98CD',
+              //background: "#4A98CD",
               width: "100%",
               height: "50px",
               borderRadius: "30px",
@@ -97,8 +98,9 @@ const MyBillModal = () => {
                 margin: "0",
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "white",
-                marginLeft: '38%'
+                color: "#4A98CD",
+                marginLeft: '38%',
+                textDecoration: 'underline'
               }}
             >
               {t('my_bill')}
@@ -110,7 +112,7 @@ const MyBillModal = () => {
                 margin: "0",
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "white",
+                color: "#4A98CD",
                 cursor: "pointer",
                 marginLeft: '30%'
               }}

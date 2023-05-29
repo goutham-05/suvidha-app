@@ -60,7 +60,7 @@ const MyInsuranceModal = () => {
       <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
-              background: "#4A98CD",
+              //background: "#4A98CD",
               width: "100%",
               height: "50px",
               borderRadius: "30px",
@@ -69,18 +69,19 @@ const MyInsuranceModal = () => {
               marginTop:'-0.3%'
             }}
           >
-            <p
+            <u
               style={{
                 whiteSpace: "nowrap",
                 margin: "0",
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "white",
-                marginLeft: '16%'
+                color: "#4A98CD",
+                marginLeft: '16%',
+                //textDecoration: 'underline''
               }}
             >
               {t('insurance_claim_status')}
-            </p>
+            </u>
             <p
               onClick={Back}
               style={{
@@ -88,9 +89,10 @@ const MyInsuranceModal = () => {
                 margin: "0",
                 fontSize: "20px",
                 fontWeight: "bold",
-                color: "white",
+                color: "#4A98CD",
                 cursor: "pointer",
-                marginLeft: '10%'
+                marginLeft: '10%',
+                marginTop:'2%'
               }}
             >
               X
