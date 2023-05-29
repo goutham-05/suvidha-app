@@ -79,7 +79,47 @@ const MyBillModal = () => {
     <div>
       <Navbar />
       <div className="mydischargeContainer">
-        <div className="mydischargeHeader">
+      <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              background: "#4A98CD",
+              width: "100%",
+              height: "50px",
+              borderRadius: "30px",
+              display: "flex",
+              alignItems: "center",
+              marginTop:'-0.3%'
+            }}
+          >
+            <p
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                marginLeft: '38%'
+              }}
+            >
+              {t('my_bill')}
+            </p>
+            <p
+              onClick={Back}
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                cursor: "pointer",
+                marginLeft: '30%'
+              }}
+            >
+              X
+            </p>
+          </div>
+        </div>
+        {/* <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
             {t('my_bill')}
           </span>
@@ -92,7 +132,7 @@ const MyBillModal = () => {
               style={{ marginTop: "10px", marginLeft: "20px" }}
             />
           </div>
-        </div>
+        </div> */}
         <div className="two-column-container">
           <div
             className="column"
@@ -127,7 +167,7 @@ const MyBillModal = () => {
             style={{
               marginTop: "45px",
               textAlign: "left",
-              marginLeft: "10%",
+              marginLeft: "-5%",
             }}
           >
             {patientTypeChecking.map((item, index) => (

@@ -57,7 +57,47 @@ const MyInsuranceModal = () => {
     <div>
       <Navbar />
       <div className="mydischargeContainer">
-        <div className="mydischargeHeader">
+      <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              background: "#4A98CD",
+              width: "100%",
+              height: "50px",
+              borderRadius: "30px",
+              display: "flex",
+              alignItems: "center",
+              marginTop:'-0.3%'
+            }}
+          >
+            <p
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                marginLeft: '16%'
+              }}
+            >
+              {t('insurance_claim_status')}
+            </p>
+            <p
+              onClick={Back}
+              style={{
+                whiteSpace: "nowrap",
+                margin: "0",
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "white",
+                cursor: "pointer",
+                marginLeft: '10%'
+              }}
+            >
+              X
+            </p>
+          </div>
+        </div>
+        {/* <div className="mydischargeHeader">
           <span className="headerTitle" style={{ background: "#4A98CD" }}>
             {t('insurance_claim_status')}
           </span>
@@ -70,9 +110,73 @@ const MyInsuranceModal = () => {
               style={{ marginTop: "10px", marginLeft: "20px" }}
             />
           </div>
+        </div> */}
+
+
+<div className="two-column-container">
+          <div
+            className="column"
+            style={{
+              marginTop: "45px",
+              textAlign: "left",
+              marginLeft:'-10%'
+            }}
+          >
+              {[
+            "status",
+            "approved_date",
+          ]?.map((item, index) => (
+              <Grid.Column
+                width={8}
+                textAlign="justified"
+                style={{ marginBottom: "10px", width: "100%" }}
+              >
+                <span
+                  style={{
+                    padding: "10%",
+                    fontSize: "100%",
+                    fontWeight: "bold",
+                    color: "black",
+                    marginLeft: "5%",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                 {t(item)}
+                </span>
+              </Grid.Column>
+            ))}
+          </div>
+          <div
+            className="column"
+            style={{
+              marginTop: "45px",
+              textAlign: "left",
+              marginLeft: "-25%",
+            }}
+          >
+            {myInsuranceData.map((item, index) => (
+              <Grid.Column
+                width={8}
+                textAlign="justified"
+                style={{ marginBottom: "10px" }}
+              >
+                <span
+                  style={{
+                    padding: "10%",
+                    fontSize: "100%",
+                    fontWeight: "bold",
+                    color: "black",
+                    marginLeft: "-20px",
+                  }}
+                >
+                  :  {item}
+                </span>
+              </Grid.Column>
+            ))}
+          </div>
         </div>
 
-        <div style={{display: 'flex', marginLeft: '-2%'}}>
+        {/* <div style={{display: 'flex', marginLeft: '-2%'}}>
               <Grid stackable style={{marginTop:'12px'}}>
               {[
             "status",
@@ -117,7 +221,7 @@ const MyInsuranceModal = () => {
                 </Grid.Column>
               ))}
           </Grid>
-      </div>
+      </div> */}
       </div>
       <BackgroundImage />
     </div>

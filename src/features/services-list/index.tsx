@@ -118,7 +118,7 @@ function ServicesList() {
 
   const filteredServicesList = patientCheckInDK.data?.length > 0
   ? ServiceRequestList
-  : ServiceRequestList.filter(item => item.title !== "Food & Beverages");
+  : ServiceRequestList.filter(item => item.title !== "food_Beverages");
 
   const patient_type = localStorage.getItem('patient_type')
 

@@ -95,6 +95,7 @@ const MyDischargeModal = () => {
               borderRadius: "30px",
               display: "flex",
               alignItems: "center",
+              marginTop:'-0.3%'
             }}
           >
             <p
