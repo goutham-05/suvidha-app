@@ -3,7 +3,7 @@ import Navbar from "../nav-bar";
 import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import veg from "../../assets/fb/vegbiryani.webp";
+import veg from "../../assets/FandB.jpg";
 import cart from "../../assets/fb/shopping-bag.png";
 import {
   RootState,
@@ -477,12 +477,20 @@ function FoodBeverages() {
                       </div>
                     </div>
                     <div style={{ marginLeft: "54%", position: "relative" }}>
-                      <img
-                        src={veg}
-                        width={100}
-                        height={70}
-                        style={{ borderRadius: "10px" }}
-                      />
+                      {
+                        item.image ? (
+                            <img src={item.image} width={100}
+                            height={70}/>
+                        ):
+                        (
+                          <img
+                          src={veg}
+                          width={100}
+                          height={70}
+                          style={{ borderRadius: "10px" }}
+                        />
+                        )
+                      }
                       <div>
                         <div
                           style={{
