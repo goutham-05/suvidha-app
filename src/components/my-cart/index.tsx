@@ -90,8 +90,6 @@ function MyCart() {
         quantity: item.quantity,
       })),
     };
-    // console.log(selectedItems);
-    // return;
 
     try {
       const response = await dispatch(getMyOrderFood(selectedItems));

@@ -414,7 +414,7 @@ function FoodBeverages() {
                 <div
                   key={index}
                   style={{
-                    width: "94%",
+                    width: "91%",
                     height: "115px",
                     padding: "10px",
                     borderRadius: "10px",
