@@ -4,18 +4,17 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import Navbar from "../nav-bar";
-import { Icon } from "semantic-ui-react";
+import { Icon, Label } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import BackgroundImage from "../background";
 import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
-
 import getMyOrderFoodSlice, {
   getMyOrderFood,
   resetStatus,
 } from "../../reduxtoolkit/orderFoodSlice";
 import { increaseQty } from "../../reduxtoolkit/myFoodSlice";
-import { Dimmer } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 import { useCallback, useEffect, useState } from "react";
 import order from "../../../src/assets/fb/orderplaced.png";
 import { clearCart } from "../../reduxtoolkit/myCartSlice";
@@ -26,9 +25,12 @@ import {
   updateCartItem,
 } from "../../reduxtoolkit/myCartSlice";
 import { useTranslation } from "react-i18next";
-import { Loader } from "semantic-ui-react";
 import vegIcon from "../../assets/fb/veg.png";
 import nonVeg from "../../assets/fb/nonVeg.png";
+import { getOtp } from "../../features/login/authSlice";
+import CInput from "../../common/input";
+import { useForm } from "react-hook-form";
+
 
 function MyCart() {
   const navigate = useNavigate();
@@ -39,11 +41,15 @@ function MyCart() {
 
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
 
-  console.log("Item TYpe", cartItems.item_type);
-
   const goBack = () => {
     navigate("/fnb");
   };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const subTotal = () => {
     let subTotalValue = 0;
@@ -73,49 +79,74 @@ function MyCart() {
     message,
   } = useAppSelector((state) => state.order);
 
+  const { data: userData } = useAppSelector(
+    (state: RootState) => state.user
+  );
+
+  const [loading, setLoading] = useState(false);
+
+  let unit_id = "";
+  const unitCodeStr = localStorage.getItem("unit_code");
+  const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+  if (unit_code) {
+    unit_id = unit_code.unit;
+  }
+
   const handleProceedToPay = async () => {
-    const unitIdString = localStorage.getItem("unit_code");
-    const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
-    const unitId = unitIdObject?.unit;
-
-    const selectedItems = {
-      unit_id: unitId,
-      patient_ipno: localStorage.getItem("admissionno"),
-      delivery_address: "",
-      serving_time: localStorage.getItem("serving time"),
-      my_cart_items: cartItems.map((item: any) => ({
-        itemid: item.itemid,
-        remarkid: [],
-        other_remark: item.other_remark || "",
-        quantity: item.quantity,
-      })),
-    };
-
-    try {
-      const response = await dispatch(getMyOrderFood(selectedItems));
-      //const orderIds = response.data; // Replace with the actual property containing the order ID from the response
-
-      // Retrieve existing order history from local storage
-      const existingArrayString = localStorage.getItem("orderHistory");
-      const existingArray = existingArrayString
-        ? JSON.parse(existingArrayString)
-        : [];
-
-      // Add new order data to the existing array
-      const updatedArray = [...existingArray, orderIds];
-
-      // Store the updated array in local storage
-      localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
-
-      setTimeout(() => {
-        dispatch(clearCart());
-        localStorage.removeItem("serving time");
-        localStorage.removeItem("servingType");
-      }, 120000);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log('Clicked "Proceed to Pay"');
+         await dispatch(
+        getOtp({
+          mobile_number: localStorage.getItem('mobile_number'),
+          unit_id: unit_id,
+        })
+      );
   };
+  
+  
+
+  // const handleProceedToPay = async () => {
+  //   const unitIdString = localStorage.getItem("unit_code");
+  //   const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+  //   const unitId = unitIdObject?.unit;
+
+  //   const selectedItems = {
+  //     unit_id: unitId,
+  //     patient_ipno: localStorage.getItem("admissionno"),
+  //     delivery_address: "",
+  //     serving_time: localStorage.getItem("serving time"),
+  //     my_cart_items: cartItems.map((item: any) => ({
+  //       itemid: item.itemid,
+  //       remarkid: [],
+  //       other_remark: item.other_remark || "",
+  //       quantity: item.quantity,
+  //     })),
+  //   };
+
+  //   try {
+  //     const response = await dispatch(getMyOrderFood(selectedItems));
+  //     //const orderIds = response.data; // Replace with the actual property containing the order ID from the response
+
+  //     // Retrieve existing order history from local storage
+  //     const existingArrayString = localStorage.getItem("orderHistory");
+  //     const existingArray = existingArrayString
+  //       ? JSON.parse(existingArrayString)
+  //       : [];
+
+  //     // Add new order data to the existing array
+  //     const updatedArray = [...existingArray, orderIds];
+
+  //     // Store the updated array in local storage
+  //     localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+
+  //     setTimeout(() => {
+  //       dispatch(clearCart());
+  //       localStorage.removeItem("serving time");
+  //       localStorage.removeItem("servingType");
+  //     }, 120000);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const onAddRemark = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
@@ -408,6 +439,30 @@ function MyCart() {
           </Dimmer>
         </div>
       )}
+
+{loading && (
+      <Dimmer active>
+        <Loader>Loading...</Loader>
+        <CInput
+            placeholder={t("Enter OTP")}
+            register={register}
+            label="otp"
+            required={true}
+            size="large"
+            error={errors["otp"] ? true : false}
+            fluid={true}
+            loading={false}
+            type="number"
+            minLength={6}
+            maxLength={6}
+          />
+          {errors.otp?.type === "required" && (
+            <Label color="orange" pointing prompt>
+              {t('otp_is_required')}
+            </Label>
+          )}
+      </Dimmer>
+    )}
       <BackgroundImage />
     </div>
   );

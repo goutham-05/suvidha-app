@@ -50,17 +50,17 @@ const MyBillModal = () => {
   const billData = () => {
     if (userData.data?.patient_type !== "GENERAL") {
       const billProps = ["advance_paid", "approximate_bill"];
-      const billValues = userData.data?.length === 0 ? ["No Data", "No"] : [userData.data?.total_advance, userData.data?.latest_estimated_amt];
+      const billValues = userData.data?.length === 0 ? ["--", "No"] : [userData.data?.total_advance, userData.data?.latest_estimated_amt];
       setPatientTypeChecking(billValues);
       console.log(billValues)
       setBillProperties(billProps);
     } else {
       const billProps = ["advance_paid", "approximate_bill", "estimated_amount", "due_amt"];
       const billValues = [
-        userData.data?.app_bill_amount || "No Data",
-        userData.data?.balance_amt || "No Data",
-        userData.data?.app_bill_amount || "No Data",
-        userData.data?.balance_amt || "No Data"
+        userData.data?.total_advance || "--",
+        userData.data?.app_bill_amount || "--",
+        userData.data?.hims_estimated_amount || "--",
+        userData.data?.balance_amt || "--"
       ];
       setPatientTypeChecking(billValues);
       setBillProperties(billProps);

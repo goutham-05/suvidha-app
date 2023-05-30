@@ -145,5 +145,5 @@ export const routes: ProtectedRoute[] = [
     path:'/order-history',
     element:<OrderHistory />,
     isProtected:true,
-  }
+  },
 ];
