@@ -63,19 +63,18 @@ const MyDischargeModal = () => {
   const dischargeStatusValue = getStatus(myDis);
 
   const dsStartedTime = DischargeStatus.data?.dsstarted_time;
-  const dsStartedTimeData = dsStartedTime === null ? "--" : dsStartedTime;
-
+  const dsStartedTimeData = DischargeStatus.data?.discharge_date === null ? "-" : DischargeStatus.data?.discharge_date;
+  const summarySatus = DischargeStatus.data?.native_summary_status === null?"-" : DischargeStatus.data?.native_summary_status;
   const dsApprovedTime = DischargeStatus.data?.dsstarted_time;
-  const dsApprovedTimeData = dsApprovedTime === null ? "--" : dsStartedTime;
+  const dsApprovedTimeData = dsApprovedTime === null ? "-" : dsStartedTime;
 
-  const disInitiatedDt = DischargeStatus.data?.dis_initiated_dt;
+  const disInitiatedDt = DischargeStatus.data?.dis_initiated_dt === null ? "-" : DischargeStatus.data?.dis_initiated_dt;
 
   const myDischargeData = [
     DischargeStatus.data?.discharge_initiated,
     disInitiatedDt,
     dsStartedTimeData,
-    //dsApprovedTimeData,
-    dischargeStatusValue,
+    summarySatus
   ];
 
   const Back = () => {

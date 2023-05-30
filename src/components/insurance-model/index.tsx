@@ -76,7 +76,7 @@ const MyInsuranceModal = () => {
                 fontSize: "20px",
                 fontWeight: "bold",
                 color: "#4A98CD",
-                marginLeft: '14%',
+                marginLeft: '14 %',
                 //textDecoration: 'underline''
               }}
             >
