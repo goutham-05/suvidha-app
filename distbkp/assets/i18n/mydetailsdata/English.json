@@ -12,5 +12,6 @@
 	"summary_status":"Summary Status",
 	"insurance_claim_status":"Insurance Claim Status",
 	"status":"Status",
-	"approved_date":"Approved Date"
+	"approved_date":"Approved Date",
+	"discharge_date":"Discharge Date"
 }
