@@ -278,7 +278,7 @@ function MyCart() {
           <div
             key={index}
             style={{
-              width: "94%",
+              //width: "94%",
               height: "124px",
               borderRadius: "10px",
               margin: "5%",
