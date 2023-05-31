@@ -148,8 +148,11 @@ function MyCart() {
       console.log("Error adding data to store", error);
     }
   }
+
+
   
   const handleOtpValidation = async (data: any) => {
+    setGetStatus("idle");
     const otp = await db.getItem(userData.ip_no);
     console.log("OTP", otp);
     if (otp === null || otp != data.otp) {
@@ -222,16 +225,8 @@ function MyCart() {
     [cartItems]
   );
 
-  // useEffect(() => {
-  //   if (status === "succeeded") {
-  //     dispatch(clearCart());
-  //     localStorage.removeItem("serving time");
-  //     localStorage.removeItem("servingType");
-  //     navigate("/fnb");
-  //   }
-  // }, [status, dispatch]);
-
   const resendOTP = async () => {
+    setGetStatus("idle");
     await dispatch(
       getOtp({
         mobile_number: localStorage.getItem("mobile_number"),
@@ -239,8 +234,8 @@ function MyCart() {
       })
     );
     setGetStatus("succeeded");
+    console.log('GET STATUS::',getstatus);
     setOtpMessage("OTP sent successfully");
-    //setShowOtpInput(true);
   };
 
   return (
@@ -507,7 +502,10 @@ function MyCart() {
 
       {showOtpInput && (
         <Dimmer active >
-          <div>
+          <div style={{background: 'white', borderRadius:'25px'}}>
+          <div style={{ marginTop: "4%" }}>
+        <img src={BrandLogo} width={150} height={150} />
+      </div>
             <MessageNotification
               message={otpMessage}
               status={getstatus}
@@ -553,7 +551,6 @@ function MyCart() {
                   fontSize: "13px",
                   whiteSpace: "nowrap",
                   textAlign: "center",
-                  marginTop: "10%",
                   color: "#0075ad",
                 }}
               >
