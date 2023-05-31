@@ -45,8 +45,8 @@ const MyInsuranceModal = () => {
   const insuranceDate = insuranceStatus.data?.approveddate;
   
   const myInsuranceData = [
-    insuranceStatus.data?.status_name || "--",
-    insuranceDate || "--"
+    insuranceStatus.data?.status_name || "-",
+    insuranceDate || "-"
   ];
   
   useEffect(() => {
@@ -76,7 +76,7 @@ const MyInsuranceModal = () => {
                 fontSize: "20px",
                 fontWeight: "bold",
                 color: "#4A98CD",
-                marginLeft: '14 %',
+                marginLeft: '14%',
                 //textDecoration: 'underline''
               }}
             >
