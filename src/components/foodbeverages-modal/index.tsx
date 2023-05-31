@@ -563,15 +563,13 @@ function FoodBeverages() {
                     <div style={{ marginLeft: "57%", position: "relative",
     marginTop: '0.5%'}}>
                       {item.image ? (
-                        <img src={item.image} width={100} height={90} />
+                        <img src={item.image} width={100} height={90} style={{marginLeft:'-20%'}}/>
                       ) : (
                         <img
                           src={veg}
                           width={100} height={90}
                           style={{
                             borderRadius: "10px",
-                            //border:'1px solid #0075AD'
-                            //boxShadow: "0px 2px 4px grey",
                           }}
                         />
                       )}
