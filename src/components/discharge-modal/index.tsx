@@ -67,6 +67,7 @@ const MyDischargeModal = () => {
   const summarySatus = DischargeStatus.data?.native_summary_status === null?"-" : DischargeStatus.data?.native_summary_status;
   const dsApprovedTime = DischargeStatus.data?.dsstarted_time;
   const dsApprovedTimeData = dsApprovedTime === null ? "-" : dsStartedTime;
+  
 
   const disInitiatedDt = DischargeStatus.data?.dis_initiated_dt === null ? "-" : DischargeStatus.data?.dis_initiated_dt;
 

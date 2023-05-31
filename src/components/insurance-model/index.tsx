@@ -45,8 +45,8 @@ const MyInsuranceModal = () => {
   const insuranceDate = insuranceStatus.data?.approveddate;
   
   const myInsuranceData = [
-    insuranceStatus.data?.status_name || "--",
-    insuranceDate || "--"
+    insuranceStatus.data?.status_name || "-",
+    insuranceDate || "-"
   ];
   
   useEffect(() => {

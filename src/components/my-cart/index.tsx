@@ -4,8 +4,9 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import Navbar from "../nav-bar";
-import { Icon, Label } from "semantic-ui-react";
+import { Button, Form, Icon, Label } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import "./index.css";
 import BackgroundImage from "../background";
 import Rupee from "../../assets/fb/Indian_Rupee_symbol.svg.png";
@@ -29,17 +30,20 @@ import vegIcon from "../../assets/fb/veg.png";
 import nonVeg from "../../assets/fb/nonVeg.png";
 import { getOtp } from "../../features/login/authSlice";
 import CInput from "../../common/input";
-import { useForm } from "react-hook-form";
-
+import localForage from "localforage";
+import { setDb } from "../../features/login/dbSlice";
+import BrandLogo from "../../assets/Logo.png";
+import MessageNotification from "../../common/notification";
 
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["fb"]);
+  const { t } = useTranslation(["fb", "otp"]);
 
   const my_cart_items = useAppSelector((state) => state.cart);
 
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
+  const db = useAppSelector((state) => state.db.db);
 
   const goBack = () => {
     navigate("/fnb");
@@ -79,11 +83,20 @@ function MyCart() {
     message,
   } = useAppSelector((state) => state.order);
 
-  const { data: userData } = useAppSelector(
-    (state: RootState) => state.user
-  );
+  const {
+    status: uStatus,
+    message: uMessage,
+    data: userData,
+  } = useAppSelector((state: RootState) => state.user);
 
-  const [loading, setLoading] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [showOtpInput, setShowOtpInput] = useState(false);
+  const [isInvalidOtp, setIsInvalidOtp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [otpMessage, setOtpMessage] = useState("");
+  const [getstatus, setGetStatus] = useState<
+    "idle" | "loading" | "failed" | "succeeded"
+  >("idle");
 
   let unit_id = "";
   const unitCodeStr = localStorage.getItem("unit_code");
@@ -93,60 +106,100 @@ function MyCart() {
   }
 
   const handleProceedToPay = async () => {
-    console.log('Clicked "Proceed to Pay"');
-         await dispatch(
-        getOtp({
-          mobile_number: localStorage.getItem('mobile_number'),
-          unit_id: unit_id,
-        })
-      );
+    await dispatch(
+      getOtp({
+        mobile_number: localStorage.getItem("mobile_number"),
+        unit_id: unit_id,
+      })
+    );
+    setGetStatus("succeeded");
+    setOtpMessage("OTP sent successfully");
+    setShowOtpInput(true);
   };
+
+  async function openDatabase() {
+    const config = {
+      name: "ksuvidha",
+      version: 1,
+      storeName: "checkotp",
+      description: "My store with auto-incrementing IDs",
+      autoIncrement: true,
+    };
+    const database = await localForage.createInstance(config);
+    dispatch(setDb(database));
+  }
+  useEffect(() => {
+    if (userData) {
+      openDatabase();
+    }
+  }, [status]);
+  useEffect(() => {
+    if (db && userData) {
+      addData(userData);
+    }
+  }, [db, userData]);
+  async function addData(userData: any) {
+    console.log("USERDATA::", userData);
+    console.log("DB::", db);
+    try {
+      await db.setItem(userData.ip_no, userData.otp);
+      console.log("Data added to store");
+    } catch (error) {
+      console.log("Error adding data to store", error);
+    }
+  }
   
-  
+  const handleOtpValidation = async (data: any) => {
+    const otp = await db.getItem(userData.ip_no);
+    console.log("OTP", otp);
+    if (otp === null || otp != data.otp) {
+      setGetStatus("failed");
+      setOtpMessage("Invalid OTP");
+      setIsLoading(false);
+      setIsInvalidOtp(false);  
+    } else {
+      setOtpMessage("Otp Sent");
+      setGetStatus("succeeded");
+      const unitIdString = localStorage.getItem("unit_code");
+      const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+      const unitId = unitIdObject?.unit;
 
-  // const handleProceedToPay = async () => {
-  //   const unitIdString = localStorage.getItem("unit_code");
-  //   const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
-  //   const unitId = unitIdObject?.unit;
+      const selectedItems = {
+        unit_id: unitId,
+        patient_ipno: localStorage.getItem("admissionno"),
+        delivery_address: "",
+        serving_time: localStorage.getItem("serving time"),
+        my_cart_items: cartItems.map((item: any) => ({
+          itemid: item.itemid,
+          remarkid: [],
+          other_remark: item.other_remark || "",
+          quantity: item.quantity,
+        })),
+      };
 
-  //   const selectedItems = {
-  //     unit_id: unitId,
-  //     patient_ipno: localStorage.getItem("admissionno"),
-  //     delivery_address: "",
-  //     serving_time: localStorage.getItem("serving time"),
-  //     my_cart_items: cartItems.map((item: any) => ({
-  //       itemid: item.itemid,
-  //       remarkid: [],
-  //       other_remark: item.other_remark || "",
-  //       quantity: item.quantity,
-  //     })),
-  //   };
+      try {
+        setOtpMessage("OTP sent successfully"); // Update otpMessage here
+        setGetStatus("loading"); // Update getstatus here
+        await dispatch(getMyOrderFood(selectedItems));
+        dispatch(clearCart());
+        navigate('/fnb');
+        const existingArrayString = localStorage.getItem("orderHistory");
+        const existingArray = existingArrayString
+          ? JSON.parse(existingArrayString)
+          : [];
 
-  //   try {
-  //     const response = await dispatch(getMyOrderFood(selectedItems));
-  //     //const orderIds = response.data; // Replace with the actual property containing the order ID from the response
-
-  //     // Retrieve existing order history from local storage
-  //     const existingArrayString = localStorage.getItem("orderHistory");
-  //     const existingArray = existingArrayString
-  //       ? JSON.parse(existingArrayString)
-  //       : [];
-
-  //     // Add new order data to the existing array
-  //     const updatedArray = [...existingArray, orderIds];
-
-  //     // Store the updated array in local storage
-  //     localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
-
-  //     setTimeout(() => {
-  //       dispatch(clearCart());
-  //       localStorage.removeItem("serving time");
-  //       localStorage.removeItem("servingType");
-  //     }, 120000);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+        const updatedArray = [...existingArray, orderIds];
+        
+        localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+        setOtp("");
+        setShowOtpInput(false);
+      } catch (error) {
+        console.log(error);
+        setOtpMessage("Error occurred"); 
+        setGetStatus("failed"); // Update getstatus here
+      }
+    }
+  };
 
   const onAddRemark = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
@@ -169,14 +222,26 @@ function MyCart() {
     [cartItems]
   );
 
-  useEffect(() => {
-    if (status === "succeeded") {
-      dispatch(clearCart());
-      localStorage.removeItem("serving time");
-      localStorage.removeItem("servingType");
-      navigate("/fnb");
-    }
-  }, [status, dispatch]);
+  // useEffect(() => {
+  //   if (status === "succeeded") {
+  //     dispatch(clearCart());
+  //     localStorage.removeItem("serving time");
+  //     localStorage.removeItem("servingType");
+  //     navigate("/fnb");
+  //   }
+  // }, [status, dispatch]);
+
+  const resendOTP = async () => {
+    await dispatch(
+      getOtp({
+        mobile_number: localStorage.getItem("mobile_number"),
+        unit_id: unit_id,
+      })
+    );
+    setGetStatus("succeeded");
+    setOtpMessage("OTP sent successfully");
+    //setShowOtpInput(true);
+  };
 
   return (
     <div>
@@ -440,29 +505,97 @@ function MyCart() {
         </div>
       )}
 
-{loading && (
-      <Dimmer active>
-        <Loader>Loading...</Loader>
-        <CInput
-            placeholder={t("Enter OTP")}
-            register={register}
-            label="otp"
-            required={true}
-            size="large"
-            error={errors["otp"] ? true : false}
-            fluid={true}
-            loading={false}
-            type="number"
-            minLength={6}
-            maxLength={6}
-          />
-          {errors.otp?.type === "required" && (
-            <Label color="orange" pointing prompt>
-              {t('otp_is_required')}
-            </Label>
-          )}
-      </Dimmer>
-    )}
+      {showOtpInput && (
+        <Dimmer active >
+          <div>
+            <MessageNotification
+              message={otpMessage}
+              status={getstatus}
+              theme="dark"
+              autoClose={5000}
+            />      
+            <Form
+              onSubmit={handleSubmit(handleOtpValidation)}
+              style={{
+                fontSize: "1.2rem",
+                maxWidth: "340px",
+                width: "100%",
+                margin: "0 auto",
+                padding: "1rem",
+              }}
+            >
+              <CInput
+                placeholder={t("Enter OTP")}
+                register={register}
+                label="otp"
+                required={true}
+                size="large"
+                error={errors["otp"] ? true : false}
+                fluid={true}
+                loading={false}
+                type="number"
+                minLength={6}
+                maxLength={6}
+              />
+              {errors.otp?.type === "required" && (
+                <Label color="orange" pointing prompt>
+                  {t("otp_is_required")}
+                </Label>
+              )}
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "25px",
+                  padding: "3px",
+                  fontSize: "13px",
+                  whiteSpace: "nowrap",
+                  textAlign: "center",
+                  marginTop: "10%",
+                  color: "#0075ad",
+                }}
+              >
+                {t("otp:Dint_Receive_A_Otp")}
+                <span
+                  style={{
+                    textDecoration: "underline",
+                    padding: "5px",
+                    fontWeight: "bold",
+                    color: "#0075AD",
+                  }}
+                  onClick={resendOTP}
+                >
+                  {t("otp:Resend_Otp")}
+                </span>
+              </div>
+              {isLoading ? (
+                <Loader active={isLoading} inline="centered" />
+              ) : (
+                <Button
+                  type="submit"
+                  loading={false}
+                  style={{
+                    borderRadius: "100px",
+                    textAlign: "center",
+                    fontWeight: "lighter",
+                    fontSize: "1.4rem",
+                    background: "#0075ad",
+                    width: "100%",
+                    maxWidth: "300px", // set a maximum width for the button
+                    margin: "0 auto", // center the button horizontally
+                  }}
+                >
+                  <h1 style={{ color: "white", fontSize: "1.2rem" }}>
+                    {t("Submit")}
+                  </h1>
+                </Button>
+              )}
+            </Form>
+          </div>
+        </Dimmer>
+      )}
       <BackgroundImage />
     </div>
   );
@@ -470,18 +603,167 @@ function MyCart() {
 
 export default MyCart;
 
-//  const handleProceedToPay = () => {
+{
+  /* <div
+style={{
+  marginBottom: "100%",
+  background: "white",
+  width: "260px",
+  height: "65%",
+  borderRadius: "25px",
+}}
+> */
+}
+{
+  /* {isInvalidOtp ? null : (<MessageNotification
+message={otpMessage}
+status={getstatus}
+theme="dark"
+autoClose={5000}
+/>)} */
+}
+{
+  /* <div style={{ marginTop: "4%" }}>
+  <img src={BrandLogo} width={150} height={150} />
+</div> */
+}
+{
+  /* {isInvalidOtp && (
+  <p style={{ color: "red", fontSize: "16px", fontWeight: "bold" }}>
+    Invalid OTP. Please try again.
+  </p>
+)} */
+}
+{
+  /* <input
+  type="text"
+  placeholder="Enter OTP"
+  style={{ fontWeight: "bold", width: "80%" }}
+  value={otp}
+  onChange={handleOtpChange}
+/> */
+}
+{
+  /* <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "25px",
+    padding: "3px",
+    fontSize: "13px",
+    whiteSpace: "nowrap",
+    textAlign: "center",
+    marginTop: "10%",
+    color: "#0075ad",
+  }}
+>
+  {t("otp:Dint_Receive_A_Otp")}
+  <span
+    style={{
+      textDecoration: "underline",
+      padding: "5px",
+      fontWeight: "bold",
+      color: "#0075AD",
+    }}
+    onClick={resendOTP}
+  >
+    {t("otp:Resend_Otp")}
+  </span>
+</div> */
+}
+{
+  /* <div
+  style={{
+    width: "25%",
+    height: "25px",
+    padding: "3px",
+    fontSize: "13px",
+    whiteSpace: "nowrap",
+    textAlign: "center",
+    marginTop: "10%",
+    color: "#0075ad",
+  }}
+>
+  {t("otp:Dint_Receive_A_Otp")}
+  <span
+    style={{
+      textDecoration: "underline",
+      padding: "5px",
+      fontWeight: "bold",
+      color: "#0075AD",
+    }}
+    onClick={resendOTP}
+  >
+    {t("otp:Resend_Otp")}
+  </span>
+</div> */
+}
+{
+  /* <Button
+  type="submit"
+  loading={false}
+  style={{
+    borderRadius: "100px",
+    textAlign: "center",
+    fontWeight: "lighter",
+    fontSize: "1.4rem",
+    background: "#0075ad",
+    width: "50%",
+    maxWidth: "300px",
+    margin: "0 auto",
+    marginTop: "10%",
+  }}
+  onClick={handleOtpValidation}
+>
+  <h1 style={{ color: "white", fontSize: "1.2rem" }}>
+    {t("Submit")}
+  </h1>
+</Button> */
+}
+// </div>
 
-//   const selectedItems = {
-//     "unit_id": localStorage.getItem('unit_code'),
-//     "patient_ipno": localStorage.getItem('admissionno'),
-//     "delivery_address": "",
-//     "serving_time": localStorage.getItem('serving time'),
-//   my_cart_items,
-//   };
 
-//   console.log("selected items:::",selectedItems);
+  // const handleProceedToPay = async () => {
+  //   const unitIdString = localStorage.getItem("unit_code");
+  //   const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
+  //   const unitId = unitIdObject?.unit;
 
-//   dispatch(addToCart(selectedItems));
-//   console.log(selectedItems);
-// };
+  //   const selectedItems = {
+  //     unit_id: unitId,
+  //     patient_ipno: localStorage.getItem("admissionno"),
+  //     delivery_address: "",
+  //     serving_time: localStorage.getItem("serving time"),
+  //     my_cart_items: cartItems.map((item: any) => ({
+  //       itemid: item.itemid,
+  //       remarkid: [],
+  //       other_remark: item.other_remark || "",
+  //       quantity: item.quantity,
+  //     })),
+  //   };
+
+  //   try {
+  //     const response = await dispatch(getMyOrderFood(selectedItems));
+  //     //const orderIds = response.data; // Replace with the actual property containing the order ID from the response
+
+  //     // Retrieve existing order history from local storage
+  //     const existingArrayString = localStorage.getItem("orderHistory");
+  //     const existingArray = existingArrayString
+  //       ? JSON.parse(existingArrayString)
+  //       : [];
+
+  //     // Add new order data to the existing array
+  //     const updatedArray = [...existingArray, orderIds];
+
+  //     // Store the updated array in local storage
+  //     localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+
+  //     setTimeout(() => {
+  //       dispatch(clearCart());
+  //       localStorage.removeItem("serving time");
+  //       localStorage.removeItem("servingType");
+  //     }, 120000);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };

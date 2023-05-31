@@ -12,6 +12,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import { clearCart } from "../../reduxtoolkit/myCartSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const Navbar = () => {
     localStorage.removeItem("serving time");
     localStorage.removeItem("servingType");
     navigate(redirectUrl + "" + unit_id);
+    dispatch(clearCart());
   };
 
   return (
