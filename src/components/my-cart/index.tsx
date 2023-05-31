@@ -251,6 +251,7 @@ function MyCart() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          marginTop: '-10%'
         }}
       >
         <div style={{ width: "32%", border: "1px solid black" }} />
@@ -271,7 +272,7 @@ function MyCart() {
           minHeight: "10px",
           maxHeight: "300px",
           overflowY: "scroll",
-          marginTop: "2%",
+          marginTop: "-5%",
         }}
       >
         {cartItems?.map((item: any, index: number) => (
@@ -449,6 +450,7 @@ function MyCart() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          marginTop: '-5%'
         }}
       >
         <div style={{ width: "32%", border: "1px solid black" }} />
@@ -473,9 +475,10 @@ function MyCart() {
           border: "1px solid grey",
           boxShadow: "0px 2px 4px grey",
           marginLeft: "4%",
+          marginTop: '-2%'
         }}
       >
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex"}}>
           <div
             style={{
               width: "10%",
@@ -558,7 +561,7 @@ function MyCart() {
       )}
 
       {showOtpInput && (
-        <Dimmer active>
+        <Dimmer active style={{height: '100%'}}>
             <div style={{ background: "white", borderRadius: '25px'}}>
               <div style={{ marginTop: "4%" }}>
                 <img src={BrandLogo} width={150} height={150} />
