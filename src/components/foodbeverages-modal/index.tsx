@@ -208,6 +208,7 @@ function FoodBeverages() {
           : category === "Drinks"
           ? 2
           : "All";
+
       const filteredItems = foodItemsList?.filter(
         (item: any) => item.item_type === filterValue
       );
@@ -222,29 +223,6 @@ function FoodBeverages() {
     },
     [foodItemsList]
   );
-
-  // const onAddRemark = useCallback(
-  //   (e: React.ChangeEvent<HTMLInputElement>, itemId: any) => {
-  //     const value = e.target.value;
-
-  //     const updatedMenu = menuItems.map((menuItem) =>
-  //       menuItem.itemid === itemId
-  //         ? { ...menuItem, other_remark: value, remarkId: undefined }
-  //         : {
-  //             ...menuItem,
-  //             remarkId: undefined,
-  //           }
-  //     );
-
-  //     const updatedCartItem = updatedMenu?.find(
-  //       (item) => item.itemid === itemId
-  //     );
-
-  //     setMenuItems(updatedMenu);
-  //     dispatch(updateCartItem(updatedCartItem));
-  //   },
-  //   [menuItems]
-  // );
 
   const orderList = useAppSelector((state) => state.orderHistory);
   const orderHistoryButton = () => {
@@ -283,6 +261,7 @@ function FoodBeverages() {
           marginBottom: "5%",
           justifyContent: "space-between",
           alignItems: "center",
+          //height: '120px'
         }}
       >
         <div
@@ -345,28 +324,6 @@ function FoodBeverages() {
           ) : null}
         </div>
       </div>
-      {/* <div style={{ display: "flex", marginTop: "4%", width: '100%'}}>
-        {data.map((item, index) => (
-          <div
-            key={index}
-            style={{
-              padding: "2%",
-              fontSize: "10px",
-              background: "white",
-              boxShadow: "0px 2px 4px grey",
-              borderRadius: "10px",
-              whiteSpace: "nowrap",
-              backgroundColor:
-                selectedCategory === item.category ? "#0075ad" : "",
-              color: selectedCategory === item.category ? "white" : "black",
-            }}
-            onClick={() => onSelectCategory(item.category)}
-          >
-            <div>{t(item.title)}</div>
-          </div>
-        ))}
-      </div> */}
-
       <div
         style={{
           display: "flex",
@@ -469,35 +426,25 @@ function FoodBeverages() {
                         style={{
                           marginTop: "50px",
                           borderRadius: "10px",
-                          width: '100%',
+                          width: "100%",
                         }}
                       >
                         <div
                           style={{
-                            background: '#0075AD',
-                            padding:'10px',
-                            width: '100px',
-                            height:'30px',
-                            borderRadius:'25px',
-                            marginTop:'-50%'
-                            // position: "relative",
-                            // left: "29%",
-                            // transform: "translate(-50%, -50%)",
-                            // width: "100%",
-                            // height: "20px",
-                            // background: "white",
-                            // borderRadius: "6px",
-                            // boxShadow: "0px 2px 4px grey",
-                            // zIndex: 1,
-                            // justifyContent: "space-between",
+                            background: "#0075AD",
+                            padding: "10px",
+                            width: "100px",
+                            height: "30px",
+                            borderRadius: "25px",
+                            marginTop: "-50%",
                           }}
                         >
                           {item.quantity === 0 ? (
                             <p
                               style={{
-                                marginTop:'-5%',
+                                marginTop: "-5%",
                                 fontWeight: "bold",
-                                color:'white',
+                                color: "white",
                                 pointerEvents: "auto",
                               }}
                               onClick={() =>
@@ -515,7 +462,7 @@ function FoodBeverages() {
                                 style={{
                                   fontWeight: "bold",
                                   marginRight: "20px",
-                                  color:'white'
+                                  color: "white",
                                 }}
                                 onClick={() =>
                                   onRemoveCartItem(index, {
@@ -526,14 +473,16 @@ function FoodBeverages() {
                               >
                                 -
                               </span>
-                              <span style={{ fontWeight: "bold",color:'white'}}>
+                              <span
+                                style={{ fontWeight: "bold", color: "white" }}
+                              >
                                 {item.quantity}
                               </span>
                               <span
                                 style={{
                                   fontWeight: "bold",
                                   marginLeft: "20px",
-                                  color:'white'
+                                  color: "white",
                                 }}
                                 onClick={() =>
                                   onAddCartItem(index, {
@@ -547,100 +496,33 @@ function FoodBeverages() {
                             </div>
                           )}
                         </div>
-                        {/* <input
-                          placeholder="Add Remarks"
-                          style={{
-                            width: "120px",
-                            height: "40px",
-                            borderRadius: "5px",
-                          }}
-                          type="text"
-                          value={item.other_remark || ""}
-                          onChange={(event) => onAddRemark(event, item.itemid)}
-                        /> */}
                       </div>
                     </div>
-                    <div style={{ marginLeft: "57%", position: "relative",
-    marginTop: '0.5%'}}>
+                    <div
+                      style={{
+                        marginLeft: "57%",
+                        position: "relative",
+                        marginTop: "0.5%",
+                      }}
+                    >
                       {item.image ? (
-                        <img src={item.image} width={100} height={90} style={{marginLeft:'-20%'}}/>
+                        <img
+                          src={item.image}
+                          width={100}
+                          height={90}
+                          style={{ marginLeft: "-8%" }}
+                        />
                       ) : (
                         <img
                           src={veg}
-                          width={100} height={90}
+                          width={100}
+                          height={90}
                           style={{
                             borderRadius: "10px",
                           }}
                         />
                       )}
-                      <div>
-                        {/* <div
-                          style={{
-                            position: "absolute",
-                            left: "50%",
-                            transform: "translate(-50%, -50%)",
-                            width: "80%",
-                            height: "20px",
-                            background: "white",
-                            borderRadius: "6px",
-                            boxShadow: "0px 2px 4px grey",
-                            zIndex: 1,
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          {item.quantity === 0 ? (
-                            <span
-                              style={{
-                                fontWeight: "bold",
-                                color: "black",
-                                pointerEvents: "auto",
-                              }}
-                              onClick={() =>
-                                onAddCartItem(index, {
-                                  ...item,
-                                  quantity: item.quantity + 1,
-                                })
-                              }
-                            >
-                              {t("add")}
-                            </span>
-                          ) : (
-                            <div style={{ marginTop: "-2%" }}>
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  marginRight: "20px",
-                                }}
-                                onClick={() =>
-                                  onRemoveCartItem(index, {
-                                    ...item,
-                                    quantity: item.quantity - 1,
-                                  })
-                                }
-                              >
-                                -
-                              </span>
-                              <span style={{ fontWeight: "bold" }}>
-                                {item.quantity}
-                              </span>
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  marginLeft: "20px",
-                                }}
-                                onClick={() =>
-                                  onAddCartItem(index, {
-                                    ...item,
-                                    quantity: item.quantity + 1,
-                                  })
-                                }
-                              >
-                                +
-                              </span>
-                            </div>
-                          )}
-                        </div> */}
-                      </div>
+                      <div></div>
                     </div>
                   </div>
                 </div>
@@ -667,120 +549,3 @@ function FoodBeverages() {
 }
 
 export default FoodBeverages;
-
-{
-  /* <div
-          style={{
-            marginRight: "4%",
-            padding: "3px",
-            fontSize: "10px",
-            background: "white",
-            boxShadow: "0px 2px 4px grey",
-            borderRadius: "10px",
-            whiteSpace: "nowrap",
-            marginLeft: "5%",
-          }}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <p style={{ width: "70px", paddingTop: "6%" }}>
-            {selectedServingType}
-            {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
-          </p>
-        </div> */
-}
-
-{
-  /* {myCartItems.length > 0 ? ( */
-}
-{
-  /* {showViewCartOption && (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            height: "60px",
-            marginTop: "8%",
-            background: "white",
-            borderRadius: "10px",
-            boxShadow: "0px 2px 4px grey",
-            marginLeft: "1%",
-          }}
-        >
-          <div style={{ marginLeft: "10%", marginTop: "6%" }}>
-            <p style={{ color: "black", fontSize: "15px", fontWeight: "bold" }}>
-              <div>{`${cartItems.length}`} {t('item(s)_added')}</div>
-            </p>
-          </div>
-          <div
-            style={{
-              marginLeft: "22%",
-              marginTop: "5%",
-              height: "26px",
-              width: "30%",
-              borderRadius: "5px",
-              background: "#4A98CD",
-            }}
-            onClick={goCart}
-          >
-            <span
-              style={{
-                fontSize: "16px",
-                fontWeight: "bold",
-                marginTop: "10%",
-                color: "white",
-              }}
-            >
-              {t('view_cart')}
-            </span>
-            <Icon name="caret right" inverted color="grey" />
-          </div>
-        </div>
-      )} */
-}
-{
-  /* ) : null} */
-}
-
-{
-  /* {isOpen && (
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 1,
-            background: "white",
-            boxShadow: "0px 2px 4px grey",
-            borderRadius: "10px",
-            marginTop: "5px",
-            width: "45%",
-            height: "250px",
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
-            {Array.isArray(getItemsServingTime.data) ? (
-              getMyServicesTypes.data?.map((item: any, index: any) => (
-                <div
-                  // onClick={() => {
-                  //   handleServingTypeSelection(item.id, item.mealtime);
-                  // }}
-                >
-                  <p
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "12px",
-                      padding: "2%",
-                    }}
-                  >
-                    {item.mealtime}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <p style={{ marginTop: "50%" }}>Loading...</p>
-            )}
-          </div>
-        </div>
-      )} */
-}

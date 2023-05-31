@@ -149,8 +149,6 @@ function MyCart() {
     }
   }
 
-
-  
   const handleOtpValidation = async (data: any) => {
     setGetStatus("idle");
     const otp = await db.getItem(userData.ip_no);
@@ -159,7 +157,7 @@ function MyCart() {
       setGetStatus("failed");
       setOtpMessage("Invalid OTP");
       setIsLoading(false);
-      setIsInvalidOtp(false);  
+      setIsInvalidOtp(false);
     } else {
       setOtpMessage("Otp Sent");
       setGetStatus("succeeded");
@@ -185,20 +183,20 @@ function MyCart() {
         setGetStatus("loading"); // Update getstatus here
         await dispatch(getMyOrderFood(selectedItems));
         dispatch(clearCart());
-        navigate('/fnb');
+        navigate("/fnb");
         const existingArrayString = localStorage.getItem("orderHistory");
         const existingArray = existingArrayString
           ? JSON.parse(existingArrayString)
           : [];
 
         const updatedArray = [...existingArray, orderIds];
-        
+
         localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
         setOtp("");
         setShowOtpInput(false);
       } catch (error) {
         console.log(error);
-        setOtpMessage("Error occurred"); 
+        setOtpMessage("Error occurred");
         setGetStatus("failed"); // Update getstatus here
       }
     }
@@ -234,7 +232,7 @@ function MyCart() {
       })
     );
     setGetStatus("succeeded");
-    console.log('GET STATUS::',getstatus);
+    console.log("GET STATUS::", getstatus);
     setOtpMessage("OTP sent successfully");
   };
 
@@ -268,76 +266,134 @@ function MyCart() {
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>
-      {cartItems?.map((item: any, index: number) => (
-        <div
-          key={index}
-          style={{
-            width: "94%",
-            height: "124px",
-            borderRadius: "10px",
-            margin: "5%",
-            border: "1px solid grey",
-            boxShadow: "0px 2px 4px grey",
-            marginLeft: "4%",
-          }}
-        >
-          <div style={{ display: "flex" }}>
-            <div
-              style={{
-                width: "10%",
-                height: "80px",
-                whiteSpace: "nowrap",
-                marginLeft: "10px",
-                marginTop: "5%",
-              }}
-            >
+      <div
+        style={{
+          minHeight: "10px",
+          maxHeight: "300px",
+          overflowY: "scroll",
+          marginTop: "2%",
+        }}
+      >
+        {cartItems?.map((item: any, index: number) => (
+          <div
+            key={index}
+            style={{
+              width: "94%",
+              height: "124px",
+              borderRadius: "10px",
+              margin: "5%",
+              border: "1px solid grey",
+              boxShadow: "0px 2px 4px grey",
+              marginLeft: "4%",
+            }}
+          >
+            <div style={{ display: "flex" }}>
               <div
                 style={{
-                  fontWeight: "bold",
-                  fontSize: "12px",
+                  width: "10%",
+                  height: "80px",
+                  whiteSpace: "nowrap",
+                  marginLeft: "10px",
+                  marginTop: "5%",
                 }}
               >
-                {item.item_type === 0 || item.item_type === 2 ? (
-                  <img src={vegIcon} width={30} height={30} />
-                ) : (
-                  <img src={nonVeg} width={20} height={20} />
-                )}
-                {item.item}
-                <div>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "12px",
+                  }}
+                >
+                  {item.item_type === 0 || item.item_type === 2 ? (
+                    <img src={vegIcon} width={30} height={30} />
+                  ) : (
+                    <img src={nonVeg} width={20} height={20} />
+                  )}
+                  {item.item}
                   <div>
-                    <img
-                      src={Rupee}
-                      width={8}
-                      height={10}
-                      style={{ marginTop: "1px", padding: "1%" }}
-                    />
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        marginTop: "10%",
-                        marginBottom: "1%",
-                      }}
-                    >
-                      {item.price_att}
-                    </span>
-                  </div>
-                  <div style={{ marginTop: "10%",width: "100%"}}>
-                    <input
-                      placeholder="Enter Remarks"
-                      style={{
-                        width: "940%",
-                        height: "40px",
-                        borderRadius: "5px",
-                      }}
-                      type="text"
-                      value={item.other_remark || ""}
-                      onChange={(event) => onAddRemark(event, item.itemid)}
-                    />
+                    <div>
+                      <img
+                        src={Rupee}
+                        width={8}
+                        height={10}
+                        style={{ marginTop: "1px", padding: "1%" }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          marginTop: "10%",
+                          marginBottom: "1%",
+                        }}
+                      >
+                        {item.price_att}
+                      </span>
+                    </div>
+                    <div style={{ marginTop: "10%", width: "100%" }}>
+                      <input
+                        placeholder="Enter Remarks"
+                        style={{
+                          width: "940%",
+                          height: "40px",
+                          borderRadius: "5px",
+                        }}
+                        type="text"
+                        value={item.other_remark || ""}
+                        onChange={(event) => onAddRemark(event, item.itemid)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div style={{ marginLeft: "56%" }}>
+              <div
+                style={{
+                  marginTop: "50px",
+                  borderRadius: "10px",
+                  width: "100%",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#0075AD",
+                    padding: "10px",
+                    width: "90px",
+                    height: "25px",
+                    borderRadius: "25px",
+                    marginTop: "-12%",
+                    marginLeft: '62%'
+                  }}
+                >
+                  {item.quantity === 0 ? (
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        color: "black",
+                        pointerEvents: "auto",
+                      }}
+                      onClick={() => dispatch(incrementCartItem(item))}
+                    >
+                      {t("add")}
+                    </span>
+                  ) : (
+                    <div style={{marginTop: '-12%', color: 'white'}}>
+                      <span
+                       style={{ fontWeight: "bold", marginRight: "20%" }}
+                        onClick={() => dispatch(decrementCartItem(item))}
+                      >
+                        -
+                      </span>
+                      <span style={{ fontWeight: "bold" }}>
+                        {item.quantity}
+                      </span>
+                      <span
+                        style={{ fontWeight: "bold", marginLeft: "20%" }}
+                        onClick={() => dispatch(incrementCartItem(item))}
+                      >
+                        +
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* <div style={{ marginLeft: "56%" }}>
               <div>
                 <div
                   style={{
@@ -383,10 +439,11 @@ function MyCart() {
                   )}
                 </div>
               </div>
+            </div> */}
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <div
         style={{
           display: "flex",
@@ -501,96 +558,96 @@ function MyCart() {
       )}
 
       {showOtpInput && (
-        <Dimmer active >
-          <div style={{background: 'white', borderRadius:'25px'}}>
-          <div style={{ marginTop: "4%" }}>
-        <img src={BrandLogo} width={150} height={150} />
-      </div>
-            <MessageNotification
-              message={otpMessage}
-              status={getstatus}
-              theme="dark"
-              autoClose={5000}
-            />      
-            <Form
-              onSubmit={handleSubmit(handleOtpValidation)}
-              style={{
-                fontSize: "1.2rem",
-                maxWidth: "340px",
-                width: "100%",
-                margin: "0 auto",
-                padding: "1rem",
-              }}
-            >
-              <CInput
-                placeholder={t("Enter OTP")}
-                register={register}
-                label="otp"
-                required={true}
-                size="large"
-                error={errors["otp"] ? true : false}
-                fluid={true}
-                loading={false}
-                type="number"
-                minLength={6}
-                maxLength={6}
+        <Dimmer active>
+            <div style={{ background: "white", borderRadius: '25px'}}>
+              <div style={{ marginTop: "4%" }}>
+                <img src={BrandLogo} width={150} height={150} />
+              </div>
+              <MessageNotification
+                message={otpMessage}
+                status={getstatus}
+                theme="dark"
+                autoClose={5000}
               />
-              {errors.otp?.type === "required" && (
-                <Label color="orange" pointing prompt>
-                  {t("otp_is_required")}
-                </Label>
-              )}
-
-              <div
+              <Form
+                onSubmit={handleSubmit(handleOtpValidation)}
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "25px",
-                  padding: "3px",
-                  fontSize: "13px",
-                  whiteSpace: "nowrap",
-                  textAlign: "center",
-                  color: "#0075ad",
+                  fontSize: "1.2rem",
+                  maxWidth: "340px",
+                  width: "100%",
+                  margin: "0 auto",
+                  padding: "1rem",
                 }}
               >
-                {t("otp:Dint_Receive_A_Otp")}
-                <span
-                  style={{
-                    textDecoration: "underline",
-                    padding: "5px",
-                    fontWeight: "bold",
-                    color: "#0075AD",
-                  }}
-                  onClick={resendOTP}
-                >
-                  {t("otp:Resend_Otp")}
-                </span>
-              </div>
-              {isLoading ? (
-                <Loader active={isLoading} inline="centered" />
-              ) : (
-                <Button
-                  type="submit"
+                <CInput
+                  placeholder={t("Enter OTP")}
+                  register={register}
+                  label="otp"
+                  required={true}
+                  size="large"
+                  error={errors["otp"] ? true : false}
+                  fluid={true}
                   loading={false}
+                  type="number"
+                  minLength={6}
+                  maxLength={6}
+                />
+                {errors.otp?.type === "required" && (
+                  <Label color="orange" pointing prompt>
+                    {t("otp:otp_is_required")}
+                  </Label>
+                )}
+
+                <div
                   style={{
-                    borderRadius: "100px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "25px",
+                    padding: "3px",
+                    fontSize: "13px",
+                    whiteSpace: "nowrap",
                     textAlign: "center",
-                    fontWeight: "lighter",
-                    fontSize: "1.4rem",
-                    background: "#0075ad",
-                    width: "100%",
-                    maxWidth: "300px", // set a maximum width for the button
-                    margin: "0 auto", // center the button horizontally
+                    color: "#0075ad",
                   }}
                 >
-                  <h1 style={{ color: "white", fontSize: "1.2rem" }}>
-                    {t("Submit")}
-                  </h1>
-                </Button>
-              )}
-            </Form>
-          </div>
+                  {t("otp:Dint_Receive_A_Otp")}
+                  <span
+                    style={{
+                      textDecoration: "underline",
+                      padding: "5px",
+                      fontWeight: "bold",
+                      color: "#0075AD",
+                    }}
+                    onClick={resendOTP}
+                  >
+                    {t("otp:Resend_Otp")}
+                  </span>
+                </div>
+                {isLoading ? (
+                  <Loader active={isLoading} inline="centered" />
+                ) : (
+                  <Button
+                    type="submit"
+                    loading={false}
+                    style={{
+                      borderRadius: "100px",
+                      textAlign: "center",
+                      fontWeight: "lighter",
+                      fontSize: "1.4rem",
+                      background: "#0075ad",
+                      width: "100%",
+                      maxWidth: "300px", // set a maximum width for the button
+                      margin: "0 auto", // center the button horizontally
+                    }}
+                  >
+                    <h1 style={{ color: "white", fontSize: "1.2rem" }}>
+                      {t("otp:Submit")}
+                    </h1>
+                  </Button>
+                )}
+              </Form>
+            </div>
         </Dimmer>
       )}
       <BackgroundImage />
