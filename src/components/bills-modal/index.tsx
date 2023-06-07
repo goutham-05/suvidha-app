@@ -13,7 +13,6 @@ import {
   useAppSelector,
 } from "../../config/redux-store";
 import { useTranslation } from "react-i18next";
-import { getOtp} from "../../features/login/authSlice";
 import { getMyBill } from "../../reduxtoolkit/myBillSlice";
 
 const MyBillModal = () => {
@@ -35,32 +34,56 @@ const MyBillModal = () => {
     );
   }, []);
 
-  const userData = useAppSelector((state) => state.user);
+  const userData = useAppSelector((state) => state.myBill);
 
   const [patientTypeChecking, setPatientTypeChecking] = useState<any[]>([]);
   const [billProperties, setBillProperties] = useState([
     "Advance Paid",
-              "Approximate Bill",
-              "Estimated Amount",
-              "Due Amt",
+    "Approximate Bill",
+    "Estimated Amount",
+    "Due Amt",
   ]);
 
- 
+  const ipNum = localStorage.getItem("admissionno");
+  const bedNo = localStorage.getItem("patient_bed");
+  const myBed = bedNo === "null" ? "-" : bedNo;
 
   const billData = () => {
     if (userData.data?.patient_type !== "GENERAL") {
-      const billProps = ["advance_paid", "approximate_bill"];
-      const billValues = userData.data?.length === 0 ? ["No Data", "No"] : [userData.data?.total_advance, userData.data?.latest_estimated_amt];
+      const billProps = [
+        "IP Number",
+        "Bed Number",
+        "advance_paid",
+        "approximate_bill",
+      ];
+      const billValues =
+        userData.data?.length === 0
+          ? ["-", "No"]
+          : [
+              ipNum,
+              myBed,
+              userData.data?.total_advance,
+              userData.data?.latest_estimated_amt,
+            ];
       setPatientTypeChecking(billValues);
-      console.log(billValues)
+      console.log(patientTypeChecking);
       setBillProperties(billProps);
     } else {
-      const billProps = ["advance_paid", "approximate_bill", "estimated_amount", "due_amt"];
+      const billProps = [
+        "IP Number",
+        "Bed Number",
+        "advance_paid",
+        "approximate_bill",
+        "estimated_amount",
+        "due_amt",
+      ];
       const billValues = [
+        ipNum,
+        myBed,
         userData.data?.total_advance || "--",
         userData.data?.app_bill_amount || "--",
         userData.data?.hims_estimated_amount || "--",
-        userData.data?.balance_amt || "--"
+        userData.data?.balance_amt || "--",
       ];
       setPatientTypeChecking(billValues);
       setBillProperties(billProps);
@@ -69,7 +92,7 @@ const MyBillModal = () => {
 
   useEffect(() => {
     billData();
-  }, []);
+  }, [userData]);
 
   const Back = () => {
     navigate("/services");
@@ -78,18 +101,24 @@ const MyBillModal = () => {
   return (
     <div>
       <Navbar />
+      <div
+        style={{ display: "flex", alignItems: "center", marginTop: "6%" }}
+        onClick={() => Back()}
+      >
+        <Icon disabled name="arrow left" size="large" />
+      </div>
       <div className="mydischargeContainer">
-      <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{ display: "flex", alignItems: "center", marginTop: "-10%" }}
+        >
           <div
             style={{
-              //border: '1px solid #4A98CD',
-              //background: "#4A98CD",
               width: "100%",
               height: "50px",
               borderRadius: "30px",
               display: "flex",
               alignItems: "center",
-              marginTop:'-0.3%'
+              marginTop: "-0.3%",
             }}
           >
             <p
@@ -99,13 +128,13 @@ const MyBillModal = () => {
                 fontSize: "20px",
                 fontWeight: "bold",
                 color: "#4A98CD",
-                marginLeft: '38%',
-                textDecoration: 'underline'
+                marginLeft: "38%",
+                textDecoration: "underline",
               }}
             >
-              {t('my_bill')}
+              {t("my_bill")}
             </p>
-            <p
+            {/* <p
               onClick={Back}
               style={{
                 whiteSpace: "nowrap",
@@ -118,7 +147,7 @@ const MyBillModal = () => {
               }}
             >
               X
-            </p>
+            </p> */}
           </div>
         </div>
         {/* <div className="mydischargeHeader">
@@ -159,7 +188,7 @@ const MyBillModal = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                 {t(item)}
+                  {t(item)}
                 </span>
               </Grid.Column>
             ))}
@@ -187,7 +216,7 @@ const MyBillModal = () => {
                     marginLeft: "-20px",
                   }}
                 >
-                  :  {item}
+                  : {item}
                 </span>
               </Grid.Column>
             ))}

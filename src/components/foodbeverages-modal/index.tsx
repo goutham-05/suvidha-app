@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../nav-bar";
 import { Icon, Input } from "semantic-ui-react";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import veg from "../../assets/FandB.svg";
 import cart from "../../assets/fb/shopping-bag.png";
 import {
@@ -23,6 +23,8 @@ import MessageNotification from "../../common/notification";
 import order from "../../reduxtoolkit/orderFoodSlice";
 import { getItemsList } from "../../reduxtoolkit/getItemsListSlice";
 import { orderHistoryList } from "../../reduxtoolkit/orderHistorySlice";
+import Footer from "../footer";
+import BackgroundImage from "../background";
 
 interface Item {
   title: string;
@@ -146,10 +148,47 @@ function FoodBeverages() {
     console.log("in here");
   }, [cartItems, foodItemsList]);
 
+  // useEffect(() => {
+  //   const hasQuantity = cartItems?.some((item) => item.quantity > 0);
+  //   const updatedItems = hasQuantity
+  //     ? menuItems?.map((item: any) => {
+  //         const cartItem = cartItems.find(
+  //           (cartItem) => cartItem.itemid === item.itemid
+  //         );
+  //         console.log(cartItem);
+
+  //         if (cartItem) {
+  //           return {
+  //             ...item,
+  //             quantity: cartItem.quantity,
+  //             other_remark: cartItem.other_remark,
+  //             remarkId: undefined,
+  //           };
+  //         }
+  //         return item;
+  //       })
+  //     : [];
+
+  //   console.log("hasQuantity", hasQuantity);
+
+  //   if (updatedItems?.length > 0) {
+  //     setMenuItems(updatedItems);
+  //     console.log("am here in items");
+  //   } else {
+  //     console.log("itemms");
+  //     setMenuItems((prevItems) =>
+  //       prevItems.map((item: any) => ({
+  //         ...item,
+  //         quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
+  //       }))
+  //     );
+  //   }
+  //   console.log("in here");
+  // }, [cartItems, foodItemsList]);
+
   const goBack = () => {
+    dispatch(clearCart());
     navigate("/services");
-    localStorage.removeItem("servingType");
-    localStorage.removeItem("serving time");
   };
 
   const goCart = () => {
@@ -197,34 +236,175 @@ function FoodBeverages() {
     [menuItems, foodItemsList]
   );
 
-  const onSelectCategory = useCallback(
-    (category: string) => {
-      setSelectedCategory(category);
-      const filterValue =
-        category === "Non Veg"
-          ? 1
-          : category === "Veg"
-          ? 0
-          : category === "Drinks"
-          ? 2
-          : "All";
+  // const onSelectCategory = useCallback(
+  //   (category: string) => {
+  //     setSelectedCategory(category);
+  //     const filterValue =
+  //       category === "Non Veg"
+  //         ? 1
+  //         : category === "Veg"
+  //         ? 0
+  //         : category === "Drinks"
+  //         ? 2
+  //         : "All";
+  //     const filteredItems = foodItemsList?.filter(
+  //       (item: any) => item.item_type === filterValue
+  //     );
+  //     console.log("filteredItems sai:::", filteredItems);
 
-      const filteredItems = foodItemsList?.filter(
-        (item: any) => item.item_type === filterValue
-      );
-      console.log("filteredItems sai:::", filteredItems);
+  //     if (category === "All") {
+  //       setMenuItems(foodItemsList);
+  //       setSearchInput("");
+  //     } else {
+  //       setMenuItems(filteredItems);
+  //     }
+  //   },
+  //   [foodItemsList]
+  // );
 
-      if (category === "All") {
-        setMenuItems(foodItemsList);
-        setSearchInput("");
-      } else {
-        setMenuItems(filteredItems);
-      }
-    },
-    [foodItemsList]
-  );
+  // const onSelectCategory = useCallback(
+  //   (category: string) => {
+  //     setSelectedCategory(category);
+  //     const filterValue =
+  //       category === "Non Veg"
+  //         ? 1
+  //         : category === "Veg"
+  //         ? 0
+  //         : category === "Drinks"
+  //         ? 2
+  //         : "All";
+
+  //     if (category === "All") {
+  //       setMenuItems((prevItems) =>
+  //         prevItems.map((item: any) => ({
+  //           ...item,
+  //           quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
+  //         }))
+  //       );
+  //       setSearchInput("");
+  //     } else {
+  //       const filteredItems = foodItemsList?.filter(
+  //         (item: any) => item.item_type === filterValue
+  //       );
+
+  //       setMenuItems((prevItems) =>
+  //         filteredItems.map((item: any) => ({
+  //           ...item,
+  //           quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
+  //         }))
+  //       );
+  //     }
+  //   },
+  //   [cartItems, foodItemsList]
+  // );
+
+  ////////////////////////////////////
+  const [allItems, setAllItems] = useState<any[]>([]);
+  const [vegItems, setVegItems] = useState<any[]>([]);
+  const [nonVegItems, setNonVegItems] = useState<any[]>([]);
+  const [drinksItems, setDrinksItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    setAllItems(foodItemsList || []);
+  }, [foodItemsList]);
+
+  // useEffect(() => {
+  //   // Update the menu items based on the selected category
+  //   switch (selectedCategory) {
+  //     case "All":
+  //       setMenuItems(allItems);
+  //       break;
+  //     case "Veg":
+  //       setMenuItems(vegItems);
+  //       break;
+  //     case "Non Veg":
+  //       setMenuItems(nonVegItems);
+  //       break;
+  //     case "Drinks":
+  //       setMenuItems(drinksItems);
+  //       break;
+  //     default:
+  //       setMenuItems(allItems);
+  //       break;
+  //   }
+  // }, [selectedCategory, allItems, vegItems, nonVegItems, drinksItems]);
+  useEffect(() => {
+    // Update the menu items based on the selected category
+    let updatedItems;
+    switch (selectedCategory) {
+      case "All":
+        updatedItems = allItems.map((item: any) => ({
+          ...item,
+          quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
+        }));
+        break;
+      case "Veg":
+        updatedItems = vegItems;
+        break;
+      case "Non Veg":
+        updatedItems = nonVegItems;
+        break;
+      case "Drinks":
+        updatedItems = drinksItems;
+        break;
+      default:
+        updatedItems = allItems;
+        break;
+    }
+    setMenuItems(updatedItems);
+  }, [selectedCategory, allItems, vegItems, nonVegItems, drinksItems, cartItems]);
+  
+
+  const onSelectCategory = useCallback((category: string) => {
+    setSelectedCategory(category);
+    setSearchInput("");
+  }, []);
+
+  useEffect(() => {
+    const filteredItems = foodItemsList?.filter(
+      (item: any) => item.item_type === 0
+    );
+
+    setVegItems((prevItems) =>
+      filteredItems?.map((item: any) => ({
+        ...item,
+        quantity:
+          cartItems.find((cartItem) => cartItem.itemid === item.itemid)
+            ?.quantity || 0,
+      }))
+    );
+      
+    const nonVegfilteredItems = foodItemsList?.filter(
+      (item: any) => item.item_type === 1
+    );
+
+    setNonVegItems((prevItems) =>
+    nonVegfilteredItems?.map((item: any) => ({
+        ...item,
+        quantity:
+          cartItems.find((cartItem) => cartItem.itemid === item.itemid)
+            ?.quantity || 0,
+      }))
+    );
+
+    const drinksfilteredItems = foodItemsList?.filter(
+      (item: any) => item.item_type === 2
+    );
+
+    setDrinksItems((prevItems) =>
+    drinksfilteredItems?.map((item: any) => ({
+        ...item,
+        quantity:
+          cartItems.find((cartItem) => cartItem.itemid === item.itemid)
+            ?.quantity || 0,
+      }))
+    );
+
+  },[foodItemsList, cartItems]);
+
 
   const orderList = useAppSelector((state) => state.orderHistory);
+
   const orderHistoryButton = () => {
     let unit_id = "";
     const unitCodeStr = localStorage.getItem("unit_code");
@@ -235,14 +415,17 @@ function FoodBeverages() {
 
     const orderIds = localStorage.getItem("orderHistory");
     const orderData = orderIds ? JSON.parse(orderIds) : [];
-
-    dispatch(
-      orderHistoryList({
-        unit_id: unit_id,
-        dietorder_id: orderData,
-      })
-    );
-    navigate("/order-history");
+    if (data !== null) {
+      dispatch(
+        orderHistoryList({
+          unit_id: unit_id,
+          dietorder_id: orderData,
+        })
+      );
+      navigate("/order-history");
+    } else {
+      return;
+    }
   };
 
   return (
@@ -261,7 +444,6 @@ function FoodBeverages() {
           marginBottom: "5%",
           justifyContent: "space-between",
           alignItems: "center",
-          //height: '120px'
         }}
       >
         <div
@@ -347,7 +529,17 @@ function FoodBeverages() {
               whiteSpace: "nowrap",
               marginBottom: "4%",
               backgroundColor:
-                selectedCategory === item.category ? "#0075ad" : "",
+                selectedCategory === item.category
+                  ? item.category === "Veg"
+                    ? "green"
+                    : item.category === "Non Veg"
+                    ? "#9d380c"
+                    : item.category === "Drinks"
+                    ? "#e53e6c"
+                    : item.category === "All"
+                    ? "#0075AD"
+                    : ""
+                  : "",
               color: selectedCategory === item.category ? "white" : "black",
             }}
             onClick={() => onSelectCategory(item.category)}
@@ -544,6 +736,8 @@ function FoodBeverages() {
           )}
         </div>
       </div>
+      <Footer />
+      <BackgroundImage />
     </>
   );
 }

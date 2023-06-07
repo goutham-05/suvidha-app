@@ -55,6 +55,7 @@ import { Icon } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import BackgroundImage from "../../components/background";
 import { Loader } from "semantic-ui-react";
+import Footer from "../../components/footer";
 
 function PortalService(props: any) {
   const navigate = useNavigate();
@@ -109,6 +110,9 @@ function PortalService(props: any) {
   
         </>
       <BackgroundImage />
+      <div style={{marginTop: '100%'}}>
+      <Footer />
+      </div>
     </>
   );
 }

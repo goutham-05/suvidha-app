@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 
 import "./index.css";
 import BackgroundImage from "../background";
+import Footer from "../footer";
 const MyInsuranceModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -56,7 +57,12 @@ const MyInsuranceModal = () => {
   return (
     <div>
       <Navbar />
-      <div className="mydischargeContainer">
+      <div
+          style={{ display: "flex", alignItems: "center", marginTop: '6%'}}
+        onClick={() => Back()}>
+          <Icon disabled name="arrow left" size="large" />
+        </div>
+      <div className="MydischargeContainer">
       <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
@@ -66,7 +72,7 @@ const MyInsuranceModal = () => {
               borderRadius: "30px",
               display: "flex",
               alignItems: "center",
-              marginTop:'-0.3%'
+              marginTop:'-5.3%'
             }}
           >
             <u
@@ -82,7 +88,7 @@ const MyInsuranceModal = () => {
             >
               {t('insurance_claim_status')}
             </u>
-            <p
+            {/* <p
               onClick={Back}
               style={{
                 whiteSpace: "nowrap",
@@ -96,7 +102,7 @@ const MyInsuranceModal = () => {
               }}
             >
               X
-            </p>
+            </p> */}
           </div>
         </div>
         {/* <div className="mydischargeHeader">
@@ -115,7 +121,7 @@ const MyInsuranceModal = () => {
         </div> */}
 
 
-<div className="two-column-container">
+<div className="two-column-container" style={{marginTop: '-10%'}}>
           <div
             className="column"
             style={{
@@ -139,7 +145,7 @@ const MyInsuranceModal = () => {
                     fontSize: "100%",
                     fontWeight: "bold",
                     color: "black",
-                    marginLeft: "5%",
+                    marginLeft: "10%",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -226,6 +232,9 @@ const MyInsuranceModal = () => {
       </div> */}
       </div>
       <BackgroundImage />
+      <div style={{marginTop: '40%'}}>
+      <Footer />
+      </div>
     </div>
   );
 };

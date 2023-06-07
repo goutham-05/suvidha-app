@@ -21,11 +21,11 @@ const Navbar = () => {
   const unit_code: string | null = localStorage.getItem("unit_code");
 
   const patientName = localStorage.getItem("patient_name");
-  const ipNumber = localStorage.getItem("admissionno");
+  //const ipNumber = localStorage.getItem("admissionno");
   const bedNo = localStorage.getItem("patient_bed");
-  const myBed = bedNo === "null" ? "--" : bedNo;
+  const myBed = bedNo === "null" ? "-" : bedNo;
   const roomno = localStorage.getItem("patient_room");
-  const myRoom = roomno === "null" ? "--" : roomno;
+  const myRoom = roomno === "null" ? "-" : roomno;
   const floorNo = localStorage.getItem("patient_floor");
   const wardName = localStorage.getItem("patient_wardName");
 
@@ -57,7 +57,7 @@ const Navbar = () => {
       style={{
         marginTop: "-10%",
         width: "119%",
-        height: "130px",
+        height: "92px",
         marginLeft: "-9%",
         display: "flex",
         background: "white",
@@ -66,24 +66,24 @@ const Navbar = () => {
     >
       <img
         src={logo}
-        width={110}
-        height={110}
-        style={{ marginTop: "3%", marginLeft: "0%" }}
+        width={90}
+        height={90}
+        style={{ marginTop: "1%", marginLeft: "4%" }}
       />
       <div
         className="data-container"
-        style={{ whiteSpace: "nowrap", marginLeft: "36%", marginTop: "2%" }}
+        style={{ whiteSpace: "nowrap", marginLeft: "36%", marginTop: "4%" }}
       >
         <div className="patientData">
           <p> {patientName}</p>
-          <p>
+          {/* <p>
             <strong> {t("mydetails:ip")}:</strong> {ipNumber}
-          </p>
+          </p> */}
           <p>
             <strong>{t("mydetails:bed")}: </strong>
             {myBed}
           </p>
-          <p>
+          {/* <p>
             <strong>
               {t("mydetails:room")}/{t("mydetails:floor")}:{" "}
             </strong>
@@ -91,7 +91,7 @@ const Navbar = () => {
           </p>
           <p>
             <strong>{t("mydetails:ward_name")}:</strong> {wardName}
-          </p>
+          </p> */}
           <p
             style={{
               padding: "2px 10px",

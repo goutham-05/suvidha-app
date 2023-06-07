@@ -1,10 +1,9 @@
-.mydischargeContainer{
+.MydischargeContainer{
     width: 95%;
     height: 350px;
     margin-left: 10px;
-    border: 1px solid #0075ad;
     border-radius: 30px;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 .mydischargeHeader{

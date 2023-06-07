@@ -24,6 +24,7 @@ import PortalService from "../../features/PortalServices";
 import MyCart from "../../components/my-cart";
 import Ambulance from "../../components/ambulance-modal";
 import OrderHistory from "../../components/orderHistory-modal";
+import Footer from "../../components/footer";
 
 type ProtectedRoute = RouteObject & { isProtected?: boolean };
 export const routes: ProtectedRoute[] = [
@@ -144,6 +145,11 @@ export const routes: ProtectedRoute[] = [
   {
     path:'/order-history',
     element:<OrderHistory />,
+    isProtected:true,
+  },
+  {
+    path:'/footer',
+    element:<Footer />,
     isProtected:true,
   }
 ];

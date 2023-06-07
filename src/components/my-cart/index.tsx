@@ -34,7 +34,6 @@ import localForage from "localforage";
 import { setDb } from "../../features/login/dbSlice";
 import BrandLogo from "../../assets/Logo.png";
 import MessageNotification from "../../common/notification";
-
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -82,6 +81,9 @@ function MyCart() {
     error,
     message,
   } = useAppSelector((state) => state.order);
+
+
+  console.log('orderIds', orderIds);
 
   const {
     status: uStatus,
@@ -151,8 +153,7 @@ function MyCart() {
 
   const handleOtpValidation = async (data: any) => {
     setGetStatus("idle");
-    const otp = await db.getItem(userData.ip_no);
-    console.log("OTP", otp);
+    const otp = db ? await db.getItem(userData.ip_no) : null;
     if (otp === null || otp != data.otp) {
       setGetStatus("failed");
       setOtpMessage("Invalid OTP");
@@ -177,28 +178,29 @@ function MyCart() {
           quantity: item.quantity,
         })),
       };
-
-      try {
         setOtpMessage("OTP sent successfully"); // Update otpMessage here
         setGetStatus("loading"); // Update getstatus here
         await dispatch(getMyOrderFood(selectedItems));
         dispatch(clearCart());
         navigate("/fnb");
+
+        const ORDER = orderIds;
         const existingArrayString = localStorage.getItem("orderHistory");
+        console.log('existingArrayString', existingArrayString);
+        
         const existingArray = existingArrayString
           ? JSON.parse(existingArrayString)
           : [];
-
-        const updatedArray = [...existingArray, orderIds];
-
+        console.log('existingArray', existingArray);
+        
+        const updatedArray = [...existingArray, ORDER];
+        console.log('updatedArray', updatedArray);
+        
         localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+        
         setOtp("");
         setShowOtpInput(false);
-      } catch (error) {
-        console.log(error);
-        setOtpMessage("Error occurred");
-        setGetStatus("failed"); // Update getstatus here
-      }
+
     }
   };
 
@@ -315,8 +317,8 @@ function MyCart() {
                       <img
                         src={Rupee}
                         width={8}
-                        height={10}
-                        style={{ marginTop: "1px", padding: "1%" }}
+                        height={12}
+                        style={{ marginTop: "-6%", padding: "1%", marginLeft: '22%'}}
                       />
                       <span
                         style={{
@@ -355,7 +357,7 @@ function MyCart() {
                   style={{
                     background: "#0075AD",
                     padding: "10px",
-                    width: "90px",
+                    width: "80px",
                     height: "25px",
                     borderRadius: "25px",
                     marginTop: "-12%",
@@ -374,7 +376,7 @@ function MyCart() {
                       {t("add")}
                     </span>
                   ) : (
-                    <div style={{marginTop: '-12%', color: 'white'}}>
+                    <div style={{marginTop: '-15%', color: 'white'}}>
                       <span
                        style={{ fontWeight: "bold", marginRight: "20%" }}
                         onClick={() => dispatch(decrementCartItem(item))}

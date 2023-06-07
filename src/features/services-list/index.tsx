@@ -291,7 +291,9 @@ function ServicesList() {
 
       </Grid>
       <BackgroundImage />
+      <div style={{marginTop: '30%'}}>
       <Footer />
+      </div>
     </div>
   );
 }
