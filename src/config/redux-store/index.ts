@@ -50,7 +50,7 @@ const store = configureStore({
     order: orderFood.reducer,
     patientCheck: patienCheck.reducer,
     foodItems: itemsList.reducer,
-    orderHistory:orderHistoryList.reducer
+    orderHistory:orderHistoryList.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
