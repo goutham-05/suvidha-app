@@ -69,11 +69,6 @@ function FoodBeverages() {
 
   const { t } = useTranslation(["fb"]);
 
-  const getMyServicesTypes = useAppSelector((state) => state.getMyServingTime);
-  const getItemsServingTime = useAppSelector(
-    (state) => state.getItemServiceTime
-  );
-
   const {
     data: foodItemsList,
     status: foodItemsStatus,
@@ -405,6 +400,39 @@ function FoodBeverages() {
 
   const orderList = useAppSelector((state) => state.orderHistory);
 
+  const [orderIdArray, setOrderIdArray] = useState<string[]>([]);
+
+  const { data: orderIds } = useAppSelector((state) => state.order);
+
+  useEffect(() => {
+    // Step 4: Update the array whenever orderIds data changes
+    setOrderIdArray(orderIds);
+  }, [orderIds]);
+
+  const addNewOrderId = (newOrderId: any) => {
+    // Step 5: Add new orderId to the array
+    setOrderIdArray([...orderIdArray, newOrderId]);
+    console.log('orderIdArray', orderIdArray);
+  };
+
+
+
+  useEffect(() => {
+    const existingArrayString = localStorage.getItem("orderHistory");
+      const existingArray = existingArrayString
+        ? JSON.parse(existingArrayString)
+        : [];
+
+      console.log("existingArray:", existingArray); // Check the value of existingArray
+
+      const updatedArray = [...existingArray, orderIds];
+
+      console.log("updatedArray:", updatedArray); // Check the value of updatedArray
+
+      localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+
+  }, [])
+
   const orderHistoryButton = () => {
     let unit_id = "";
     const unitCodeStr = localStorage.getItem("unit_code");
@@ -415,17 +443,14 @@ function FoodBeverages() {
 
     const orderIds = localStorage.getItem("orderHistory");
     const orderData = orderIds ? JSON.parse(orderIds) : [];
-    if (data !== null) {
-      dispatch(
-        orderHistoryList({
-          unit_id: unit_id,
-          dietorder_id: orderData,
-        })
-      );
-      navigate("/order-history");
-    } else {
-      return;
-    }
+
+    dispatch(
+      orderHistoryList({
+        unit_id: unit_id,
+        dietorder_id: orderData,
+      })
+    );
+    navigate("/order-history");
   };
 
   return (
@@ -454,7 +479,7 @@ function FoodBeverages() {
         </div>
         <div
           style={{ marginLeft: "auto" }}
-          onClick={() => orderHistoryButton()}
+          onClick={orderIds !== null ? () => orderHistoryButton() : () => alert("Not cart")}
         >
           <p
             style={{

@@ -44,6 +44,14 @@ function MyCart() {
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
   const db = useAppSelector((state) => state.db.db);
 
+  const {
+    status: uStatus,
+    message: uMessage,
+    data: userData,
+  } = useAppSelector((state: RootState) => state.user);
+
+  console.log("DB-Data", db);
+
   const goBack = () => {
     navigate("/fnb");
   };
@@ -82,14 +90,7 @@ function MyCart() {
     message,
   } = useAppSelector((state) => state.order);
 
-
-  console.log('orderIds', orderIds);
-
-  const {
-    status: uStatus,
-    message: uMessage,
-    data: userData,
-  } = useAppSelector((state: RootState) => state.user);
+  console.log("orderIds:", orderIds); // Check the value of orderIds
 
   const [otp, setOtp] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
@@ -107,6 +108,57 @@ function MyCart() {
     unit_id = unit_code.unit;
   }
 
+  useEffect(() => {
+    if (userData) {
+      openDatabase();
+    }
+  }, [userData]);
+
+  const openDatabase = async () => {
+    const config = {
+      name: "ksuvidha",
+      version: 1,
+      storeName: "checkotp",
+      description: "My store with auto-incrementing IDs",
+      autoIncrement: true,
+    };
+
+    try {
+      // Check if the database configuration is stored in local storage
+      const storedConfig = localStorage.getItem("dbConfig");
+      let database;
+
+      if (storedConfig) {
+        const parsedConfig = JSON.parse(storedConfig);
+        database = await localForage.createInstance(parsedConfig);
+      } else {
+        database = await localForage.createInstance(config);
+        // Store the database configuration in local storage
+        localStorage.setItem("dbConfig", JSON.stringify(config));
+      }
+
+      dispatch(setDb(database));
+    } catch (error) {
+      console.error("Error creating database:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (db && userData) {
+      addData(userData);
+    }
+  }, [db, userData]);
+
+  async function addData(userData: any) {
+    console.log("USERDATA::", userData);
+    try {
+      await db.setItem(userData.ip_no, userData.otp);
+      console.log("Data added to store");
+    } catch (error) {
+      console.log("Error adding data to store", error);
+    }
+  }
+
   const handleProceedToPay = async () => {
     await dispatch(
       getOtp({
@@ -119,41 +171,10 @@ function MyCart() {
     setShowOtpInput(true);
   };
 
-  async function openDatabase() {
-    const config = {
-      name: "ksuvidha",
-      version: 1,
-      storeName: "checkotp",
-      description: "My store with auto-incrementing IDs",
-      autoIncrement: true,
-    };
-    const database = await localForage.createInstance(config);
-    dispatch(setDb(database));
-  }
-  useEffect(() => {
-    if (userData) {
-      openDatabase();
-    }
-  }, [status]);
-  useEffect(() => {
-    if (db && userData) {
-      addData(userData);
-    }
-  }, [db, userData]);
-  async function addData(userData: any) {
-    console.log("USERDATA::", userData);
-    console.log("DB::", db);
-    try {
-      await db.setItem(userData.ip_no, userData.otp);
-      console.log("Data added to store");
-    } catch (error) {
-      console.log("Error adding data to store", error);
-    }
-  }
-
   const handleOtpValidation = async (data: any) => {
     setGetStatus("idle");
-    const otp = db ? await db.getItem(userData.ip_no) : null;
+    const otp = await db.getItem(userData.ip_no);
+    console.log("OTP", otp);
     if (otp === null || otp != data.otp) {
       setGetStatus("failed");
       setOtpMessage("Invalid OTP");
@@ -178,29 +199,27 @@ function MyCart() {
           quantity: item.quantity,
         })),
       };
-        setOtpMessage("OTP sent successfully"); // Update otpMessage here
-        setGetStatus("loading"); // Update getstatus here
-        await dispatch(getMyOrderFood(selectedItems));
-        dispatch(clearCart());
-        navigate("/fnb");
+      setOtpMessage("OTP sent successfully"); // Update otpMessage here
+      setGetStatus("loading"); // Update getstatus here
+      await dispatch(getMyOrderFood(selectedItems));
+      dispatch(clearCart());
+      navigate("/fnb");
 
-        const ORDER = orderIds;
-        const existingArrayString = localStorage.getItem("orderHistory");
-        console.log('existingArrayString', existingArrayString);
-        
-        const existingArray = existingArrayString
-          ? JSON.parse(existingArrayString)
-          : [];
-        console.log('existingArray', existingArray);
-        
-        const updatedArray = [...existingArray, ORDER];
-        console.log('updatedArray', updatedArray);
-        
-        localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
-        
-        setOtp("");
-        setShowOtpInput(false);
+      // const existingArrayString = localStorage.getItem("orderHistory");
+      // const existingArray = existingArrayString
+      //   ? JSON.parse(existingArrayString)
+      //   : [];
 
+      // console.log("existingArray:", existingArray); // Check the value of existingArray
+
+      // const updatedArray = [...existingArray, orderIds];
+
+      // console.log("updatedArray:", updatedArray); // Check the value of updatedArray
+
+      // localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+
+      setOtp("");
+      setShowOtpInput(false);
     }
   };
 
@@ -253,7 +272,7 @@ function MyCart() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: '-10%'
+          marginTop: "-10%",
         }}
       >
         <div style={{ width: "32%", border: "1px solid black" }} />
@@ -318,7 +337,11 @@ function MyCart() {
                         src={Rupee}
                         width={8}
                         height={12}
-                        style={{ marginTop: "-6%", padding: "1%", marginLeft: '22%'}}
+                        style={{
+                          marginTop: "-6%",
+                          padding: "1%",
+                          marginLeft: "22%",
+                        }}
                       />
                       <span
                         style={{
@@ -361,7 +384,7 @@ function MyCart() {
                     height: "25px",
                     borderRadius: "25px",
                     marginTop: "-12%",
-                    marginLeft: '62%'
+                    marginLeft: "62%",
                   }}
                 >
                   {item.quantity === 0 ? (
@@ -376,9 +399,9 @@ function MyCart() {
                       {t("add")}
                     </span>
                   ) : (
-                    <div style={{marginTop: '-15%', color: 'white'}}>
+                    <div style={{ marginTop: "-15%", color: "white" }}>
                       <span
-                       style={{ fontWeight: "bold", marginRight: "20%" }}
+                        style={{ fontWeight: "bold", marginRight: "20%" }}
                         onClick={() => dispatch(decrementCartItem(item))}
                       >
                         -
@@ -452,7 +475,7 @@ function MyCart() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          marginTop: '-5%'
+          marginTop: "-5%",
         }}
       >
         <div style={{ width: "32%", border: "1px solid black" }} />
@@ -477,10 +500,10 @@ function MyCart() {
           border: "1px solid grey",
           boxShadow: "0px 2px 4px grey",
           marginLeft: "4%",
-          marginTop: '-2%'
+          marginTop: "-2%",
         }}
       >
-        <div style={{ display: "flex"}}>
+        <div style={{ display: "flex" }}>
           <div
             style={{
               width: "10%",
@@ -563,96 +586,96 @@ function MyCart() {
       )}
 
       {showOtpInput && (
-        <Dimmer active style={{height: '100%'}}>
-            <div style={{ background: "white", borderRadius: '25px'}}>
-              <div style={{ marginTop: "4%" }}>
-                <img src={BrandLogo} width={150} height={150} />
-              </div>
-              <MessageNotification
-                message={otpMessage}
-                status={getstatus}
-                theme="dark"
-                autoClose={5000}
+        <Dimmer active style={{ height: "100%" }}>
+          <div style={{ background: "white", borderRadius: "25px" }}>
+            <div style={{ marginTop: "4%" }}>
+              <img src={BrandLogo} width={150} height={150} />
+            </div>
+            <MessageNotification
+              message={otpMessage}
+              status={getstatus}
+              theme="dark"
+              autoClose={5000}
+            />
+            <Form
+              onSubmit={handleSubmit(handleOtpValidation)}
+              style={{
+                fontSize: "1.2rem",
+                maxWidth: "340px",
+                width: "100%",
+                margin: "0 auto",
+                padding: "1rem",
+              }}
+            >
+              <CInput
+                placeholder={t("Enter OTP")}
+                register={register}
+                label="otp"
+                required={true}
+                size="large"
+                error={errors["otp"] ? true : false}
+                fluid={true}
+                loading={false}
+                type="number"
+                minLength={6}
+                maxLength={6}
               />
-              <Form
-                onSubmit={handleSubmit(handleOtpValidation)}
+              {errors.otp?.type === "required" && (
+                <Label color="orange" pointing prompt>
+                  {t("otp:otp_is_required")}
+                </Label>
+              )}
+
+              <div
                 style={{
-                  fontSize: "1.2rem",
-                  maxWidth: "340px",
-                  width: "100%",
-                  margin: "0 auto",
-                  padding: "1rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "25px",
+                  padding: "3px",
+                  fontSize: "13px",
+                  whiteSpace: "nowrap",
+                  textAlign: "center",
+                  color: "#0075ad",
                 }}
               >
-                <CInput
-                  placeholder={t("Enter OTP")}
-                  register={register}
-                  label="otp"
-                  required={true}
-                  size="large"
-                  error={errors["otp"] ? true : false}
-                  fluid={true}
-                  loading={false}
-                  type="number"
-                  minLength={6}
-                  maxLength={6}
-                />
-                {errors.otp?.type === "required" && (
-                  <Label color="orange" pointing prompt>
-                    {t("otp:otp_is_required")}
-                  </Label>
-                )}
-
-                <div
+                {t("otp:Dint_Receive_A_Otp")}
+                <span
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "25px",
-                    padding: "3px",
-                    fontSize: "13px",
-                    whiteSpace: "nowrap",
+                    textDecoration: "underline",
+                    padding: "5px",
+                    fontWeight: "bold",
+                    color: "#0075AD",
+                  }}
+                  onClick={resendOTP}
+                >
+                  {t("otp:Resend_Otp")}
+                </span>
+              </div>
+              {isLoading ? (
+                <Loader active={isLoading} inline="centered" />
+              ) : (
+                <Button
+                  type="submit"
+                  loading={false}
+                  style={{
+                    borderRadius: "100px",
                     textAlign: "center",
-                    color: "#0075ad",
+                    fontWeight: "lighter",
+                    fontSize: "1.4rem",
+                    background: "#0075ad",
+                    width: "100%",
+                    maxWidth: "300px", // set a maximum width for the button
+                    margin: "0 auto", // center the button horizontally
                   }}
                 >
-                  {t("otp:Dint_Receive_A_Otp")}
-                  <span
-                    style={{
-                      textDecoration: "underline",
-                      padding: "5px",
-                      fontWeight: "bold",
-                      color: "#0075AD",
-                    }}
-                    onClick={resendOTP}
-                  >
-                    {t("otp:Resend_Otp")}
-                  </span>
-                </div>
-                {isLoading ? (
-                  <Loader active={isLoading} inline="centered" />
-                ) : (
-                  <Button
-                    type="submit"
-                    loading={false}
-                    style={{
-                      borderRadius: "100px",
-                      textAlign: "center",
-                      fontWeight: "lighter",
-                      fontSize: "1.4rem",
-                      background: "#0075ad",
-                      width: "100%",
-                      maxWidth: "300px", // set a maximum width for the button
-                      margin: "0 auto", // center the button horizontally
-                    }}
-                  >
-                    <h1 style={{ color: "white", fontSize: "1.2rem" }}>
-                      {t("otp:Submit")}
-                    </h1>
-                  </Button>
-                )}
-              </Form>
-            </div>
+                  <h1 style={{ color: "white", fontSize: "1.2rem" }}>
+                    {t("otp:Submit")}
+                  </h1>
+                </Button>
+              )}
+            </Form>
+          </div>
         </Dimmer>
       )}
       <BackgroundImage />

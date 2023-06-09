@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../nav-bar";
 import { Icon } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import { setOrders } from "../../reduxtoolkit/orderHistoryListSlice";
 
 function OrderHistory() {
   const navigate = useNavigate();
@@ -14,6 +15,25 @@ function OrderHistory() {
 
   const orderList = useAppSelector((state) => state.orderHistory);
 
+  const [loading, setLoading] = useState(true);
+
+  // const pendingOrderHistoryList = useAppSelector(state => state.pendingOrder);
+
+  // console.log('pendingOrderHistoryList',pendingOrderHistoryList);
+
+  // const handleSetOrders = () => {
+  //   dispatch(setOrders(orderList.data));
+  // };
+
+  // useEffect(() => {
+  //   handleSetOrders();
+  // }, [orderList])
+
+
+  useEffect(() => {
+    
+  })
+  
   const goBack = () => {
     navigate("/fnb");
   };
@@ -158,6 +178,7 @@ function OrderHistory() {
         ))}
       </div> */}
     </div>
+
   );
 }
 

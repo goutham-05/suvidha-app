@@ -60,7 +60,7 @@ function NoMatch() {
       </div>
       {isOpen && (
        <ul className="dropdown-content" style={{background: 'transparent', marginTop: '8%', width: '100%', marginLeft: '-14%'}}>
-       {data.map((unit: any) => (
+       {data?.map((unit: any) => (
          <li
            key={unit.unit_admin_id}
            style={{padding: '5%'}}

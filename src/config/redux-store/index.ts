@@ -25,6 +25,7 @@ import orderFood from "../../reduxtoolkit/orderFoodSlice";
 import patienCheck from "../../reduxtoolkit/patientCheckSlice";
 import itemsList from '../../reduxtoolkit/getItemsListSlice';
 import orderHistoryList from "../../reduxtoolkit/orderHistorySlice";
+import pendingOrders from "../../reduxtoolkit/orderHistoryListSlice";
 
 const middlewares: Middleware<{}, any, Dispatch<AnyAction>>[] = [];
 
@@ -51,6 +52,7 @@ const store = configureStore({
     patientCheck: patienCheck.reducer,
     foodItems: itemsList.reducer,
     orderHistory:orderHistoryList.reducer,
+    pendingOrder: pendingOrders,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

@@ -4,6 +4,7 @@ import { axiosGet, axiosPost } from "../services/baseService";
 import axios from "axios";
 
 interface State {
+  [x: string]: any;
   data: any;
   status: "idle" | "loading" | "failed" | "succeeded";
   error: string;
