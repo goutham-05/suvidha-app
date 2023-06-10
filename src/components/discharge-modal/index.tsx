@@ -14,6 +14,7 @@ import {
 } from "../../config/redux-store";
 import { useTranslation } from "react-i18next";
 import { getMyDischarge } from "../../reduxtoolkit/myDischargeSlice";
+import { Loader } from "semantic-ui-react";
 import Footer from "../footer";
 
 const MyDischargeModal = () => {
@@ -38,6 +39,7 @@ const MyDischargeModal = () => {
   }, []);
 
   const DischargeStatus = useAppSelector((state) => state.myDischarge);
+  const [loading, setLoading] = useState(false);
 
   const myDis = DischargeStatus?.data?.native_summary_status;
 
@@ -87,6 +89,17 @@ const MyDischargeModal = () => {
     summarySatus,
   ];
 
+  useEffect(() => {
+    setLoading(true); // Set loading state to true before fetching data
+    // Rest of the code...
+  }, []);
+
+  useEffect(() => {
+    if (DischargeStatus.data) {
+      setLoading(false); // Set loading state to false when data is fetched
+    }
+  }, [DischargeStatus]);
+
   const Back = () => {
     navigate("/services");
   };
@@ -95,12 +108,15 @@ const MyDischargeModal = () => {
     <div>
       <Navbar />
       <div
-          style={{ display: "flex", alignItems: "center", marginTop: '6%'}}
-        onClick={() => Back()}>
-          <Icon disabled name="arrow left" size="large" />
-        </div>
+        style={{ display: "flex", alignItems: "center", marginTop: "6%" }}
+        onClick={() => Back()}
+      >
+        <Icon disabled name="arrow left" size="large" />
+      </div>
       <div className="mydischargeContainer">
-        <div style={{ display: "flex", alignItems: "center", marginTop: '-10%'}}>
+        <div
+          style={{ display: "flex", alignItems: "center", marginTop: "-10%" }}
+        >
           <div
             style={{
               //background: "#4A98CD",
@@ -125,23 +141,9 @@ const MyDischargeModal = () => {
             >
               {t("my_discharge")}
             </p>
-            {/* <p
-              onClick={Back}
-              style={{
-                whiteSpace: "nowrap",
-                margin: "0",
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#4A98CD",
-                cursor: "pointer",
-                marginLeft: "20%",
-              }}
-            >
-              X
-            </p> */}
           </div>
         </div>
-        <div className="two-column-container" style={{marginTop: '-10%'}}>
+        <div className="two-column-container" style={{ marginTop: "-10%" }}>
           <div
             className="column"
             style={{
@@ -153,7 +155,6 @@ const MyDischargeModal = () => {
               "discharge_initiated",
               "discharge_initiated_date",
               "discharge_date",
-              // "discharge_approved",
               "summary_status",
             ].map((item, index) => (
               <Grid.Column
@@ -167,7 +168,6 @@ const MyDischargeModal = () => {
                     fontSize: "14px",
                     fontWeight: "bold",
                     color: "black",
-                    //marginLeft: "20%",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -190,26 +190,30 @@ const MyDischargeModal = () => {
                 textAlign="justified"
                 style={{ marginBottom: "10px" }}
               >
-                <span
-                  style={{
-                    padding: "10%",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                    color: "black",
-                    marginLeft: "-12%",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  : {t(item)}
-                </span>
+                {loading ? ( // Render loader if loading state is true
+                <p>: Loading...</p>
+                ) : (
+                  <span
+                    style={{
+                      padding: "10%",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      color: "black",
+                      marginLeft: "-12%",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    : {t(item)}
+                  </span>
+                )}
               </Grid.Column>
             ))}
           </div>
         </div>
       </div>
       <BackgroundImage />
-      <div style={{marginTop: '50%'}}>
-      <Footer />
+      <div style={{ marginTop: "50%" }}>
+        <Footer />
       </div>
     </div>
   );

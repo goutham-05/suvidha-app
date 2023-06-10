@@ -49,11 +49,13 @@ const UserForm: React.FC<Props> = ({ history }) => {
     const database = await localForage.createInstance(config);
     dispatch(setDb(database));
   }
+  
   useEffect(() => {
     if (userData) {
       openDatabase();
     }
   }, [status]);
+
   useEffect(() => {
     addData(userData);
   }, [db, userData]);

@@ -7,32 +7,62 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-import { setOrders } from "../../reduxtoolkit/orderHistoryListSlice";
+import { values } from "lodash";
+import { orderHistoryList } from "../../reduxtoolkit/orderHistorySlice";
+import { setorderDb } from "../foodbeverages-modal/orderDBSlice";
+import localForage from "localforage";
 
 function OrderHistory() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const orderList = useAppSelector((state) => state.orderHistory);
+  const orderDB = useAppSelector((state) => state.orderdb);
+  const { data: orderIds, status:orderStatus, message: orderMessage } = useAppSelector((state) => state.order);
+
 
   const [loading, setLoading] = useState(true);
+  const [storedOrderIds, setStoredOrderIds] = useState([]);
 
-  // const pendingOrderHistoryList = useAppSelector(state => state.pendingOrder);
-
-  // console.log('pendingOrderHistoryList',pendingOrderHistoryList);
-
-  // const handleSetOrders = () => {
-  //   dispatch(setOrders(orderList.data));
-  // };
-
-  // useEffect(() => {
-  //   handleSetOrders();
-  // }, [orderList])
-
-
+  const { status:userStatus, data: userData } = useAppSelector(
+    (state: RootState) => state.user
+  );
+  
   useEffect(() => {
-    
-  })
+    orderHistoryButton();
+  }, []);
+
+  const orderHistoryButton = async () => {
+    let unit_id = "";
+    const unitCodeStr = localStorage.getItem("unit_code");
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      unit_id = unit_code.unit;
+    }
+  
+    try {
+      const keys = await orderDB.orderID.keys();
+
+      const values = await Promise.all(
+        keys.map((key:any) => orderDB.orderID.getItem(key))
+      );
+      const flattenedValues = values.flat(); 
+      
+      dispatch(
+        orderHistoryList({
+          unit_id: unit_id,
+          dietorder_id: flattenedValues,
+        })
+      );
+      
+      navigate("/order-history");
+    } catch (error) {
+      console.log("Error retrieving data from store", error);
+      return null;
+    }
+  };
+  
+  
   
   const goBack = () => {
     navigate("/fnb");

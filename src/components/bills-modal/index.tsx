@@ -14,6 +14,7 @@ import {
 } from "../../config/redux-store";
 import { useTranslation } from "react-i18next";
 import { getMyBill } from "../../reduxtoolkit/myBillSlice";
+import { Loader } from "semantic-ui-react";
 
 const MyBillModal = () => {
   const dispatch = useAppDispatch();
@@ -36,12 +37,13 @@ const MyBillModal = () => {
 
   const userData = useAppSelector((state) => state.myBill);
 
+  const [loading, setLoading] = useState(false);
   const [patientTypeChecking, setPatientTypeChecking] = useState<any[]>([]);
   const [billProperties, setBillProperties] = useState([
-    "Advance Paid",
-    "Approximate Bill",
-    "Estimated Amount",
-    "Due Amt",
+    // "Advance Paid",
+    // "Approximate Bill",
+    // "Estimated Amount",
+    // "Due Amt",
   ]);
 
   const ipNum = localStorage.getItem("admissionno");
@@ -91,7 +93,15 @@ const MyBillModal = () => {
   };
 
   useEffect(() => {
-    billData();
+    setLoading(true); // Set loading state to true before fetching data
+    // Rest of the code...
+  }, []);
+
+  useEffect(() => {
+    if (userData.data) {
+      setLoading(false); // Set loading state to false when data is fetched
+      billData();
+    }
   }, [userData]);
 
   const Back = () => {
@@ -134,36 +144,8 @@ const MyBillModal = () => {
             >
               {t("my_bill")}
             </p>
-            {/* <p
-              onClick={Back}
-              style={{
-                whiteSpace: "nowrap",
-                margin: "0",
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#4A98CD",
-                cursor: "pointer",
-                marginLeft: '30%'
-              }}
-            >
-              X
-            </p> */}
           </div>
         </div>
-        {/* <div className="mydischargeHeader">
-          <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            {t('my_bill')}
-          </span>
-          <div onClick={Back}>
-            <Icon
-              disabled
-              name="close"
-              size="large"
-              color="black"
-              style={{ marginTop: "10px", marginLeft: "20px" }}
-            />
-          </div>
-        </div> */}
         <div className="two-column-container">
           <div
             className="column"
@@ -207,6 +189,9 @@ const MyBillModal = () => {
                 textAlign="justified"
                 style={{ marginBottom: "10px" }}
               >
+                {loading ? ( // Render loader if loading state is true
+      <Loader active={loading} inline="centered"/>
+    ) : (
                 <span
                   style={{
                     padding: "10%",
@@ -218,6 +203,7 @@ const MyBillModal = () => {
                 >
                   : {item}
                 </span>
+                 )}
               </Grid.Column>
             ))}
           </div>

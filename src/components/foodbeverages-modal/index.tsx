@@ -25,6 +25,8 @@ import { getItemsList } from "../../reduxtoolkit/getItemsListSlice";
 import { orderHistoryList } from "../../reduxtoolkit/orderHistorySlice";
 import Footer from "../footer";
 import BackgroundImage from "../background";
+import localForage from "localforage";
+import { setorderDb } from "./orderDBSlice";
 
 interface Item {
   title: string;
@@ -80,6 +82,10 @@ function FoodBeverages() {
   console.log("CartItems", cartItems);
 
   const { status, message } = useAppSelector((state) => state.order);
+
+  const { status:userStatus, data: userData } = useAppSelector(
+    (state: RootState) => state.user
+  );
 
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
@@ -402,7 +408,7 @@ function FoodBeverages() {
 
   const [orderIdArray, setOrderIdArray] = useState<string[]>([]);
 
-  const { data: orderIds } = useAppSelector((state) => state.order);
+  const { data: orderIds, status:orderStatus, message: orderMessage } = useAppSelector((state) => state.order);
 
   useEffect(() => {
     // Step 4: Update the array whenever orderIds data changes
@@ -417,39 +423,126 @@ function FoodBeverages() {
 
 
 
+  // useEffect(() => {
+  //   const existingArrayString = localStorage.getItem("orderHistory");
+  //     const existingArray = existingArrayString
+  //       ? JSON.parse(existingArrayString)
+  //       : [];
+
+  //     console.log("existingArray:", existingArray); // Check the value of existingArray
+
+  //     const updatedArray = [...existingArray, orderIds];
+
+  //     console.log("updatedArray:", updatedArray); // Check the value of updatedArray
+
+  //     localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
+
+  // }, [])
+
+  /////////////////////////////////////////
+
+  const orderDB = useAppSelector(state => state.orderdb);
+
+  async function openDatabase() {
+    const config = {
+      name: "ksuvidha-orders",
+      version: 1,
+      storeName: "checkorders",
+      description: "My store with auto-incrementing orderIDs",
+      autoIncrement: true,
+    };
+    const database = await localForage.createInstance(config);
+    dispatch(setorderDb(database));
+  }
+
+  // async function openDatabase() {
+  //   const config = {
+  //     name: "ksuvidha-orders",
+  //     version: 1,
+  //     storeName: "checkorders",
+  //     description: "My store with auto-incrementing orderIDs",
+  //     autoIncrement: true,
+  //   };
+  
+  //   try {
+  //     // Check if the database configuration is stored in local storage
+  //     const storedConfig = localStorage.getItem("orderDbConfig");
+  //     let database;
+  
+  //     if (storedConfig) {
+  //       const parsedConfig = JSON.parse(storedConfig);
+  //       database = await localForage.createInstance(parsedConfig);
+  //     } else {
+  //       database = await localForage.createInstance(config);
+  //       // Store the database configuration in local storage
+  //       localStorage.setItem("orderDbConfig", JSON.stringify(config));
+  //     } 
+  //     dispatch(setorderDb(database));
+  //   } catch (error) {
+  //     console.error("Error creating database:", error);
+  //   }
+  // }
+
   useEffect(() => {
-    const existingArrayString = localStorage.getItem("orderHistory");
-      const existingArray = existingArrayString
-        ? JSON.parse(existingArrayString)
-        : [];
+    openDatabase();
+  }, []);
 
-      console.log("existingArray:", existingArray); // Check the value of existingArray
-
-      const updatedArray = [...existingArray, orderIds];
-
-      console.log("updatedArray:", updatedArray); // Check the value of updatedArray
-
-      localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
-
-  }, [])
-
-  const orderHistoryButton = () => {
-    let unit_id = "";
-    const unitCodeStr = localStorage.getItem("unit_code");
-    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-    if (unit_code) {
-      unit_id = unit_code.unit;
+  useEffect(() => {
+    if (userData) {
+      openDatabase();
     }
+  }, [status]);
 
-    const orderIds = localStorage.getItem("orderHistory");
-    const orderData = orderIds ? JSON.parse(orderIds) : [];
+  useEffect(() => {
+    addData(userData);
+  }, [orderDB, userData]);
 
-    dispatch(
-      orderHistoryList({
-        unit_id: unit_id,
-        dietorder_id: orderData,
-      })
-    );
+  async function addData(userData: any) {
+    try {
+      const existingOrderIds = await orderDB.orderID.getItem(userData.ip_no);
+      console.log('existingOrderIds', existingOrderIds)
+  
+      let updatedOrderIds = [];
+      if (orderIds !== null) {
+        if (existingOrderIds) {
+          updatedOrderIds = existingOrderIds.concat([orderIds]);
+        } else {
+          updatedOrderIds = [orderIds];
+        }
+      } else {
+        // Skip adding null values to the database
+        console.log("Null values not added to store");
+        return;
+      }
+  
+      await orderDB.orderID.setItem(userData.ip_no, updatedOrderIds);
+      console.log("Data added to store");
+    } catch (error) {
+      console.log("Error adding data to store", error);
+    }
+  }
+  
+
+  // async function addData(userData: any) {
+  //   try {
+  //     const existingOrderIds = await orderDB.orderID.getItem(userData.ip_no);
+  //     console.log('existingOrderIds', existingOrderIds)
+  
+  //     let updatedOrderIds = [];
+  //     if (existingOrderIds) {
+  //       updatedOrderIds = existingOrderIds.concat([orderIds]);
+  //     } else {
+  //       updatedOrderIds = [orderIds];
+  //     }
+  
+  //     await orderDB.orderID.setItem(userData.ip_no, updatedOrderIds);
+  //     console.log("Data added to store");
+  //   } catch (error) {
+  //     console.log("Error adding data to store", error);
+  //   }
+  // }
+    
+  const orderHistoryButton = () => {
     navigate("/order-history");
   };
 
@@ -479,7 +572,7 @@ function FoodBeverages() {
         </div>
         <div
           style={{ marginLeft: "auto" }}
-          onClick={orderIds !== null ? () => orderHistoryButton() : () => alert("Not cart")}
+          onClick={() => orderHistoryButton()}
         >
           <p
             style={{
@@ -753,7 +846,7 @@ function FoodBeverages() {
                   marginTop: "10%",
                 }}
               >
-                Items not available
+                Items are Loading...
               </p>
             )
           ) : (
