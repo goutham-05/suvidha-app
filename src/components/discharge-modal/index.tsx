@@ -199,7 +199,7 @@ const MyDischargeModal = () => {
                       fontSize: "14px",
                       fontWeight: "bold",
                       color: "black",
-                      marginLeft: "-12%",
+                      marginLeft: "-10%",
                       whiteSpace: "nowrap",
                     }}
                   >

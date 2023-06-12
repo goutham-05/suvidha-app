@@ -39,12 +39,7 @@ const MyBillModal = () => {
 
   const [loading, setLoading] = useState(false);
   const [patientTypeChecking, setPatientTypeChecking] = useState<any[]>([]);
-  const [billProperties, setBillProperties] = useState([
-    // "Advance Paid",
-    // "Approximate Bill",
-    // "Estimated Amount",
-    // "Due Amt",
-  ]);
+  const [billProperties, setBillProperties] = useState<any[]>([]);
 
   const ipNum = localStorage.getItem("admissionno");
   const bedNo = localStorage.getItem("patient_bed");
@@ -146,7 +141,9 @@ const MyBillModal = () => {
             </p>
           </div>
         </div>
-        <div className="two-column-container">
+        {
+          loading ? <p style={{marginTop: '20%'}}>Loading...</p> :
+                <div className="two-column-container">
           <div
             className="column"
             style={{
@@ -198,7 +195,7 @@ const MyBillModal = () => {
                     fontSize: "100%",
                     fontWeight: "bold",
                     color: "black",
-                    marginLeft: "-20px",
+                    marginLeft: "-15px",
                   }}
                 >
                   : {item}
@@ -207,7 +204,8 @@ const MyBillModal = () => {
               </Grid.Column>
             ))}
           </div>
-        </div>
+        </div> 
+        }
       </div>
       <BackgroundImage />
     </div>

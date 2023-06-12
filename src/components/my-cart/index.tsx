@@ -160,6 +160,7 @@ function MyCart() {
   }
 
   const handleProceedToPay = async () => {
+    setIsLoading(true); // Set isLoading to true
     await dispatch(
       getOtp({
         mobile_number: localStorage.getItem("mobile_number"),
@@ -172,13 +173,14 @@ function MyCart() {
   };
 
   const handleOtpValidation = async (data: any) => {
+    //setIsLoading(false)
     setGetStatus("idle");
     const otp = await db.getItem(userData.ip_no);
     console.log("OTP", otp);
     if (otp === null || otp != data.otp) {
       setGetStatus("failed");
       setOtpMessage("Invalid OTP");
-      setIsLoading(false);
+      //setIsLoading(false);
       setIsInvalidOtp(false);
     } else {
       setOtpMessage("Otp Sent");
@@ -204,20 +206,7 @@ function MyCart() {
       await dispatch(getMyOrderFood(selectedItems));
       dispatch(clearCart());
       navigate("/fnb");
-
-      // const existingArrayString = localStorage.getItem("orderHistory");
-      // const existingArray = existingArrayString
-      //   ? JSON.parse(existingArrayString)
-      //   : [];
-
-      // console.log("existingArray:", existingArray); // Check the value of existingArray
-
-      // const updatedArray = [...existingArray, orderIds];
-
-      // console.log("updatedArray:", updatedArray); // Check the value of updatedArray
-
-      // localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
-
+      setIsLoading(false);
       setOtp("");
       setShowOtpInput(false);
     }
@@ -419,53 +408,6 @@ function MyCart() {
                   )}
                 </div>
               </div>
-              {/* <div style={{ marginLeft: "56%" }}>
-              <div>
-                <div
-                  style={{
-                    width: "20%",
-                    height: "23px",
-                    background: "white",
-                    borderRadius: "6px",
-                    position: "absolute",
-                    marginTop: "5%",
-                    boxShadow: "0px 2px 4px grey",
-                    border: "1px solid black",
-                  }}
-                >
-                  {item.quantity === 0 ? (
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        color: "black",
-                        pointerEvents: "auto",
-                      }}
-                      onClick={() => dispatch(incrementCartItem(item))}
-                    >
-                      {t("add")}
-                    </span>
-                  ) : (
-                    <div>
-                      <span
-                        style={{ fontWeight: "bold", marginRight: "20%" }}
-                        onClick={() => dispatch(decrementCartItem(item))}
-                      >
-                        -
-                      </span>
-                      <span style={{ fontWeight: "bold" }}>
-                        {item.quantity}
-                      </span>
-                      <span
-                        style={{ fontWeight: "bold", marginLeft: "20%" }}
-                        onClick={() => dispatch(incrementCartItem(item))}
-                      >
-                        +
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div> */}
             </div>
           </div>
         ))}
@@ -559,32 +501,12 @@ function MyCart() {
         }}
         onClick={() => cartItems.length > 0 && handleProceedToPay()}
       >
-        <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
+        {isLoading ? (
+    <Loader active={isLoading} inline="centered" />
+  ) : (
+    <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
+  )}
       </div>
-      {status === "loading" && (
-        <div>
-          <Dimmer active>
-            <p style={{ marginTop: "10%", fontSize: "20px" }}>Loading</p>
-            <Loader />
-          </Dimmer>
-        </div>
-      )}
-      {status === "succeeded" && (
-        <Dimmer active>
-          <div>
-            <img src={order} width={60} height={60} />
-            <p style={{ marginTop: "10%", fontSize: "20px" }}>Order Placed</p>
-          </div>
-        </Dimmer>
-      )}
-      {status === "failed" && (
-        <div>
-          <Dimmer active>
-            <p style={{ marginTop: "10%", fontSize: "20px" }}>Error</p>
-          </Dimmer>
-        </div>
-      )}
-
       {showOtpInput && (
         <Dimmer active style={{ height: "100%" }}>
           <div style={{ background: "white", borderRadius: "25px" }}>
@@ -652,9 +574,9 @@ function MyCart() {
                   {t("otp:Resend_Otp")}
                 </span>
               </div>
-              {isLoading ? (
+              {/* {isLoading ? (
                 <Loader active={isLoading} inline="centered" />
-              ) : (
+              ) : ( */}
                 <Button
                   type="submit"
                   loading={false}
@@ -665,15 +587,15 @@ function MyCart() {
                     fontSize: "1.4rem",
                     background: "#0075ad",
                     width: "100%",
-                    maxWidth: "300px", // set a maximum width for the button
-                    margin: "0 auto", // center the button horizontally
+                    maxWidth: "300px", 
+                    margin: "0 auto",
                   }}
                 >
                   <h1 style={{ color: "white", fontSize: "1.2rem" }}>
                     {t("otp:Submit")}
                   </h1>
                 </Button>
-              )}
+              {/* )} */}
             </Form>
           </div>
         </Dimmer>

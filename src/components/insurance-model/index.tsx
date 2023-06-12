@@ -12,7 +12,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
 
 import "./index.css";
 import BackgroundImage from "../background";
@@ -22,9 +22,17 @@ const MyInsuranceModal = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["mydetailsdata"]);
 
+  const [loading, setLoading] = useState(false);
+
   const Back = () => {
     navigate("/services");
   };
+
+
+  useEffect(() => {
+    setLoading(true); // Set loading state to true before fetching data
+    // Rest of the code...
+  }, []);
 
   useEffect(() => {
     let unit_id = "";
@@ -40,30 +48,33 @@ const MyInsuranceModal = () => {
       })
     );
   }, []);
-  
+
   const insuranceStatus = useAppSelector((state) => state.myDetails);
-  
+
   const insuranceDate = insuranceStatus.data?.approveddate;
-  
+
   const myInsuranceData = [
     insuranceStatus.data?.status_name || "-",
-    insuranceDate || "-"
+    insuranceDate || "-",
   ];
-  
+
   useEffect(() => {
-    myInsuranceData
-  }, []);
+    if(insuranceStatus.data){
+      setLoading(false);
+    }
+  }, [myInsuranceData]);
 
   return (
     <div>
       <Navbar />
       <div
-          style={{ display: "flex", alignItems: "center", marginTop: '6%'}}
-        onClick={() => Back()}>
-          <Icon disabled name="arrow left" size="large" />
-        </div>
+        style={{ display: "flex", alignItems: "center", marginTop: "6%" }}
+        onClick={() => Back()}
+      >
+        <Icon disabled name="arrow left" size="large" />
+      </div>
       <div className="MydischargeContainer">
-      <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
               //background: "#4A98CD",
@@ -72,7 +83,7 @@ const MyInsuranceModal = () => {
               borderRadius: "30px",
               display: "flex",
               alignItems: "center",
-              marginTop:'-5.3%'
+              marginTop: "-5.3%",
             }}
           >
             <u
@@ -82,58 +93,25 @@ const MyInsuranceModal = () => {
                 fontSize: "20px",
                 fontWeight: "bold",
                 color: "#4A98CD",
-                marginLeft: '14%',
+                marginLeft: "14%",
                 //textDecoration: 'underline''
               }}
             >
-              {t('insurance_claim_status')}
+              {t("insurance_claim_status")}
             </u>
-            {/* <p
-              onClick={Back}
-              style={{
-                whiteSpace: "nowrap",
-                margin: "0",
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#4A98CD",
-                cursor: "pointer",
-                marginLeft: '8%',
-                marginTop:'2%'
-              }}
-            >
-              X
-            </p> */}
           </div>
         </div>
-        {/* <div className="mydischargeHeader">
-          <span className="headerTitle" style={{ background: "#4A98CD" }}>
-            {t('insurance_claim_status')}
-          </span>
-          <div onClick={Back}>
-            <Icon
-              disabled
-              name="close"
-              size="large"
-              color="black"
-              style={{ marginTop: "10px", marginLeft: "20px" }}
-            />
-          </div>
-        </div> */}
 
-
-<div className="two-column-container" style={{marginTop: '-10%'}}>
+        <div className="two-column-container" style={{ marginTop: "-10%" }}>
           <div
             className="column"
             style={{
               marginTop: "45px",
               textAlign: "left",
-              marginLeft:'-10%'
+              marginLeft: "-10%",
             }}
           >
-              {[
-            "status",
-            "approved_date",
-          ]?.map((item, index) => (
+            {["status", "approved_date"]?.map((item, index) => (
               <Grid.Column
                 width={8}
                 textAlign="justified"
@@ -149,7 +127,7 @@ const MyInsuranceModal = () => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                 {t(item)}
+                  {t(item)}
                 </span>
               </Grid.Column>
             ))}
@@ -168,72 +146,28 @@ const MyInsuranceModal = () => {
                 textAlign="justified"
                 style={{ marginBottom: "10px" }}
               >
+                 {/* {loading ? ( // Render loader if loading state is true
+                <p>: Loading...</p>
+                ) : ( */}
                 <span
                   style={{
                     padding: "10%",
                     fontSize: "100%",
                     fontWeight: "bold",
                     color: "black",
-                    marginLeft: "-20px",
+                    marginLeft: "30px",
                   }}
                 >
-                  :  {item}
+                  : {item}
                 </span>
               </Grid.Column>
             ))}
           </div>
         </div>
-
-        {/* <div style={{display: 'flex', marginLeft: '-2%'}}>
-              <Grid stackable style={{marginTop:'12px'}}>
-              {[
-            "status",
-            "approved_date",
-          ]?.map((item, index) => (
-                <Grid.Column
-                  textAlign="justified"
-                  style={{ marginBottom: "12%" }}
-                >
-                  <span
-                    style={{
-                      padding: "10px",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      color: "black",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {t(item)}
-                  </span>
-                </Grid.Column>
-              ))}
-          </Grid>
-      <Grid stackable>
-              {myInsuranceData?.map((item, index) => (
-                <Grid.Column
-                  textAlign="justified"
-                  style={{ marginBottom: "12%" }}
-                >
-                  <span
-                    style={{
-                      padding: "10px",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      color: "black",
-                      whiteSpace: "nowrap",
-                      marginLeft: '-20%'
-                    }}
-                  >
-                    :<span style={{ marginLeft: "4%" }}>{item}</span>
-                  </span>
-                </Grid.Column>
-              ))}
-          </Grid>
-      </div> */}
       </div>
       <BackgroundImage />
-      <div style={{marginTop: '40%'}}>
-      <Footer />
+      <div style={{ marginTop: "40%" }}>
+        <Footer />
       </div>
     </div>
   );
