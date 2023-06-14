@@ -601,7 +601,7 @@ function MyCart() {
           </div>
         </Dimmer>
       )}
-      <div style={{marginTop: '-20%', position: 'fixed'}}>
+      <div style={{marginTop: '-30%', position: 'fixed'}}>
       <Footer />
       </div>
       <BackgroundImage />

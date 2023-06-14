@@ -291,7 +291,7 @@ function ServicesList() {
 
       </Grid>
       <BackgroundImage />
-      <div style={{marginTop: '-20%', position: 'fixed'}}>
+      <div style={{marginTop: '-30%', position: 'fixed'}}>
       <Footer />
       </div>
     </div>

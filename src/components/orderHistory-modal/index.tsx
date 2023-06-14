@@ -208,7 +208,7 @@ function OrderHistory() {
           </div>
         ))}
       </div> */}
-            <div style={{marginTop: '70%', position: 'fixed'}}>
+            <div style={{marginTop: '50%', position: 'fixed'}}>
       <Footer />
       </div>
     </div>

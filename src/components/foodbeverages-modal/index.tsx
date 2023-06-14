@@ -854,7 +854,7 @@ function FoodBeverages() {
           )}
         </div>
       </div>
-      <div style={{marginTop: '-30%', position: 'fixed'}}>
+      <div style={{marginTop: '-40%', position: 'fixed'}}>
       <Footer />
       </div>
       <BackgroundImage />

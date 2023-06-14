@@ -209,7 +209,7 @@ const MyBillModal = () => {
         }
       </div>
       <BackgroundImage />
-      <div style={{marginTop: '0%', position: 'fixed'}}>
+      <div style={{marginTop: '-10%', position: 'fixed'}}>
       <Footer />
       </div>
     </div>
