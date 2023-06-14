@@ -48,8 +48,8 @@ const MyBillModal = () => {
   const billData = () => {
     if (userData.data?.patient_type !== "GENERAL") {
       const billProps = [
-        "IP Number",
-        "Bed Number",
+        "ip_number",
+        "bed_number",
         "advance_paid",
         "approximate_bill",
       ];
@@ -67,8 +67,8 @@ const MyBillModal = () => {
       setBillProperties(billProps);
     } else {
       const billProps = [
-        "IP Number",
-        "Bed Number",
+        "ip_number",
+        "bed_number",
         "advance_paid",
         "approximate_bill",
         "estimated_amount",

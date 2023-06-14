@@ -9,12 +9,12 @@ import {
 } from "../../config/redux-store";
 import { values } from "lodash";
 import { orderHistoryList } from "../../reduxtoolkit/orderHistorySlice";
-import { setorderDb } from "../foodbeverages-modal/orderDBSlice";
-import localForage from "localforage";
-
+import { useTranslation } from "react-i18next";
 function OrderHistory() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { t } = useTranslation(["fb", "otp"]);
 
   const orderList = useAppSelector((state) => state.orderHistory);
   const orderDB = useAppSelector((state) => state.orderdb);
@@ -94,7 +94,7 @@ function OrderHistory() {
             fontWeight: "bold",
           }}
         >
-          ITEM(S) IN HISTORY
+          {t("item(s)_in_history")}
         </div>
         <div style={{ width: "35%", border: "1px solid black" }} />
       </div>

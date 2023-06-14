@@ -12,5 +12,7 @@
 "item(s)_added":"ITEM(S) ADDED",
 "bill_summary":"BILL SUMMARY",
 "grand_total":"Grand Total",
-"add_to_my_bill":"Add To My Bill"
+"add_to_my_bill":"Add To My Bill",
+"order_history": "Order History",
+"item(s)_in_history":"ITEM(S) IN HISTORY"
 }

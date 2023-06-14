@@ -290,7 +290,7 @@ function MyCart() {
             key={index}
             style={{
               //width: "94%",
-              height: "124px",
+              height: "130px",
               borderRadius: "10px",
               margin: "5%",
               border: "1px solid grey",
@@ -342,11 +342,11 @@ function MyCart() {
                         {item.price_att}
                       </span>
                     </div>
-                    <div style={{ marginTop: "10%", width: "100%" }}>
+                    <div style={{ marginTop: "10%"}}>
                       <input
                         placeholder="Enter Remarks"
                         style={{
-                          width: "940%",
+                          width: "116px",
                           height: "40px",
                           borderRadius: "5px",
                         }}

@@ -580,10 +580,10 @@ function FoodBeverages() {
               color: "#0075AD",
               fontSize: "16px",
               fontWeight: "bold",
-              textDecoration: "underline",
+              //textDecoration: "underline",
             }}
           >
-            Order History
+            {t('order_history')}
           </p>
         </div>
       </div>
@@ -820,7 +820,7 @@ function FoodBeverages() {
                           src={item.image}
                           width={100}
                           height={90}
-                          style={{ marginLeft: "-8%" }}
+                          style={{ marginLeft: "-26%" }}
                         />
                       ) : (
                         <img

@@ -12,6 +12,8 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../config/redux-store";
+import { clearCart } from "../../reduxtoolkit/myCartSlice";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -48,8 +50,7 @@ const Navbar = () => {
     localStorage.removeItem("patient_bed");
     localStorage.removeItem("patient_room");
     localStorage.removeItem("dbConfig");
-    localStorage.removeItem("orderHistory");
-
+    dispatch(clearCart());
     navigate(redirectUrl + "" + unit_id);
   };
 

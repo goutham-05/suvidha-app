@@ -1,17 +1,20 @@
 
 {
+	"ip_number": "आयपी नंबर",
+	"bed_number": "बेड नंबर",
 	"my_bill": "माझे बिल",
-	"advance_paid": "अग्रिम भरलेले",
+	"advance_paid": "अग्रिम दिले",
 	"approximate_bill": "प्रामाणिक बिल",
-	"estimated_amount": "अंदाजित रक्कम",
+	"estimated_amount": "आकलन रक्कम",
 	"due_amt": "बाकी रक्कम",
-	"my_discharge": "माझे डिस्चार्ज",
-	"discharge_initiated": "डिस्चार्ज सुरू झाले",
-	"discharge_initiated_date": "डिस्चार्ज सुरू होणारी तारीख",
-	"discharge_started": "डिस्चार्ज सुरू झाले",
-	"discharge_approved": "डिस्चार्ज मंजूर झाले",
-	"summary_status": "संक्षेप स्थिती",
+	"my_discharge": "माझे प्रवेश",
+	"discharge_initiated": "प्रवेश प्रारंभ केले",
+	"discharge_initiated_date": "प्रवेश प्रारंभ केल्याची तारीख",
+	"discharge_started": "प्रवेश प्रारंभ केले",
+	"discharge_approved": "प्रवेश स्वीकृत",
+	"summary_status": "सारांश स्थिती",
 	"insurance_claim_status": "विमा दावा स्थिती",
 	"status": "स्थिती",
-	"approved_date": "मंजूर झालेली तारीख"
+	"approved_date": "मंजूर तारीख",
+	"discharge_date": "प्रवेश तारीख"
 	}
