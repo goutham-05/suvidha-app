@@ -61,7 +61,7 @@ const MyBillModal = () => {
               ipNum,
               myBed,
               userData.data?.total_advance,
-              userData.data?.latest_estimated_amt,
+              userData.data?.app_bill_amount,
             ];
       setPatientTypeChecking(billValues);
       console.log(patientTypeChecking);
