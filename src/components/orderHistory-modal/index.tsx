@@ -10,6 +10,7 @@ import {
 import { values } from "lodash";
 import { orderHistoryList } from "../../reduxtoolkit/orderHistorySlice";
 import { useTranslation } from "react-i18next";
+import Footer from "../footer";
 function OrderHistory() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -207,6 +208,9 @@ function OrderHistory() {
           </div>
         ))}
       </div> */}
+            <div style={{marginTop: '70%', position: 'fixed'}}>
+      <Footer />
+      </div>
     </div>
 
   );

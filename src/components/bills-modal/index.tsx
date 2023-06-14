@@ -15,6 +15,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { getMyBill } from "../../reduxtoolkit/myBillSlice";
 import { Loader } from "semantic-ui-react";
+import Footer from "../footer";
 
 const MyBillModal = () => {
   const dispatch = useAppDispatch();
@@ -72,7 +73,7 @@ const MyBillModal = () => {
         "advance_paid",
         "approximate_bill",
         "estimated_amount",
-        "due_amt",
+        // "due_amt",
       ];
       const billValues = [
         ipNum,
@@ -80,7 +81,7 @@ const MyBillModal = () => {
         userData.data?.total_advance || "--",
         userData.data?.app_bill_amount || "--",
         userData.data?.hims_estimated_amount || "--",
-        userData.data?.balance_amt || "--",
+        // userData.data?.balance_amt || "--",
       ];
       setPatientTypeChecking(billValues);
       setBillProperties(billProps);
@@ -208,6 +209,9 @@ const MyBillModal = () => {
         }
       </div>
       <BackgroundImage />
+      <div style={{marginTop: '0%', position: 'fixed'}}>
+      <Footer />
+      </div>
     </div>
   );
 };

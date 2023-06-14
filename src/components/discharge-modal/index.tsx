@@ -212,7 +212,7 @@ const MyDischargeModal = () => {
         </div>
       </div>
       <BackgroundImage />
-      <div style={{ marginTop: "50%" }}>
+      <div style={{ marginTop: "0%", position: 'fixed'}}>
         <Footer />
       </div>
     </div>

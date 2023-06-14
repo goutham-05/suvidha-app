@@ -21,6 +21,7 @@ const MyInsuranceModal = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation(["mydetailsdata"]);
+  
 
   const [loading, setLoading] = useState(false);
 
@@ -47,9 +48,11 @@ const MyInsuranceModal = () => {
         unit_id: unit_id,
       })
     );
-  }, []);
+  }, [getMyInsuranceStatus]);
 
   const insuranceStatus = useAppSelector((state) => state.myDetails);
+  const [insuranceData, setInsuranceData] = useState<any[]>([]);
+  
 
   const insuranceDate = insuranceStatus.data?.approveddate;
 
@@ -60,6 +63,7 @@ const MyInsuranceModal = () => {
 
   useEffect(() => {
     if(insuranceStatus.data){
+      //setInsuranceData(myInsuranceData);
       setLoading(false);
     }
   }, [myInsuranceData]);
@@ -166,8 +170,8 @@ const MyInsuranceModal = () => {
         </div>
       </div>
       <BackgroundImage />
-      <div style={{ marginTop: "40%" }}>
-        <Footer />
+      <div style={{marginTop: '0%', position: 'fixed'}}>
+      <Footer />
       </div>
     </div>
   );

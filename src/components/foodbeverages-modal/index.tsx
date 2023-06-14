@@ -669,7 +669,7 @@ function FoodBeverages() {
       <div
         style={{
           minHeight: "10px",
-          maxHeight: "420px",
+          maxHeight: "384px",
           overflowY: "scroll",
           marginTop: "2%",
         }}
@@ -854,7 +854,9 @@ function FoodBeverages() {
           )}
         </div>
       </div>
+      <div style={{marginTop: '-30%', position: 'fixed'}}>
       <Footer />
+      </div>
       <BackgroundImage />
     </>
   );

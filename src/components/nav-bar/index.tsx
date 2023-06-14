@@ -59,7 +59,7 @@ const Navbar = () => {
       style={{
         marginTop: "-10%",
         width: "119%",
-        height: "92px",
+        height: "100px",
         marginLeft: "-9%",
         display: "flex",
         background: "white",
@@ -85,13 +85,13 @@ const Navbar = () => {
             <strong>{t("mydetails:bed")}: </strong>
             {myBed}
           </p>
-          {/* <p>
+          <p>
             <strong>
               {t("mydetails:room")}/{t("mydetails:floor")}:{" "}
             </strong>
             {myRoom}/{floorNo}
           </p>
-          <p>
+          {/*<p>
             <strong>{t("mydetails:ward_name")}:</strong> {wardName}
           </p> */}
           <p

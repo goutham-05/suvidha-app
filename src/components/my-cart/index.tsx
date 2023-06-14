@@ -34,6 +34,7 @@ import localForage from "localforage";
 import { setDb } from "../../features/login/dbSlice";
 import BrandLogo from "../../assets/Logo.png";
 import MessageNotification from "../../common/notification";
+import Footer from "../footer";
 function MyCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -600,6 +601,9 @@ function MyCart() {
           </div>
         </Dimmer>
       )}
+      <div style={{marginTop: '-20%', position: 'fixed'}}>
+      <Footer />
+      </div>
       <BackgroundImage />
     </div>
   );
