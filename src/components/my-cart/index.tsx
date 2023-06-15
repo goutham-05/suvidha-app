@@ -174,14 +174,14 @@ function MyCart() {
   };
 
   const handleOtpValidation = async (data: any) => {
-    //setIsLoading(false)
+    setIsLoading(false)
     setGetStatus("idle");
     const otp = await db.getItem(userData.ip_no);
     console.log("OTP", otp);
     if (otp === null || otp != data.otp) {
       setGetStatus("failed");
       setOtpMessage("Invalid OTP");
-      //setIsLoading(false);
+      setIsLoading(true);
       setIsInvalidOtp(false);
     } else {
       setOtpMessage("Otp Sent");
@@ -505,7 +505,22 @@ function MyCart() {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
+        style={{
+          width: "98%",
+          height: "34px",
+          background: "#4A98CD",
+          borderRadius: "6px",
+          marginLeft: "2%",
+        }}
+        onClick={() => cartItems.length > 0 && handleProceedToPay()}
+      > */}
+        {isLoading ? (
+           //<p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
+    <Loader active={isLoading} inline="centered" />
+  ) : (
+    //<Loader active={isLoading} inline="centered" />
+    <div
         style={{
           width: "98%",
           height: "34px",
@@ -515,12 +530,10 @@ function MyCart() {
         }}
         onClick={() => cartItems.length > 0 && handleProceedToPay()}
       >
-        {isLoading ? (
-    <Loader active={isLoading} inline="centered" />
-  ) : (
     <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
+    </div>
   )}
-      </div>
+      {/* </div> */}
       {showOtpInput && (
         <Dimmer active style={{ height: "100%" }}>
           <div style={{ background: "white", borderRadius: "25px" }}>
@@ -588,28 +601,31 @@ function MyCart() {
                   {t("otp:Resend_Otp")}
                 </span>
               </div>
-              {/* {isLoading ? (
+              <div>
+              {isLoading ? 
+                         <Button
+                         type="submit"
+                         loading={false}
+                         style={{
+                           borderRadius: "100px",
+                           textAlign: "center",
+                           fontWeight: "lighter",
+                           fontSize: "1.4rem",
+                           background: "#0075ad",
+                           width: "100%",
+                           maxWidth: "300px", 
+                           margin: "0 auto",
+                         }}
+                       >
+                         <h1 style={{ color: "white", fontSize: "1.2rem" }}>
+                           {t("otp:Submit")}
+                         </h1>
+                       </Button>
+                
+              : (
                 <Loader active={isLoading} inline="centered" />
-              ) : ( */}
-                <Button
-                  type="submit"
-                  loading={false}
-                  style={{
-                    borderRadius: "100px",
-                    textAlign: "center",
-                    fontWeight: "lighter",
-                    fontSize: "1.4rem",
-                    background: "#0075ad",
-                    width: "100%",
-                    maxWidth: "300px", 
-                    margin: "0 auto",
-                  }}
-                >
-                  <h1 style={{ color: "white", fontSize: "1.2rem" }}>
-                    {t("otp:Submit")}
-                  </h1>
-                </Button>
-              {/* )} */}
+              )}
+              </div>
             </Form>
           </div>
         </Dimmer>
