@@ -299,7 +299,7 @@ function MyCart() {
               marginLeft: "4%",
             }}
           >
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex" }}> 
               <div
                 style={{
                   width: "10%",
@@ -343,11 +343,27 @@ function MyCart() {
                         {item.price_att}
                       </span>
                     </div>
-                    <div style={{ marginTop: "10%"}}>
+                    {/* <div style={{ marginTop: "10%"}}>
                       <input
                         placeholder="Enter Remarks"
                         style={{
-                          width: "116px",
+                          width: "286px",
+                          height: "40px",
+                          borderRadius: "5px",
+                        }}
+                        type="text"
+                        value={item.other_remark || ""}
+                        onChange={(event) => onAddRemark(event, item.itemid)}
+                      />
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginTop: "25%", marginLeft: '-10%', width: '560px'}}>
+                      <input
+                        placeholder="Enter Remarks"
+                        style={{
+                          //width: "286px",
                           height: "40px",
                           borderRadius: "5px",
                         }}
@@ -356,9 +372,6 @@ function MyCart() {
                         onChange={(event) => onAddRemark(event, item.itemid)}
                       />
                     </div>
-                  </div>
-                </div>
-              </div>
               <div
                 style={{
                   marginTop: "50px",
@@ -373,8 +386,8 @@ function MyCart() {
                     width: "80px",
                     height: "25px",
                     borderRadius: "25px",
-                    marginTop: "-12%",
-                    marginLeft: "62%",
+                    marginTop: "-32%",
+                    marginLeft: "22%",
                   }}
                 >
                   {item.quantity === 0 ? (

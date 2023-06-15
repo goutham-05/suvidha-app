@@ -124,7 +124,7 @@ function OrderHistory() {
                 textAlign: "left",
               }}
             >
-              {item.items}
+              {item.items.split('</br>').join(', ')}
             </p>
             <p style={{marginRight: '160px',fontWeight: "bold",
                 fontSize: "12px",}}>
