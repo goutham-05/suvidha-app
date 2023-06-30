@@ -15,6 +15,7 @@ import Logo from "../../assets/Logo.png";
 import BackgroundImage from "../background";
 import "./index.css";
 import { Loader } from "semantic-ui-react";
+import Check from '../../reduxtoolkit/patientCheckSlice';
 
 interface Props {}
 
@@ -62,6 +63,7 @@ const OtpForm: React.FC<Props> = ({}) => {
   }, [status, otpSuccess]);
 
   const db = useAppSelector((state) => state.db.db);
+
   async function addData(userData: any) {
     try {
       await db.setItem(userData.ip_no, userData.otp);

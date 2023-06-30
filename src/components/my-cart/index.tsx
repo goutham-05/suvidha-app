@@ -44,6 +44,7 @@ function MyCart() {
 
   const cartItems: any = useAppSelector((state) => selectAllCartItems(state));
   const db = useAppSelector((state) => state.db.db);
+  const fbStatus = localStorage.getItem('Status');
 
   const {
     status: uStatus,
@@ -530,7 +531,12 @@ function MyCart() {
         }}
         onClick={() => cartItems.length > 0 && handleProceedToPay()}
       >
+    {/* <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p> */}
+    {fbStatus === '3' ? (
+    <p style={{ padding: "2%", color: "white" }}>COD</p>
+  ) : fbStatus === '1' && (
     <p style={{ padding: "2%", color: "white" }}>{t("add_to_my_bill")}</p>
+  )}
     </div>
   )}
       {/* </div> */}

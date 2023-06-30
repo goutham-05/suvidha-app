@@ -105,7 +105,10 @@ function ServicesList() {
 
 
   const patientCheckInDK = useAppSelector((state) => state.patientCheck);
+const Status = patientCheckInDK.data && patientCheckInDK.data[0] ? patientCheckInDK.data[0].Status : undefined;
+localStorage.setItem('Status', Status);
 
+ 
   useEffect(() => {
     const unitIdString = localStorage.getItem("unit_code");
     const unitIdObject = unitIdString ? JSON.parse(unitIdString) : null;
@@ -124,7 +127,7 @@ function ServicesList() {
 
   const filteredDetailsList = patient_type === "GENERAL"
   ? myDetailsList.filter(item => item.title !== "insurance_status")
-  : myDetailsList;
+  : myDetailsList.filter(item => item.title !== "my_bill");
 
 
   const { t } = useTranslation(["serviceslist"]);
