@@ -535,9 +535,15 @@ if (currentDateTime > closingTime) {
               {Array.isArray(getItemsServingTime.data) ? (
                 mealData?.map((item: any, index: any) => {
                   const disabled =
-                    item.Totime.localeCompare(currentTime, undefined, {
-                      numeric: true,
-                    }) < 0;
+                  item.Totime.localeCompare(currentTime, undefined, {
+                    numeric: true,
+                  }) < 0 ||
+                  item.Totime.localeCompare(currentTime, undefined, {
+                    numeric: true,
+                  }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
+                    numeric: true,
+                  }) > 0;
+                
 
                     const optionStyle = {
                       cursor: disabled ? "not-allowed" : "pointer",
