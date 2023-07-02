@@ -17,6 +17,58 @@ import {
 import { getMyServingTime } from "../../reduxtoolkit/getServingTimesSlice";
 import { getItemServiceTime } from "../../reduxtoolkit/getItemServSlice";
 
+const mealData = [
+  {
+    id: 1,
+    mealtime: "Pre Breakfast",
+    Fromtime: "06:00:00",
+    Totime: "07:30:00",
+    status: 1,
+  },
+  {
+    id: 2,
+    mealtime: "Breakfast",
+    Fromtime: "07:30:00",
+    Totime: "09:30:00",
+    status: 1,
+  },
+  {
+    id: 3,
+    mealtime: "Post Dinner",
+    Fromtime: "21:30:00",
+    Totime: "22:00:00",
+    status: 1,
+  },
+  {
+    id: 4,
+    mealtime: "Lunch",
+    Fromtime: "12:30:00",
+    Totime: "14:00:00",
+    status: 1,
+  },
+  {
+    id: 5,
+    mealtime: "Snacks",
+    Fromtime: "15:30:00",
+    Totime: "16:30:00",
+    status: 1,
+  },
+  {
+    id: 6,
+    mealtime: "Dinner",
+    Fromtime: "19:30:00",
+    Totime: "23:30:00",
+    status: 1,
+  },
+  {
+    id: 7,
+    mealtime: "Soup Service",
+    Fromtime: "17:30:00",
+    Totime: "23:00:00",
+    status: 1,
+  },
+];
+
 interface Item {
   title: string;
   type: string;
@@ -25,6 +77,14 @@ interface Item {
   qty: number;
   category: string;
   selectedServingType: string;
+}
+
+interface ServingTime {
+  id: string;
+  mealtime: string;
+  Fromtime: string;
+  Totime: string;
+  status: number;
 }
 
 const data = [
@@ -52,6 +112,12 @@ const data = [
     category: "Drinks",
     status: false,
   },
+  {
+    itemId: 5,
+    title: "Best Sellor",
+    category: "Best Sellor",
+    status: false,
+  },
 ];
 
 function FoodBeverages() {
@@ -62,8 +128,9 @@ function FoodBeverages() {
   const getItemsServingTime = useAppSelector(
     (state) => state.getItemServiceTime
   );
+
   const cartItems = useAppSelector((state) => state.cart);
-  console.log('CartItems', cartItems);
+  console.log("CartItems", cartItems);
 
   const [isOpen, setIsOpen] = useState(false);
   const [remarksList, setRemarksList] = useState<string[]>([]);
@@ -85,7 +152,7 @@ function FoodBeverages() {
   //     }
   // }, [getItemsServingTime])
 
-  console.log('Menu Items', menuItems?.length);
+  console.log("Menu Items", menuItems?.length);
 
   useEffect(() => {
     const unitCodeStr = localStorage.getItem("unit_code");
@@ -114,30 +181,32 @@ function FoodBeverages() {
 
   useEffect(() => {
     const hasQuantity = cartItems?.some((item) => item.quantity > 0);
-    const updatedItems = hasQuantity ? menuItems?.map((item) => {
-      const cartItem = cartItems.find(
-        (cartItem) => cartItem.itemid === item.itemid
-      );
-      console.log(cartItem);
+    const updatedItems = hasQuantity
+      ? menuItems?.map((item) => {
+          const cartItem = cartItems.find(
+            (cartItem) => cartItem.itemid === item.itemid
+          );
+          console.log(cartItem);
 
-      if (cartItem) {
-        return {
-          ...item,
-          quantity: cartItem.quantity,
-          other_remark: cartItem.other_remark,
-          remarkId: undefined,
-        };
-      }
-      return item;
-    }) : []
+          if (cartItem) {
+            return {
+              ...item,
+              quantity: cartItem.quantity,
+              other_remark: cartItem.other_remark,
+              remarkId: undefined,
+            };
+          }
+          return item;
+        })
+      : [];
 
-    console.log('hasQuantity',hasQuantity);
-    
+    console.log("hasQuantity", hasQuantity);
+
     if (updatedItems?.length > 0) {
       setMenuItems(updatedItems);
-      console.log("am here in items")
+      console.log("am here in items");
     } else {
-      console.log('itemms');
+      console.log("itemms");
       setMenuItems(
         getItemsServingTime?.data?.map((item: any) => ({
           ...item,
@@ -147,7 +216,6 @@ function FoodBeverages() {
     }
     console.log("in here");
   }, [cartItems, getItemsServingTime]);
-
 
   const goBack = () => {
     navigate("/services");
@@ -161,7 +229,6 @@ function FoodBeverages() {
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
-      window.location.reload();
       if (selectedType && unitId) {
         console.log(selectedType);
 
@@ -277,6 +344,27 @@ function FoodBeverages() {
 
   const showViewCartOption = menuItems?.some((item) => item.quantity > 0);
 
+  const currentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+
+  // Get the current date and time
+const currentDateTime = new Date();
+
+// Set the closing time based on the current date and time
+const closingTime = new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate(), 22, 0, 0);
+
+let message = ""; // Initialize an empty message variable
+
+// Compare the current time with the closing time
+if (currentDateTime > closingTime) {
+  message = "Kitchen is closed"; // Set the message if the kitchen is closed
+}
+
+
   return (
     <>
       <Navbar />
@@ -314,12 +402,69 @@ function FoodBeverages() {
               {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
             </p>
           </div>
+
+          {/* <div>
+            <select
+              onChange={(e) => setSelectedItem(e.target.value)}
+              value={selectedItem}
+              style={{ height: "25px", width: "105px" }}
+            >
+              <option value="" style={{ fontSize: "10px" }}>
+                Serving Type
+              </option>
+              {getMyServicesTypes.data?.map((item: any) => {
+                const disabled =
+                  item.Totime.localeCompare(currentTime, undefined, {
+                    numeric: true,
+                  }) < 0;
+                return (
+                  <option
+                    key={item.id}
+                    value={item.mealtime}
+                    onClick={() => {
+                      handleServingTypeSelection(item.id, item.mealtime);
+                    }}
+                  >
+                    {item.mealtime}
+                  </option>
+                );
+              })}
+            </select>
+          </div> */}
+
+          {/* <div>
+  <select
+    onChange={(e) => handleServingTypeSelection(item.id, e.target.value)}
+    value={selectedItem}
+    style={{ height: "25px", width: "105px" }}
+  >
+    <option value="" style={{ fontSize: "10px" }}>
+      Serving Type
+    </option>
+    {getMyServicesTypes.data?.map((item: any) => {
+      const disabled =
+        item.Totime.localeCompare(currentTime, undefined, {
+          numeric: true,
+        }) < 0;
+      return (
+        <option
+          key={item.id}
+          value={item.mealtime}
+          // disabled={disabled} // Add the disabled attribute here
+        >
+          {item.mealtime}
+        </option>
+      );
+    })}
+  </select>
+</div> */}
+
           {data.map((item, index) => (
             <div
               key={index}
               style={{
                 marginRight: "20px",
-                width: "30%",
+                width: "16%",
                 padding: "1%",
                 fontSize: "10px",
                 background: "white",
@@ -336,6 +481,41 @@ function FoodBeverages() {
           ))}
         </div>
         {isOpen && (
+          // <div
+          //   style={{
+          //     position: "absolute",
+          //     zIndex: 1,
+          //     background: "white",
+          //     boxShadow: "0px 2px 4px grey",
+          //     borderRadius: "10px",
+          //     marginTop: "5px",
+          //     width: "45%",
+          //     height: "250px",
+          //     padding: "20px",
+          //   }}
+          // >
+          //   <div
+          //     style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          //   >
+          //     {Array.isArray(getItemsServingTime.data) ? (
+
+          //       getMyServicesTypes.data?.map((item: any, index: any) => (
+
+          //         <div
+
+          //           onClick={() => {
+          //             handleServingTypeSelection(item.id, item.mealtime);
+          //           }}
+
+          //         >
+          //           {item.mealtime}
+          //         </div>
+          //       ))
+          //     ) : (
+          //       <p style={{ marginTop: "50%" }}>Loading...</p>
+          //     )}
+          //   </div>
+          // </div>
           <div
             style={{
               position: "absolute",
@@ -353,15 +533,31 @@ function FoodBeverages() {
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
               {Array.isArray(getItemsServingTime.data) ? (
-                getMyServicesTypes.data?.map((item: any, index: any) => (
-                  <div
-                    onClick={() => {
-                      handleServingTypeSelection(item.id, item.mealtime);
-                    }}
-                  >
-                    {item.mealtime}
-                  </div>
-                ))
+                mealData?.map((item: any, index: any) => {
+                  const disabled =
+                    item.Totime.localeCompare(currentTime, undefined, {
+                      numeric: true,
+                    }) < 0;
+
+                    const optionStyle = {
+                      cursor: disabled ? "not-allowed" : "pointer",
+                      color: disabled ? "grey" : "inherit",
+                    };
+
+                  return (
+                    <div
+                      onClick={() => {
+                        if (!disabled) {
+                          handleServingTypeSelection(item.id, item.mealtime);
+                        }
+                      }}
+                      key={item.id}
+                      style={optionStyle}
+                    >
+                      {item.mealtime}
+                    </div>
+                  );
+                })
               ) : (
                 <p style={{ marginTop: "50%" }}>Loading...</p>
               )}
@@ -483,7 +679,7 @@ function FoodBeverages() {
                                 ADD
                               </span>
                             ) : (
-                              <div style={{marginTop: '-2%'}}>
+                              <div style={{ marginTop: "-2%" }}>
                                 <span
                                   style={{
                                     fontWeight: "bold",
@@ -550,8 +746,13 @@ function FoodBeverages() {
           >
             Please Select Serving Type
           </p>
+          
         )}
       </div>
+      <div>
+  {/* Rest of your code */}
+  <p>{message}</p> {/* Display the message using the <p> element */}
+</div>
       {/* {myCartItems.length > 0 ? ( */}
       {showViewCartOption && (
         <div
