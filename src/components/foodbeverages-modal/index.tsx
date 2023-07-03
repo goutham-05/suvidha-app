@@ -176,18 +176,18 @@ function FoodBeverages() {
 
   console.log("Menu Items", menuItems?.length);
 
-  useEffect(() => {
-    const unitCodeStr = localStorage.getItem("unit_code");
-    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-    if (unit_code) {
-      setUnitId(unit_code.unit);
-    }
-    dispatch(
-      getItemsList({
-        unit_id: unit_code.unit,
-      })
-    );
-  }, []);
+  // useEffect(() => {
+  //   const unitCodeStr = localStorage.getItem("unit_code");
+  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+  //   if (unit_code) {
+  //     setUnitId(unit_code.unit);
+  //   }
+  //   dispatch(
+  //     getItemsList({
+  //       unit_id: unit_code.unit,
+  //     })
+  //   );
+  // }, []);
 
   // useEffect(() => {
   //   const unitCodeStr = localStorage.getItem("unit_code");
@@ -646,10 +646,7 @@ function FoodBeverages() {
   };
 
   ////////////////////////////////////////////////////
-  const [selectedServingType, setSelectedServingType] = useState(() => {
-    const servingType = localStorage.getItem("servingType");
-    return servingType ? servingType : "Serving Type";
-  });
+  const [selectedServingType, setSelectedServingType] = useState('Serving Type');
 
   const currentTime = new Date().toLocaleTimeString([], {
     hour: "2-digit",
@@ -923,6 +920,7 @@ function FoodBeverages() {
           marginTop: "2%",
         }}
       >
+        
         <div>
           {Array.isArray(menuItems) ? (
             menuItems.length > 0 ? (
@@ -1095,7 +1093,7 @@ function FoodBeverages() {
                   marginTop: "10%",
                 }}
               >
-                Items are Loading...
+                Please Select Serving Type
               </p>
             )
           ) : (
