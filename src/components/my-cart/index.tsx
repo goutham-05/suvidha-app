@@ -195,7 +195,7 @@ function MyCart() {
         unit_id: unitId,
         patient_ipno: localStorage.getItem("admissionno"),
         delivery_address: "",
-        serving_time: localStorage.getItem("serving time"),
+        servingtime_id: localStorage.getItem("serving time"),
         my_cart_items: cartItems.map((item: any) => ({
           itemid: item.itemid,
           remarkid: [],

@@ -66,8 +66,8 @@ const data = [
   },
   {
     itemId: 5,
-    title: "Best",
-    category: "Best",
+    title: "Best Seller",
+    category: "Best Seller",
     status: false,
   },
 ];
@@ -218,6 +218,7 @@ function FoodBeverages() {
   const [vegItems, setVegItems] = useState<any[]>([]);
   const [nonVegItems, setNonVegItems] = useState<any[]>([]);
   const [drinksItems, setDrinksItems] = useState<any[]>([]);
+  const [bestItems,setBestItems] = useState<any[]>([]);
 
   useEffect(() => {
     setAllItems(foodItemsList || []);
@@ -245,6 +246,9 @@ function FoodBeverages() {
       case "Drinks":
         updatedItems = drinksItems;
         break;
+      case "Best Seller":
+        updatedItems = bestItems;
+        break;
       default:
         updatedItems = allItems;
         break;
@@ -263,6 +267,7 @@ function FoodBeverages() {
     setSelectedCategory(category);
     setSearchInput("");
   }, []);
+  
 
   useEffect(() => {
     const filteredItems = foodItemsList?.filter(
@@ -303,6 +308,25 @@ function FoodBeverages() {
             ?.quantity || 0,
       }))
     );
+
+
+    if (!foodItemsList || !Array.isArray(foodItemsList)) {
+      return;
+    }
+    
+    const sortedItems = [...foodItemsList].sort((a, b) => b.counts - a.counts);
+    console.log('sortedItems', sortedItems)
+    const bestItems = sortedItems.slice(0, 84);
+    
+    setBestItems((prevItems) =>
+      bestItems.map((item) => ({
+        ...item,
+        quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
+      }))
+    );
+    
+
+
   }, [foodItemsList, cartItems]);
 
   const orderList = useAppSelector((state) => state.orderHistory);
@@ -510,46 +534,6 @@ function FoodBeverages() {
           flexWrap: "wrap",
         }}
       >
-        {/* <div
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
-              {Array.isArray(mealData) ? (
-                mealData?.map((item: any, index: any) => {
-                  const disabled =
-                  item.Totime.localeCompare(currentTime, undefined, {
-                    numeric: true,
-                  }) < 0;
-                  // ||
-                  // item.Totime.localeCompare(currentTime, undefined, {
-                  //   numeric: true,
-                  // }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
-                  //   numeric: true,
-                  // }) > 0;
-                
-
-                    const optionStyle = {
-                      cursor: disabled ? "not-allowed" : "pointer",
-                      color: disabled ? "grey" : "inherit",
-                    };
-
-                  return (
-                    <div
-                      // onClick={() => {
-                      //   if (!disabled) {
-                      //     handleServingTypeSelection(item.id, item.mealtime);
-                      //   }
-                      // }}
-                      key={item.id}
-                      style={optionStyle}
-                    >
-                      {item.mealtime}
-                    </div>
-                  );
-                })
-              ) : (
-                <p style={{ marginTop: "50%" }}>Loading...</p>
-              )}
-            </div> */}
           <div
             style={{
               minWidth: "20%",
@@ -648,7 +632,9 @@ function FoodBeverages() {
                     ? "#e53e6c"
                     : item.category === "All"
                     ? "#0075AD"
-                    : ""
+                    : item.category === "Best Seller"
+                    ? "#0075AD"
+                    :""
                   : "",
               color: selectedCategory === item.category ? "white" : "black",
             }}
