@@ -112,12 +112,6 @@ const data = [
     category: "Drinks",
     status: false,
   },
-  {
-    itemId: 5,
-    title: "Best Sellor",
-    category: "Best Sellor",
-    status: false,
-  },
 ];
 
 function FoodBeverages() {
@@ -537,12 +531,13 @@ if (currentDateTime > closingTime) {
                   const disabled =
                   item.Totime.localeCompare(currentTime, undefined, {
                     numeric: true,
-                  }) < 0 ||
-                  item.Totime.localeCompare(currentTime, undefined, {
-                    numeric: true,
-                  }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
-                    numeric: true,
-                  }) > 0;
+                  }) < 0;
+                  //  ||
+                  // item.Totime.localeCompare(currentTime, undefined, {
+                  //   numeric: true,
+                  // }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
+                  //   numeric: true,
+                  // }) > 0;
                 
 
                     const optionStyle = {
