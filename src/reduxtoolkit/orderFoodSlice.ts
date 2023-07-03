@@ -21,7 +21,7 @@ interface Payload {
   unit_id: string | null;
   patient_ipno:string | null;
   delivery_address:string | null;
-  serving_time: string | number | null;
+  servingtime_id: string | number | null;
   my_cart_items: {};
 }
 export const getMyOrderFood = createAsyncThunk(
