@@ -28,6 +28,7 @@ import BackgroundImage from "../background";
 import localForage from "localforage";
 import { setorderDb } from "./orderDBSlice";
 
+
 interface Item {
   title: string;
   type: string;
@@ -37,6 +38,58 @@ interface Item {
   category: string;
   selectedServingType: string;
 }
+
+const mealData = [
+  {
+    id: 1,
+    mealtime: "Pre Breakfast",
+    Fromtime: "06:00:00",
+    Totime: "07:30:00",
+    status: 1,
+  },
+  {
+    id: 2,
+    mealtime: "Breakfast",
+    Fromtime: "07:30:00",
+    Totime: "09:15:00",
+    status: 1,
+  },
+  {
+    id: 3,
+    mealtime: "Post Dinner",
+    Fromtime: "21:30:00",
+    Totime: "22:00:00",
+    status: 1,
+  },
+  {
+    id: 4,
+    mealtime: "Lunch",
+    Fromtime: "12:30:00",
+    Totime: "14:00:00",
+    status: 1,
+  },
+  {
+    id: 5,
+    mealtime: "Snacks",
+    Fromtime: "15:30:00",
+    Totime: "16:30:00",
+    status: 1,
+  },
+  {
+    id: 6,
+    mealtime: "Dinner",
+    Fromtime: "19:30:00",
+    Totime: "23:30:00",
+    status: 1,
+  },
+  {
+    id: 7,
+    mealtime: "Soup Service",
+    Fromtime: "17:30:00",
+    Totime: "23:00:00",
+    status: 1,
+  },
+];
 
 const data = [
   {
@@ -83,7 +136,7 @@ function FoodBeverages() {
 
   const { status, message } = useAppSelector((state) => state.order);
 
-  const { status:userStatus, data: userData } = useAppSelector(
+  const { status: userStatus, data: userData } = useAppSelector(
     (state: RootState) => state.user
   );
 
@@ -98,18 +151,32 @@ function FoodBeverages() {
 
   console.log("Menu Items", menuItems?.length);
 
-  useEffect(() => {
-    const unitCodeStr = localStorage.getItem("unit_code");
-    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-    if (unit_code) {
-      setUnitId(unit_code.unit);
-    }
-    dispatch(
-      getItemsList({
-        unit_id: unit_code.unit,
-      })
-    );
-  }, []);
+  // useEffect(() => {
+  //   const unitCodeStr = localStorage.getItem("unit_code");
+  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+  //   if (unit_code) {
+  //     setUnitId(unit_code.unit);
+  //   }
+  //   dispatch(
+  //     getItemsList({
+  //       unit_id: unit_code.unit,
+  //     })
+  //   );
+  // }, []);
+
+  // useEffect((selectedType: string) => {
+  //   const unitCodeStr = localStorage.getItem("unit_code");
+  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+  //   if (unit_code) {
+  //     setUnitId(unit_code.unit);
+  //   }
+  //   dispatch(
+  //     getItemServiceTime({
+  //       unit_id: unitId,
+  //       servingtime_id: selectedType.toString(),
+  //     })
+  //   );
+  // }, []);
 
   useEffect(() => {
     const hasQuantity = cartItems?.some((item) => item.quantity > 0);
@@ -336,7 +403,9 @@ function FoodBeverages() {
       case "All":
         updatedItems = allItems.map((item: any) => ({
           ...item,
-          quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
+          quantity:
+            cartItems.find((cartItem) => cartItem.itemid === item.itemid)
+              ?.quantity || 0,
         }));
         break;
       case "Veg":
@@ -353,8 +422,14 @@ function FoodBeverages() {
         break;
     }
     setMenuItems(updatedItems);
-  }, [selectedCategory, allItems, vegItems, nonVegItems, drinksItems, cartItems]);
-  
+  }, [
+    selectedCategory,
+    allItems,
+    vegItems,
+    nonVegItems,
+    drinksItems,
+    cartItems,
+  ]);
 
   const onSelectCategory = useCallback((category: string) => {
     setSelectedCategory(category);
@@ -366,7 +441,7 @@ function FoodBeverages() {
       (item: any) => item.item_type === 0
     );
 
-    setVegItems((prevItems) =>
+    setVegItems((_prevItems) =>
       filteredItems?.map((item: any) => ({
         ...item,
         quantity:
@@ -374,13 +449,13 @@ function FoodBeverages() {
             ?.quantity || 0,
       }))
     );
-      
+
     const nonVegfilteredItems = foodItemsList?.filter(
       (item: any) => item.item_type === 1
     );
 
-    setNonVegItems((prevItems) =>
-    nonVegfilteredItems?.map((item: any) => ({
+    setNonVegItems((_prevItems) =>
+      nonVegfilteredItems?.map((item: any) => ({
         ...item,
         quantity:
           cartItems.find((cartItem) => cartItem.itemid === item.itemid)
@@ -392,23 +467,25 @@ function FoodBeverages() {
       (item: any) => item.item_type === 2
     );
 
-    setDrinksItems((prevItems) =>
-    drinksfilteredItems?.map((item: any) => ({
+    setDrinksItems((_prevItems) =>
+      drinksfilteredItems?.map((item: any) => ({
         ...item,
         quantity:
           cartItems.find((cartItem) => cartItem.itemid === item.itemid)
             ?.quantity || 0,
       }))
     );
-
-  },[foodItemsList, cartItems]);
-
+  }, [foodItemsList, cartItems]);
 
   const orderList = useAppSelector((state) => state.orderHistory);
 
   const [orderIdArray, setOrderIdArray] = useState<string[]>([]);
 
-  const { data: orderIds, status:orderStatus, message: orderMessage } = useAppSelector((state) => state.order);
+  const {
+    data: orderIds,
+    status: orderStatus,
+    message: orderMessage,
+  } = useAppSelector((state) => state.order);
 
   useEffect(() => {
     // Step 4: Update the array whenever orderIds data changes
@@ -418,10 +495,8 @@ function FoodBeverages() {
   const addNewOrderId = (newOrderId: any) => {
     // Step 5: Add new orderId to the array
     setOrderIdArray([...orderIdArray, newOrderId]);
-    console.log('orderIdArray', orderIdArray);
+    console.log("orderIdArray", orderIdArray);
   };
-
-
 
   // useEffect(() => {
   //   const existingArrayString = localStorage.getItem("orderHistory");
@@ -441,7 +516,7 @@ function FoodBeverages() {
 
   /////////////////////////////////////////
 
-  const orderDB = useAppSelector(state => state.orderdb);
+  const orderDB = useAppSelector((state) => state.orderdb);
 
   async function openDatabase() {
     const config = {
@@ -463,12 +538,12 @@ function FoodBeverages() {
   //     description: "My store with auto-incrementing orderIDs",
   //     autoIncrement: true,
   //   };
-  
+
   //   try {
   //     // Check if the database configuration is stored in local storage
   //     const storedConfig = localStorage.getItem("orderDbConfig");
   //     let database;
-  
+
   //     if (storedConfig) {
   //       const parsedConfig = JSON.parse(storedConfig);
   //       database = await localForage.createInstance(parsedConfig);
@@ -476,7 +551,7 @@ function FoodBeverages() {
   //       database = await localForage.createInstance(config);
   //       // Store the database configuration in local storage
   //       localStorage.setItem("orderDbConfig", JSON.stringify(config));
-  //     } 
+  //     }
   //     dispatch(setorderDb(database));
   //   } catch (error) {
   //     console.error("Error creating database:", error);
@@ -500,8 +575,8 @@ function FoodBeverages() {
   async function addData(userData: any) {
     try {
       const existingOrderIds = await orderDB.orderID.getItem(userData.ip_no);
-      console.log('existingOrderIds', existingOrderIds)
-  
+      console.log("existingOrderIds", existingOrderIds);
+
       let updatedOrderIds = [];
       if (orderIds !== null) {
         if (existingOrderIds) {
@@ -514,37 +589,69 @@ function FoodBeverages() {
         console.log("Null values not added to store");
         return;
       }
-  
+
       await orderDB.orderID.setItem(userData.ip_no, updatedOrderIds);
       console.log("Data added to store");
     } catch (error) {
       console.log("Error adding data to store", error);
     }
   }
-  
 
   // async function addData(userData: any) {
   //   try {
   //     const existingOrderIds = await orderDB.orderID.getItem(userData.ip_no);
   //     console.log('existingOrderIds', existingOrderIds)
-  
+
   //     let updatedOrderIds = [];
   //     if (existingOrderIds) {
   //       updatedOrderIds = existingOrderIds.concat([orderIds]);
   //     } else {
   //       updatedOrderIds = [orderIds];
   //     }
-  
+
   //     await orderDB.orderID.setItem(userData.ip_no, updatedOrderIds);
   //     console.log("Data added to store");
   //   } catch (error) {
   //     console.log("Error adding data to store", error);
   //   }
   // }
-    
+
   const orderHistoryButton = () => {
     navigate("/order-history");
   };
+
+  ////////////////////////////////////////////////////
+  const [selectedServingType, setSelectedServingType] = useState(() => {
+    const servingType = localStorage.getItem("servingType");
+    return servingType ? servingType : "Serving Type";
+  });
+
+  const currentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  const handleServingTypeSelection = useCallback(
+    (selectedType: string, selectedServingType: string) => {
+      if (selectedType && unitId) {
+        console.log(selectedType);
+
+        dispatch(
+          getItemServiceTime({
+            unit_id: unitId,
+            servingtime_id: selectedType.toString(),
+          })
+        );
+      }
+
+      setSelectedServingType(selectedServingType);
+      localStorage.setItem("serving time", selectedType);
+      localStorage.setItem("servingType", selectedServingType);
+      setIsOpen((prev) => !prev);
+    },
+    [unitId, dispatch, setIsOpen, setSelectedServingType]
+  );
 
   return (
     <>
@@ -583,7 +690,7 @@ function FoodBeverages() {
               //textDecoration: "underline",
             }}
           >
-            {t('order_history')}
+            {t("order_history")}
           </p>
         </div>
       </div>
@@ -624,6 +731,7 @@ function FoodBeverages() {
           ) : null}
         </div>
       </div>
+
       <div
         style={{
           display: "flex",
@@ -634,6 +742,121 @@ function FoodBeverages() {
           flexWrap: "wrap",
         }}
       >
+        {/* <div
+              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            >
+              {Array.isArray(mealData) ? (
+                mealData?.map((item: any, index: any) => {
+                  const disabled =
+                  item.Totime.localeCompare(currentTime, undefined, {
+                    numeric: true,
+                  }) < 0;
+                  // ||
+                  // item.Totime.localeCompare(currentTime, undefined, {
+                  //   numeric: true,
+                  // }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
+                  //   numeric: true,
+                  // }) > 0;
+                
+
+                    const optionStyle = {
+                      cursor: disabled ? "not-allowed" : "pointer",
+                      color: disabled ? "grey" : "inherit",
+                    };
+
+                  return (
+                    <div
+                      // onClick={() => {
+                      //   if (!disabled) {
+                      //     handleServingTypeSelection(item.id, item.mealtime);
+                      //   }
+                      // }}
+                      key={item.id}
+                      style={optionStyle}
+                    >
+                      {item.mealtime}
+                    </div>
+                  );
+                })
+              ) : (
+                <p style={{ marginTop: "50%" }}>Loading...</p>
+              )}
+            </div> */}
+          <div
+            style={{
+              minWidth: "20%",
+              padding: "2%",
+              fontSize: "12px",
+              background: "white",
+              boxShadow: "0px 2px 4px grey",
+              borderRadius: "25px",
+              whiteSpace: "nowrap",
+              marginBottom: "4%",
+              backgroundColor:'red'
+            }}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <p>
+              {selectedServingType}
+              {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
+            </p>
+          </div>
+          {isOpen && (
+             <div
+             style={{
+               position: "absolute",
+               zIndex: 1,
+               background: "white",
+               boxShadow: "0px 2px 4px grey",
+               borderRadius: "10px",
+               marginTop: "5px",
+               width: "45%",
+               height: "250px",
+               padding: "20px",
+             }}
+           >
+             <div
+               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+             >
+               {Array.isArray(mealData) ? (
+                 mealData?.map((item: any, _index: any) => {
+                   const disabled =
+                   item.Totime.localeCompare(currentTime, undefined, {
+                     numeric: true,
+                   }) < 0;
+                   // ||
+                   // item.Totime.localeCompare(currentTime, undefined, {
+                   //   numeric: true,
+                   // }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
+                   //   numeric: true,
+                   // }) > 0;
+                 
+ 
+                     const optionStyle = {
+                       cursor: disabled ? "not-allowed" : "pointer",
+                       color: disabled ? "grey" : "inherit",
+                     };
+ 
+                   return (
+                     <div
+                       onClick={() => {
+                         if (!disabled) {
+                           handleServingTypeSelection(item.id, item.mealtime);
+                         }
+                       }}
+                       key={item.id}
+                       style={optionStyle}
+                     >
+                       {item.mealtime}
+                     </div>
+                   );
+                 })
+               ) : (
+                 <p style={{ marginTop: "50%" }}>Loading...</p>
+               )}
+             </div>
+           </div>
+          )}
         {data.map((item, index) => (
           <div
             key={index}
@@ -854,8 +1077,8 @@ function FoodBeverages() {
           )}
         </div>
       </div>
-      <div style={{marginTop: '-40%', position: 'fixed'}}>
-      <Footer />
+      <div style={{ marginTop: "-40%", position: "fixed" }}>
+        <Footer />
       </div>
       <BackgroundImage />
     </>
