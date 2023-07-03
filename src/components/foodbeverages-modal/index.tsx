@@ -124,12 +124,37 @@ function FoodBeverages() {
 
   const { t } = useTranslation(["fb"]);
 
+  // const {
+  //   data: foodItemsList,
+  //   status: foodItemsStatus,
+  //   error,
+  //   message: foodItemsMsg,
+  // } = useAppSelector((state) => state.foodItems);
   const {
     data: foodItemsList,
     status: foodItemsStatus,
     error,
     message: foodItemsMsg,
-  } = useAppSelector((state) => state.foodItems);
+  } = useAppSelector((state) => state.getItemServiceTime);
+
+  const getItemsServingTime = useAppSelector(
+    (state) => state.getMyServingTime
+  );
+
+
+  useEffect(() => {
+    const unitCodeStr = localStorage.getItem("unit_code");
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      setUnitId(unit_code.unit);
+
+      dispatch(
+        getMyServingTime({
+          unit_id: unit_code.unit,
+        })
+      );
+    }
+  }, [dispatch]);
 
   const cartItems = useAppSelector((state) => state.cart);
   console.log("CartItems", cartItems);
@@ -151,20 +176,20 @@ function FoodBeverages() {
 
   console.log("Menu Items", menuItems?.length);
 
-  // useEffect(() => {
-  //   const unitCodeStr = localStorage.getItem("unit_code");
-  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-  //   if (unit_code) {
-  //     setUnitId(unit_code.unit);
-  //   }
-  //   dispatch(
-  //     getItemsList({
-  //       unit_id: unit_code.unit,
-  //     })
-  //   );
-  // }, []);
+  useEffect(() => {
+    const unitCodeStr = localStorage.getItem("unit_code");
+    const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
+    if (unit_code) {
+      setUnitId(unit_code.unit);
+    }
+    dispatch(
+      getItemsList({
+        unit_id: unit_code.unit,
+      })
+    );
+  }, []);
 
-  // useEffect((selectedType: string) => {
+  // useEffect(() => {
   //   const unitCodeStr = localStorage.getItem("unit_code");
   //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
   //   if (unit_code) {
@@ -173,7 +198,7 @@ function FoodBeverages() {
   //   dispatch(
   //     getItemServiceTime({
   //       unit_id: unitId,
-  //       servingtime_id: selectedType.toString(),
+  //       servingtime_id: '1',
   //     })
   //   );
   // }, []);
@@ -644,7 +669,7 @@ function FoodBeverages() {
           })
         );
       }
-
+      
       setSelectedServingType(selectedServingType);
       localStorage.setItem("serving time", selectedType);
       localStorage.setItem("servingType", selectedServingType);
@@ -809,17 +834,18 @@ function FoodBeverages() {
                background: "white",
                boxShadow: "0px 2px 4px grey",
                borderRadius: "10px",
-               marginTop: "5px",
+               marginTop: "35px",
                width: "45%",
                height: "250px",
                padding: "20px",
+               marginLeft: '-35%'
              }}
            >
              <div
                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
              >
-               {Array.isArray(mealData) ? (
-                 mealData?.map((item: any, _index: any) => {
+               {Array.isArray(getItemsServingTime.data) ? (
+                 getItemsServingTime.data?.map((item: any, _index: any) => {
                    const disabled =
                    item.Totime.localeCompare(currentTime, undefined, {
                      numeric: true,
