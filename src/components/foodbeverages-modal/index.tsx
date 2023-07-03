@@ -39,58 +39,6 @@ interface Item {
   selectedServingType: string;
 }
 
-const mealData = [
-  {
-    id: 1,
-    mealtime: "Pre Breakfast",
-    Fromtime: "06:00:00",
-    Totime: "07:30:00",
-    status: 1,
-  },
-  {
-    id: 2,
-    mealtime: "Breakfast",
-    Fromtime: "07:30:00",
-    Totime: "09:15:00",
-    status: 1,
-  },
-  {
-    id: 3,
-    mealtime: "Post Dinner",
-    Fromtime: "21:30:00",
-    Totime: "22:00:00",
-    status: 1,
-  },
-  {
-    id: 4,
-    mealtime: "Lunch",
-    Fromtime: "12:30:00",
-    Totime: "14:00:00",
-    status: 1,
-  },
-  {
-    id: 5,
-    mealtime: "Snacks",
-    Fromtime: "15:30:00",
-    Totime: "16:30:00",
-    status: 1,
-  },
-  {
-    id: 6,
-    mealtime: "Dinner",
-    Fromtime: "19:30:00",
-    Totime: "23:30:00",
-    status: 1,
-  },
-  {
-    id: 7,
-    mealtime: "Soup Service",
-    Fromtime: "17:30:00",
-    Totime: "23:00:00",
-    status: 1,
-  },
-];
-
 const data = [
   {
     itemId: 1,
@@ -116,6 +64,12 @@ const data = [
     category: "Drinks",
     status: false,
   },
+  {
+    itemId: 5,
+    title: "Best",
+    category: "Best",
+    status: false,
+  },
 ];
 
 function FoodBeverages() {
@@ -124,12 +78,6 @@ function FoodBeverages() {
 
   const { t } = useTranslation(["fb"]);
 
-  // const {
-  //   data: foodItemsList,
-  //   status: foodItemsStatus,
-  //   error,
-  //   message: foodItemsMsg,
-  // } = useAppSelector((state) => state.foodItems);
   const {
     data: foodItemsList,
     status: foodItemsStatus,
@@ -176,33 +124,6 @@ function FoodBeverages() {
 
   console.log("Menu Items", menuItems?.length);
 
-  // useEffect(() => {
-  //   const unitCodeStr = localStorage.getItem("unit_code");
-  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-  //   if (unit_code) {
-  //     setUnitId(unit_code.unit);
-  //   }
-  //   dispatch(
-  //     getItemsList({
-  //       unit_id: unit_code.unit,
-  //     })
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   const unitCodeStr = localStorage.getItem("unit_code");
-  //   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
-  //   if (unit_code) {
-  //     setUnitId(unit_code.unit);
-  //   }
-  //   dispatch(
-  //     getItemServiceTime({
-  //       unit_id: unitId,
-  //       servingtime_id: '1',
-  //     })
-  //   );
-  // }, []);
-
   useEffect(() => {
     const hasQuantity = cartItems?.some((item) => item.quantity > 0);
     const updatedItems = hasQuantity
@@ -240,44 +161,6 @@ function FoodBeverages() {
     }
     console.log("in here");
   }, [cartItems, foodItemsList]);
-
-  // useEffect(() => {
-  //   const hasQuantity = cartItems?.some((item) => item.quantity > 0);
-  //   const updatedItems = hasQuantity
-  //     ? menuItems?.map((item: any) => {
-  //         const cartItem = cartItems.find(
-  //           (cartItem) => cartItem.itemid === item.itemid
-  //         );
-  //         console.log(cartItem);
-
-  //         if (cartItem) {
-  //           return {
-  //             ...item,
-  //             quantity: cartItem.quantity,
-  //             other_remark: cartItem.other_remark,
-  //             remarkId: undefined,
-  //           };
-  //         }
-  //         return item;
-  //       })
-  //     : [];
-
-  //   console.log("hasQuantity", hasQuantity);
-
-  //   if (updatedItems?.length > 0) {
-  //     setMenuItems(updatedItems);
-  //     console.log("am here in items");
-  //   } else {
-  //     console.log("itemms");
-  //     setMenuItems((prevItems) =>
-  //       prevItems.map((item: any) => ({
-  //         ...item,
-  //         quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
-  //       }))
-  //     );
-  //   }
-  //   console.log("in here");
-  // }, [cartItems, foodItemsList]);
 
   const goBack = () => {
     dispatch(clearCart());
@@ -329,68 +212,7 @@ function FoodBeverages() {
     [menuItems, foodItemsList]
   );
 
-  // const onSelectCategory = useCallback(
-  //   (category: string) => {
-  //     setSelectedCategory(category);
-  //     const filterValue =
-  //       category === "Non Veg"
-  //         ? 1
-  //         : category === "Veg"
-  //         ? 0
-  //         : category === "Drinks"
-  //         ? 2
-  //         : "All";
-  //     const filteredItems = foodItemsList?.filter(
-  //       (item: any) => item.item_type === filterValue
-  //     );
-  //     console.log("filteredItems sai:::", filteredItems);
-
-  //     if (category === "All") {
-  //       setMenuItems(foodItemsList);
-  //       setSearchInput("");
-  //     } else {
-  //       setMenuItems(filteredItems);
-  //     }
-  //   },
-  //   [foodItemsList]
-  // );
-
-  // const onSelectCategory = useCallback(
-  //   (category: string) => {
-  //     setSelectedCategory(category);
-  //     const filterValue =
-  //       category === "Non Veg"
-  //         ? 1
-  //         : category === "Veg"
-  //         ? 0
-  //         : category === "Drinks"
-  //         ? 2
-  //         : "All";
-
-  //     if (category === "All") {
-  //       setMenuItems((prevItems) =>
-  //         prevItems.map((item: any) => ({
-  //           ...item,
-  //           quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
-  //         }))
-  //       );
-  //       setSearchInput("");
-  //     } else {
-  //       const filteredItems = foodItemsList?.filter(
-  //         (item: any) => item.item_type === filterValue
-  //       );
-
-  //       setMenuItems((prevItems) =>
-  //         filteredItems.map((item: any) => ({
-  //           ...item,
-  //           quantity: cartItems.find((cartItem) => cartItem.itemid === item.itemid)?.quantity || 0,
-  //         }))
-  //       );
-  //     }
-  //   },
-  //   [cartItems, foodItemsList]
-  // );
-
+  
   ////////////////////////////////////
   const [allItems, setAllItems] = useState<any[]>([]);
   const [vegItems, setVegItems] = useState<any[]>([]);
@@ -401,26 +223,7 @@ function FoodBeverages() {
     setAllItems(foodItemsList || []);
   }, [foodItemsList]);
 
-  // useEffect(() => {
-  //   // Update the menu items based on the selected category
-  //   switch (selectedCategory) {
-  //     case "All":
-  //       setMenuItems(allItems);
-  //       break;
-  //     case "Veg":
-  //       setMenuItems(vegItems);
-  //       break;
-  //     case "Non Veg":
-  //       setMenuItems(nonVegItems);
-  //       break;
-  //     case "Drinks":
-  //       setMenuItems(drinksItems);
-  //       break;
-  //     default:
-  //       setMenuItems(allItems);
-  //       break;
-  //   }
-  // }, [selectedCategory, allItems, vegItems, nonVegItems, drinksItems]);
+
   useEffect(() => {
     // Update the menu items based on the selected category
     let updatedItems;
@@ -523,21 +326,7 @@ function FoodBeverages() {
     console.log("orderIdArray", orderIdArray);
   };
 
-  // useEffect(() => {
-  //   const existingArrayString = localStorage.getItem("orderHistory");
-  //     const existingArray = existingArrayString
-  //       ? JSON.parse(existingArrayString)
-  //       : [];
 
-  //     console.log("existingArray:", existingArray); // Check the value of existingArray
-
-  //     const updatedArray = [...existingArray, orderIds];
-
-  //     console.log("updatedArray:", updatedArray); // Check the value of updatedArray
-
-  //     localStorage.setItem("orderHistory", JSON.stringify(updatedArray));
-
-  // }, [])
 
   /////////////////////////////////////////
 
@@ -555,33 +344,7 @@ function FoodBeverages() {
     dispatch(setorderDb(database));
   }
 
-  // async function openDatabase() {
-  //   const config = {
-  //     name: "ksuvidha-orders",
-  //     version: 1,
-  //     storeName: "checkorders",
-  //     description: "My store with auto-incrementing orderIDs",
-  //     autoIncrement: true,
-  //   };
 
-  //   try {
-  //     // Check if the database configuration is stored in local storage
-  //     const storedConfig = localStorage.getItem("orderDbConfig");
-  //     let database;
-
-  //     if (storedConfig) {
-  //       const parsedConfig = JSON.parse(storedConfig);
-  //       database = await localForage.createInstance(parsedConfig);
-  //     } else {
-  //       database = await localForage.createInstance(config);
-  //       // Store the database configuration in local storage
-  //       localStorage.setItem("orderDbConfig", JSON.stringify(config));
-  //     }
-  //     dispatch(setorderDb(database));
-  //   } catch (error) {
-  //     console.error("Error creating database:", error);
-  //   }
-  // }
 
   useEffect(() => {
     openDatabase();
@@ -622,24 +385,7 @@ function FoodBeverages() {
     }
   }
 
-  // async function addData(userData: any) {
-  //   try {
-  //     const existingOrderIds = await orderDB.orderID.getItem(userData.ip_no);
-  //     console.log('existingOrderIds', existingOrderIds)
 
-  //     let updatedOrderIds = [];
-  //     if (existingOrderIds) {
-  //       updatedOrderIds = existingOrderIds.concat([orderIds]);
-  //     } else {
-  //       updatedOrderIds = [orderIds];
-  //     }
-
-  //     await orderDB.orderID.setItem(userData.ip_no, updatedOrderIds);
-  //     console.log("Data added to store");
-  //   } catch (error) {
-  //     console.log("Error adding data to store", error);
-  //   }
-  // }
 
   const orderHistoryButton = () => {
     navigate("/order-history");
@@ -814,11 +560,11 @@ function FoodBeverages() {
               borderRadius: "25px",
               whiteSpace: "nowrap",
               marginBottom: "4%",
-              backgroundColor:'red'
+              backgroundColor:'#0075ad'
             }}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <p>
+            <p style={{color: 'white'}}>
               {selectedServingType}
               {isOpen ? <Icon name="caret up" /> : <Icon name="caret down" />}
             </p>
