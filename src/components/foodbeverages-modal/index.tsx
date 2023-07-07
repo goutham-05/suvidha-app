@@ -39,6 +39,58 @@ interface Item {
   selectedServingType: string;
 }
 
+const servingTypeData = [
+  {
+      "id": 1,
+      "mealtime": "Pre Breakfast",
+      "Fromtime": "06:00:00",
+      "Totime": "07:30:00",
+      "status": 1
+  },
+  {
+      "id": 2,
+      "mealtime": "Breakfast",
+      "Fromtime": "07:30:00",
+      "Totime": "09:30:00",
+      "status": 1
+  },
+  {
+      "id": 3,
+      "mealtime": "Post Dinner",
+      "Fromtime": "21:30:00",
+      "Totime": "22:00:00",
+      "status": 1
+  },
+  {
+      "id": 4,
+      "mealtime": "Lunch",
+      "Fromtime": "12:30:00",
+      "Totime": "14:00:00",
+      "status": 1
+  },
+  {
+      "id": 5,
+      "mealtime": "Snacks",
+      "Fromtime": "15:30:00",
+      "Totime": "16:30:00",
+      "status": 1
+  },
+  {
+      "id": 6,
+      "mealtime": "Dinner",
+      "Fromtime": "19:30:00",
+      "Totime": "21:00:00",
+      "status": 1
+  },
+  {
+      "id": 7,
+      "mealtime": "Soup Service",
+      "Fromtime": "17:30:00",
+      "Totime": "23:30:00",
+      "status": 1
+  }
+]
+
 const data = [
   {
     itemId: 1,
@@ -165,6 +217,8 @@ function FoodBeverages() {
   const goBack = () => {
     dispatch(clearCart());
     navigate("/services");
+    localStorage.removeItem("servingType");
+    localStorage.removeItem("serving time");
   };
 
   const goCart = () => {
@@ -416,7 +470,10 @@ function FoodBeverages() {
   };
 
   ////////////////////////////////////////////////////
-  const [selectedServingType, setSelectedServingType] = useState('Serving Type');
+  const [selectedServingType, setSelectedServingType] = useState(() => {
+    const servingType = localStorage.getItem("servingType");
+    return servingType ? servingType : "Serving Type";
+  });
 
   const currentTime = new Date().toLocaleTimeString([], {
     hour: "2-digit",
@@ -571,8 +628,8 @@ function FoodBeverages() {
              <div
                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
              >
-               {Array.isArray(getItemsServingTime.data) ? (
-                 getItemsServingTime.data?.map((item: any, _index: any) => {
+               {Array.isArray(servingTypeData) ? (
+                 servingTypeData?.map((item: any, _index: any) => {
                    const disabled =
                    item.Totime.localeCompare(currentTime, undefined, {
                      numeric: true,
