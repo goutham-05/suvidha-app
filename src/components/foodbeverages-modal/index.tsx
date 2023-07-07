@@ -709,7 +709,7 @@ function FoodBeverages() {
           marginTop: "2%",
         }}
       >
-        
+        {localStorage.getItem("serving time") ? (
         <div>
           {Array.isArray(menuItems) ? (
             menuItems.length > 0 ? (
@@ -888,7 +888,19 @@ function FoodBeverages() {
           ) : (
             <p>Loading...</p>
           )}
-        </div>
+        </div>) :  (
+              <p
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  color: "#4A98CD",
+                  marginTop: "10%",
+                }}
+              >
+                Please Select Serving Type
+              </p>
+            )
+}
       </div>
       <div style={{ marginTop: "-40%", position: "fixed" }}>
         <Footer />
