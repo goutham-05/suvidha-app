@@ -56,6 +56,8 @@ function MyCart() {
 
   const goBack = () => {
     navigate("/fnb");
+    localStorage.getItem("servingType");
+    localStorage.getItem("serving time");
   };
 
   const {

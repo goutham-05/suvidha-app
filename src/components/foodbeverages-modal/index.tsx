@@ -27,6 +27,7 @@ import Footer from "../footer";
 import BackgroundImage from "../background";
 import localForage from "localforage";
 import { setorderDb } from "./orderDBSlice";
+import { useLocation } from "react-router-dom";
 
 
 interface Item {
@@ -51,21 +52,21 @@ const servingTypeData = [
       "id": 2,
       "mealtime": "Breakfast",
       "Fromtime": "07:30:00",
-      "Totime": "09:30:00",
+      "Totime": "08:19:00",
       "status": 1
   },
   {
       "id": 3,
       "mealtime": "Post Dinner",
       "Fromtime": "21:30:00",
-      "Totime": "22:00:00",
+      "Totime": "09:00:00",
       "status": 1
   },
   {
       "id": 4,
       "mealtime": "Lunch",
       "Fromtime": "12:30:00",
-      "Totime": "14:00:00",
+      "Totime": "13:00:00",
       "status": 1
   },
   {
@@ -79,14 +80,14 @@ const servingTypeData = [
       "id": 6,
       "mealtime": "Dinner",
       "Fromtime": "19:30:00",
-      "Totime": "21:00:00",
+      "Totime": "20:00:00",
       "status": 1
   },
   {
       "id": 7,
       "mealtime": "Soup Service",
       "Fromtime": "17:30:00",
-      "Totime": "23:30:00",
+      "Totime": "22:30:00",
       "status": 1
   }
 ]
@@ -140,7 +141,6 @@ function FoodBeverages() {
   const getItemsServingTime = useAppSelector(
     (state) => state.getMyServingTime
   );
-
 
   useEffect(() => {
     const unitCodeStr = localStorage.getItem("unit_code");
@@ -470,10 +470,21 @@ function FoodBeverages() {
   };
 
   ////////////////////////////////////////////////////
+  // const [selectedServingType, setSelectedServingType] = useState(() => {
+  //   const servingType = localStorage.getItem("servingType");
+  //   return servingType ? servingType : "Serving Type";
+  // });
+  // ...
+  
   const [selectedServingType, setSelectedServingType] = useState(() => {
     const servingType = localStorage.getItem("servingType");
-    return servingType ? servingType : "Serving Type";
+    const isPageReloaded = performance.navigation.type === 1; // Check if page is reloaded
+  
+    return isPageReloaded ? "Serving Type" : servingType;
   });
+  
+  
+  
 
   const currentTime = new Date().toLocaleTimeString([], {
     hour: "2-digit",
@@ -628,18 +639,18 @@ function FoodBeverages() {
              <div
                style={{ display: "flex", flexDirection: "column", gap: "10px" }}
              >
-               {Array.isArray(servingTypeData) ? (
-                 servingTypeData?.map((item: any, _index: any) => {
+               {Array.isArray(getItemsServingTime.data) ? (
+                 getItemsServingTime.data?.map((item: any, _index: any) => {
                    const disabled =
                    item.Totime.localeCompare(currentTime, undefined, {
                      numeric: true,
+                   }) < 0
+                   ||
+                   item.Totime.localeCompare(currentTime, undefined, {
+                     numeric: true,
+                   }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
+                     numeric: true,
                    }) < 0;
-                   // ||
-                   // item.Totime.localeCompare(currentTime, undefined, {
-                   //   numeric: true,
-                   // }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
-                   //   numeric: true,
-                   // }) > 0;
                  
  
                      const optionStyle = {
@@ -902,11 +913,15 @@ function FoodBeverages() {
             )
 }
       </div>
-      <div style={{ marginTop: "-40%", position: "fixed" }}>
+      {/* <div style={{ marginTop: "-45%", position: "sticky" }}>
+        <Footer />
+      </div> */}
+      <BackgroundImage />
+      <div style={{ marginTop: "-48%", position: "sticky" }}>
         <Footer />
       </div>
-      <BackgroundImage />
     </>
+    
   );
 }
 
