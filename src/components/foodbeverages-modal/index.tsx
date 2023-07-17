@@ -480,17 +480,18 @@ function FoodBeverages() {
     const servingType = localStorage.getItem("servingType");
     const isPageReloaded = performance.navigation.type === 1; // Check if page is reloaded
   
-    return isPageReloaded ? "Serving Type" : servingType;
+    return isPageReloaded ? "Serving Type" : servingType || 'Serving Type';
   });
   
   
   
 
-  const currentTime = new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+  // const currentTime = new Date().toLocaleTimeString([], {
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  //   second: "2-digit",
+  // });
+
 
   const handleServingTypeSelection = useCallback(
     (selectedType: string, selectedServingType: string) => {
@@ -641,17 +642,62 @@ function FoodBeverages() {
              >
                {Array.isArray(getItemsServingTime.data) ? (
                  getItemsServingTime.data?.map((item: any, _index: any) => {
-                   const disabled =
-                   item.Totime.localeCompare(currentTime, undefined, {
-                     numeric: true,
-                   }) < 0
-                   ||
-                   item.Totime.localeCompare(currentTime, undefined, {
-                     numeric: true,
-                   }) > 0 && item.Fromtime.localeCompare(currentTime, undefined, {
-                     numeric: true,
-                   }) < 0;
+                  //  const disabled =
+                  //  item.Totime.localeCompare(currentTime, undefined, {
+                  //    numeric: true,
+                  //  }) < 0
+                  //  ||
+                  //  item.Totime.localeCompare(currentTime, undefined, {
+                  //    numeric: true,
+                  //  }) < 0 && item.Fromtime.localeCompare(currentTime, undefined, {
+                  //    numeric: true,
+                  //  }) > 0;
                  
+                  // const disabled =
+                  // item.Totime.localeCompare(currentTime, undefined, {
+                  //   numeric: true,
+                  // }) < 0 ||
+                  // (item.Totime.localeCompare(currentTime, undefined, {
+                  //   numeric: true,
+                  // }) > 0 &&
+                  //   item.Fromtime.localeCompare(currentTime, undefined, {
+                  //     numeric: true,
+                  //   }) > 0);
+
+                  // const currentTime = new Date(); // Get current date and time
+
+                  // const isPastMidnight =
+                  //   currentTime.getHours() === 0 &&
+                  //   currentTime.getMinutes() === 0 &&
+                  //   currentTime.getSeconds() === 0;
+                  
+                  // const toTime = new Date();
+                  // toTime.setHours(...item.Totime.split(':'), 0, 0, 0);
+                  
+                  // const disabled =
+                  //   isPastMidnight ||
+                  //   currentTime > toTime; // Disable serving types after the Totime
+                  
+                  
+                  const currentTime = new Date(); // Get current date and time
+
+                  const isPastMidnight =
+                    currentTime.getHours() === 0 &&
+                    currentTime.getMinutes() === 0 &&
+                    currentTime.getSeconds() === 0;
+                  
+                  const toTimeComponents = item.Totime.split(':');
+                  const toTime = new Date();
+                  toTime.setHours(parseInt(toTimeComponents[0]), parseInt(toTimeComponents[1]), parseInt(toTimeComponents[2]), 0);
+                  
+                  const disabled =
+                    isPastMidnight ||
+                    currentTime > toTime; // Disable serving types after the Totime
+                  
+
+                  
+                  
+
  
                      const optionStyle = {
                        cursor: disabled ? "not-allowed" : "pointer",
