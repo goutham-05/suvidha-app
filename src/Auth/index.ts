@@ -8,18 +8,18 @@ export const  isLoggedIn = () => {
     }
 }
 
-export const doLoggin = (Data) => {
-    localStorage.setItem("OTP", JSON.stringify(Data));
-}
+// export const doLoggin = (Data) => {
+//     localStorage.setItem("OTP", JSON.stringify(Data));
+// }
 
-export const doLogout = (next) => {
-    localStorage.removeItem("OTP");
-    next()
-}
+// export const doLogout = (next) => {
+//     localStorage.removeItem("OTP");
+//     next()
+// }
 
-export const getCurrentUserDetails = () => {
-    if (isLoggedIn) {
-        return JSON.parse(localStorage.getItem("OTP"));
-    }
-    else false;
-}
+// export const getCurrentUserDetails = () => {
+//     if (isLoggedIn) {
+//         return JSON.parse(localStorage.getItem("OTP"));
+//     }
+//     else false;
+// }

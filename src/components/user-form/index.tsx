@@ -154,7 +154,7 @@ const UserForm: React.FC<Props> = ({ history }) => {
                     type="number"
                     minLength={8}
                     maxLength={10}
-                    pattern={10}
+                    //pattern={10}
                   />
                 )}
               />
