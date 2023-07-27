@@ -1,0 +1,19 @@
+.text-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .line {
+    flex: 1;
+    border-bottom: 1px solid black;
+  }
+  
+  .text {
+    margin: 0 10px;
+  }
+
+  @media (max-width: 768px) {
+    input {
+      width: 100%;
+    }
+  }

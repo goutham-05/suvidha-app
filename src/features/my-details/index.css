@@ -1,0 +1,17 @@
+.grid-item {
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.grid-item:hover {
+  background-color: #3f8acb;
+  transform: scale(1.05);
+}
+
+.grid-item img {
+  transition: transform 0.3s;
+}
+
+.grid-item:hover img {
+  transform: scale(1.2);
+}

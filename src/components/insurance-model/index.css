@@ -1,0 +1,79 @@
+.MydischargeContainer{
+    width: 95%;
+    height: 350px;
+    margin-left: 10px;
+    border-radius: 30px;
+    margin-top: 20px;
+}
+
+.mydischargeHeader{
+    display: flex;
+    width: 100%;
+    margin-top: 6%;
+}
+
+.headerTitle{
+    width: 60%;
+    height: 40px;
+    background: #6C6D70;
+    border-radius: 10px;
+    margin-left: 20%;
+    padding-top: 2.5%;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.myBillsDataContainer{
+    width: 10%;
+    height: 100px;
+    border: 1px solid red;
+    display: flex;
+}
+
+.payBillButton {
+    width: 60%;
+    height: 35px;
+    background: #E31A47;
+    border-radius: 10px;
+    margin-left: 20%;
+    padding-top: 6px;
+    font-size: 14px;
+    color: white;
+}
+
+.Tablecontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    margin-top: 20%;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+
+  .scrollable-div {
+   width: 160px;
+   height: 150px;
+   overflow: scroll;
+   border-radius: 4%;
+  }

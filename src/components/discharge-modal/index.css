@@ -1,0 +1,43 @@
+.mydischargeContainer{
+    width: 95%;
+    height: 350px;
+    margin-left: 10px;
+    border-radius: 30px;
+    margin-top: 60px;
+}
+
+.mydischargeHeader{
+    display: flex;
+    width: 100%;
+    /* margin-top: 6%; */
+}
+
+.headerTitle{
+    width: 60%;
+    height: 40px;
+    background: #6C6D70;
+    border-radius: 10px;
+    margin-left: 20%;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.myBillsDataContainer{
+    width: 10%;
+    height: 100px;
+    border: 1px solid red;
+    display: flex;
+}
+
+.payBillButton {
+    width: 60%;
+    height: 35px;
+    background: #E31A47;
+    border-radius: 10px;
+    margin-left: 20%;
+    padding-top: 6px;
+    font-size: 14px;
+    color: white;
+}

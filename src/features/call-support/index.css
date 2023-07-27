@@ -1,0 +1,85 @@
+.callSupportContainer{
+    justify-content: center;
+    border: 1px solid red;
+}
+
+.supportContainer{
+    margin-top: 10%;
+}
+
+.modal {
+    width: 100px;
+    height: 200px;
+}
+
+.modal-content{
+    width: 100px;
+    height: 200px; 
+}
+
+.two-column-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Creates two columns with equal width */
+    gap: 20px; /* Adds some space between the columns */
+  }
+  
+  .column {
+    /* Style for each column */
+  }
+
+  .callTable {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    margin-left: 20%;
+    margin-top: 4%;
+  }
+  
+  .tablebox {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    white-space: nowrap;
+    color: black;
+    margin-bottom: 10%;
+    background-color: #e31a47;
+    width: 40%;
+    border-radius: 10px;
+    color: white;margin-top: 4%;
+  }
+
+  .Tablecontainer {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%; */
+    margin-top: 4%;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  
+  
+  
+  
+  
+  
