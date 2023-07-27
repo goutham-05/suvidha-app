@@ -1,20 +1,20 @@
-import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
-import { Button, Grid, Form, Message, Label } from "semantic-ui-react";
-import { getOtp, validateOtp } from "../../features/login/authSlice";
-import { useForm } from "react-hook-form";
-import CInput from "../../common/input";
+import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
+import { Button, Grid, Form, Message, Label } from 'semantic-ui-react';
+import { getOtp, validateOtp } from '../../features/login/authSlice';
+import { useForm } from 'react-hook-form';
+import CInput from '../../common/input';
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
-} from "../../config/redux-store";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import MessageNotification from "../../common/notification";
-import Logo from "../../assets/Logo.png";
-import BackgroundImage from "../background";
-import "./index.css";
-import { Loader } from "semantic-ui-react";
+} from '../../config/redux-store';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import MessageNotification from '../../common/notification';
+import Logo from '../../assets/Logo.png';
+import BackgroundImage from '../background';
+import './index.css';
+import { Loader } from 'semantic-ui-react';
 import Check from '../../reduxtoolkit/patientCheckSlice';
 
 interface Props {}
@@ -24,7 +24,7 @@ function formatMobileNumber(getMobile: any) {
   const hiddenDigits = getMobile.length - visibleDigits;
   const firstDigits = getMobile.substring(0, hiddenDigits);
   const lastDigits = getMobile.substring(hiddenDigits);
-  const hiddenNumbers = "*".repeat(hiddenDigits);
+  const hiddenNumbers = '*'.repeat(hiddenDigits);
   return `${hiddenNumbers}${lastDigits}`;
 }
 
@@ -32,19 +32,19 @@ const OtpForm: React.FC<Props> = ({}) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation(["otp"]);
+  const { t } = useTranslation(['otp']);
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [status, setStatus] = useState<
-    "idle" | "loading" | "failed" | "succeeded"
-  >("idle");
+    'idle' | 'loading' | 'failed' | 'succeeded'
+  >('idle');
 
   const { otpSuccess, data: userData } = useAppSelector(
     (state: RootState) => state.user
   );
 
-  localStorage.setItem("admissionno", userData.ip_no);
-  const getMobile = localStorage.getItem("mobile_number");
+  localStorage.setItem('admissionno', userData.ip_no);
+  const getMobile = localStorage.getItem('mobile_number');
 
   const {
     register,
@@ -52,13 +52,13 @@ const OtpForm: React.FC<Props> = ({}) => {
     formState: { errors },
   } = useForm();
 
-  const [mobile, setMobile] = useState("");
-  const [ipNumber, setIpNumber] = useState("");
+  const [mobile, setMobile] = useState('');
+  const [ipNumber, setIpNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (status === "succeeded" && otpSuccess) {
-      navigate("/services");
+    if (status === 'succeeded' && otpSuccess) {
+      navigate('/services');
     }
   }, [status, otpSuccess]);
 
@@ -67,29 +67,29 @@ const OtpForm: React.FC<Props> = ({}) => {
   async function addData(userData: any) {
     try {
       await db.setItem(userData.ip_no, userData.otp);
-      console.log("Data added to store");
+      console.log('Data added to store');
     } catch (error) {
-      console.log("Error adding data to store", error);
+      console.log('Error adding data to store', error);
     }
   }
   const onSubmitForm = async (data: any) => {
     setIsLoading(true);
-    setStatus("idle");
+    setStatus('idle');
     const otp = await db.getItem(userData.ip_no);
     if (otp === null || otp != data.otp) {
-      setMessage("Invalid OTP");
-      setStatus("failed");
+      setMessage('Invalid OTP');
+      setStatus('failed');
       setIsLoading(false);
     } else {
-      const otp = await db.setItem("token", userData.token);
-      localStorage.setItem("token", userData.token);
-      navigate("/services");
+      const otp = await db.setItem('token', userData.token);
+      localStorage.setItem('token', userData.token);
+      navigate('/services');
       setIsLoading(true);
     }
   };
 
-  let unit_id = "";
-  const unitCodeStr = localStorage.getItem("unit_code");
+  let unit_id = '';
+  const unitCodeStr = localStorage.getItem('unit_code');
   const unit_code = unitCodeStr ? JSON.parse(unitCodeStr) : null;
   if (unit_code) {
     unit_id = unit_code.unit;
@@ -98,7 +98,7 @@ const OtpForm: React.FC<Props> = ({}) => {
     //setIsLoading(true);
     await dispatch(
       getOtp({
-        mobile_number: localStorage.getItem("mobile_number"),
+        mobile_number: localStorage.getItem('mobile_number'),
         unit_id: unit_id,
       })
     );
@@ -112,10 +112,10 @@ const OtpForm: React.FC<Props> = ({}) => {
 
   return (
     <>
-      <div style={{ marginTop: "4%" }}>
-        <img src={Logo} width={150} height={150} />
+      <div style={{ marginTop: '4%' }}>
+        <img src={Logo} width={90} height={90} />
       </div>
-      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
         <MessageNotification
           message={message}
           status={status}
@@ -124,75 +124,81 @@ const OtpForm: React.FC<Props> = ({}) => {
         />
         <Message
           style={{
-            fontSize: "1.2rem",
-            maxWidth: "340px",
-            width: "100%",
-            margin: "0 auto",
-            padding: "1rem",
+            fontSize: '1.2rem',
+            maxWidth: '340px',
+            width: '100%',
+            margin: '0 auto',
+            padding: '1rem',
           }}
         >
           <Message.Header
             style={{
-              color: "#374F4F",
-              fontSize: "1.2rem",
-              textAlign: "center",
+              color: '#374F4F',
+              fontSize: '1.2rem',
+              textAlign: 'center',
             }}
           >
-            {t("Enter OTP sent to")} {formattedNumber}
+            {t('Enter OTP sent to')} {formattedNumber}
           </Message.Header>
         </Message>
 
         <Form
           onSubmit={handleSubmit(onSubmitForm)}
           style={{
-            fontSize: "1.2rem",
-            maxWidth: "340px",
-            width: "100%",
-            margin: "0 auto",
-            padding: "1rem",
+            fontSize: '1.2rem',
+            maxWidth: '340px',
+            width: '100%',
+            margin: '0 auto',
+            padding: '1rem',
           }}
         >
           <CInput
-            placeholder={t("Enter OTP")}
+            placeholder={t('Enter OTP')}
             register={register}
             label="otp"
             required={true}
             size="large"
-            error={errors["otp"] ? true : false}
+            error={errors['otp'] ? true : false}
             fluid={true}
             loading={false}
             type="number"
             minLength={6}
             maxLength={6}
+            // pattern={6} // Add the pattern rule to allow only 6 digits
           />
-          {errors.otp?.type === "required" && (
+          {errors.otp?.type === 'required' && (
             <Label color="orange" pointing prompt>
               {t('otp_is_required')}
+            </Label>
+          )}
+          {errors.otp?.type === 'pattern' && (
+            <Label color="orange" pointing prompt>
+              {t('otp_must_be_6_digits')}
             </Label>
           )}
 
           <div
             style={{
-              width: "25%",
-              height: "25px",
-              padding: "3px",
-              fontSize: "13px",
-              whiteSpace: "nowrap",
-              marginLeft: "12%",
-              textAlign: "center",
+              width: '25%',
+              height: '25px',
+              padding: '3px',
+              fontSize: '13px',
+              whiteSpace: 'nowrap',
+              marginLeft: '12%',
+              textAlign: 'center',
             }}
           >
-            {t("Dint_Receive_A_Otp")}
+            {t('Dint_Receive_A_Otp')}
             <span
               style={{
-                textDecoration: "underline",
-                padding: "5px",
-                fontWeight: "bold",
-                color: "#0075AD",
+                textDecoration: 'underline',
+                padding: '5px',
+                fontWeight: 'bold',
+                color: '#0075AD',
               }}
               onClick={resendOTP}
             >
-              {t("Resend_Otp")}
+              {t('Resend_Otp')}
             </span>
           </div>
           {isLoading ? (
@@ -202,18 +208,18 @@ const OtpForm: React.FC<Props> = ({}) => {
               type="submit"
               loading={false}
               style={{
-                borderRadius: "100px",
-                textAlign: "center",
-                fontWeight: "lighter",
-                fontSize: "1.4rem",
-                background: "#0075ad",
-                width: "100%",
-                maxWidth: "300px", // set a maximum width for the button
-                margin: "0 auto", // center the button horizontally
+                borderRadius: '100px',
+                textAlign: 'center',
+                fontWeight: 'lighter',
+                fontSize: '1.4rem',
+                background: '#0075ad',
+                width: '100%',
+                maxWidth: '300px', // set a maximum width for the button
+                margin: '0 auto', // center the button horizontally
               }}
             >
-              <h1 style={{ color: "white", fontSize: "1.2rem" }}>
-                {t("Submit")}
+              <h1 style={{ color: 'white', fontSize: '1.2rem' }}>
+                {t('Submit')}
               </h1>
             </Button>
           )}

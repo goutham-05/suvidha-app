@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import DropDown from "../../common/drop-down";
-import { languageOptions } from "../../config/languages";
-import BrandLogo from "../../components/logo";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import DropDown from '../../common/drop-down';
+import { languageOptions } from '../../config/languages';
+import BrandLogo from '../../components/logo';
 import Logo from '../../assets/Logo.png';
-import BackgroundImage from "../../components/background";
+import BackgroundImage from '../../components/background';
 
 function Home() {
   const navigate = useNavigate();
@@ -16,19 +16,19 @@ function Home() {
   console.log('room::', param5);
   console.log('bed::', param6);
   const unit_code = {
-      unit: param1,
-      block: param2,
-      floor: param3,
-      ns: param4,
-      room: param5,
-      bed: param6,
-    };
-    localStorage.setItem("unit_code", JSON.stringify(unit_code));
+    unit: param1,
+    block: param2,
+    floor: param3,
+    ns: param4,
+    room: param5,
+    bed: param6,
+  };
+  localStorage.setItem('unit_code', JSON.stringify(unit_code));
   const onChangeLanguage = (
     _: React.SyntheticEvent<HTMLElement>,
     data: any
   ) => {
-    navigate("/login", {
+    navigate('/login', {
       state: {
         selectedLanguage: data.value,
         patientData: data.blockNo,
@@ -38,13 +38,13 @@ function Home() {
 
   return (
     <>
-    <div>
-    <img src={Logo} width={150} height={150}/>
-    </div>
+      <div>
+        <img src={Logo} width={90} height={90} />
+      </div>
       <DropDown
         fluid
         options={languageOptions}
-        placeholder={"Select a language"}
+        placeholder={'Select a language'}
         search
         selection
         onChange={onChangeLanguage}
