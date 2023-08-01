@@ -1,0 +1,20 @@
+
+{
+	"ip_number": "آئی پی نمبر",
+	"bed_number": "بستر نمبر",
+	"my_bill": "میرا بل",
+	"advance_paid": "اعلیٰ دیا گیا",
+	"approximate_bill": "تقریبی بل",
+	"estimated_amount": "تخمینہ مقدار",
+	"due_amt": "باقی رقم",
+	"my_discharge": "میری چھٹان",
+	"discharge_initiated": "چھٹان شروع ہوئی",
+	"discharge_initiated_date": "چھٹان شروع ہوئی تاریخ",
+	"discharge_started": "چھٹان شروع ہوئی",
+	"discharge_approved": "چھٹان منظور شدہ",
+	"summary_status": "خلاصہ حالت",
+	"insurance_claim_status": "اینشورنس دعوی کی حالت",
+	"status": "حالت",
+	"approved_date": "منظور شدہ تاریخ",
+	"discharge_date": "چھٹان کی تاریخ"
+	}

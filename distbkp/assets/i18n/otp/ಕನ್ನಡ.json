@@ -1,0 +1,8 @@
+{
+  "Enter OTP": "OTP ನಮೂದಿಸಿ",
+  "Submit": "ಸಲ್ಲಿಸಿ",
+  "Enter OTP sent to": "ಕಳುಹಿಸಲಾದ OTP ಅನ್ನು ನಮೂದಿಸಿ",
+  "Dint_Receive_A_Otp":"OTP ಸ್ವೀಕರಿಸಲಿಲ್ಲವೇ?",
+  "Resend_Otp":"OTP ಅನ್ನು ಮರುಕಳುಹಿಸಿ",
+  "otp_is_required": "OTP ಅಗತ್ಯವಿದೆ"
+}

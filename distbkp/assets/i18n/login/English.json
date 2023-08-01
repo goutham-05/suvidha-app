@@ -1,0 +1,8 @@
+{
+	"mobileNumber": "Mobile Number",
+	"IpNumber": "IP Number",
+	"GetOTP": "Get OTP",
+	"login_text":"Please login with your registered mobile number",
+	"mobile_number_required":"Mobile Number Required",
+	"otp_is_required":"OTP is required"
+}

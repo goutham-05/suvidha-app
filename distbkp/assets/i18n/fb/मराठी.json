@@ -1,0 +1,19 @@
+
+{
+	"search_menu...": "मेनू शोधा...",
+	"serving_type": "सर्विंग प्रकार",
+	"all": "सर्व",
+	"veg": "शाकाहारी",
+	"non_veg": "मांसाहारी",
+	"drinks_juices": "पेय पदार्थ आणि रस",
+	"please_select_serving_type": "कृपया सर्व्हिंग प्रकार निवडा",
+	"add": "जोडा",
+	"item_added": "वस्तु जोडली गेली",
+	"view_cart": "कार्ट पहा",
+	"item(s)_added": "वस्तु(जे) जोडली गेली",
+	"bill_summary": "बिल सारांश",
+	"grand_total": "एकूण रक्कम",
+	"add_to_my_bill": "माझ्या बिलमध्ये जोडा",
+	"order_history": "आदेश इतिहास",
+	"item(s)_in_history": "वस्तु(जे) इतिहासात"
+	}

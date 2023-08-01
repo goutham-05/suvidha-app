@@ -1,0 +1,19 @@
+{
+	"ip_number": "ഐപി നമ്പർ",
+	"bed_number": "ബെഡ് നമ്പർ",
+	"my_bill": "എന്റെ ബിൽ",
+	"advance_paid": "പിന്നിട്ട പണം",
+	"approximate_bill": "അപ്രോക്സിമേറ്റ് ബിൽ",
+	"estimated_amount": "അനുമാനിച്ച തുക",
+	"due_amt": "ബക്കി തുക",
+	"my_discharge": "എന്റെ ഡിസ്ചാർജ്",
+	"discharge_initiated": "ഡിസ്ചാർജ് ആരംഭിച്ചു",
+	"discharge_initiated_date": "ഡിസ്ചാർജ് ആരംഭിച്ച തീയതി",
+	"discharge_started": "ഡിസ്ചാർജ് ആരംഭിച്ചു",
+	"discharge_approved": "ഡിസ്ചാർജ് അംഗീകൃതമാണ്",
+	"summary_status": "സംഗ്രഹാന്ത്യ അവസ്ഥ",
+	"insurance_claim_status": "ഇൻഷുറൻസ് ക്ലെയിം അവസ്ഥ",
+	"status": "അവസ്ഥ",
+	"approved_date": "അംഗീകരിച്ച തീയതി",
+	"discharge_date": "ഡിസ്ചാർജ് തീയതി"
+	}
