@@ -14,6 +14,7 @@ import getMyOrderFoodSlice, {
   getMyOrderFood,
   resetStatus,
 } from '../../reduxtoolkit/orderFoodSlice';
+import TruncatedText from '../../common/truncate/truncate';
 import { increaseQty } from '../../reduxtoolkit/myFoodSlice';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -65,6 +66,7 @@ function MyCart() {
   const {
     register,
     handleSubmit,
+
     formState: { errors },
   } = useForm();
 
@@ -103,6 +105,7 @@ function MyCart() {
   const [isInvalidOtp, setIsInvalidOtp] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [otpMessage, setOtpMessage] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
   const [getstatus, setGetStatus] = useState<
     'idle' | 'loading' | 'failed' | 'succeeded'
   >('idle');
@@ -179,15 +182,18 @@ function MyCart() {
   };
 
   const handleOtpValidation = async (data: any) => {
-    setIsLoading(false);
+    setIsLoading(true);
+    setShowLoader(true);
+    setTimeout(() => setShowLoader(false), 100000);
     setGetStatus('idle');
     const otp = await db.getItem(userData.ip_no);
     console.log('OTP', otp);
     if (otp === null || otp != data.otp) {
       setGetStatus('failed');
       setOtpMessage('Invalid OTP');
+      setTimeout(() => setShowLoader(false), 100);
       setIsLoading(true);
-      setIsInvalidOtp(false);
+      setIsInvalidOtp(true);
     } else {
       setOtpMessage('Otp Sent');
       setGetStatus('succeeded');
@@ -246,6 +252,7 @@ function MyCart() {
     // dispatch(clearCart());
     // navigate('/fnb');
     setIsLoading(false);
+    setShowLoader(false);
   };
   const resendOTP = async () => {
     setGetStatus('idle');
@@ -318,8 +325,10 @@ function MyCart() {
                   width: '10%',
                   height: '80px',
                   whiteSpace: 'nowrap',
-                  marginLeft: '10px',
+                  marginLeft: '5px',
                   marginTop: '5%',
+                  inlineSize: '50px',
+                  overflowWrap: 'break-word',
                 }}
               >
                 <div
@@ -329,11 +338,30 @@ function MyCart() {
                   }}
                 >
                   {item.item_type === 0 || item.item_type === 2 ? (
-                    <img src={vegIcon} width={30} height={30} />
+                    <img
+                      src={vegIcon}
+                      width={30}
+                      height={30}
+                      style={{ position: 'relative' }}
+                    />
                   ) : (
-                    <img src={nonVeg} width={20} height={20} />
+                    <img
+                      src={nonVeg}
+                      width={20}
+                      height={20}
+                      style={{ position: 'relative' }}
+                    />
                   )}
-                  {item.item}
+                  {/* {item.item} */}
+
+                  <TruncatedText item={item} maxLength={20} />
+
+                  {/* {item.item.length >= 10
+                    ? item.item.substring(0, 10) + '...'
+                    : item.item} */}
+
+                  {/* {item.item.substring(0, 10) + '...'} */}
+
                   <div>
                     <div>
                       <img
@@ -373,7 +401,11 @@ function MyCart() {
                 </div>
               </div>
               <div
-                style={{ marginTop: '25%', marginLeft: '-10%', width: '560px' }}
+                style={{
+                  marginTop: '25%',
+                  marginLeft: '-10%',
+                  width: '560px',
+                }}
               >
                 <input
                   placeholder="Enter Remarks"
@@ -397,12 +429,13 @@ function MyCart() {
                 <div
                   style={{
                     background: '#0075AD',
+
                     padding: '10px',
-                    width: '65px',
+                    width: '73px',
                     height: '25px',
                     borderRadius: '10px',
                     marginTop: '-32%',
-                    marginLeft: '33%',
+                    marginLeft: '3%',
                   }}
                 >
                   {item.quantity === 0 ? (
@@ -417,7 +450,7 @@ function MyCart() {
                       {t('add')}
                     </span>
                   ) : (
-                    <div style={{ marginTop: '-15%', color: 'white' }}>
+                    <div style={{ marginTop: '-16%', color: 'white' }}>
                       <span
                         style={{ fontWeight: 'bold', marginRight: '20%' }}
                         onClick={() => dispatch(decrementCartItem(item))}
@@ -578,6 +611,8 @@ function MyCart() {
             />
             <Form
               onSubmit={handleSubmit(handleOtpValidation)}
+              loading={showLoader}
+              disabled={showLoader}
               style={{
                 fontSize: '1.2rem',
                 maxWidth: '340px',
@@ -630,11 +665,11 @@ function MyCart() {
                   {t('otp:Resend_Otp')}
                 </span>
               </div>
+
               <div>
                 {isLoading ? (
                   <Button
                     type="submit"
-                    loading={false}
                     style={{
                       borderRadius: '100px',
                       textAlign: 'center',
@@ -646,6 +681,7 @@ function MyCart() {
                       margin: '0 auto',
                     }}
                   >
+                    {' '}
                     <h1 style={{ color: 'white', fontSize: '1.2rem' }}>
                       {t('otp:Submit')}
                     </h1>
@@ -673,21 +709,6 @@ function MyCart() {
                   Cancel
                 </Button>
               </div>
-              {/* <Button
-                style={{
-                  borderRadius: '100px',
-                  textAlign: 'center',
-                  fontWeight: 'lighter',
-                  fontSize: '1.4rem',
-                  background: '#D5D5D5',
-                  width: '100%',
-                  maxWidth: '300px',
-                  margin: '0 auto',
-                }}
-                onClick={handlecancel}
-              >
-                Cancel
-              </Button> */}
             </Form>
           </div>
         </Dimmer>

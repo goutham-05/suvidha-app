@@ -850,7 +850,7 @@ function FoodBeverages() {
                       cursor: 'pointer',
                     }}
                   >
-                    <div style={{ display: 'flex' }}>
+                    <div>
                       <div
                         style={{
                           width: '10%',
@@ -865,7 +865,7 @@ function FoodBeverages() {
                             fontWeight: 'bold',
                             fontSize: '12px',
                             color: 'black',
-                            width: '200px',
+                            width: '187px',
                             whiteSpace: 'normal',
                             textAlign: 'left',
                             cursor: 'pointer',
@@ -873,124 +873,29 @@ function FoodBeverages() {
                         >
                           {item.item}
                         </p>
-                        <div
+
+                        <Icon
+                          color="black"
+                          name="rupee"
                           style={{
                             float: 'left',
                             display: 'flex',
-                            marginTop: '-30%',
+                            marginTop: '-5%',
                             cursor: 'pointer',
                           }}
-                        >
-                          <Icon color="black" name="rupee" />
-                          <p
-                            style={{
-                              color: 'black',
-                              marginLeft: '-10%',
-                              fontWeight: 'bold',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            {item.price_att}
-                          </p>
-                        </div>
-                        <div
+                        />
+                        <p
                           style={{
-                            marginTop: '50px',
-                            borderRadius: '10px',
-                            width: '100%',
+                            color: 'black',
+                            marginLeft: '-10%',
+                            fontWeight: 'bold',
                             cursor: 'pointer',
                           }}
                         >
-                          <div
-                            style={{
-                              position: 'relative',
-                              bottom: '10px', // Adjust the distance from the bottom of the image
-                              right: '1px', // Ad
-                              background: '#0075AD',
-                              padding: '10px',
-                              width: '85px',
-                              height: '30px',
-                              borderRadius: '10px',
-                              marginTop: '260%',
-                              cursor: 'pointer',
-                              marginLeft: '612%',
-                              zIndex: 10,
-                            }}
-                          >
-                            {item.quantity === 0 ? (
-                              <p
-                                style={{
-                                  marginTop: '-5%',
-                                  fontWeight: 'bold',
-                                  color: 'white',
-                                  pointerEvents: 'auto',
-                                  cursor: 'pointer',
-                                }}
-                                onClick={() =>
-                                  onAddCartItem(index, {
-                                    ...item,
-                                    quantity: item.quantity + 1,
-                                  })
-                                }
-                              >
-                                {t('ADD')}
-                              </p>
-                            ) : (
-                              <div style={{ marginTop: '-8%' }}>
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    marginRight: '20px',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                  }}
-                                  onClick={() =>
-                                    onRemoveCartItem(index, {
-                                      ...item,
-                                      quantity: item.quantity - 1,
-                                    })
-                                  }
-                                >
-                                  -
-                                </span>
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                  }}
-                                >
-                                  {item.quantity}
-                                </span>
-                                <span
-                                  style={{
-                                    fontWeight: 'bold',
-                                    marginLeft: '20px',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                  }}
-                                  onClick={() =>
-                                    onAddCartItem(index, {
-                                      ...item,
-                                      quantity: item.quantity + 1,
-                                    })
-                                  }
-                                >
-                                  +
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                          {item.price_att}
+                        </p>
                       </div>
-                      <div
-                        style={{
-                          marginLeft: '57%',
-                          position: 'relative',
-                          marginTop: '0.5%',
-                          cursor: 'pointer',
-                        }}
-                      >
+                      <div style={{ display: 'flex' }}>
                         {item.image ? (
                           <div
                             style={{
@@ -1004,24 +909,109 @@ function FoodBeverages() {
                               height={96}
                               style={{
                                 display: 'block',
-                                marginLeft: '-26%',
+                                marginLeft: '161%',
+                                marginTop: '-69px',
                                 cursor: 'pointer',
                                 objectFit: 'cover',
                               }}
                             />
                           </div>
                         ) : (
-                          <img
-                            src={veg}
-                            width={100}
-                            height={90}
+                          <div>
+                            <img
+                              src={veg}
+                              width={100}
+                              height={90}
+                              style={{
+                                borderRadius: '10px',
+                                cursor: 'pointer',
+                                marginLeft: '169px',
+                                marginTop: '-91px',
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          position: 'relative',
+                          bottom: '10px', // Adjust the distance from the bottom of the image
+                          right: '1px', // Ad
+                          background: '#0075AD',
+                          padding: '10px',
+                          width: '85px',
+                          height: '30px',
+                          borderRadius: '10px',
+                          marginTop: '-57%',
+                          cursor: 'pointer',
+                          marginLeft: '169px',
+                          zIndex: 10,
+                        }}
+                      >
+                        {item.quantity === 0 ? (
+                          <p
                             style={{
-                              borderRadius: '10px',
+                              marginTop: '-5%',
+                              fontWeight: 'bold',
+                              color: 'white',
+                              pointerEvents: 'auto',
                               cursor: 'pointer',
                             }}
-                          />
+                            onClick={() =>
+                              onAddCartItem(index, {
+                                ...item,
+                                quantity: item.quantity + 1,
+                              })
+                            }
+                          >
+                            {t('ADD')}
+                          </p>
+                        ) : (
+                          <div style={{ marginTop: '-8%' }}>
+                            <span
+                              style={{
+                                fontWeight: 'bold',
+                                marginRight: '20px',
+                                color: 'white',
+                                cursor: 'pointer',
+                              }}
+                              onClick={() =>
+                                onRemoveCartItem(index, {
+                                  ...item,
+                                  quantity: item.quantity - 1,
+                                })
+                              }
+                            >
+                              -
+                            </span>
+                            <span
+                              style={{
+                                fontWeight: 'bold',
+                                color: 'white',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {item.quantity}
+                            </span>
+
+                            <span
+                              style={{
+                                fontWeight: 'bold',
+                                marginLeft: '20px',
+                                color: 'white',
+                                cursor: 'pointer',
+                              }}
+                              onClick={() =>
+                                onAddCartItem(index, {
+                                  ...item,
+                                  quantity: item.quantity + 1,
+                                })
+                              }
+                            >
+                              +
+                            </span>
+                          </div>
                         )}
-                        <div></div>
                       </div>
                     </div>
                   </div>

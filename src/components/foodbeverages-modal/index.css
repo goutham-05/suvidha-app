@@ -1,0 +1,14 @@
+/* For WebKit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 0.5em; /* Adjust the width as needed to match your design */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* You can change this to the desired background color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0); /* Transparent color to hide the thumb */
+}
+
+/* For Firefox and other browsers */

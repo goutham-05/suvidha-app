@@ -124,7 +124,7 @@ const MyInsuranceModal = () => {
                     fontSize: '100%',
                     fontWeight: 'bold',
                     color: 'black',
-                    marginLeft: '10%',
+                    marginLeft: '1%',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -156,7 +156,7 @@ const MyInsuranceModal = () => {
                     fontSize: '100%',
                     fontWeight: 'bold',
                     color: 'black',
-                    marginLeft: '30px',
+                    marginLeft: '-17px',
                   }}
                 >
                   : {item}
